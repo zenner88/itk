@@ -69,13 +69,58 @@ const routes: Routes = [{
         .then(m => m.TablesModule),
     },
     {
+      path: 'master-indikator-satfung',
+      loadChildren: () => import('./master-indikator-satfung/tables.module')
+        .then(m => m.TablesModule),
+    },
+    {
+      path: 'master-indikator-satfung-obyektif',
+      loadChildren: () => import('./master-indikator-satfung-obyektif/tables.module')
+        .then(m => m.TablesModule),
+    },
+    {
+      path: 'master-indikator-satker',
+      loadChildren: () => import('./master-indikator-satker/tables.module')
+        .then(m => m.TablesModule),
+    },
+    {
+      path: 'master-polres-satfung',
+      loadChildren: () => import('./master-polres-satfung/tables.module')
+        .then(m => m.TablesModule),
+    },
+    {
       path: 'master-satker',
       loadChildren: () => import('./master-satker/tables.module')
         .then(m => m.TablesModule),
     },
     {
+      path: 'ref-jenis-data',
+      loadChildren: () => import('./ref-jenis-data/tables.module')
+        .then(m => m.TablesModule),
+    },
+    {
+      path: 'ref-pangkat',
+      loadChildren: () => import('./ref-pangkat/tables.module')
+        .then(m => m.TablesModule),
+    },
+    {
       path: 'ref-prinsip',
       loadChildren: () => import('./ref-prinsip/tables.module')
+        .then(m => m.TablesModule),
+    },
+    {
+      path: 'ref-satfung',
+      loadChildren: () => import('./ref-satfung/tables.module')
+        .then(m => m.TablesModule),
+    },
+    {
+      path: 'ref-satker',
+      loadChildren: () => import('./ref-satker/tables.module')
+        .then(m => m.TablesModule),
+    },
+    {
+      path: 'ref-tipe-polres',
+      loadChildren: () => import('./ref-tipe-polres/tables.module')
         .then(m => m.TablesModule),
     },
     {

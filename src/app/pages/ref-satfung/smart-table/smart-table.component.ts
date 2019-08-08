@@ -33,10 +33,6 @@ export class SmartTableComponent {
         title: 'ID',
         type: 'string',
       },
-      prefix: {
-        title: 'Prefix',
-        type: 'string',
-      },
       prinsip: {
         title: 'Prinsip',
         type: 'string',

@@ -33,16 +33,24 @@ export class SmartTableComponent {
         title: 'Kode',
         type: 'string',
       },
-      kode_satker: {
-        title: 'Kode Satker',
+      id_prinsip: {
+        title: 'Prinsip',
         type: 'string',
       },
       indikator: {
         title: 'Indikator',
         type: 'string',
       },
-      is_persepsi: {
-        title: 'Persepsi',
+      bobot: {
+        title: 'Bobot',
+        type: 'string',
+      },
+      rumus: {
+        title: 'Rumus',
+        type: 'string',
+      },
+      id_jenis_data: {
+        title: 'Jenis Data',
         type: 'string',
       },
     },

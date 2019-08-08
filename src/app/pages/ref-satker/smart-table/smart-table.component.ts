@@ -33,21 +33,17 @@ export class SmartTableComponent {
         title: 'ID',
         type: 'string',
       },
-      prefix: {
-        title: 'Prefix',
+      jenis: {
+        title: 'Jenis',
         type: 'string',
       },
-      prinsip: {
-        title: 'Prinsip',
-        type: 'string',
       },
-    },
   };
 
   source: LocalDataSource = new LocalDataSource();
   
   constructor(private service: SmartTableData, private httpClient : HttpClient, private _global: AppGlobals) {
-    this.httpClient.get(this._global.baseAPIUrl + '/Itk_ref_prinsips').subscribe(indikator => {
+    this.httpClient.get(this._global.baseAPIUrl + '/Itk_ref_satkers').subscribe(indikator => {
     const data = JSON.stringify(indikator);
     this.source.load(JSON.parse(data));
   }); 

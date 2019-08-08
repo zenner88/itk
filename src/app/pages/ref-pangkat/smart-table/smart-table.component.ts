@@ -33,12 +33,16 @@ export class SmartTableComponent {
         title: 'ID',
         type: 'string',
       },
-      prefix: {
-        title: 'Prefix',
+      singkatan: {
+        title: 'Singkatan',
         type: 'string',
       },
-      prinsip: {
-        title: 'Prinsip',
+      pangkat: {
+        title: 'Pangkat',
+        type: 'string',
+      },
+      jenjang: {
+        title: 'Jenjang',
         type: 'string',
       },
     },
@@ -47,7 +51,7 @@ export class SmartTableComponent {
   source: LocalDataSource = new LocalDataSource();
   
   constructor(private service: SmartTableData, private httpClient : HttpClient, private _global: AppGlobals) {
-    this.httpClient.get(this._global.baseAPIUrl + '/Itk_ref_prinsips').subscribe(indikator => {
+    this.httpClient.get(this._global.baseAPIUrl + '/Itk_ref_pangkats').subscribe(indikator => {
     const data = JSON.stringify(indikator);
     this.source.load(JSON.parse(data));
   }); 

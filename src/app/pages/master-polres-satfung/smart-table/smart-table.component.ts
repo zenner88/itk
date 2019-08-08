@@ -29,16 +29,16 @@ export class SmartTableComponent {
       confirmDelete: true,
     },
     columns: {
-      id: {
-        title: 'ID',
+      kode: {
+        title: 'Kode',
         type: 'string',
       },
-      prefix: {
-        title: 'Prefix',
+      id_tipe_polres: {
+        title: 'Tipe Polres',
         type: 'string',
       },
-      prinsip: {
-        title: 'Prinsip',
+      id_satfung: {
+        title: 'Satfung',
         type: 'string',
       },
     },
@@ -47,9 +47,13 @@ export class SmartTableComponent {
   source: LocalDataSource = new LocalDataSource();
   
   constructor(private service: SmartTableData, private httpClient : HttpClient, private _global: AppGlobals) {
-    this.httpClient.get(this._global.baseAPIUrl + '/Itk_ref_prinsips').subscribe(indikator => {
+    
+    this.httpClient.get(this._global.baseAPIUrl + '/Itk_mst_polres_satfungs').subscribe(indikator => {
+    console.log("cek log");      
+    console.log(indikator);
     const data = JSON.stringify(indikator);
     this.source.load(JSON.parse(data));
+    console.log(data);
   }); 
   
   }

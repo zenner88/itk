@@ -26,19 +26,19 @@ export const MENU_ITEMS: NbMenuItem[] = [
       },
       {
         title: 'Master Indikator Satfung',
-        link: '/pages/master/',
+        link: '/pages/master-indikator-satfung/smart-table/',
       },
       {
-        title: 'Master Indikator Satfung Oby',
-        link: '/pages/master/',
+        title: 'Master Indikator Satfung Obyektif',
+        link: '/pages/master-indikator-satfung-obyektif/smart-table',
       },
       {
         title: 'Master Indikator Satker',
-        link: '/pages/master/',
+        link: '/pages/master-indikator-satker/smart-table',
       },
       {
         title: 'Master Polres Satfung',
-        link: '/pages/master/',
+        link: '/pages/master-polres-satfung/smart-table',
       },
       {
         title: 'Master Satker',
@@ -73,6 +73,32 @@ export const MENU_ITEMS: NbMenuItem[] = [
       {
         title: 'Tipe Polres',
         link: '/pages/ref-tipe-polres/smart-table',
+      },
+    ],
+  },
+  {
+    title: 'System',
+    icon: 'edit-2-outline',
+    children: [
+      {
+        title: 'System Akses',
+        link: '/pages/sys-akses/smart-table',
+      },
+      {
+        title: 'System Kelompok',
+        link: '/pages/sys-kelompok/smart-table',
+      },
+      {
+        title: 'System Kelompok Pengguna',
+        link: '/pages/sys-kelompok-pengguna/smart-table',
+      },
+      {
+        title: 'System Menu',
+        link: '/pages/sys-menu/smart-table',
+      },
+      {
+        title: 'System Pengguna',
+        link: '/pages/sys-pengguna/smart-table',
       },
     ],
   },

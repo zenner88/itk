@@ -37,8 +37,12 @@ export class SmartTableComponent {
         title: 'Satker',
         type: 'string',
       },
-      na: {
-        title: 'na',
+      kode_induk: {
+        title: 'Kode Induk',
+        type: 'string',
+      },
+      id_tipe_polres: {
+        title: 'Type Polres',
         type: 'string',
       },
     },
