@@ -78,7 +78,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
   },
   {
     title: 'System',
-    icon: 'edit-2-outline',
+    icon: 'lock-outline',
     children: [
       {
         title: 'System Akses',

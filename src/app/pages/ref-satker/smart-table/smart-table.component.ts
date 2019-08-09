@@ -1,17 +1,14 @@
 import { Component, Injectable } from '@angular/core';
 import { LocalDataSource } from 'ng2-smart-table';
-import { HttpClient, HttpClientModule  } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { AppGlobals } from '../../../app.global'
 import 'style-loader!angular2-toaster/toaster.css';
 import {
   NbComponentStatus,
-  NbGlobalLogicalPosition,
   NbGlobalPhysicalPosition,
-  NbGlobalPosition,
   NbToastrService,
 } from '@nebular/theme';
 
-// import { Injectable } from '@angular/core';
 @Component({
   selector: 'ngx-smart-table',
   templateUrl: './smart-table.component.html',
@@ -52,35 +49,65 @@ export class SmartTableComponent {
   };
 
   source: LocalDataSource = new LocalDataSource();
-  
+  id : string;
+  jenis : string;
   constructor(private httpClient : HttpClient, private _global: AppGlobals, private toastrService: NbToastrService) {
     this.httpClient.get(this._global.baseAPIUrl + '/Itk_ref_satkers').subscribe(indikator => {
     const data = JSON.stringify(indikator);
     this.source.load(JSON.parse(data));
-    }); 
-  
+    },
+    error  => {
+      console.log("Error", error);
+      this.showToast("warning", "Koneksi bermasalah", error.message);      
+    }
+    ); 
   }
   onCreateConfirm(event): void {
     console.log(event.newData);
+    this.id = event.newData.id;
+    this.jenis = event.newData.jenis;
+    if (this.id == ""){
+      this.showToast("warning", "Kolom ID masih Kosong", "Harus di isi");
+    }
+    else if (this.jenis == ""){
+      this.showToast("warning", "Kolom JENIS masih Kosong", "Harus di isi");
+    }
+    else{
     this.httpClient.post(this._global.baseAPIUrl + '/Itk_ref_satkers',event.newData).subscribe(data  => {
       console.log("POST Request is successful ", data);
       this.showToast("success", "Data Tersimpan", event.newData.jenis);
       event.confirm.resolve();
     },
-    error  => {console.log("Error", error);}
+    error  => {
+      console.log("Error", error);
+      this.showToast("warning", "Input / koneksi bermasalah", error.error.error.message);      
+    }
     );
+    }
   }
   onSaveConfirm(event): void {
     console.log(event.newData);
     console.log(event);
-
+    this.id = event.newData.id;
+    this.jenis = event.newData.jenis;
+    if (this.id == ""){
+      this.showToast("warning", "Kolom ID masih Kosong", "Harus di isi");
+    }
+    else if (this.jenis == ""){
+      this.showToast("warning", "Kolom JENIS masih Kosong", "Harus di isi");
+    }
+    else{
     this.httpClient.put(this._global.baseAPIUrl + '/Itk_ref_satkers/'+event.data.id,event.newData).subscribe(data  => {
       console.log("PUT Request is successful ", data);
       this.showToast("success", "Data Ter update", event.newData.jenis);
       event.confirm.resolve();
     },
-    error  => {console.log("Error", error);}
+    error  => {
+      console.log("Error", error);
+      this.showToast("warning", "Input / koneksi bermasalah", error.error.error.message);
+    }
     );
+    }
   }
   onDeleteConfirm(event): void {
     if (window.confirm('Are you sure you want to delete?')) {
