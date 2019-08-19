@@ -2,6 +2,66 @@
 @import '~@nebular/theme/styles/theming';
 // @nebular out of the box themes
 @import '~@nebular/theme/styles/themes';
+@import '~@nebular/theme/styles/themes/dark';
+
+$nb-themes: nb-register-theme((
+
+  color-primary-100: #faf7ff, // <- primary violet shades
+  color-primary-200: #ece3ff,
+  color-primary-300: #d5bfff,
+  color-primary-400: #E3B505,
+  color-primary-500: #E3B505,
+  color-primary-600: #E3B505,
+  color-primary-700: #E3B505,
+  color-primary-800: #E3B505,
+  color-primary-900: #E3B505,
+
+  color-basic-100: white,
+  color-basic-200: #eefafc,
+  color-basic-300: #e8f5fa,
+  color-basic-400: #d6e6f2,
+  color-basic-500: #c7dbeb,
+  color-basic-600: #E3B505,
+  color-basic-700: #1B1F1E,
+  color-basic-800: #FE5D26,
+  color-basic-900: #2F3332,
+  color-basic-1000: #244555,
+  color-basic-1100: #121a2b,
+
+  background-basic-color-1: color-basic-700,
+  background-basic-color-2: color-basic-900,
+  background-basic-color-3: color-basic-800,
+  background-basic-color-4: color-basic-800,
+
+  border-basic-color-1: color-basic-900,
+  border-basic-color-2: color-basic-900,
+  border-basic-color-3: color-basic-900,
+  border-basic-color-4: color-basic-900,
+  border-basic-color-5: color-basic-900,
+
+  shadow: 0 0.5rem 1rem 0 rgba(255, 127, 53, 0.24),
+
+  text-disabled-color: color-basic-600,
+
+  layout-padding-top: 2.25rem,
+
+  menu-item-icon-margin: 0 0.5rem 0 0,
+
+  card-height-tiny: 13.5rem,
+  card-height-small: 21.1875rem,
+  card-height-medium: 28.875rem,
+  card-height-large: 36.5625rem,
+  card-height-giant: 44.25rem,
+  card-margin-bottom: 1.875rem,
+  card-header-with-select-padding-top: 0.5rem,
+  card-header-with-select-padding-bottom: 0.5rem,
+
+  select-min-width: 6rem,
+
+  slide-out-background: linear-gradient(270deg, #222b45 0%, #151a30 100%),
+  slide-out-shadow-color: 0 4px 14px 0 #8f9bb3,
+  slide-out-shadow-color-rtl: 0 4px 14px 0 #8f9bb3,
+), polri, dark);
 
 $nb-themes: nb-register-theme((
   layout-padding-top: 2.25rem,
@@ -19,7 +79,7 @@ $nb-themes: nb-register-theme((
 
   select-min-width: 6rem,
 
-  slide-out-background: #f7f9fc,
+  slide-out-background: #000,
   slide-out-shadow-color: 0 4px 14px 0 #8f9bb3,
   slide-out-shadow-color-rtl: 0 4px 14px 0 #8f9bb3,
 ), default, default);
@@ -41,8 +101,8 @@ $nb-themes: nb-register-theme((
   select-min-width: 6rem,
 
   slide-out-background: #252547,
-  slide-out-shadow-color: 2px 0 3px #29157a,
-  slide-out-shadow-color-rtl: -2px 0 3px #29157a,
+  slide-out-shadow-color: 2px 0 3px #2A302E,
+  slide-out-shadow-color-rtl: -2px 0 3px #2A302E,
 ), cosmic, cosmic);
 
 $nb-themes: nb-register-theme((
@@ -61,9 +121,9 @@ $nb-themes: nb-register-theme((
 
   select-min-width: 6rem,
 
-  slide-out-background: linear-gradient(270deg, #edf1f7 0%, #e4e9f2 100%),
-  slide-out-shadow-color: 0 4px 14px 0 #8f9bb3,
-  slide-out-shadow-color-rtl: 0 4px 14px 0 #8f9bb3,
+  slide-out-background: linear-gradient(270deg, #2A302E 0%, #444545 100%),
+  slide-out-shadow-color: 0 4px 14px 0 #848BBA,
+  slide-out-shadow-color-rtl: 0 4px 14px 0 #848BBA,
 ), corporate, corporate);
 
 $nb-themes: nb-register-theme((

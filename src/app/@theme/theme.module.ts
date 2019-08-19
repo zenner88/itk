@@ -71,9 +71,10 @@ const PIPES = [
 ];
 
 @NgModule({
-  imports: [CommonModule, ...NB_MODULES],
+  imports: [CommonModule, ...NB_MODULES, NbThemeModule.forRoot({ name: 'polri' }),],
   exports: [CommonModule, ...PIPES, ...COMPONENTS],
   declarations: [...COMPONENTS, ...PIPES],
+  
 })
 export class ThemeModule {
   static forRoot(): ModuleWithProviders {
