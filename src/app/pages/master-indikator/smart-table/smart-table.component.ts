@@ -1,4 +1,4 @@
-import { Component, Injectable } from '@angular/core';
+import { Component, Injectable, TemplateRef } from '@angular/core';
 import { LocalDataSource } from 'ng2-smart-table';
 import { HttpClient } from '@angular/common/http';
 import { AppGlobals } from '../../../app.global'
@@ -7,6 +7,7 @@ import {
   NbComponentStatus,
   NbGlobalPhysicalPosition,
   NbToastrService,
+  NbDialogService,
 } from '@nebular/theme';
 @Component({
   selector: 'ngx-smart-table',
@@ -69,7 +70,7 @@ export class SmartTableComponent {
   bobot : string;
   rumus : string;
   id_jenis_data : string;  
-  constructor(private httpClient : HttpClient, private _global: AppGlobals, private toastrService: NbToastrService) {    
+  constructor(private dialogService: NbDialogService, private httpClient : HttpClient, private _global: AppGlobals, private toastrService: NbToastrService) {    
     this.httpClient.get(this._global.baseAPIUrl + '/Itk_mst_indikators').subscribe(indikator => {
       const data = JSON.stringify(indikator);
       this.source.load(JSON.parse(data));
@@ -187,5 +188,13 @@ export class SmartTableComponent {
         body,
         `${titleContent}`,
         config);
+    }
+    openWithoutBackdropClick(dialog: TemplateRef<any>) {
+      this.dialogService.open(
+        dialog,
+        {
+          context: 'this is some additional data passed to dialog',
+          closeOnBackdropClick: false,
+        });
     }
   }
