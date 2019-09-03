@@ -5,5 +5,14 @@
 @include nb-install-component() {
   .menu-sidebar ::ng-deep .scrollable {
     padding-top: nb-theme(layout-padding-top);
+    // background-color: #1B1F1E;
+
   }
+  // .bg-sidebar ::ng-deep .scrollable {
+  //   padding-top: nb-theme(layout-padding-top);
+  //   background-color: #1B1F1E;    
+  // }
+  // .bg-header{
+  //   background-color: #1B1F1E;    
+  // }
 }

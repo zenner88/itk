@@ -40,36 +40,36 @@ export const MENU_ITEMS: NbMenuItem[] = [
       },
     ],
   },
-  {
-    title: 'Referensi',
-    icon: 'edit-2-outline',
-    children: [
-      {
-        title: 'Referensi Jenis Data',
-        link: '/pages/ref-jenis-data/smart-table',
-      },
-      {
-        title: 'Referensi Pangkat',
-        link: '/pages/ref-pangkat/smart-table',
-      },
-      {
-        title: 'Referensi Prinsip',
-        link: '/pages/ref-prinsip/smart-table',
-      },
-      {
-        title: 'Referensi Satfung',
-        link: '/pages/ref-satfung/smart-table',
-      },
-      {
-        title: 'Referensi Satker',
-        link: '/pages/ref-satker/smart-table',
-      },
-      {
-        title: 'Referensi Tipe Polres',
-        link: '/pages/ref-tipe-polres/smart-table',
-      },
-    ],
-  },
+  // {
+  //   title: 'Referensi',
+  //   icon: 'edit-2-outline',
+  //   children: [
+  //     {
+  //       title: 'Referensi Jenis Data',
+  //       link: '/pages/ref-jenis-data/smart-table',
+  //     },
+  //     {
+  //       title: 'Referensi Pangkat',
+  //       link: '/pages/ref-pangkat/smart-table',
+  //     },
+  //     {
+  //       title: 'Referensi Prinsip',
+  //       link: '/pages/ref-prinsip/smart-table',
+  //     },
+  //     {
+  //       title: 'Referensi Satfung',
+  //       link: '/pages/ref-satfung/smart-table',
+  //     },
+  //     {
+  //       title: 'Referensi Satker',
+  //       link: '/pages/ref-satker/smart-table',
+  //     },
+  //     {
+  //       title: 'Referensi Tipe Polres',
+  //       link: '/pages/ref-tipe-polres/smart-table',
+  //     },
+  //   ],
+  // },
   {
     title: 'System',
     icon: 'lock-outline',

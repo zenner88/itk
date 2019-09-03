@@ -1,4 +1,4 @@
-import { Component, Injectable, TemplateRef } from '@angular/core';
+import { Component, Injectable, TemplateRef, ViewChild } from '@angular/core';
 import { LocalDataSource } from 'ng2-smart-table';
 import { HttpClient } from '@angular/common/http';
 import { AppGlobals } from '../../../app.global'
@@ -18,7 +18,7 @@ import {
 @Injectable()
 export class SmartTableComponent {
 
-  settings = {
+  indikators = {
     add: {
       addButtonContent: '<i class="nb-plus"></i>',
       createButtonContent: '<i class="nb-checkmark"></i>',
@@ -62,8 +62,112 @@ export class SmartTableComponent {
       },
     },
   };
+  indikatorDetails = {
+    add: {
+      addButtonContent: '<i class="nb-plus"></i>',
+      createButtonContent: '<i class="nb-checkmark"></i>',
+      cancelButtonContent: '<i class="nb-close"></i>',
+      confirmCreate: true,
+    },
+    edit: {
+      editButtonContent: '<i class="nb-edit"></i>',
+      saveButtonContent: '<i class="nb-checkmark"></i>',
+      cancelButtonContent: '<i class="nb-close"></i>',
+      confirmSave: true,
+    },
+    delete: {
+      deleteButtonContent: '<i class="nb-trash"></i>',
+      confirmDelete: true,
+    },
+    columns: {
+      kode: {
+        title: 'Kode',
+        type: 'string',
+      },
+      kode_indikator: {
+        title: 'Kode Indikator',
+        type: 'string',
+      },
+      indikator: {
+        title: 'Indikator',
+        type: 'string',
+      },
+      id_satuan: {
+        title: 'Satuan',
+        type: 'string',
+      },
+    },
+  };
+  @ViewChild('item', { static: true }) accordion;
 
+  public show_dialog : boolean = false;
+  public show_details : boolean = false;
+  public button_name : any = 'Tambah';
+  public radioBut : string;
+  // public row_kiri : string = "col-md-8";
+  // public row_kanan : string = "col-md-4";
+  toggle() {
+    this.show_dialog = !this.show_dialog;
+    this.accordion.toggle();
+    console.log(this.show_dialog);
+    // CHANGE THE TEXT OF THE BUTTON.
+    if(this.show_dialog) 
+      this.button_name = "Tutup";
+    else
+      this.button_name = "Tambah";
+  }
+  onUserRowSelect(event): void {
+    console.log(event);
+    console.log(event.data.kode);
+    this.show_dialog = true;
+    this.button_name = "Tutup";
+    // Isi data 
+    this.kode = event.data.kode;
+    this.id_prinsip = event.data.id_prinsip;
+    this.indikator = event.data.indikator;
+    this.bobot = event.data.bobot;
+    this.rumus = event.data.rumus;
+    this.id_jenis_data = event.data.id_jenis_data;
+
+    this.httpClient.get(this._global.baseAPIUrl + '/Itk_mst_indikator_details/getDataByKodeIndikator?KodeIndikator='+this.kode).subscribe(indikatorDetails => {
+      const data = JSON.stringify(indikatorDetails);
+      this.sourceDetails.load(JSON.parse(data));
+    },
+    error  => {
+      console.log("Error", error);
+      this.showToast("warning", "Koneksi bermasalah", error.message);      
+    }
+    ); 
+  }
+  radioChangeHandler(event : any){
+    console.log(event.target.value);
+    console.log(event.target.value.data.kode);
+    this.radioBut = event.target.value;
+    this.show_details = event.target.value;
+
+    // this.httpClient.get(this._global.baseAPIUrl + '/Itk_mst_indikator_details/getDataByKodeIndikator?KodeIndikator=').subscribe(indikator => {
+    //   const data = JSON.stringify(indikator);
+    //   this.sourceDetails.load(JSON.parse(data));
+    // },
+    // error  => {
+    //   console.log("Error", error);
+    //   this.showToast("warning", "Koneksi bermasalah", error.message);      
+    // }
+    // ); 
+    // if (this.show_details == false){
+    //   this.row_kiri = "col-md-8"
+    //   this.row_kanan = "col-md-4"
+    // }
+    // else
+    // {
+    //   this.row_kiri == "col-md-4";
+    //   this.row_kanan == "col-md-8";
+    // }
+    // console.log(this.row_kanan);
+    // console.log(this.row_kiri);
+  }
   source: LocalDataSource = new LocalDataSource();
+  sourceDetails: LocalDataSource = new LocalDataSource();
   kode : string;
   id_prinsip : string;
   indikator : string;
