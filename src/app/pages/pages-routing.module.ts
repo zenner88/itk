@@ -68,6 +68,16 @@ const routes: Routes = [{
       loadChildren: () => import('./master-satker/tables.module')
         .then(m => m.TablesModule),
     },
+    {
+      path: 'trn-penilaian',
+      loadChildren: () => import('./trn-penilaian/tables.module')
+        .then(m => m.TablesModule),
+    },
+    {
+      path: 'trn-benchmarking',
+      loadChildren: () => import('./trn-benchmarking/tables.module')
+        .then(m => m.TablesModule),
+    },
     // {
     //   path: 'ref-jenis-data',
     //   loadChildren: () => import('./ref-jenis-data/tables.module')

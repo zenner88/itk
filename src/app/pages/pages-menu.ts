@@ -100,6 +100,20 @@ export const MENU_ITEMS: NbMenuItem[] = [
       },
     ],
   },
+  {
+    title: 'Transaksi',
+    icon: 'lock-outline',
+    children: [
+      {
+        title: 'Transaksi Penilaian',
+        link: '/pages/trn-penilaian/smart-table',
+      },
+      {
+        title: 'Transaksi Benchmarking',
+        link: '/pages/trn-benchmarking/smart-table',
+      },
+    ],
+  },
   // {
   //   title: 'CONTOH UI',
   //   group: true,
