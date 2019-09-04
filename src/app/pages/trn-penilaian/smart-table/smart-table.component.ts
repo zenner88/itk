@@ -118,7 +118,7 @@ export class SmartTableComponent {
     this.kode_periode = event.data.kode_periode;
     this.kode_satker = event.data.kode_satker;
 
-    this.httpClient.get(this._global.baseAPIUrl + '/Itk_trn_penilaian_details/getDataByKodeIndikator?penilaian_id='+this.id).subscribe(indikatorDetails => {
+    this.httpClient.get(this._global.baseAPIUrl + '/Itk_trn_penilaian_details/getDataBypenilaianId?penilaianId='+this.id).subscribe(indikatorDetails => {
       const data = JSON.stringify(indikatorDetails);
       this.sourceDetails.load(JSON.parse(data));
     },

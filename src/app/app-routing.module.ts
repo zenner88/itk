@@ -10,13 +10,9 @@ import {
 } from '@nebular/auth';
 
 const routes: Routes = [
+  { path: 'pages', loadChildren: 'app/pages/pages.module#PagesModule' },
   {
-    path: 'pages',
-    loadChildren: () => import('app/pages/pages.module')
-      .then(m => m.PagesModule),
-  },
-  {
-    path: 'auth',
+    path: '',
     component: NbAuthComponent,
     children: [
       {
@@ -56,6 +52,7 @@ const config: ExtraOptions = {
 @NgModule({
   imports: [RouterModule.forRoot(routes, config)],
   exports: [RouterModule],
+  
 })
 export class AppRoutingModule {
 }
