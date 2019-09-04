@@ -86,7 +86,7 @@ export class SmartTableComponent {
   tanggal_mulai : string;
   tanggal_selesai : string;
   constructor(private httpClient : HttpClient, private _global: AppGlobals, private toastrService: NbToastrService) {     
-    this.httpClient.get(this._global.baseAPIUrl + '/Itk_trn_benchmarking/').subscribe(indikator => {
+    this.httpClient.get(this._global.baseAPIUrl + '/Itk_trn_brenchmarkings/').subscribe(indikator => {
       const data = JSON.stringify(indikator);
       this.source.load(JSON.parse(data));
     },
@@ -123,7 +123,7 @@ export class SmartTableComponent {
         this.showToast("warning", "Kolom tanggal_selesai masih Kosong", "Harus di isi");
       }
       else{
-      this.httpClient.post(this._global.baseAPIUrl + '/Itk_trn_benchmarking/',event.newData).subscribe(data  => {
+      this.httpClient.post(this._global.baseAPIUrl + '/Itk_trn_brenchmarkings/',event.newData).subscribe(data  => {
         console.log("POST Request is successful ", data);
         this.showToast("success", "Data Tersimpan", event.newData.jenis);
         event.confirm.resolve();
@@ -163,7 +163,7 @@ export class SmartTableComponent {
         this.showToast("warning", "Kolom tanggal_selesai masih Kosong", "Harus di isi");
       }
       else{
-      this.httpClient.put(this._global.baseAPIUrl + '/Itk_trn_benchmarking/'+event.data.kode,event.newData).subscribe(data  => {
+      this.httpClient.put(this._global.baseAPIUrl + '/Itk_trn_brenchmarkings/'+event.data.kode,event.newData).subscribe(data  => {
         console.log("PUT Request is successful ", data);
         this.showToast("success", "Data Ter update", event.newData.kode);
         event.confirm.resolve();
@@ -177,7 +177,7 @@ export class SmartTableComponent {
     }
     onDeleteConfirm(event): void {
       if (window.confirm('Are you sure you want to delete?')) {
-        this.httpClient.delete(this._global.baseAPIUrl + '/Itk_trn_benchmarking/'+event.data.kode).subscribe(data => {
+        this.httpClient.delete(this._global.baseAPIUrl + '/Itk_trn_brenchmarkings/'+event.data.kode).subscribe(data => {
           event.confirm.resolve();
           console.log(event.data.kode);
           this.showToast("danger", "Data terhapus", event.data.jenis+"("+event.data.id+")");

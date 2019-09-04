@@ -114,11 +114,11 @@ export class SmartTableComponent {
     this.show_dialog = true;
     this.button_name = "Tutup";
     // Isi data 
-    this.id = event.data.kode;
+    this.id = event.data.id;
     this.kode_periode = event.data.kode_periode;
     this.kode_satker = event.data.kode_satker;
 
-    this.httpClient.get(this._global.baseAPIUrl + '/Itk_trn_penilaian_detail/getDataByKodeIndikator?penilaian_id='+this.id).subscribe(indikatorDetails => {
+    this.httpClient.get(this._global.baseAPIUrl + '/Itk_trn_penilaian_details/getDataByKodeIndikator?penilaian_id='+this.id).subscribe(indikatorDetails => {
       const data = JSON.stringify(indikatorDetails);
       this.sourceDetails.load(JSON.parse(data));
     },
@@ -144,7 +144,7 @@ export class SmartTableComponent {
   nilai: string;
 
   constructor(private dialogService: NbDialogService, private httpClient : HttpClient, private _global: AppGlobals, private toastrService: NbToastrService) {    
-    this.httpClient.get(this._global.baseAPIUrl + '/Itk_trn_penilaian/').subscribe(indikator => {
+    this.httpClient.get(this._global.baseAPIUrl + '/Itk_trn_penilaians/').subscribe(indikator => {
       const data = JSON.stringify(indikator);
       this.source.load(JSON.parse(data));
     },
@@ -169,7 +169,7 @@ export class SmartTableComponent {
         this.showToast("warning", "Kolom kode_satker masih Kosong", "Harus di isi");
       }
       else{
-      this.httpClient.post(this._global.baseAPIUrl + '/Itk_trn_penilaian/',event.newData).subscribe(data  => {
+      this.httpClient.post(this._global.baseAPIUrl + '/Itk_trn_penilaians/',event.newData).subscribe(data  => {
         console.log("POST Request is successful ", data);
         this.showToast("success", "Data Tersimpan", event.newData.jenis);
         event.confirm.resolve();
@@ -197,7 +197,7 @@ export class SmartTableComponent {
         this.showToast("warning", "Kolom kode_satker masih Kosong", "Harus di isi");
       }
       else{
-      this.httpClient.put(this._global.baseAPIUrl + '/Itk_trn_penilaian/'+event.data.kode,event.newData).subscribe(data  => {
+      this.httpClient.put(this._global.baseAPIUrl + '/Itk_trn_penilaians/'+event.data.kode,event.newData).subscribe(data  => {
         console.log("PUT Request is successful ", data);
         this.showToast("success", "Data Ter update", event.newData.kode);
         event.confirm.resolve();
@@ -211,7 +211,7 @@ export class SmartTableComponent {
     }
     onDeleteConfirm(event): void {
       if (window.confirm('Are you sure you want to delete?')) {
-        this.httpClient.delete(this._global.baseAPIUrl + '/Itk_trn_penilaian/'+event.data.kode).subscribe(data => {
+        this.httpClient.delete(this._global.baseAPIUrl + '/Itk_trn_penilaians/'+event.data.kode).subscribe(data => {
           event.confirm.resolve();
           console.log(event.data.kode);
           this.showToast("danger", "Data terhapus", event.data.jenis+"("+event.data.id+")");
@@ -229,7 +229,7 @@ export class SmartTableComponent {
       this.penilaian_id = event.newData.penilaian_id;
       this.kode_indikator_satfung = event.newData.kode_indikator_satfung;
       this.nilai = event.newData.nilai;
-      this.httpClient.post(this._global.baseAPIUrl + '/Itk_trn_penilaian_detail',event.newData).subscribe(data  => {
+      this.httpClient.post(this._global.baseAPIUrl + '/Itk_trn_penilaian_details',event.newData).subscribe(data  => {
         console.log("POST Request is successful ", data);
         this.showToast("success", "Data Tersimpan", event.newData.jenis);
         event.confirm.resolve();
@@ -248,7 +248,7 @@ export class SmartTableComponent {
       this.penilaian_id = event.newData.penilaian_id;
       this.kode_indikator_satfung = event.newData.kode_indikator_satfung;
       this.nilai = event.newData.nilai;
-      this.httpClient.put(this._global.baseAPIUrl + '/Itk_trn_penilaian_detail/'+event.data.id,event.newData).subscribe(data  => {
+      this.httpClient.put(this._global.baseAPIUrl + '/Itk_trn_penilaian_details/'+event.data.id,event.newData).subscribe(data  => {
         console.log("PUT Request is successful ", data);
         this.showToast("success", "Data Ter update", event.newData.kode);
         event.confirm.resolve();
@@ -262,7 +262,7 @@ export class SmartTableComponent {
     // }
     onDeleteConfirmD(event): void {
       if (window.confirm('Are you sure you want to delete?')) {
-        this.httpClient.delete(this._global.baseAPIUrl + '/Itk_trn_penilaian_detail/'+event.data.id).subscribe(data => {
+        this.httpClient.delete(this._global.baseAPIUrl + '/Itk_trn_penilaian_details/'+event.data.id).subscribe(data => {
           event.confirm.resolve();
           console.log(event.data.kode);
           this.showToast("danger", "Data terhapus", event.data.jenis+"("+event.data.id+")");
