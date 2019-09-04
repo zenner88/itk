@@ -75,7 +75,7 @@ export class SmartTableComponent {
   bobot : string;
   rumus : string;
   constructor(private httpClient : HttpClient, private _global: AppGlobals, private toastrService: NbToastrService) {     
-    this.httpClient.get(this._global.baseAPIUrl + '/Itk_mst_indikator_satfungs').subscribe(indikator => {
+    this.httpClient.get(this._global.baseAPIUrl + '/Itk_mst_indikator_satfungs/').subscribe(indikator => {
       const data = JSON.stringify(indikator);
       this.source.load(JSON.parse(data));
     },
@@ -116,7 +116,7 @@ export class SmartTableComponent {
         this.showToast("warning", "Kolom rumus masih Kosong", "Harus di isi");
       }
       else{
-      this.httpClient.post(this._global.baseAPIUrl + '/Itk_mst_indikator_satfungs',event.newData).subscribe(data  => {
+      this.httpClient.post(this._global.baseAPIUrl + '/Itk_mst_indikator_satfungs/',event.newData).subscribe(data  => {
         console.log("POST Request is successful ", data);
         this.showToast("success", "Data Tersimpan", event.newData.jenis);
         event.confirm.resolve();

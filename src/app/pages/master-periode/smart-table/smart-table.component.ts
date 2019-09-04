@@ -39,33 +39,38 @@ export class SmartTableComponent {
         title: 'Kode',
         type: 'string',
       },
-      kode_indikator: {
-        title: 'Kode Indikator',
+      periode: {
+        title: 'Periode',
         type: 'string',
       },
-      kode_satker: {
-        title: 'Kode Satker',
+      id_tipe_satker: {
+        title: 'Tipe Satker',
         type: 'string',
       },
-      nomor: {
-        title: 'Nomor',
+      tahun: {
+        title: 'tahun',
         type: 'string',
       },
-      indikator: {
-        title: 'Indikator',
-        type: 'string',
+      tanggal_mulai: {
+        title: 'Tanngal Mulai',
+        type: 'date',
+      },
+      tanggal_selesai: {
+        title: 'Tanggal Selesai',
+        type: 'date',
       },
     },
   };
 
   source: LocalDataSource = new LocalDataSource();
   kode : string;
-  kode_indikator : string;
-  kode_satker : string;
-  nomor : string;
-  indikator : string;
-  constructor(private httpClient : HttpClient, private _global: AppGlobals, private toastrService: NbToastrService) {         
-    this.httpClient.get(this._global.baseAPIUrl + '/Itk_mst_indikator_satkers/').subscribe(indikator => {
+  periode : string;
+  id_tipe_satker : string;
+  tahun : string;
+  tanggal_mulai : string;
+  tanggal_selesai : string;
+  constructor(private httpClient : HttpClient, private _global: AppGlobals, private toastrService: NbToastrService) {     
+    this.httpClient.get(this._global.baseAPIUrl + '/Itk_mst_periodes/').subscribe(indikator => {
       const data = JSON.stringify(indikator);
       this.source.load(JSON.parse(data));
     },
@@ -78,27 +83,31 @@ export class SmartTableComponent {
     onCreateConfirm(event): void {
       console.log(event.newData);
       this.kode = event.newData.kode;
-      this.kode_satker = event.newData.kode_satker;
-      this.kode_indikator = event.newData.kode_indikator;
-      this.nomor = event.newData.nomor;
-      this.indikator = event.newData.indikator;
+      this.periode = event.newData.periode;
+      this.id_tipe_satker = event.newData.id_tipe_satker;
+      this.tahun = event.newData.tahun;
+      this.tanggal_mulai = event.newData.tanggal_mulai;
+      this.tanggal_selesai = event.newData.tanggal_selesai;
       if (this.kode == ""){
         this.showToast("warning", "Kolom ID masih Kosong", "Harus di isi");
       }
-      else if (this.kode_satker == ""){
-        this.showToast("warning", "Kolom kode_satker masih Kosong", "Harus di isi");
+      else if (this.periode == ""){
+        this.showToast("warning", "Kolom periode masih Kosong", "Harus di isi");
       }
-      else if (this.kode_indikator == ""){
-        this.showToast("warning", "Kolom kode_indikator masih Kosong", "Harus di isi");
+      else if (this.id_tipe_satker == ""){
+        this.showToast("warning", "Kolom id_tipe_satker masih Kosong", "Harus di isi");
       }
-      else if (this.nomor == ""){
-        this.showToast("warning", "Kolom nomor masih Kosong", "Harus di isi");
+      else if (this.tahun == ""){
+        this.showToast("warning", "Kolom tahun masih Kosong", "Harus di isi");
       }
-      else if (this.indikator == ""){
-        this.showToast("warning", "Kolom indikator masih Kosong", "Harus di isi");
+      else if (this.tanggal_mulai == ""){
+        this.showToast("warning", "Kolom tanggal_mulai masih Kosong", "Harus di isi");
+      }
+      else if (this.tanggal_selesai == ""){
+        this.showToast("warning", "Kolom tanggal_selesai masih Kosong", "Harus di isi");
       }
       else{
-      this.httpClient.post(this._global.baseAPIUrl + '/Itk_mst_indikator_satkers/',event.newData).subscribe(data  => {
+      this.httpClient.post(this._global.baseAPIUrl + '/Itk_mst_periodes/',event.newData).subscribe(data  => {
         console.log("POST Request is successful ", data);
         this.showToast("success", "Data Tersimpan", event.newData.jenis);
         event.confirm.resolve();
@@ -114,27 +123,31 @@ export class SmartTableComponent {
       console.log(event.newData);
       console.log(event);
       this.kode = event.newData.kode;
-      this.kode_satker = event.newData.kode_satker;
-      this.kode_indikator = event.newData.kode_indikator;
-      this.nomor = event.newData.nomor;
-      this.indikator = event.newData.indikator;
+      this.periode = event.newData.periode;
+      this.id_tipe_satker = event.newData.id_tipe_satker;
+      this.tahun = event.newData.tahun;
+      this.tanggal_mulai = event.newData.tanggal_mulai;
+      this.tanggal_selesai = event.newData.tanggal_selesai;
       if (this.kode == ""){
         this.showToast("warning", "Kolom ID masih Kosong", "Harus di isi");
       }
-      else if (this.kode_satker == ""){
-        this.showToast("warning", "Kolom kode_satker masih Kosong", "Harus di isi");
+      else if (this.periode == ""){
+        this.showToast("warning", "Kolom periode masih Kosong", "Harus di isi");
       }
-      else if (this.kode_indikator == ""){
-        this.showToast("warning", "Kolom kode_indikator masih Kosong", "Harus di isi");
+      else if (this.id_tipe_satker == ""){
+        this.showToast("warning", "Kolom id_tipe_satker masih Kosong", "Harus di isi");
       }
-      else if (this.nomor == ""){
-        this.showToast("warning", "Kolom nomor masih Kosong", "Harus di isi");
+      else if (this.tahun == ""){
+        this.showToast("warning", "Kolom tahun masih Kosong", "Harus di isi");
       }
-      else if (this.indikator == ""){
-        this.showToast("warning", "Kolom indikator masih Kosong", "Harus di isi");
+      else if (this.tanggal_mulai == ""){
+        this.showToast("warning", "Kolom tanggal_mulai masih Kosong", "Harus di isi");
+      }
+      else if (this.tanggal_selesai == ""){
+        this.showToast("warning", "Kolom tanggal_selesai masih Kosong", "Harus di isi");
       }
       else{
-      this.httpClient.put(this._global.baseAPIUrl + '/Itk_mst_indikator_satkers/'+event.data.kode,event.newData).subscribe(data  => {
+      this.httpClient.put(this._global.baseAPIUrl + '/Itk_mst_periodes/'+event.data.kode,event.newData).subscribe(data  => {
         console.log("PUT Request is successful ", data);
         this.showToast("success", "Data Ter update", event.newData.kode);
         event.confirm.resolve();
@@ -148,7 +161,7 @@ export class SmartTableComponent {
     }
     onDeleteConfirm(event): void {
       if (window.confirm('Are you sure you want to delete?')) {
-        this.httpClient.delete(this._global.baseAPIUrl + '/Itk_mst_indikator_satkers/'+event.data.kode).subscribe(data => {
+        this.httpClient.delete(this._global.baseAPIUrl + '/Itk_mst_periodes/'+event.data.kode).subscribe(data => {
           event.confirm.resolve();
           console.log(event.data.kode);
           this.showToast("danger", "Data terhapus", event.data.jenis+"("+event.data.id+")");

@@ -54,8 +54,8 @@ const routes: Routes = [{
         .then(m => m.TablesModule),
     },
     {
-      path: 'master-indikator-satker',
-      loadChildren: () => import('./master-indikator-satker/tables.module')
+      path: 'master-periode',
+      loadChildren: () => import('./master-periode/tables.module')
         .then(m => m.TablesModule),
     },
     {
@@ -68,36 +68,36 @@ const routes: Routes = [{
       loadChildren: () => import('./master-satker/tables.module')
         .then(m => m.TablesModule),
     },
-    {
-      path: 'ref-jenis-data',
-      loadChildren: () => import('./ref-jenis-data/tables.module')
-        .then(m => m.TablesModule),
-    },
-    {
-      path: 'ref-pangkat',
-      loadChildren: () => import('./ref-pangkat/tables.module')
-        .then(m => m.TablesModule),
-    },
-    {
-      path: 'ref-prinsip',
-      loadChildren: () => import('./ref-prinsip/tables.module')
-        .then(m => m.TablesModule),
-    },
-    {
-      path: 'ref-satfung',
-      loadChildren: () => import('./ref-satfung/tables.module')
-        .then(m => m.TablesModule),
-    },
-    {
-      path: 'ref-satker',
-      loadChildren: () => import('./ref-satker/tables.module')
-        .then(m => m.TablesModule),
-    },
-    {
-      path: 'ref-tipe-polres',
-      loadChildren: () => import('./ref-tipe-polres/tables.module')
-        .then(m => m.TablesModule),
-    },
+    // {
+    //   path: 'ref-jenis-data',
+    //   loadChildren: () => import('./ref-jenis-data/tables.module')
+    //     .then(m => m.TablesModule),
+    // },
+    // {
+    //   path: 'ref-pangkat',
+    //   loadChildren: () => import('./ref-pangkat/tables.module')
+    //     .then(m => m.TablesModule),
+    // },
+    // {
+    //   path: 'ref-prinsip',
+    //   loadChildren: () => import('./ref-prinsip/tables.module')
+    //     .then(m => m.TablesModule),
+    // },
+    // {
+    //   path: 'ref-satfung',
+    //   loadChildren: () => import('./ref-satfung/tables.module')
+    //     .then(m => m.TablesModule),
+    // },
+    // {
+    //   path: 'ref-satker',
+    //   loadChildren: () => import('./ref-satker/tables.module')
+    //     .then(m => m.TablesModule),
+    // },
+    // {
+    //   path: 'ref-tipe-polres',
+    //   loadChildren: () => import('./ref-tipe-polres/tables.module')
+    //     .then(m => m.TablesModule),
+    // },
     {
       path: 'miscellaneous',
       loadChildren: () => import('./miscellaneous/miscellaneous.module')

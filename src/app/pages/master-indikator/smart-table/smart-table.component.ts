@@ -63,6 +63,7 @@ export class SmartTableComponent {
     },
   };
   indikatorDetails = {
+    noDataMessage : "Tidak ada Details",
     add: {
       addButtonContent: '<i class="nb-plus"></i>',
       createButtonContent: '<i class="nb-checkmark"></i>',
@@ -108,13 +109,19 @@ export class SmartTableComponent {
   // public row_kanan : string = "col-md-4";
   toggle() {
     this.show_dialog = !this.show_dialog;
-    this.accordion.toggle();
     console.log(this.show_dialog);
     // CHANGE THE TEXT OF THE BUTTON.
     if(this.show_dialog) 
       this.button_name = "Tutup";
     else
       this.button_name = "Tambah";
+      this.kode = "";
+      this.id_prinsip = "";
+      this.indikator = "";
+      this.bobot = "";
+      this.rumus = "";
+      this.id_jenis_data = "";
+      this.sourceDetails = null;
   }
   onUserRowSelect(event): void {
     console.log(event);
@@ -174,8 +181,10 @@ export class SmartTableComponent {
   bobot : string;
   rumus : string;
   id_jenis_data : string;  
+  kode_indikator : string;
+  id_satuan : string;
   constructor(private dialogService: NbDialogService, private httpClient : HttpClient, private _global: AppGlobals, private toastrService: NbToastrService) {    
-    this.httpClient.get(this._global.baseAPIUrl + '/Itk_mst_indikators').subscribe(indikator => {
+    this.httpClient.get(this._global.baseAPIUrl + '/Itk_mst_indikators/').subscribe(indikator => {
       const data = JSON.stringify(indikator);
       this.source.load(JSON.parse(data));
     },
@@ -212,7 +221,7 @@ export class SmartTableComponent {
         this.showToast("warning", "Kolom id_jenis_data masih Kosong", "Harus di isi");
       }
       else{
-      this.httpClient.post(this._global.baseAPIUrl + '/Itk_mst_indikators',event.newData).subscribe(data  => {
+      this.httpClient.post(this._global.baseAPIUrl + '/Itk_mst_indikators/',event.newData).subscribe(data  => {
         console.log("POST Request is successful ", data);
         this.showToast("success", "Data Tersimpan", event.newData.jenis);
         event.confirm.resolve();
@@ -275,6 +284,97 @@ export class SmartTableComponent {
         event.confirm.reject();
       }
     }
+
+    // Details___________________
+
+    onCreateConfirmD(event): void {
+      console.log(event.newData);
+      this.kode = event.newData.kode;
+      this.kode_indikator = event.newData.id_prinsip;
+      this.indikator = event.newData.indikator;
+      this.id_satuan = event.newData.bobot;
+      // if (this.kode == ""){
+      //   this.showToast("warning", "Kolom ID masih Kosong", "Harus di isi");
+      // }
+      // else if (this.id_prinsip == ""){
+      //   this.showToast("warning", "Kolom id_prinsip masih Kosong", "Harus di isi");
+      // }
+      // else if (this.indikator == ""){
+      //   this.showToast("warning", "Kolom indikator masih Kosong", "Harus di isi");
+      // }
+      // else if (this.bobot == ""){
+      //   this.showToast("warning", "Kolom bobot masih Kosong", "Harus di isi");
+      // }
+      // else if (this.rumus == ""){
+      //   this.showToast("warning", "Kolom rumus masih Kosong", "Harus di isi");
+      // }
+      // else if (this.id_jenis_data == ""){
+      //   this.showToast("warning", "Kolom id_jenis_data masih Kosong", "Harus di isi");
+      // }
+      // else{
+      this.httpClient.post(this._global.baseAPIUrl + '/Itk_mst_indikator_details',event.newData).subscribe(data  => {
+        console.log("POST Request is successful ", data);
+        this.showToast("success", "Data Tersimpan", event.newData.jenis);
+        event.confirm.resolve();
+      },
+      error  => {
+        console.log("Error", error);
+        this.showToast("warning", "Input / koneksi bermasalah", error.error.error.message);      
+      }
+      );
+      }
+    // }
+    onSaveConfirmD(event): void {
+      console.log(event.newData);
+      console.log(event);
+      this.kode = event.newData.kode;
+      this.id_prinsip = event.newData.id_prinsip;
+      this.indikator = event.newData.indikator;
+      this.bobot = event.newData.bobot;
+      this.rumus = event.newData.rumus;
+      this.id_jenis_data = event.newData.id_jenis_data;
+      // if (this.kode == ""){
+      //   this.showToast("warning", "Kolom ID masih Kosong", "Harus di isi");
+      // }
+      // else if (this.id_prinsip == ""){
+      //   this.showToast("warning", "Kolom id_prinsip masih Kosong", "Harus di isi");
+      // }
+      // else if (this.indikator == ""){
+      //   this.showToast("warning", "Kolom indikator masih Kosong", "Harus di isi");
+      // }
+      // else if (this.bobot == ""){
+      //   this.showToast("warning", "Kolom bobot masih Kosong", "Harus di isi");
+      // }
+      // else if (this.rumus == ""){
+      //   this.showToast("warning", "Kolom rumus masih Kosong", "Harus di isi");
+      // }
+      // else if (this.id_jenis_data == ""){
+      //   this.showToast("warning", "Kolom id_jenis_data masih Kosong", "Harus di isi");
+      // }
+      // else{
+      this.httpClient.put(this._global.baseAPIUrl + '/Itk_mst_indikator_details/'+event.data.kode,event.newData).subscribe(data  => {
+        console.log("PUT Request is successful ", data);
+        this.showToast("success", "Data Ter update", event.newData.kode);
+        event.confirm.resolve();
+      },
+      error  => {
+        console.log("Error", error);
+        this.showToast("warning", "Input / koneksi bermasalah", error.error.error.message);
+      }
+      );
+      }
+    // }
+    onDeleteConfirmD(event): void {
+      if (window.confirm('Are you sure you want to delete?')) {
+        this.httpClient.delete(this._global.baseAPIUrl + '/Itk_mst_indikator_details/'+event.data.kode).subscribe(data => {
+          event.confirm.resolve();
+          console.log(event.data.kode);
+          this.showToast("danger", "Data terhapus", event.data.jenis+"("+event.data.id+")");
+        });
+      } else {
+        event.confirm.reject();
+      }
+    }
     index = 1;
     private showToast(type: NbComponentStatus, title: string, body: string) {
       const config = {
@@ -292,13 +392,5 @@ export class SmartTableComponent {
         body,
         `${titleContent}`,
         config);
-    }
-    openWithoutBackdropClick(dialog: TemplateRef<any>) {
-      this.dialogService.open(
-        dialog,
-        {
-          context: 'this is some additional data passed to dialog',
-          closeOnBackdropClick: false,
-        });
     }
   }

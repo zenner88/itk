@@ -23,15 +23,19 @@ export const MENU_ITEMS: NbMenuItem[] = [
         link: '/pages/master-indikator-satfung/smart-table/',
       },
       {
-        title: 'Master Indikator Satfung Obyektif',
+        title: 'Master Indikator Satfung Details',
         link: '/pages/master-indikator-satfung-obyektif/smart-table',
       },
       {
-        title: 'Master Indikator Satker',
-        link: '/pages/master-indikator-satker/smart-table',
+        title: 'Master Periode',
+        link: '/pages/master-periode/smart-table',
       },
       {
-        title: 'Master Polres Satfung',
+        title: 'Master Satfung',
+        link: '/pages/master-polres-satfung/smart-table',
+      },
+      {
+        title: 'Master Satfung Prinsip',
         link: '/pages/master-polres-satfung/smart-table',
       },
       {

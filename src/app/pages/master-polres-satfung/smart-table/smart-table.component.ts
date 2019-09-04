@@ -55,7 +55,7 @@ export class SmartTableComponent {
   id_tipe_polres : string;
   id_satfung : string;
   constructor(private httpClient : HttpClient, private _global: AppGlobals, private toastrService: NbToastrService) {    
-    this.httpClient.get(this._global.baseAPIUrl + '/Itk_mst_polres_satfungs').subscribe(indikator => {
+    this.httpClient.get(this._global.baseAPIUrl + '/Itk_mst_satfungs/').subscribe(indikator => {
       const data = JSON.stringify(indikator);
       this.source.load(JSON.parse(data));
     },
@@ -80,7 +80,7 @@ export class SmartTableComponent {
         this.showToast("warning", "Kolom id_satfung masih Kosong", "Harus di isi");
       }
       else{
-      this.httpClient.post(this._global.baseAPIUrl + '/Itk_mst_polres_satfungs',event.newData).subscribe(data  => {
+      this.httpClient.post(this._global.baseAPIUrl + '/Itk_mst_satfungs/',event.newData).subscribe(data  => {
         console.log("POST Request is successful ", data);
         this.showToast("success", "Data Tersimpan", event.newData.jenis);
         event.confirm.resolve();
@@ -108,7 +108,7 @@ export class SmartTableComponent {
         this.showToast("warning", "Kolom id_satfung masih Kosong", "Harus di isi");
       }
       else{
-      this.httpClient.put(this._global.baseAPIUrl + '/Itk_mst_polres_satfungs/'+event.data.kode,event.newData).subscribe(data  => {
+      this.httpClient.put(this._global.baseAPIUrl + '/Itk_mst_satfungs/'+event.data.kode,event.newData).subscribe(data  => {
         console.log("PUT Request is successful ", data);
         this.showToast("success", "Data Ter update", event.newData.kode);
         event.confirm.resolve();
@@ -122,7 +122,7 @@ export class SmartTableComponent {
     }
     onDeleteConfirm(event): void {
       if (window.confirm('Are you sure you want to delete?')) {
-        this.httpClient.delete(this._global.baseAPIUrl + '/Itk_mst_polres_satfungs/'+event.data.kode).subscribe(data => {
+        this.httpClient.delete(this._global.baseAPIUrl + '/Itk_mst_satfungs/'+event.data.kode).subscribe(data => {
           event.confirm.resolve();
           console.log(event.data.kode);
           this.showToast("danger", "Data terhapus", event.data.jenis+"("+event.data.id+")");

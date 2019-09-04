@@ -39,12 +39,24 @@ export class SmartTableComponent {
         title: 'Kode',
         type: 'string',
       },
-      kode_indikator_satfung_obyektif: {
-        title: 'Kode Satker',
+      kode_satfung: {
+        title: 'Kode Satfung',
+        type: 'string',
+      },
+      kode_indikator_detail: {
+        title: 'Kode Satfung',
+        type: 'string',
+      },
+      kode_indikator: {
+        title: 'Kode Satfung',
         type: 'string',
       },
       indikator: {
         title: 'Indikator',
+        type: 'string',
+      },
+      id_satuan: {
+        title: 'Kode Satfung',
         type: 'string',
       },
     },
@@ -52,10 +64,13 @@ export class SmartTableComponent {
 
   source: LocalDataSource = new LocalDataSource();
   kode : string;
-  kode_indikator_satfung_obyektif : string;
+  kode_satfung : string;
+  kode_indikator_detail : string;
+  kode_indikator : string;
   indikator : string;
+  id_satuan : string;
   constructor(private httpClient : HttpClient, private _global: AppGlobals, private toastrService: NbToastrService) {
-    this.httpClient.get(this._global.baseAPIUrl + '/Itk_mst_indikator_satfung_obyektifs').subscribe(indikator => {
+    this.httpClient.get(this._global.baseAPIUrl + '/Itk_mst_indikator_satfung_details/').subscribe(indikator => {
       const data = JSON.stringify(indikator);
       this.source.load(JSON.parse(data));
     },
@@ -68,19 +83,31 @@ export class SmartTableComponent {
     onCreateConfirm(event): void {
       console.log(event.newData);
       this.kode = event.newData.kode;
-      this.kode_indikator_satfung_obyektif = event.newData.kode_indikator_satfung_obyektif;
+      this.kode_satfung = event.newData.kode_satfung;
+      this.kode_indikator_detail = event.newData.kode_indikator_detail;
+      this.kode_indikator = event.newData.kode_indikator;
       this.indikator = event.newData.indikator;
+      this.id_satuan = event.newData.id_satuan;
       if (this.kode == ""){
         this.showToast("warning", "Kolom ID masih Kosong", "Harus di isi");
       }
-      else if (this.kode_indikator_satfung_obyektif == ""){
-        this.showToast("warning", "Kolom kode_indikator_satfung_obyektif masih Kosong", "Harus di isi");
+      else if (this.kode_satfung == ""){
+        this.showToast("warning", "Kolom kode_satfung masih Kosong", "Harus di isi");
+      }
+      else if (this.kode_indikator == ""){
+        this.showToast("warning", "Kolom kode_indikator masih Kosong", "Harus di isi");
+      }
+      else if (this.kode_indikator_detail == ""){
+        this.showToast("warning", "Kolom kode_indikator_detail masih Kosong", "Harus di isi");
       }
       else if (this.indikator == ""){
         this.showToast("warning", "Kolom indikator masih Kosong", "Harus di isi");
       }
+      else if (this.id_satuan == ""){
+        this.showToast("warning", "Kolom id_satuan masih Kosong", "Harus di isi");
+      }
       else{
-      this.httpClient.post(this._global.baseAPIUrl + '/Itk_mst_indikator_satfung_obyektifs',event.newData).subscribe(data  => {
+      this.httpClient.post(this._global.baseAPIUrl + '/Itk_mst_indikator_satfung_obyektifs/',event.newData).subscribe(data  => {
         console.log("POST Request is successful ", data);
         this.showToast("success", "Data Tersimpan", event.newData.jenis);
         event.confirm.resolve();
@@ -96,19 +123,31 @@ export class SmartTableComponent {
       console.log(event.newData);
       console.log(event);
       this.kode = event.newData.kode;
-      this.kode_indikator_satfung_obyektif = event.newData.kode_indikator_satfung_obyektif;
+      this.kode_satfung = event.newData.kode_satfung;
+      this.kode_indikator_detail = event.newData.kode_indikator_detail;
+      this.kode_indikator = event.newData.kode_indikator;
       this.indikator = event.newData.indikator;
+      this.id_satuan = event.newData.id_satuan;
       if (this.kode == ""){
         this.showToast("warning", "Kolom ID masih Kosong", "Harus di isi");
       }
-      else if (this.kode_indikator_satfung_obyektif == ""){
-        this.showToast("warning", "Kolom kode_indikator_satfung_obyektif masih Kosong", "Harus di isi");
+      else if (this.kode_satfung == ""){
+        this.showToast("warning", "Kolom kode_satfung masih Kosong", "Harus di isi");
+      }
+      else if (this.kode_indikator == ""){
+        this.showToast("warning", "Kolom kode_indikator masih Kosong", "Harus di isi");
+      }
+      else if (this.kode_indikator_detail == ""){
+        this.showToast("warning", "Kolom kode_indikator_detail masih Kosong", "Harus di isi");
       }
       else if (this.indikator == ""){
         this.showToast("warning", "Kolom indikator masih Kosong", "Harus di isi");
       }
+      else if (this.id_satuan == ""){
+        this.showToast("warning", "Kolom id_satuan masih Kosong", "Harus di isi");
+      }
       else{
-      this.httpClient.put(this._global.baseAPIUrl + '/Itk_mst_indikator_satfung_obyektifs/'+event.data.kode,event.newData).subscribe(data  => {
+      this.httpClient.put(this._global.baseAPIUrl + '/Itk_mst_indikator_satfung_details/'+event.data.kode,event.newData).subscribe(data  => {
         console.log("PUT Request is successful ", data);
         this.showToast("success", "Data Ter update", event.newData.kode);
         event.confirm.resolve();
@@ -122,7 +161,7 @@ export class SmartTableComponent {
     }
     onDeleteConfirm(event): void {
       if (window.confirm('Are you sure you want to delete?')) {
-        this.httpClient.delete(this._global.baseAPIUrl + '/Itk_mst_indikator_satfung_obyektifs/'+event.data.kode).subscribe(data => {
+        this.httpClient.delete(this._global.baseAPIUrl + '/Itk_mst_indikator_satfung_details/'+event.data.kode).subscribe(data => {
           event.confirm.resolve();
           console.log(event.data.kode);
           this.showToast("danger", "Data terhapus", event.data.jenis+"("+event.data.id+")");
