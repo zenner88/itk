@@ -9,6 +9,7 @@ import {
   NbToastrService,
   NbDialogService,
 } from '@nebular/theme';
+import { FormBuilder, FormGroup, FormArray, FormControl, ValidatorFn } from '@angular/forms';
 @Component({
   selector: 'ngx-smart-table',
   templateUrl: './smart-table.component.html',
@@ -40,7 +41,7 @@ export class SmartTableComponent {
         title: 'Kode',
         type: 'string',
       },
-      id_prinsip: {
+      prinsip: {
         title: 'Prinsip',
         type: 'string',
       },
@@ -100,7 +101,8 @@ export class SmartTableComponent {
     },
   };
   @ViewChild('item', { static: true }) accordion;
-
+  form: FormGroup;
+  orders = [];
   public show_dialog : boolean = false;
   public show_details : boolean = false;
   public button_name : any = 'Tambah';
@@ -121,7 +123,7 @@ export class SmartTableComponent {
       this.bobot = "";
       this.rumus = "";
       this.id_jenis_data = "";
-      this.sourceDetails = null;
+      // this.sourceDetails = null;
   }
   onUserRowSelect(event): void {
     console.log(event);
@@ -183,8 +185,8 @@ export class SmartTableComponent {
   id_jenis_data : string;  
   kode_indikator : string;
   id_satuan : string;
-  constructor(private dialogService: NbDialogService, private httpClient : HttpClient, private _global: AppGlobals, private toastrService: NbToastrService) {    
-    this.httpClient.get(this._global.baseAPIUrl + '/Itk_mst_indikators/').subscribe(indikator => {
+  constructor(private formBuilder: FormBuilder, private dialogService: NbDialogService, private httpClient : HttpClient, private _global: AppGlobals, private toastrService: NbToastrService) {    
+    this.httpClient.get(this._global.baseAPIUrl + '/View_indikators/').subscribe(indikator => {
       const data = JSON.stringify(indikator);
       this.source.load(JSON.parse(data));
     },
@@ -193,6 +195,19 @@ export class SmartTableComponent {
       this.showToast("warning", "Koneksi bermasalah", error.message);      
     }
     ); 
+    this.form = this.formBuilder.group({
+      orders: ['']
+    });
+
+    this.orders = this.getOrders();
+    }
+    getOrders() {
+      return [
+        { id: '1', name: 'order 1' },
+        { id: '2', name: 'order 2' },
+        { id: '3', name: 'order 3' },
+        { id: '4', name: 'order 4' }
+      ];
     }
     onCreateConfirm(event): void {
       console.log(event.newData);

@@ -106,7 +106,7 @@ export class SmartTableComponent {
       this.id = "";
       this.kode_periode = "";
       this.kode_satker = "";
-      this.sourceDetails = null;
+      // this.sourceDetails = null;
   }
   onUserRowSelect(event): void {
     console.log(event);

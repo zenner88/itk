@@ -4,9 +4,9 @@ import { NbAuthService } from '@nebular/auth';
 @Injectable()
 export class AppGlobals {
     // readonly baseAppUrl: string = 'http://itkpolri.ptcmk.co.id/';
-    // readonly baseAPIUrl: string = 'http://itkpolri.ptcmk.co.id/api';
+    readonly baseAPIUrl: string = 'https://itkpolri.ptcmk.co.id/api';
     readonly baseAppUrl: string = '';
-    readonly baseAPIUrl: string = 'http://localhost:3000/api'
+    // readonly baseAPIUrl: string = 'http://localhost:3000/api'
     
 }
 export class AuthGuard implements CanActivate {
