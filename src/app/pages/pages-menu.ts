@@ -104,14 +104,14 @@ export const MENU_ITEMS: NbMenuItem[] = [
         title: 'System Kelompok Pengguna',
         link: '/pages/sys-kelompok-pengguna/smart-table',
       },
-      {
-        title: 'System Menu',
-        link: '/pages/sys-menu/smart-table',
-      },
-      {
-        title: 'System Pengguna',
-        link: '/pages/sys-pengguna/smart-table',
-      },
+      // {
+      //   title: 'System Menu',
+      //   link: '/pages/sys-menu/smart-table',
+      // },
+      // {
+      //   title: 'System Pengguna',
+      //   link: '/pages/sys-pengguna/smart-table',
+      // },
     ],
   },
   

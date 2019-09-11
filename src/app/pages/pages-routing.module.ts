@@ -109,6 +109,21 @@ const routes: Routes = [{
     //     .then(m => m.TablesModule),
     // },
     {
+      path: 'sys-akses',
+      loadChildren: () => import('./sys-akses/tables.module')
+        .then(m => m.TablesModule),
+    },
+    {
+      path: 'sys-kelompok',
+      loadChildren: () => import('./sys-kelompok/tables.module')
+        .then(m => m.TablesModule),
+    },
+    {
+      path: 'sys-kelompok-pengguna',
+      loadChildren: () => import('./sys-kelompok-pengguna/tables.module')
+        .then(m => m.TablesModule),
+    },
+    {
       path: 'miscellaneous',
       loadChildren: () => import('./miscellaneous/miscellaneous.module')
         .then(m => m.MiscellaneousModule),

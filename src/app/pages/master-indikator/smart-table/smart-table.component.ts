@@ -14,7 +14,7 @@ import { FormBuilder, FormGroup, FormArray, FormControl, ValidatorFn } from '@an
   selector: 'ngx-smart-table',
   templateUrl: './smart-table.component.html',
   styleUrls: ['./smart-table.component.scss'],
-  providers: [AppGlobals]
+  providers: [AppGlobals],
 })
 @Injectable()
 export class SmartTableComponent {
@@ -40,6 +40,7 @@ export class SmartTableComponent {
       kode: {
         title: 'Kode',
         type: 'string',
+        editable: false,
       },
       prinsip: {
         title: 'Prinsip',
@@ -65,6 +66,7 @@ export class SmartTableComponent {
   };
   indikatorDetails = {
     noDataMessage : "Tidak ada Details",
+    actions: false,
     add: {
       addButtonContent: '<i class="nb-plus"></i>',
       createButtonContent: '<i class="nb-checkmark"></i>',
@@ -85,6 +87,7 @@ export class SmartTableComponent {
       kode: {
         title: 'Kode',
         type: 'string',
+        editable: false,
       },
       kode_indikator: {
         title: 'Kode Indikator',
@@ -125,7 +128,7 @@ export class SmartTableComponent {
       this.id_jenis_data = "";
       // this.sourceDetails = null;
   }
-  onUserRowSelect(event): void {
+  onCustomAction(event): void {
     console.log(event);
     console.log(event.data.kode);
     this.show_dialog = true;
