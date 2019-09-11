@@ -3,65 +3,17 @@
     Master Indikator
   </nb-card-header>
   <nb-card-body>
-      <button (click)="toggle()" id="btToggle" class="btn btn-info btn-md" >{{button_name}}</button>
-      <hr style="background-color: azure">
-      <nb-card class="form-group">
-      <div class="row" *ngIf="show_dialog">
-        <div class="col-md-4">
-          <nb-card>
-          <!-- <nb-card style="background-color: azure">             -->
-            <nb-card-body>
-              <form>
-                <div class="form-group">
-                  <label for="inputEmail1" class="label">Kode</label>
-                  <input type="text" nbInput fullWidth id="inputEmail1" placeholder="kode" value={{kode}}>
-                </div>
-                <div class="form-group">
-                  <label for="inputPassword2" class="label">Prinsip</label>
-                  <input type="text" nbInput fullWidth id="inputPassword2" placeholder="Prinsip" value={{id_prinsip}}>
-                  <nb-select selected="1">
-                    <nb-option value={{id_prinsip}}>{{prinsip}}</nb-option>
-                  </nb-select>
-                </div>
-                <div class="form-group">
-                  <label for="inputPassword2" class="label">Indikator</label>
-                  <textarea rows="5" nbInput fullWidth  placeholder="Indikator" value={{indikator}}></textarea>
-                </div>
-                <div class="form-group">
-                  <label for="inputEmail1" class="label">Bobot</label>
-                  <input type="text" nbInput fullWidth id="inputEmail1" placeholder="bobot" value={{bobot}}>
-                </div>
-                <div class="form-group">
-                  <label for="inputPassword2" class="label">Rumus</label>
-                  <input type="text" nbInput fullWidth id="inputPassword2" placeholder="Rumus" value={{rumus}}>
-                </div>
-                <div class="form-group">
-                  <label for="inputPassword2" class="label">Jenis Data</label>
-                  <input type="text" nbInput fullWidth id="inputPassword2" placeholder="Jenis Data" value={{id_jenis_data}}>
-                </div>
-                <!-- <div class="form-group">
-                  <label class="label">Tambah Details </label>
-                  <div class="form-group">
-                    <input type="radio" name="details" class="primary" value="true" (change)="radioChangeHandler($event)">Ya
-                    <input type="radio" name="details" class="primary" value="false" (change)="radioChangeHandler($event)">Tidak
-                  </div>
-                </div> -->
-              </form>
-            </nb-card-body>
-          </nb-card>
-        </div>
-        <div class="col-md-8">
-          Indikator Details
-          <nb-card-body>
-            <ng2-smart-table [settings]="indikatorDetails" [source]="sourceDetails" (deleteConfirm)="onDeleteConfirmD($event)" (editConfirm)="onSaveConfirmD($event)"
-            (createConfirm)="onCreateConfirmD($event)       ">
-            </ng2-smart-table>
-          </nb-card-body>
-        </div>
-      </div>
-    </nb-card>
       <ng2-smart-table [settings]="indikators" [source]="source" (deleteConfirm)="onDeleteConfirm($event)" (editConfirm)="onSaveConfirm($event)"
-      (createConfirm)="onCreateConfirm($event)" (userRowSelect)="onUserRowSelect($event)">
+      (createConfirm)="onCreateConfirm($event)" (userRowSelect)="onUserRowSelect($event, contentTemplate)">
       </ng2-smart-table>
   </nb-card-body>
 </nb-card>
+<ng-template style="height: 500px" #contentTemplate let-data>
+  <nb-card-body>
+    <div style="height: 450px; overflow-y: auto; border-top: 1px solid #dee2e6;">
+    <ng2-smart-table [settings]="indikatorDetails" [source]="sourceDetails" (deleteConfirm)="onDeleteConfirmD($event)" (editConfirm)="onSaveConfirmD($event)"
+    (createConfirm)="onCreateConfirmD($event)       ">
+    </ng2-smart-table>
+    </div>
+  </nb-card-body>  
+</ng-template>

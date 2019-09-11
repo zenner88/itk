@@ -8,17 +8,19 @@ import {
   NbGlobalPhysicalPosition,
   NbToastrService,
   NbDialogService,
+  NbWindowService
 } from '@nebular/theme';
 import { FormBuilder, FormGroup, FormArray, FormControl, ValidatorFn } from '@angular/forms';
+import { WindowFormComponent } from './window-form/window-form.component';
+
 @Component({
   selector: 'ngx-smart-table',
   templateUrl: './smart-table.component.html',
   styleUrls: ['./smart-table.component.scss'],
-  providers: [AppGlobals],
+  providers: [AppGlobals]
 })
 @Injectable()
 export class SmartTableComponent {
-
   indikators = {
     add: {
       addButtonContent: '<i class="nb-plus"></i>',
@@ -66,7 +68,6 @@ export class SmartTableComponent {
   };
   indikatorDetails = {
     noDataMessage : "Tidak ada Details",
-    actions: false,
     add: {
       addButtonContent: '<i class="nb-plus"></i>',
       createButtonContent: '<i class="nb-checkmark"></i>',
@@ -89,10 +90,11 @@ export class SmartTableComponent {
         type: 'string',
         editable: false,
       },
-      kode_indikator: {
-        title: 'Kode Indikator',
-        type: 'string',
-      },
+      // kode_indikator: {
+      //   title: 'Kode Indikator',
+      //   type: 'string',
+      //   editable: false,
+      // },
       indikator: {
         title: 'Indikator',
         type: 'string',
@@ -104,6 +106,8 @@ export class SmartTableComponent {
     },
   };
   @ViewChild('item', { static: true }) accordion;
+  @ViewChild('contentTemplate', { static: true }) contentTemplate: TemplateRef<any>;
+  @ViewChild('disabledEsc', { read: TemplateRef, static: true }) disabledEscTemplate: TemplateRef<HTMLElement>;
   form: FormGroup;
   orders = [];
   public show_dialog : boolean = false;
@@ -128,20 +132,17 @@ export class SmartTableComponent {
       this.id_jenis_data = "";
       // this.sourceDetails = null;
   }
-  onCustomAction(event): void {
+  onUserRowSelect(event,contentTemplate) {
     console.log(event);
     console.log(event.data.kode);
-    this.show_dialog = true;
-    this.button_name = "Tutup";
-    // Isi data 
-    this.kode = event.data.kode;
-    this.id_prinsip = event.data.id_prinsip;
-    this.indikator = event.data.indikator;
-    this.bobot = event.data.bobot;
-    this.rumus = event.data.rumus;
-    this.id_jenis_data = event.data.id_jenis_data;
-
-    this.httpClient.get(this._global.baseAPIUrl + '/Itk_mst_indikator_details/getDataByKodeIndikator?KodeIndikator='+this.kode).subscribe(indikatorDetails => {
+    this.kodeDetails = event.data.kode;
+    this.windowService.open(
+      contentTemplate,
+      {
+        title: 'Details Indikator Kode '+this.kodeDetails,
+      },
+    );   
+    this.httpClient.get(this._global.baseAPIUrl + '/Itk_mst_indikator_details/getDataByKodeIndikator?KodeIndikator='+this.kodeDetails).subscribe(indikatorDetails => {
       const data = JSON.stringify(indikatorDetails);
       this.sourceDetails.load(JSON.parse(data));
     },
@@ -181,6 +182,7 @@ export class SmartTableComponent {
   source: LocalDataSource = new LocalDataSource();
   sourceDetails: LocalDataSource = new LocalDataSource();
   kode : string;
+  kodeDetails : string;
   id_prinsip : string;
   indikator : string;
   bobot : string;
@@ -188,7 +190,8 @@ export class SmartTableComponent {
   id_jenis_data : string;  
   kode_indikator : string;
   id_satuan : string;
-  constructor(private formBuilder: FormBuilder, private dialogService: NbDialogService, private httpClient : HttpClient, private _global: AppGlobals, private toastrService: NbToastrService) {    
+  detailsData: any;
+  constructor(private windowService: NbWindowService, private formBuilder: FormBuilder, private dialogService: NbDialogService, private httpClient : HttpClient, private _global: AppGlobals, private toastrService: NbToastrService) {    
     this.httpClient.get(this._global.baseAPIUrl + '/View_indikators/').subscribe(indikator => {
       const data = JSON.stringify(indikator);
       this.source.load(JSON.parse(data));
@@ -198,20 +201,8 @@ export class SmartTableComponent {
       this.showToast("warning", "Koneksi bermasalah", error.message);      
     }
     ); 
-    this.form = this.formBuilder.group({
-      orders: ['']
-    });
-
-    this.orders = this.getOrders();
     }
-    getOrders() {
-      return [
-        { id: '1', name: 'order 1' },
-        { id: '2', name: 'order 2' },
-        { id: '3', name: 'order 3' },
-        { id: '4', name: 'order 4' }
-      ];
-    }
+   
     onCreateConfirm(event): void {
       console.log(event.newData);
       this.kode = event.newData.kode;
@@ -308,9 +299,8 @@ export class SmartTableComponent {
     onCreateConfirmD(event): void {
       console.log(event.newData);
       this.kode = event.newData.kode;
-      this.kode_indikator = event.newData.id_prinsip;
       this.indikator = event.newData.indikator;
-      this.id_satuan = event.newData.bobot;
+      this.id_satuan = event.newData.id_satuan;
       // if (this.kode == ""){
       //   this.showToast("warning", "Kolom ID masih Kosong", "Harus di isi");
       // }
@@ -330,7 +320,20 @@ export class SmartTableComponent {
       //   this.showToast("warning", "Kolom id_jenis_data masih Kosong", "Harus di isi");
       // }
       // else{
-      this.httpClient.post(this._global.baseAPIUrl + '/Itk_mst_indikator_details',event.newData).subscribe(data  => {
+        this.detailsData= {
+          kode: this.kode,
+          hash: "",
+          kode_indikator: this.kodeDetails,
+          indikator: this.indikator,
+          id_satuan: this.id_satuan,
+          // waktu_buat: "",
+          dibuat_oleh: "zenner",
+          diubah_oleh: "zenner",
+          na: "N"
+      };
+      console.log(this.detailsData);
+      console.log(this.kodeDetails);
+      this.httpClient.post(this._global.baseAPIUrl + '/Itk_mst_indikator_details',this.detailsData).subscribe(data  => {
         console.log("POST Request is successful ", data);
         this.showToast("success", "Data Tersimpan", event.newData.jenis);
         event.confirm.resolve();
@@ -370,7 +373,20 @@ export class SmartTableComponent {
       //   this.showToast("warning", "Kolom id_jenis_data masih Kosong", "Harus di isi");
       // }
       // else{
-      this.httpClient.put(this._global.baseAPIUrl + '/Itk_mst_indikator_details/'+event.data.kode,event.newData).subscribe(data  => {
+      
+      this.detailsData= {
+          kode: event.newData.kode,
+          hash: "",
+          kode_indikator: this.kode,
+          indikator: event.newData.indikator,
+          id_satuan: event.newData.id_satuan,
+          waktu_buat: "",
+          dibuat_oleh: "zenner",
+          diubah_oleh: "zenner",
+          na: "Y"
+      };
+      console.log(this.detailsData);
+      this.httpClient.put(this._global.baseAPIUrl + '/Itk_mst_indikator_details/'+event.data.kode,this.detailsData).subscribe(data  => {
         console.log("PUT Request is successful ", data);
         this.showToast("success", "Data Ter update", event.newData.kode);
         event.confirm.resolve();

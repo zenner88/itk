@@ -1,4 +1,11 @@
 import { NgModule } from '@angular/core';
+import { Ng2SmartTableModule } from 'ng2-smart-table';
+import { ThemeModule } from '../../@theme/theme.module';
+import { TablesRoutingModule, routedComponents } from './tables-routing.module';
+import { FsIconComponent } from './tree-grid/tree-grid.component';
+import { FormsModule } from '@angular/forms';
+import { SmartTableComponent } from './smart-table/smart-table.component';
+import { WindowFormComponent } from './smart-table/window-form/window-form.component';
 import { 
   NbCardModule, 
   NbIconModule, 
@@ -6,14 +13,15 @@ import {
   NbTreeGridModule, 
   NbAccordionModule, 
   NbRadioModule,
+  NbWindowModule,
+  NbButtonModule,
+  NbCheckboxModule,
+  NbDialogModule,
+  NbPopoverModule,
   NbSelectModule,
-} from '@nebular/theme';
-import { Ng2SmartTableModule } from 'ng2-smart-table';
-
-import { ThemeModule } from '../../@theme/theme.module';
-import { TablesRoutingModule, routedComponents } from './tables-routing.module';
-import { FsIconComponent } from './tree-grid/tree-grid.component';
-
+  NbTabsetModule,
+  NbTooltipModule,
+  } from '@nebular/theme';
 @NgModule({
   imports: [
     NbCardModule,
@@ -26,10 +34,23 @@ import { FsIconComponent } from './tree-grid/tree-grid.component';
     NbAccordionModule,
     NbRadioModule,
     NbSelectModule,
+    NbWindowModule.forChild(),
+    FormsModule,
+    NbDialogModule.forChild(),
+    NbCheckboxModule,
+    NbTabsetModule,
+    NbPopoverModule,
+    NbButtonModule,
+    NbTooltipModule,
   ],
   declarations: [
     ...routedComponents,
     FsIconComponent,
+    WindowFormComponent,
+    SmartTableComponent,
+  ],
+  entryComponents: [
+    WindowFormComponent,
   ],
 })
 export class TablesModule { }
