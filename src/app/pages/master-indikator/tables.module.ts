@@ -5,7 +5,6 @@ import { TablesRoutingModule, routedComponents } from './tables-routing.module';
 import { FsIconComponent } from './tree-grid/tree-grid.component';
 import { FormsModule } from '@angular/forms';
 import { SmartTableComponent } from './smart-table/smart-table.component';
-import { WindowFormComponent } from './smart-table/window-form/window-form.component';
 import { 
   NbCardModule, 
   NbIconModule, 
@@ -46,11 +45,9 @@ import {
   declarations: [
     ...routedComponents,
     FsIconComponent,
-    WindowFormComponent,
     SmartTableComponent,
   ],
   entryComponents: [
-    WindowFormComponent,
   ],
 })
 export class TablesModule { }

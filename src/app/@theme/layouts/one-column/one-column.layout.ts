@@ -4,8 +4,8 @@ import { Component } from '@angular/core';
   selector: 'ngx-one-column-layout',
   styleUrls: ['./one-column.layout.scss'],
   template: `
-    <nb-layout windowMode>
-      <nb-layout-header fixed>
+    <nb-layout windowMode>    
+      <nb-layout-header style="background-color: #FE5D26;" fixed>
         <ngx-header></ngx-header>
       </nb-layout-header>
 
@@ -13,7 +13,7 @@ import { Component } from '@angular/core';
         <ng-content select="nb-menu"></ng-content>
       </nb-sidebar>
 
-      <nb-layout-column>
+      <nb-layout-column style="background-color: #FE5D26;">
         <ng-content select="router-outlet"></ng-content>
       </nb-layout-column>
 
