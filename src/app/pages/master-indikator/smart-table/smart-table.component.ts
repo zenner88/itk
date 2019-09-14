@@ -10,7 +10,7 @@ import {
   NbDialogService,
   NbWindowService
 } from '@nebular/theme';
-import { FormBuilder, FormGroup, FormArray, FormControl, ValidatorFn } from '@angular/forms';
+import { FormBuilder, FormGroup} from '@angular/forms';
 import { JsonPipe } from '@angular/common';
 @Component({
   selector: 'ngx-smart-table',
@@ -25,8 +25,6 @@ export class SmartTableComponent {
   @ViewChild('disabledEsc', { read: TemplateRef, static: true }) disabledEscTemplate: TemplateRef<HTMLElement>;
   constructor(
     private windowService: NbWindowService, 
-    private formBuilder: FormBuilder, 
-    private dialogService: NbDialogService, 
     private httpClient : HttpClient, 
     private _global: AppGlobals, 
     private toastrService: NbToastrService

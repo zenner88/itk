@@ -22,10 +22,10 @@ export const MENU_ITEMS: NbMenuItem[] = [
         title: 'Master Indikator Satfung',
         link: '/pages/master-indikator-satfung/smart-table/',
       },
-      {
-        title: 'Master Indikator Satfung Details',
-        link: '/pages/master-indikator-satfung-obyektif/smart-table',
-      },
+      // {
+      //   title: 'Master Indikator Satfung Details',
+      //   link: '/pages/master-indikator-satfung-obyektif/smart-table',
+      // },
       {
         title: 'Master Periode',
         link: '/pages/master-periode/smart-table',
