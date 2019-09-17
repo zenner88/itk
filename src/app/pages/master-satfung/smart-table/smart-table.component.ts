@@ -28,6 +28,8 @@ export class SmartTableComponent {
     private toastrService: NbToastrService
     ) {}
   form: FormGroup;
+  public polresList: any[] = []; 
+  public satfungList: any[] = [];  
   public prinsipList: any[] = [];  
   source: LocalDataSource = new LocalDataSource();
   sourceDetails: LocalDataSource = new LocalDataSource();
@@ -51,7 +53,7 @@ export class SmartTableComponent {
   prinsipName: any;
   ngOnInit(): void {
     this.satfungs = this.loadTableSettings(); 
-    this.httpClient.get(this._global.baseAPIUrl + '/View_indikator_satfungs/').subscribe(indikator => {
+    this.httpClient.get(this._global.baseAPIUrl + '/View_satfungs/').subscribe(indikator => {
       const data = JSON.stringify(indikator);
       this.source.load(JSON.parse(data));
     },
@@ -60,8 +62,43 @@ export class SmartTableComponent {
       this.showToast("warning", "Koneksi bermasalah", error.message);      
     }
     ); 
-    this.httpClient.get(this._global.baseAPIUrl + '/Itk_ref_prinsips/').subscribe(data => {
+    this.httpClient.get(this._global.baseAPIUrl + '/Itk_ref_tipe_polres/').subscribe(data => {
       
+      if(data != undefined || data != null)
+      {
+      const datas = JSON.stringify(data);
+      const datax = JSON.parse(datas);
+      console.log(datas);
+      console.log(datax);
+        datax.forEach(xx => {
+          this.polresList.push({value:xx.id,title:xx.tipe})   
+          // this.prinsipName = xx.title;                
+        });
+      }
+      localStorage.setItem('gridServicecList', JSON.stringify(this.polresList));
+      this.satfungs = this.loadTableSettings(); 
+      console.log(JSON.stringify(this.polresList));
+    }, 
+    error => { console.log(error) });  
+    this.httpClient.get(this._global.baseAPIUrl + '/Itk_ref_satfungs/').subscribe(data => {
+      
+      if(data != undefined || data != null)
+      {
+      const datas = JSON.stringify(data);
+      const datax = JSON.parse(datas);
+      console.log(datas);
+      console.log(datax);
+        datax.forEach(xx => {
+          this.satfungList.push({value:xx.id,title:xx.singkatan})   
+          // this.prinsipName = xx.title;                
+        });
+      }
+      localStorage.setItem('gridServicecList', JSON.stringify(this.satfungList));
+      this.satfungs = this.loadTableSettings(); 
+      console.log(JSON.stringify(this.satfungList));
+    }, 
+    error => { console.log(error) }); 
+    this.httpClient.get(this._global.baseAPIUrl + '/Itk_ref_prinsips/').subscribe(data => {
       if(data != undefined || data != null)
       {
       const datas = JSON.stringify(data);
@@ -75,9 +112,8 @@ export class SmartTableComponent {
       }
       localStorage.setItem('gridServicecList', JSON.stringify(this.prinsipList));
       this.satfungs = this.loadTableSettings(); 
-      console.log(JSON.stringify(this.prinsipList));
     }, 
-    error => { console.log(error) });  
+    error => { console.log(error) }); 
   }
   // openWindow(contentBobots) {
   //   this.windowService.open(
@@ -108,7 +144,7 @@ export class SmartTableComponent {
         title: 'Details Indikator Satfung '+this.kodeDetails,
       },
     );   
-    this.httpClient.get(this._global.baseAPIUrl + '/View_indikator_satfung_details/getDataBykodeIndikator?kodeSatker='+this.kodeDetails).subscribe(indikatorDetails => {
+    this.httpClient.get(this._global.baseAPIUrl + '/View_satfung_prinsips/getDataBykodeIndikator?kodeSatker='+this.kodeDetails).subscribe(indikatorDetails => {
       const data = JSON.stringify(indikatorDetails);
       this.sourceDetails.load(JSON.parse(data));
     },
@@ -304,46 +340,25 @@ loadTableSettings(){
         type: 'string',
         editable: false,
       },
-      nomor: {
-        title: 'nomor',
-        type: 'string',
-        editable: false,
+      id_tipe_polres: {
+        title: 'Prinsip',
+        editor: {
+          type: 'list',
+          config: {
+            selectText: 'Select',
+            list:this.polresList,
+          },
+        },
       },
-      kode_indikator: {
-        title: 'kode_indikator',
-        type: 'string',
-        editable: false,
-      },
-      kode_satfung: {
-        title: 'kode_satfung',
-        type: 'string',
-        editable: false,
-      },
-      indikator: {
-        title: 'Indikator',
-        type: 'string',
-      },
-      // id_prinsip: {
-      //   title: 'Prinsip',
-      //   editor: {
-      //     type: 'list',
-      //     config: {
-      //       selectText: 'Select',
-      //       list:this.prinsipList,
-      //     },
-      //   },
-      // },
-      bobot: {
-        title: 'Bobot',
-        type: 'string',
-      },
-      rumus: {
-        title: 'Rumus',
-        type: 'string',
-      },
-      ada_detail: {
-        title: 'ada_detail',
-        type: 'string',
+      id_satfung: {
+        title: 'Prinsip',
+        editor: {
+          type: 'list',
+          config: {
+            selectText: 'Select',
+            list:this.satfungList,
+          },
+        },
       },
     },
   };
@@ -377,23 +392,20 @@ loadTableSettings(){
         type: 'string',
         editable: false,
       },
-      kode_indikator: {
-        title: 'Kode Indikator',
+      id_prinsip: {
+        title: 'Prinsip',
+        editor: {
+          type: 'list',
+          config: {
+            selectText: 'Select',
+            list:this.prinsipList,
+          },
+        },
+      },
+      bobot: {
+        title: 'bobot',
         type: 'string',
         editable: false,
-      },
-      kode_indikator_detail: {
-        title: 'kode_indikator_detail',
-        type: 'string',
-        editable: false,
-      },
-      indikator: {
-        title: 'Indikator',
-        type: 'string',
-      },
-      id_satuan: {
-        title: 'Satuan',
-        type: 'string',
       },
     },
   };

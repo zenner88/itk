@@ -20,7 +20,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
       },
       {
         title: 'Master Indikator Satfung',
-        link: '/pages/master-indikator-satfung/smart-table/',
+        link: '/pages/master-i-s/smart-table',
       },
       // {
       //   title: 'Master Indikator Satfung Details',
@@ -34,10 +34,10 @@ export const MENU_ITEMS: NbMenuItem[] = [
         title: 'Master Satfung',
         link: '/pages/master-satfung/smart-table',
       },
-      {
-        title: 'Master Satfung Prinsip',
-        link: '/pages/master-satfung-prinsip/smart-table',
-      },
+      // {
+      //   title: 'Master Satfung Prinsip',
+      //   link: '/pages/master-satfung-prinsip/smart-table',
+      // },
       {
         title: 'Master Satker',
         link: '/pages/master-satker/smart-table',

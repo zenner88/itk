@@ -1,0 +1,21 @@
+<nb-card>
+  <nb-card-header>
+    Master Satfung
+  </nb-card-header>
+
+  <nb-card-body>
+    <!-- <button class="btn-primary btn-md" (click)="openWindow(contentBobots)" nbButton>Isi Bobot</button> -->
+    <ng2-smart-table [settings]="satfungs" [source]="source" (deleteConfirm)="onDeleteConfirm($event)" (editConfirm)="onSaveConfirm($event)"
+    (createConfirm)="onCreateConfirm($event)" (userRowSelect)="onUserRowSelect($event, contentTemplate)">
+    </ng2-smart-table>
+</nb-card-body>
+</nb-card>
+<ng-template style="height: 500px" #contentTemplate let-data>
+<nb-card-body>
+  <div style="height: 450px; overflow-y: auto; border-top: 1px solid #dee2e6;">
+  <ng2-smart-table [settings]="satfungsDetails" [source]="sourceDetails" (deleteConfirm)="onDeleteConfirmD($event)" (editConfirm)="onSaveConfirmD($event)"
+  (createConfirm)="onCreateConfirmD($event)">
+  </ng2-smart-table>
+  </div>
+</nb-card-body>  
+</ng-template>
