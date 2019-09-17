@@ -32,11 +32,11 @@ export const MENU_ITEMS: NbMenuItem[] = [
       },
       {
         title: 'Master Satfung',
-        link: '/pages/master-polres-satfung/smart-table',
+        link: '/pages/master-satfung/smart-table',
       },
       {
         title: 'Master Satfung Prinsip',
-        link: '/pages/master-polres-satfung/smart-table',
+        link: '/pages/master-satfung-prinsip/smart-table',
       },
       {
         title: 'Master Satker',

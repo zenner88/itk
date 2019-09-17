@@ -59,8 +59,8 @@ const routes: Routes = [{
         .then(m => m.TablesModule),
     },
     {
-      path: 'master-polres-satfung',
-      loadChildren: () => import('./master-polres-satfung/tables.module')
+      path: 'master-satfung-prinsip',
+      loadChildren: () => import('./master-satfung-prinsip/tables.module')
         .then(m => m.TablesModule),
     },
     {

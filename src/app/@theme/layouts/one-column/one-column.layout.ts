@@ -5,15 +5,15 @@ import { Component } from '@angular/core';
   styleUrls: ['./one-column.layout.scss'],
   template: `
     <nb-layout windowMode>    
-      <nb-layout-header style="background-color: #FE5D26;" fixed>
+      <nb-layout-header fixed>
         <ngx-header></ngx-header>
       </nb-layout-header>
 
-      <nb-sidebar class="bg-sidebar" tag="menu-sidebar" responsive>
+      <nb-sidebar tag="menu-sidebar" responsive>
         <ng-content select="nb-menu"></ng-content>
       </nb-sidebar>
 
-      <nb-layout-column style="background-color: #FE5D26;">
+      <nb-layout-column style="background-color:#ffc400">
         <ng-content select="router-outlet"></ng-content>
       </nb-layout-column>
 

@@ -7,6 +7,7 @@ import {
   NbComponentStatus,
   NbGlobalPhysicalPosition,
   NbToastrService,
+  NbWindowService
 } from '@nebular/theme';
 @Component({
   selector: 'ngx-smart-table',
@@ -16,51 +17,25 @@ import {
 })
 @Injectable()
 export class SmartTableComponent {
-
-  settings = {
-    add: {
-      addButtonContent: '<i class="nb-plus"></i>',
-      createButtonContent: '<i class="nb-checkmark"></i>',
-      cancelButtonContent: '<i class="nb-close"></i>',
-      confirmCreate: true,
-    },
-    edit: {
-      editButtonContent: '<i class="nb-edit"></i>',
-      saveButtonContent: '<i class="nb-checkmark"></i>',
-      cancelButtonContent: '<i class="nb-close"></i>',
-      confirmSave: true,
-    },
-    delete: {
-      deleteButtonContent: '<i class="nb-trash"></i>',
-      confirmDelete: true,
-    },
-    columns: {
-      kode: {
-        title: 'Kode',
-        type: 'string',
-      },
-      satker: {
-        title: 'Satker',
-        type: 'string',
-      },
-      kode_induk: {
-        title: 'Kode Induk',
-        type: 'string',
-      },
-      id_tipe_polres: {
-        title: 'Type Polres',
-        type: 'string',
-      },
-    },
-  };
-
+  constructor(
+    private windowService: NbWindowService, 
+    private httpClient : HttpClient, 
+    private _global: AppGlobals, 
+    private toastrService: NbToastrService) 
+  {  }
   source: LocalDataSource = new LocalDataSource();
   kode : string;
   satker : string;
   kode_induk : string;
   id_tipe_polres : string;
-  constructor(private httpClient : HttpClient, private _global: AppGlobals, private toastrService: NbToastrService) {
-    this.httpClient.get(this._global.baseAPIUrl + '/Itk_mst_satkers/').subscribe(indikator => {
+  satkerName: any;
+  polresName: any;
+  public satkerList: any[] = [];  
+  public polresList: any[] = [];  
+  satkers: any;
+  ngOnInit(): void {
+    this.satkers = this.loadTableSettings(); 
+    this.httpClient.get(this._global.baseAPIUrl + '/View_satkers/').subscribe(indikator => {
       const data = JSON.stringify(indikator);
       this.source.load(JSON.parse(data));
     },
@@ -69,7 +44,40 @@ export class SmartTableComponent {
       this.showToast("warning", "Koneksi bermasalah", error.message);      
     }
     ); 
-    }
+    this.httpClient.get(this._global.baseAPIUrl + '/Itk_ref_tipe_satkers/').subscribe(data => {
+      if(data != undefined || data != null)
+      {
+      const datas = JSON.stringify(data);
+      const datax = JSON.parse(datas);
+      console.log(datas);
+      console.log(datax);
+        datax.forEach(xx => {
+          this.satkerList.push({value:xx.id,title:xx.tipe})   
+          this.satkerName = xx.tipe;                
+        });
+      }
+      this.satkers = this.loadTableSettings(); 
+      localStorage.setItem('gridServicecList', JSON.stringify(this.satkerList));
+    }, 
+    error => { console.log(error) }); 
+    this.httpClient.get(this._global.baseAPIUrl + '/Itk_ref_tipe_polres/').subscribe(data => {
+      
+      if(data != undefined || data != null)
+      {
+      const datas = JSON.stringify(data);
+      const datax = JSON.parse(datas);
+      console.log(datas);
+      console.log(datax);
+        datax.forEach(xx => {
+          this.polresList.push({value:xx.id,title:xx.tipe})   
+          this.polresName = xx.tipe;                
+        });
+      }
+      this.satkers = this.loadTableSettings(); 
+      localStorage.setItem('gridServicecList', JSON.stringify(this.polresList));
+    }, 
+    error => { console.log(error) }); 
+  }
     onCreateConfirm(event): void {
       console.log(event.newData);
       this.kode = event.newData.kode;
@@ -162,5 +170,62 @@ export class SmartTableComponent {
         `${titleContent}`,
         config);
     }
+loadTableSettings(){
+  return {
+      add: {
+        addButtonContent: '<i class="nb-plus"></i>',
+        createButtonContent: '<i class="nb-checkmark"></i>',
+        cancelButtonContent: '<i class="nb-close"></i>',
+        confirmCreate: true,
+      },
+      edit: {
+        editButtonContent: '<i class="nb-edit"></i>',
+        saveButtonContent: '<i class="nb-checkmark"></i>',
+        cancelButtonContent: '<i class="nb-close"></i>',
+        confirmSave: true,
+      },
+      delete: {
+        deleteButtonContent: '<i class="nb-trash"></i>',
+        confirmDelete: true,
+      },
+      columns: {
+        kode: {
+          title: 'Kode',
+          type: 'string',
+          editable: false,
+        },
+        satker: {
+          title: 'Satker',
+          type: 'string',
+        },
+        kode_induk: {
+          title: 'Kode Induk',
+          type: 'string',
+        },
+        id_tipe_satker: {
+          title: 'Tipe Satker',
+          editor: {
+            type: 'list',
+            config: {
+              // selectText: this.satkerList,
+              selectText: 'Select', 
+              list:this.satkerList,
+            },
+          },
+        },
+        id_tipe_polres: {
+          title: 'Tipe Polres',
+          editor: {
+            type: 'list',
+            config: {
+              // selectText: this.polresList,
+              selectText: 'Select',
+              list:this.polresList,
+            },
+          },
+        },
+      },
+    };
   }
+}
   

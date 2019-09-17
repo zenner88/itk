@@ -49,9 +49,11 @@ export class SmartTableComponent {
   findDayNameById: any;
   prinsipName: any;
   ngOnInit(): void {
+    this.indikators = this.loadTableSettings(); 
     this.httpClient.get(this._global.baseAPIUrl + '/View_indikators/').subscribe(indikator => {
       const data = JSON.stringify(indikator);
       this.source.load(JSON.parse(data));
+      console.log(this.source);
     },
     error  => {
       console.log("Error", error);
@@ -59,7 +61,6 @@ export class SmartTableComponent {
     }
     ); 
     this.httpClient.get(this._global.baseAPIUrl + '/Itk_ref_prinsips/').subscribe(data => {
-      
       if(data != undefined || data != null)
       {
       const datas = JSON.stringify(data);
@@ -73,7 +74,6 @@ export class SmartTableComponent {
       }
       localStorage.setItem('gridServicecList', JSON.stringify(this.prinsipList));
       this.indikators = this.loadTableSettings(); 
-      console.log(JSON.stringify(this.prinsipList));
     }, 
     error => { console.log(error) });  
   }
@@ -434,6 +434,9 @@ loadTableSettings(){
       indikator: {
         title: 'Indikator',
         type: 'string',
+        editor:{
+          type: 'textarea'
+        }
       },
       bobot: {
         title: 'Bobot',
