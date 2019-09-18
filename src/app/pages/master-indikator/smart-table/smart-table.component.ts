@@ -430,6 +430,16 @@ loadTableSettings(){
             list:this.prinsipList,
           },
         },
+        valuePrepareFunction: (value) =>
+        { if (value == 1)  return "Akuntabilitas"  
+        else if (value == 2) return "Efektivitas"
+        else if (value == 3) return "Keadilan (Fairness)"
+        else if (value == 4) return "Kompetensi"
+        else if (value == 5) return "Perilaku"
+        else if (value == 6) return "Responsif" 
+        else if (value == 7) return "TransparansiS" 
+        else return "-"
+        },
       },
       indikator: {
         title: 'Indikator',
