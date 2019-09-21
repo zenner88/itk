@@ -28,7 +28,8 @@ export class SmartTableComponent {
     private toastrService: NbToastrService
     ) {}
   form: FormGroup;
-  public prinsipList: any[] = [];  
+  public indikatorList: any[] = [];  
+  public satfungList: any[] = [];  
   source: LocalDataSource = new LocalDataSource();
   sourceDetails: LocalDataSource = new LocalDataSource();
   sourceBobots: LocalDataSource = new LocalDataSource();
@@ -60,7 +61,7 @@ export class SmartTableComponent {
       this.showToast("warning", "Koneksi bermasalah", error.message);      
     }
     ); 
-    this.httpClient.get(this._global.baseAPIUrl + '/Itk_ref_prinsips/').subscribe(data => {
+    this.httpClient.get(this._global.baseAPIUrl + '/Itk_mst_indikators/').subscribe(data => {
       
       if(data != undefined || data != null)
       {
@@ -69,13 +70,30 @@ export class SmartTableComponent {
       console.log(datas);
       console.log(datax);
         datax.forEach(xx => {
-          this.prinsipList.push({value:xx.id,title:xx.prinsip})   
+          this.indikatorList.push({value:xx.kode,title:xx.indikator})   
           this.prinsipName = xx.title;                
         });
       }
-      localStorage.setItem('gridServicecList', JSON.stringify(this.prinsipList));
+      localStorage.setItem('gridServicecList', JSON.stringify(this.indikatorList));
       this.satfungs = this.loadTableSettings(); 
-      console.log(JSON.stringify(this.prinsipList));
+    }, 
+    error => { console.log(error) });  
+
+    this.httpClient.get(this._global.baseAPIUrl + '/Itk_ref_satfungs/').subscribe(data => {
+      
+      if(data != undefined || data != null)
+      {
+      const datas = JSON.stringify(data);
+      const datax = JSON.parse(datas);
+      console.log(datas);
+      console.log(datax);
+        datax.forEach(xx => {
+          this.satfungList.push({value:xx.id,title:xx.satfung})   
+          this.prinsipName = xx.title;                
+        });
+      }
+      localStorage.setItem('gridServicecList', JSON.stringify(this.satfungList));
+      this.satfungs = this.loadTableSettings(); 
     }, 
     error => { console.log(error) });  
   }
@@ -310,29 +328,31 @@ loadTableSettings(){
         editable: false,
       },
       kode_indikator: {
-        title: 'kode_indikator',
-        type: 'string',
-        editable: false,
+        title: 'Indikator',
+        editor: {
+          type: 'list',
+          config: {
+            selectText: 'Select',
+            list:this.indikatorList,
+          },
+        },
+        valuePrepareFunction: (cell, row) => { return row.indikator },
       },
-      kode_satfung: {
-        title: 'kode_satfung',
-        type: 'string',
-        editable: false,
+      id_satfung: {
+        title: 'Satfung',
+        editor: {
+          type: 'list',
+          config: {
+            selectText: 'Select',
+            list:this.satfungList,
+          },
+        },
+        valuePrepareFunction: (cell, row) => { return row.satfung },
       },
       indikator: {
         title: 'Indikator',
         type: 'string',
       },
-      // id_prinsip: {
-      //   title: 'Prinsip',
-      //   editor: {
-      //     type: 'list',
-      //     config: {
-      //       selectText: 'Select',
-      //       list:this.prinsipList,
-      //     },
-      //   },
-      // },
       bobot: {
         title: 'Bobot',
         type: 'string',
@@ -372,15 +392,27 @@ loadTableSettings(){
         type: 'string',
         editable: false,
       },
-      kode_satfung: {
-        title: 'kode_satfung',
-        type: 'string',
-        editable: false,
+      id_satfung: {
+        title: 'Satfung',
+        editor: {
+          type: 'list',
+          config: {
+            selectText: 'Select',
+            list:this.satfungList,
+          },
+        },
+        valuePrepareFunction: (cell, row) => { return row.satfung },
       },
       kode_indikator: {
-        title: 'Kode Indikator',
-        type: 'string',
-        editable: false,
+        title: 'Indikator',
+        editor: {
+          type: 'list',
+          config: {
+            selectText: 'Select',
+            list:this.indikatorList,
+          },
+        },
+        valuePrepareFunction: (cell, row) => { return row.indikator },
       },
       kode_indikator_detail: {
         title: 'kode_indikator_detail',

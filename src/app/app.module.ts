@@ -23,7 +23,7 @@ import {
 import { AuthGuard } from './auth-guard.service';
 import { HomeComponent } from './public/home/home.component';
 @NgModule({
-  declarations: [AppComponent, HomeComponent],
+  declarations: [AppComponent, HomeComponent, ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,

@@ -10,13 +10,12 @@ import {
   NbDialogService,
   NbWindowService
 } from '@nebular/theme';
-import { FormBuilder, FormGroup} from '@angular/forms';
-import { JsonPipe } from '@angular/common';
+import { FormGroup} from '@angular/forms';
 @Component({
   selector: 'ngx-smart-table',
   templateUrl: './smart-table.component.html',
   styleUrls: ['./smart-table.component.scss'],
-  providers: [AppGlobals]
+  providers: [AppGlobals],
 })
 @Injectable()
 export class SmartTableComponent {
@@ -31,6 +30,8 @@ export class SmartTableComponent {
     ) {}
   form: FormGroup;
   public prinsipList: any[] = [];  
+  public jenisDataList: any[] = [];  
+  public satuanList: any[] = [];  
   source: LocalDataSource = new LocalDataSource();
   sourceDetails: LocalDataSource = new LocalDataSource();
   sourceBobots: LocalDataSource = new LocalDataSource();
@@ -48,6 +49,9 @@ export class SmartTableComponent {
   indikators: any;
   findDayNameById: any;
   prinsipName: any;
+  pilihAh: any;
+  wow: any;
+  
   ngOnInit(): void {
     this.indikators = this.loadTableSettings(); 
     this.httpClient.get(this._global.baseAPIUrl + '/View_indikators/').subscribe(indikator => {
@@ -76,6 +80,41 @@ export class SmartTableComponent {
       this.indikators = this.loadTableSettings(); 
     }, 
     error => { console.log(error) });  
+
+    this.httpClient.get(this._global.baseAPIUrl + '/Itk_ref_jenis_data/').subscribe(data => {
+      if(data != undefined || data != null)
+      {
+      const datas = JSON.stringify(data);
+      const datax = JSON.parse(datas);
+      console.log(datas);
+      console.log(datax);
+        datax.forEach(xx => {
+          this.jenisDataList.push({value:xx.id,title:xx.jenis})   
+          // this.prinsipName = xx.title;                
+        });
+      }
+      localStorage.setItem('gridServicecList', JSON.stringify(this.jenisDataList));
+      this.indikators = this.loadTableSettings(); 
+    }, 
+    error => { console.log(error) }); 
+
+
+    this.httpClient.get(this._global.baseAPIUrl + '/Itk_ref_satuans/').subscribe(data => {
+      if(data != undefined || data != null)
+      {
+      const datas = JSON.stringify(data);
+      const datax = JSON.parse(datas);
+      console.log(datas);
+      console.log(datax);
+        datax.forEach(xx => {
+          this.satuanList.push({value:xx.id,title:xx.satuan})   
+          // this.prinsipName = xx.title;                
+        });
+      }
+      localStorage.setItem('gridServicecList', JSON.stringify(this.satuanList));
+      this.indikators = this.loadTableSettings(); 
+    }, 
+    error => { console.log(error) }); 
   }
   openWindow(contentBobots) {
     this.windowService.open(
@@ -84,7 +123,27 @@ export class SmartTableComponent {
         title: 'Pengisian Bobot Berdasarkan Prinsip',
       },
     );
-    this.httpClient.get(this._global.baseAPIUrl + '/Itk_mst_indikators/getDataByIdPrinsip?idPrinsip=1').subscribe(indikator => {
+    this.httpClient.get(this._global.baseAPIUrl + '/Itk_ref_prinsips/').subscribe(data => {
+      if(data != undefined || data != null)
+      {
+        this.pilihAh = data;
+      // const datax = JSON.parse(datas);
+      // console.log(datas);
+      // console.log(datax);
+      //   datax.forEach(xx => {
+      //     // this.pilihAh = "<nb-option value="+xx.id+" (click)=prinsipClick($event)>"+xx.prinsip+"</nb-option>";          
+      //     console.log(this.pilihAh);
+      //     this.wow = "huh!"
+      //   });
+      }
+    }, 
+    error => { console.log(error) });      
+  }
+  prinsipClick(event){
+    // console.log(event.target.attributes.value.textContent);
+    console.log(event);
+    var kodex = event;
+    this.httpClient.get(this._global.baseAPIUrl + '/View_indikators/getDataByidPrinsip?idPrinsip='+kodex).subscribe(indikator => {
       const data = JSON.stringify(indikator);
       this.sourceBobots.load(JSON.parse(data));
       console.log("data bobot");      
@@ -415,14 +474,17 @@ loadTableSettings(){
       deleteButtonContent: '<i class="nb-trash"></i>',
       confirmDelete: true,
     },
+    // hideSubHeader: true,
     columns: {
       kode: {
         title: 'Kode',
         type: 'string',
         editable: false,
+        filter: false
       },
       id_prinsip: {
         title: 'Prinsip',
+        filter: false,
         editor: {
           type: 'list',
           config: {
@@ -430,20 +492,12 @@ loadTableSettings(){
             list:this.prinsipList,
           },
         },
-        valuePrepareFunction: (value) =>
-        { if (value == 1)  return "Akuntabilitas"  
-        else if (value == 2) return "Efektivitas"
-        else if (value == 3) return "Keadilan (Fairness)"
-        else if (value == 4) return "Kompetensi"
-        else if (value == 5) return "Perilaku"
-        else if (value == 6) return "Responsif" 
-        else if (value == 7) return "TransparansiS" 
-        else return "-"
-        },
+        valuePrepareFunction: (cell, row) => { return row.prinsip },
       },
       indikator: {
         title: 'Indikator',
         type: 'string',
+        filter: false,
         editor:{
           type: 'textarea'
         }
@@ -451,14 +505,24 @@ loadTableSettings(){
       bobot: {
         title: 'Bobot',
         type: 'string',
+        filter: false
       },
       rumus: {
         title: 'Rumus',
         type: 'string',
+        filter: false
       },
       id_jenis_data: {
         title: 'Jenis Data',
-        type: 'string',
+        filter: false,
+        editor: {
+          type: 'list',
+          config: {
+            selectText: 'Select',
+            list:this.jenisDataList,
+          },
+        },
+        valuePrepareFunction: (cell, row) => { return row.jenis_data },
       },
     },
   };
@@ -498,7 +562,14 @@ loadTableSettings(){
       },
       id_satuan: {
         title: 'Satuan',
-        type: 'string',
+        editor: {
+          type: 'list',
+          config: {
+            selectText: 'Select',
+            list:this.satuanList,
+          },
+        },
+        valuePrepareFunction: (cell, row) => { return row.satuan },
       },
     },
   };
@@ -534,8 +605,14 @@ loadTableSettings(){
       },
       id_prinsip: {
         title: 'Prinsip',
-        type: 'string',
-        editable: false,
+        editor: {
+          type: 'list',
+          config: {
+            selectText: 'Select',
+            list:this.prinsipList,
+          },
+        },
+        valuePrepareFunction: (cell, row) => { return row.prinsip },
       },
       indikator: {
         title: 'Indikator',

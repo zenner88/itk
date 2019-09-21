@@ -212,6 +212,7 @@ loadTableSettings(){
               list:this.satkerList,
             },
           },
+        valuePrepareFunction: (cell, row) => { return row.tipe_satker },
         },
         id_tipe_polres: {
           title: 'Tipe Polres',
@@ -223,6 +224,7 @@ loadTableSettings(){
               list:this.polresList,
             },
           },
+        valuePrepareFunction: (cell, row) => { return row.tipe_polres },
         },
       },
     };

@@ -144,7 +144,7 @@ export class SmartTableComponent {
         title: 'Details Indikator Satfung '+this.kodeDetails,
       },
     );   
-    this.httpClient.get(this._global.baseAPIUrl + '/View_satfung_prinsips/getDataBykodeIndikator?kodeSatker='+this.kodeDetails).subscribe(indikatorDetails => {
+    this.httpClient.get(this._global.baseAPIUrl + '/View_satfung_prinsips/getDataBykodeSatfung?kodeSatfung='+this.kodeDetails).subscribe(indikatorDetails => {
       const data = JSON.stringify(indikatorDetails);
       this.sourceDetails.load(JSON.parse(data));
     },
@@ -341,7 +341,7 @@ loadTableSettings(){
         editable: false,
       },
       id_tipe_polres: {
-        title: 'Prinsip',
+        title: 'Tipe Polres',
         editor: {
           type: 'list',
           config: {
@@ -349,9 +349,10 @@ loadTableSettings(){
             list:this.polresList,
           },
         },
+        valuePrepareFunction: (cell, row) => { return row.tipe_polres },
       },
       id_satfung: {
-        title: 'Prinsip',
+        title: 'Satfung',
         editor: {
           type: 'list',
           config: {
@@ -359,6 +360,7 @@ loadTableSettings(){
             list:this.satfungList,
           },
         },
+        valuePrepareFunction: (cell, row) => { return row.satfung },
       },
     },
   };
@@ -381,31 +383,28 @@ loadTableSettings(){
       deleteButtonContent: '<i class="nb-trash"></i>',
       confirmDelete: true,
     },
+    actions: { 
+      position: 'right', 
+    },
     columns: {
       kode: {
         title: 'Kode',
         type: 'string',
         editable: false,
       },
-      kode_satfung: {
-        title: 'kode_satfung',
+      satfung: {
+        title: 'Satfung',
         type: 'string',
         editable: false,
       },
-      id_prinsip: {
+      prinsip: {
         title: 'Prinsip',
-        editor: {
-          type: 'list',
-          config: {
-            selectText: 'Select',
-            list:this.prinsipList,
-          },
-        },
+        type: 'string',
+        editable: false,
       },
       bobot: {
         title: 'bobot',
         type: 'string',
-        editable: false,
       },
     },
   };
