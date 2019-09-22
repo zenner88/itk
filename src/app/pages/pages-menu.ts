@@ -86,6 +86,14 @@ export const MENU_ITEMS: NbMenuItem[] = [
         title: 'Transaksi Benchmarking',
         link: '/pages/trn-benchmarking/smart-table',
       },
+      {
+        title: 'Transaksi Penilaian Indikator',
+        link: '/pages/trn-penilaian-indikator/smart-table',
+      },
+      {
+        title: 'Transaksi Penilaian Satfung',
+        link: '/pages/trn-penilaian-satfung/smart-table',
+      },
     ],
   },
   {

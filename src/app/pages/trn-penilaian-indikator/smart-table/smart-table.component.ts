@@ -25,10 +25,11 @@ export class SmartTableComponent {
   tanggal_selesai : string;
   public periodeList: any[] = [];    
   public indikatorSatfungList: any[] = [];    
+  public satkerList: any[] = [];    
   bench: any;
   constructor(private httpClient : HttpClient, private _global: AppGlobals, private toastrService: NbToastrService) {     
     this.bench = this.loadTableSettings()
-    this.httpClient.get(this._global.baseAPIUrl + '/Itk_trn_brenchmarkings/').subscribe(indikator => {
+    this.httpClient.get(this._global.baseAPIUrl + '/View_penilaian_indikators/').subscribe(indikator => {
       const data = JSON.stringify(indikator);
       this.source.load(JSON.parse(data));
     },
@@ -37,7 +38,7 @@ export class SmartTableComponent {
       this.showToast("warning", "Koneksi bermasalah", error.message);      
     }
     ); 
-    this.httpClient.get(this._global.baseAPIUrl + '/Itk_mst_indikator_satfungs/').subscribe(data => {
+    this.httpClient.get(this._global.baseAPIUrl + '/Itk_ref_satfungs/').subscribe(data => {
       if(data != undefined || data != null)
       {
       const datas = JSON.stringify(data);
@@ -45,7 +46,7 @@ export class SmartTableComponent {
       console.log(datas);
       console.log(datax);
         datax.forEach(xx => {
-          this.indikatorSatfungList.push({value:xx.kode,title:xx.indikator})   
+          this.indikatorSatfungList.push({value:xx.id,title:xx.singkatan})   
         });
       }
       localStorage.setItem('gridServicecList', JSON.stringify(this.indikatorSatfungList));
@@ -68,6 +69,23 @@ export class SmartTableComponent {
       this.bench = this.loadTableSettings()
     }, 
     error => { console.log(error) }); 
+
+    this.httpClient.get(this._global.baseAPIUrl + '/Itk_mst_satkers/').subscribe(data => {
+      if(data != undefined || data != null)
+      {
+      const datas = JSON.stringify(data);
+      const datax = JSON.parse(datas);
+      console.log(datas);
+      console.log(datax);
+        datax.forEach(xx => {
+          this.satkerList.push({value:xx.kode,title:xx.satker})   
+        });
+      }
+      localStorage.setItem('gridServicecList', JSON.stringify(this.satkerList));
+      this.bench = this.loadTableSettings()
+    }, 
+    error => { console.log(error) }); 
+    
     }
     onCreateConfirm(event): void {
       console.log(event.newData);
@@ -77,26 +95,26 @@ export class SmartTableComponent {
       this.tahun = event.newData.tahun;
       this.tanggal_mulai = event.newData.tanggal_mulai;
       this.tanggal_selesai = event.newData.tanggal_selesai;
-      if (this.kode == ""){
-        this.showToast("warning", "Kolom ID masih Kosong", "Harus di isi");
-      }
-      else if (this.periode == ""){
-        this.showToast("warning", "Kolom periode masih Kosong", "Harus di isi");
-      }
-      else if (this.id_tipe_satker == ""){
-        this.showToast("warning", "Kolom id_tipe_satker masih Kosong", "Harus di isi");
-      }
-      else if (this.tahun == ""){
-        this.showToast("warning", "Kolom tahun masih Kosong", "Harus di isi");
-      }
-      else if (this.tanggal_mulai == ""){
-        this.showToast("warning", "Kolom tanggal_mulai masih Kosong", "Harus di isi");
-      }
-      else if (this.tanggal_selesai == ""){
-        this.showToast("warning", "Kolom tanggal_selesai masih Kosong", "Harus di isi");
-      }
-      else{
-      this.httpClient.post(this._global.baseAPIUrl + '/Itk_trn_brenchmarkings/',event.newData).subscribe(data  => {
+      // if (this.kode == ""){
+      //   this.showToast("warning", "Kolom ID masih Kosong", "Harus di isi");
+      // }
+      // else if (this.periode == ""){
+      //   this.showToast("warning", "Kolom periode masih Kosong", "Harus di isi");
+      // }
+      // else if (this.id_tipe_satker == ""){
+      //   this.showToast("warning", "Kolom id_tipe_satker masih Kosong", "Harus di isi");
+      // }
+      // else if (this.tahun == ""){
+      //   this.showToast("warning", "Kolom tahun masih Kosong", "Harus di isi");
+      // }
+      // else if (this.tanggal_mulai == ""){
+      //   this.showToast("warning", "Kolom tanggal_mulai masih Kosong", "Harus di isi");
+      // }
+      // else if (this.tanggal_selesai == ""){
+      //   this.showToast("warning", "Kolom tanggal_selesai masih Kosong", "Harus di isi");
+      // }
+      // else{
+      this.httpClient.post(this._global.baseAPIUrl + '/Itk_trn_penilaian_indikators/',event.newData).subscribe(data  => {
         console.log("POST Request is successful ", data);
         this.showToast("success", "Data Tersimpan", event.newData.jenis);
         event.confirm.resolve();
@@ -106,7 +124,7 @@ export class SmartTableComponent {
         this.showToast("warning", "Input / koneksi bermasalah", error.error.error.message);      
       }
       );
-      }
+      // }
     }
     onSaveConfirm(event): void {
       console.log(event.newData);
@@ -117,26 +135,26 @@ export class SmartTableComponent {
       this.tahun = event.newData.tahun;
       this.tanggal_mulai = event.newData.tanggal_mulai;
       this.tanggal_selesai = event.newData.tanggal_selesai;
-      if (this.kode == ""){
-        this.showToast("warning", "Kolom ID masih Kosong", "Harus di isi");
-      }
-      else if (this.periode == ""){
-        this.showToast("warning", "Kolom periode masih Kosong", "Harus di isi");
-      }
-      else if (this.id_tipe_satker == ""){
-        this.showToast("warning", "Kolom id_tipe_satker masih Kosong", "Harus di isi");
-      }
-      else if (this.tahun == ""){
-        this.showToast("warning", "Kolom tahun masih Kosong", "Harus di isi");
-      }
-      else if (this.tanggal_mulai == ""){
-        this.showToast("warning", "Kolom tanggal_mulai masih Kosong", "Harus di isi");
-      }
-      else if (this.tanggal_selesai == ""){
-        this.showToast("warning", "Kolom tanggal_selesai masih Kosong", "Harus di isi");
-      }
-      else{
-      this.httpClient.put(this._global.baseAPIUrl + '/Itk_trn_brenchmarkings/'+event.data.kode,event.newData).subscribe(data  => {
+      // if (this.kode == ""){
+      //   this.showToast("warning", "Kolom ID masih Kosong", "Harus di isi");
+      // }
+      // else if (this.periode == ""){
+      //   this.showToast("warning", "Kolom periode masih Kosong", "Harus di isi");
+      // }
+      // else if (this.id_tipe_satker == ""){
+      //   this.showToast("warning", "Kolom id_tipe_satker masih Kosong", "Harus di isi");
+      // }
+      // else if (this.tahun == ""){
+      //   this.showToast("warning", "Kolom tahun masih Kosong", "Harus di isi");
+      // }
+      // else if (this.tanggal_mulai == ""){
+      //   this.showToast("warning", "Kolom tanggal_mulai masih Kosong", "Harus di isi");
+      // }
+      // else if (this.tanggal_selesai == ""){
+      //   this.showToast("warning", "Kolom tanggal_selesai masih Kosong", "Harus di isi");
+      // }
+      // else{
+      this.httpClient.put(this._global.baseAPIUrl + '/Itk_trn_penilaian_indikators/'+event.data.kode,event.newData).subscribe(data  => {
         console.log("PUT Request is successful ", data);
         this.showToast("success", "Data Ter update", event.newData.kode);
         event.confirm.resolve();
@@ -146,11 +164,11 @@ export class SmartTableComponent {
         this.showToast("warning", "Input / koneksi bermasalah", error.error.error.message);
       }
       );
-      }
+      // }
     }
     onDeleteConfirm(event): void {
       if (window.confirm('Are you sure you want to delete?')) {
-        this.httpClient.delete(this._global.baseAPIUrl + '/Itk_trn_brenchmarkings/'+event.data.kode).subscribe(data => {
+        this.httpClient.delete(this._global.baseAPIUrl + '/Itk_trn_penilaian_indikators/'+event.data.kode).subscribe(data => {
           event.confirm.resolve();
           console.log(event.data.kode);
           this.showToast("danger", "Data terhapus", event.data.jenis+"("+event.data.id+")");
@@ -196,17 +214,15 @@ export class SmartTableComponent {
         confirmDelete: true,
       },
       columns: {
-        kode_periode: {
-          title: 'Periode',
+        id: {
+          title: 'ID',
+          type: 'string',
           filter: false,
-          editor: {
-            type: 'list',
-            config: {
-              selectText: 'Select',
-              list:this.periodeList,
-            },
-          },
-          // valuePrepareFunction: (cell, row) => { return row.periode },
+        },
+        penelitian_id: {
+          title: 'Penelitian',
+          type: 'string',
+          filter: false,
         },
         kode_indikator_satfung: {
           title: 'Indikator Satfung',
@@ -218,45 +234,39 @@ export class SmartTableComponent {
               list:this.indikatorSatfungList,
             },
           },
-          // valuePrepareFunction: (cell, row) => { return row.indikator_satfung },
+          valuePrepareFunction: (cell, row) => { return row.singkatan_satfung },
         },
-        tipe: {
-          title: 'Tipe',
-          type: 'string',
+        kode_periode: {
+          title: 'Periode',
           filter: false,
+          editor: {
+            type: 'list',
+            config: {
+              selectText: 'Select',
+              list:this.periodeList,
+            },
+          },
+          valuePrepareFunction: (cell, row) => { return row.periode },
         },
-        rerata: {
-          title: 'rerata',
+        kode_satker: {
+          title: 'Satker',
+          filter: false,
+          editor: {
+            type: 'list',
+            config: {
+              selectText: 'Select',
+              list:this.satkerList,
+            },
+          },
+          valuePrepareFunction: (cell, row) => { return row.satker },
+        },
+        nilai: {
+          title: 'Nilai',
           type: 'integer',
           filter: false,
         },
-        nilai_min: {
-          title: 'Nilai Min',
-          type: 'integer',
-          filter: false,
-        },
-        nilai_max: {
-          title: 'Nilai Max',
-          type: 'integer',
-          filter: false,
-        },
-        normatif_min: {
-          title: 'Normatif Min',
-          type: 'integer',
-          filter: false,
-        },
-        normatif_max: {
-          title: 'Normatif Max',
-          type: 'integer',
-          filter: false,
-        },
-        batas_atas: {
-          title: 'Batas Atas',
-          type: 'integer',
-          filter: false,
-        },
-        batas_bawah: {
-          title: 'Batas Bawah',
+        nilai_indeks: {
+          title: 'Nilai Indeks',
           type: 'integer',
           filter: false,
         },

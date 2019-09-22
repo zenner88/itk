@@ -81,6 +81,16 @@ const routes: Routes = [{
         .then(m => m.TablesModule),
     },
     {
+      path: 'trn-penilaian-indikator',
+      loadChildren: () => import('./trn-penilaian-indikator/tables.module')
+        .then(m => m.TablesModule),
+    },
+    {
+      path: 'trn-penilaian-satfung',
+      loadChildren: () => import('./trn-penilaian-satfung/tables.module')
+        .then(m => m.TablesModule),
+    },
+    {
       path: 'sys-akses',
       loadChildren: () => import('./sys-akses/tables.module')
         .then(m => m.TablesModule),

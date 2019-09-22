@@ -1,14 +1,15 @@
 import { Component, Injectable } from '@angular/core';
 import { LocalDataSource } from 'ng2-smart-table';
 import { HttpClient } from '@angular/common/http';
-import { AppGlobals } from '../../../app.global'
+import { AppGlobals } from '../../../app.global';
+import { SmartTableDatepickerComponent, SmartTableDatepickerRenderComponent } from '../smart-table-datepicker/smart-table-datepicker.component';
 import 'style-loader!angular2-toaster/toaster.css';
 import {
   NbComponentStatus,
   NbGlobalPhysicalPosition,
   NbToastrService,
 } from '@nebular/theme';
-import { ValueConverter } from '@angular/compiler/src/render3/view/template';
+
 @Component({
   selector: 'ngx-smart-table',
   templateUrl: './smart-table.component.html',
@@ -224,12 +225,32 @@ export class SmartTableComponent {
       tanggal_mulai: {
         title: 'Tanngal Mulai',
         type: 'date',
+        editor:{
+          type:'datepicker'
+        }
       },
       tanggal_selesai: {
         title: 'Tanggal Selesai',
         type: 'date',
+        editor:{
+          type:'datepicker'
+        }
       },
+      // tanggal_selesai: {
+      //   title: 'Tanggal Selesai',
+      //   type: 'custom',
+      //   renderComponent: SmartTableDatepickerRenderComponent,
+      //   width: '250px',
+      //   filter: false,
+      //   editor: {
+      //     type: 'custom',
+      //     component: SmartTableDatepickerComponent,
+      //     config: {
+      //       placeholder: 'End Time'
+      //     }
+      //   }
+      // }
     },
   };
 }
-  }
+}

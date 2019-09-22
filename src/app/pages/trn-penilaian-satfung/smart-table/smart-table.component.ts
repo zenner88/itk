@@ -52,7 +52,7 @@ export class SmartTableComponent {
   
   ngOnInit(): void {
     this.penilaians = this.loadTableSettings(); 
-    this.httpClient.get(this._global.baseAPIUrl + '/View_penilaians/').subscribe(indikator => {
+    this.httpClient.get(this._global.baseAPIUrl + '/Itk_trn_penilaian_satfungs/').subscribe(indikator => {
       const data = JSON.stringify(indikator);
       this.source.load(JSON.parse(data));
       console.log(this.source);
@@ -103,7 +103,7 @@ export class SmartTableComponent {
     this.windowService.open(
       contentTemplate,
       {
-        title: 'Details Penilaian',
+        title: 'Penilaian Satfung Prinsip'+this.kodeDetails,
       },
     );   
     this.httpClient.get(this._global.baseAPIUrl + '/View_penilaian_details/getDataBypenilaianId?penilaianId='+this.kodeDetails).subscribe(indikatorDetails => {
@@ -143,7 +143,7 @@ export class SmartTableComponent {
     // //   this.showToast("warning", "Kolom id_jenis_data masih Kosong", "Harus di isi");
     // // }
     // else{
-    this.httpClient.post(this._global.baseAPIUrl + '/Itk_trn_penilaians/',event.newData).subscribe(data  => {
+    this.httpClient.post(this._global.baseAPIUrl + '/Itk_trn_penilaian_satfungs/',event.newData).subscribe(data  => {
       console.log("POST Request is successful ", data);
       this.showToast("success", "Data Tersimpan", event.newData.jenis);
       event.confirm.resolve();
@@ -183,7 +183,7 @@ export class SmartTableComponent {
     //   this.showToast("warning", "Kolom id_jenis_data masih Kosong", "Harus di isi");
     // }
     // else{
-    this.httpClient.put(this._global.baseAPIUrl + '/Itk_trn_penilaians/'+event.data.kode,event.newData).subscribe(data  => {
+    this.httpClient.put(this._global.baseAPIUrl + '/Itk_trn_penilaian_satfungs/'+event.data.kode,event.newData).subscribe(data  => {
       console.log("PUT Request is successful ", data);
       this.showToast("success", "Data Ter update", event.newData.kode);
       event.confirm.resolve();
@@ -197,7 +197,7 @@ export class SmartTableComponent {
   }
   onDeleteConfirm(event): void {
     if (window.confirm('Are you sure you want to delete?')) {
-      this.httpClient.delete(this._global.baseAPIUrl + '/Itk_trn_penilaians/'+event.data.kode).subscribe(data => {
+      this.httpClient.delete(this._global.baseAPIUrl + '/Itk_trn_penilaian_satfungs/'+event.data.kode).subscribe(data => {
         event.confirm.resolve();
         console.log(event.data.kode);
         this.showToast("danger", "Data terhapus", event.data.jenis+"("+event.data.id+")");
@@ -246,7 +246,7 @@ export class SmartTableComponent {
     };
     console.log(this.detailsData);
     console.log(this.kodeDetails);
-    this.httpClient.post(this._global.baseAPIUrl + '/Itk_trn_penilaian_details',this.detailsData).subscribe(data  => {
+    this.httpClient.post(this._global.baseAPIUrl + '/Itk_trn_penilaian_satfung_prinsips',this.detailsData).subscribe(data  => {
       console.log("POST Request is successful ", data);
       this.showToast("success", "Data Tersimpan", event.newData.jenis);
       event.confirm.resolve();
@@ -299,7 +299,7 @@ export class SmartTableComponent {
         na: "Y"
     };
     console.log(this.detailsData);
-    this.httpClient.put(this._global.baseAPIUrl + '/Itk_trn_penilaian_details/'+event.data.kode,this.detailsData).subscribe(data  => {
+    this.httpClient.put(this._global.baseAPIUrl + '/Itk_trn_penilaian_satfung_prinsips/'+event.data.kode,this.detailsData).subscribe(data  => {
       console.log("PUT Request is successful ", data);
       this.showToast("success", "Data Ter update", event.newData.kode);
       event.confirm.resolve();
@@ -313,7 +313,7 @@ export class SmartTableComponent {
   // }
   onDeleteConfirmD(event): void {
     if (window.confirm('Are you sure you want to delete?')) {
-      this.httpClient.delete(this._global.baseAPIUrl + '/Itk_trn_penilaian_details/'+event.data.kode).subscribe(data => {
+      this.httpClient.delete(this._global.baseAPIUrl + '/Itk_trn_penilaian_satfung_prinsips/'+event.data.kode).subscribe(data => {
         event.confirm.resolve();
         console.log(event.data.kode);
         this.showToast("danger", "Data terhapus", event.data.jenis+"("+event.data.id+")");
@@ -368,30 +368,46 @@ loadTableSettings(){
         editable: false,
         filter: false
       },
-
-      kode_periode: {
-        title: 'Periode',
-        filter: false,
-        editor: {
-          type: 'list',
-          config: {
-            selectText: 'Select',
-            list:this.periodeList,
-          },
-        },
-        valuePrepareFunction: (cell, row) => { return row.periode },
+      id_penilaian: {
+        title: 'Penilaian',
+        type: 'string',
+        editable: false,
+        filter: false
       },
-      kode_satker: {
-        title: 'Satker',
-        filter: false,
-        editor: {
-          type: 'list',
-          config: {
-            selectText: 'Select',
-            list:this.satkerList,
-          },
-        },
-        valuePrepareFunction: (cell, row) => { return row.satker },       
+      kode_satfung: {
+        title: 'Satfung',
+        type: 'string',
+        editable: false,
+        filter: false
+      },
+      // kode_periode: {
+      //   title: 'Periode',
+      //   filter: false,
+      //   editor: {
+      //     type: 'list',
+      //     config: {
+      //       selectText: 'Select',
+      //       list:this.periodeList,
+      //     },
+      //   },
+      //   valuePrepareFunction: (cell, row) => { return row.periode },
+      // },
+      // kode_satker: {
+      //   title: 'Satker',
+      //   filter: false,
+      //   editor: {
+      //     type: 'list',
+      //     config: {
+      //       selectText: 'Select',
+      //       list:this.satkerList,
+      //     },
+      //   },
+      //   valuePrepareFunction: (cell, row) => { return row.satker },       
+      // },
+      bobot: {
+        title: 'Bobot',
+        type: 'string',
+        filter: false
       },
       nilai: {
         title: 'Nilai',
@@ -424,16 +440,48 @@ penilaianDetails = {
         title: 'ID',
         type: 'string',
         editable: false,
+        filter: false
       },
-      penilaian: {
-        title: 'Penilaian',
-        filter: false,
+      penilaian_satfung_id: {
+        title: 'Penilaian Satfung',
+        type: 'string',
         editable: false,
+        filter: false
       },
-      indikator_satfung: {
-        title: 'Penilaian',
-        filter: false,
+      kode_satfung_prinsip: {
+        title: 'Satfung Prinsip',
+        type: 'string',
         editable: false,
+        filter: false
+      },
+      // kode_periode: {
+      //   title: 'Periode',
+      //   filter: false,
+      //   editor: {
+      //     type: 'list',
+      //     config: {
+      //       selectText: 'Select',
+      //       list:this.periodeList,
+      //     },
+      //   },
+      //   valuePrepareFunction: (cell, row) => { return row.periode },
+      // },
+      // kode_satker: {
+      //   title: 'Satker',
+      //   filter: false,
+      //   editor: {
+      //     type: 'list',
+      //     config: {
+      //       selectText: 'Select',
+      //       list:this.satkerList,
+      //     },
+      //   },
+      //   valuePrepareFunction: (cell, row) => { return row.satker },       
+      // },
+      bobot: {
+        title: 'Bobot',
+        type: 'string',
+        filter: false
       },
       nilai: {
         title: 'Nilai',
