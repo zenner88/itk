@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 
-import { MENU_ITEMS } from './pages-menu';
+import { MENU_ITEMS } from './public-menu';
 
 @Component({
   selector: 'ngx-pages',
-  styleUrls: ['pages.component.scss'],
+  styleUrls: ['public.component.scss'],
   template: `
     <ngx-one-column-layout>
       <nb-menu [items]="menu"></nb-menu>
@@ -12,7 +12,7 @@ import { MENU_ITEMS } from './pages-menu';
     </ngx-one-column-layout>
   `,
 })
-export class PagesComponent {
+export class PublicComponent {
 
-  menu = MENU_ITEMS;
+  // menu = MENU_ITEMS;
 }

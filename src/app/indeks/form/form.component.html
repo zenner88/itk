@@ -1,0 +1,149 @@
+<div class="row">
+  <div class="col-lg-12">
+    <nb-card>
+      <nb-card-header>FORM PENGISIAN DATA INDEKS TATA KELOLA KEPOLISIAN</nb-card-header>
+      <nb-card-body>
+    <nb-card accent="warning">
+      <nb-card-header>
+        KETERANGAN POLRES
+      </nb-card-header>
+      <nb-card-body>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="row show-grid">
+              <div class="col-sm-2">
+                <div align="center">1.</div>
+              </div>
+              <div class="col-sm-2">
+                <div align="right">POLDA</div>
+              </div>
+              <div class="col-sm-8">
+                <div align="left">POLDA SUMUT</div>
+              </div>
+            </div>
+            <div class="row show-grid">
+              <div class="col-sm-2">
+                <div align="center">2.</div>
+              </div>
+              <div class="col-sm-2">
+                <div align="right">POLRES</div>
+              </div>
+              <div class="col-sm-8">
+                <div align="left">POLRES SIMALUNGUN</div>
+              </div>
+            </div>
+            <div class="row show-grid">
+              <div class="col-sm-2">
+                <div align="center">3.</div>
+              </div>
+              <div class="col-sm-2">
+                <div align="right">TYPE POLRES</div>
+              </div>
+              <div class="col-sm-8">
+                <div align="left">Rawan Konflik</div>
+              </div>
+            </div>
+            <div class="row show-grid">
+              <div class="col-sm-2">
+                <div align="center">4.</div>
+              </div>
+              <div class="col-sm-2">
+                <div align="right">Nama KABAGOPS</div>
+              </div>
+              <div class="col-sm-8">
+                <div align="left"><input type="text" class="col-lg-4" nbInput placeholder=""></div>
+              </div>
+            </div>
+            <div class="row show-grid">
+              <div class="col-sm-2">
+                <div align="center">5.</div>
+              </div>
+              <div class="col-sm-2">
+                <div align="right">Notelp/HP KABAGOPS</div>
+              </div>
+              <div class="col-sm-8">
+                <div align="left"><input type="text" class="col-lg-4" nbInput placeholder=""></div>
+              </div>
+            </div>
+            <div class="row show-grid">
+              <div class="col-sm-2">
+                <div align="center">6.</div>
+              </div>
+              <div class="col-sm-2">
+                <div align="right">Nama Staff bagops</div>
+              </div>
+              <div class="col-sm-8">
+                <div align="left"><input type="text" class="col-lg-4" nbInput placeholder=""></div>
+              </div>
+            </div>
+            <div class="row show-grid">
+              <div class="col-sm-2">
+                <div align="center">7.</div>
+              </div>
+              <div class="col-sm-2">
+                <div align="right">Notelp/HP Staff bagops</div>
+              </div>
+              <div class="col-sm-8">
+                <div align="left"><input type="text"  class="col-lg-4" nbInput placeholder=""></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <nb-card accent="info">
+          <nb-card-header>
+              DAFTAR DATA OBJEKTIF
+          </nb-card-header>
+          <nb-card-body>
+            <div class="row show-grid">
+              <div class="col-sm-1">
+                <div align="center">1.</div>
+              </div>
+              <div class="col-sm-3">
+                <div align="left" *ngFor="let source of sources">{{ source.indikator}} 
+
+                  <hr>
+                </div>
+                
+              </div>
+              <div class="col-sm-3">
+                <div align="right">Jumlah Personil Riil</div>
+              </div>
+              <div class="col-sm-1">
+                <div align="left"><input type="text" class="col-lg-4" nbInput placeholder=""></div>
+              </div>
+              <div class="col-sm-2">
+                <div align="left">Personil</div>
+              </div>
+              <div class="col-sm-1">
+                <div align="right">~ 1 file</div>
+              </div>
+              <div class="col-sm-1">
+                </div>
+            </div>
+          </nb-card-body>
+
+            <!-- button -->
+          <nb-card-body>
+            <div class="row show-grid">
+                <div class="col-sm-2">
+                  <div align="right">
+                    <button nbButton status="primary" hero>Upload File Pengesahan</button>
+                  </div>
+                  </div>
+                  <div class="col-sm-7"></div>
+                  <div class="col-sm-3">
+                    <div align="right">
+                    <button nbButton status="warning" hero>Print Untuk Pengesahan</button>
+                    </div>
+                  </div>
+              </div>
+          </nb-card-body>
+        </nb-card>
+        </nb-card-body>
+        </nb-card>
+        <!-- aaaaaaaaa -->
+        
+      </nb-card-body>
+    </nb-card>
+  </div>
+</div>

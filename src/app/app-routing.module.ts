@@ -8,9 +8,10 @@ import {
   NbRequestPasswordComponent,
   NbResetPasswordComponent,
 } from '@nebular/auth';
-import {HomeComponent} from './public/home/home.component' 
 const routes: Routes = [
   { path: 'pages', loadChildren: 'app/pages/pages.module#PagesModule' },
+  { path: 'public', loadChildren: 'app/public/public.module#PublicModule' },  
+  { path: 'indeks', loadChildren: 'app/indeks/indeks.module#IndeksModule' },    
   {
     path: '',
     component: NbAuthComponent,
@@ -40,10 +41,6 @@ const routes: Routes = [
         component: NbResetPasswordComponent,
       },
     ],
-  },
-  {
-    path: 'public',
-    component: HomeComponent,
   },
   { path: '', redirectTo: 'pages', pathMatch: 'full' },
   { path: '**', redirectTo: 'pages' },

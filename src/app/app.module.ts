@@ -21,10 +21,9 @@ import {
   NbWindowModule,
 } from '@nebular/theme';
 import { AuthGuard } from './auth-guard.service';
-import { HomeComponent } from './public/home/home.component';
 
 @NgModule({
-  declarations: [AppComponent, HomeComponent, ],
+  declarations: [AppComponent, ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,

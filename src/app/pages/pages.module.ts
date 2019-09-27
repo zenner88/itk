@@ -6,6 +6,7 @@ import { PagesComponent } from './pages.component';
 import { DashboardModule } from './dashboard/dashboard.module';
 import { PagesRoutingModule } from './pages-routing.module';
 import { MiscellaneousModule } from './miscellaneous/miscellaneous.module';
+import { PublicModule } from '../public/public.module';
 
 @NgModule({
   imports: [
