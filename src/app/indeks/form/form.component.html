@@ -94,34 +94,45 @@
               DAFTAR DATA OBJEKTIF
           </nb-card-header>
           <nb-card-body>
-            <div class="row show-grid">
+            <div class="row show-grid" *ngFor="let source of sources; let i = index">
               <div class="col-sm-1">
-                <div align="center">1.</div>
+                <div align="center">
+                  {{i+1}}
+                </div>  
               </div>
               <div class="col-sm-3">
-                <div align="left" *ngFor="let source of sources">{{ source.indikator}} 
-
+                <div align="left">
+                  {{ source.indikator}} 
+                  <hr>
+                </div>               
+              </div>
+              <div class="col-sm-3">
+                <div align="right" *ngFor="let sourceDetail of sourceDetails">
+                  {{ sourceDetail.indikator}} 
                   <hr>
                 </div>
-                
-              </div>
-              <div class="col-sm-3">
-                <div align="right">Jumlah Personil Riil</div>
               </div>
               <div class="col-sm-1">
-                <div align="left"><input type="text" class="col-lg-4" nbInput placeholder=""></div>
+                <div align="left" *ngFor="let sourceDetail of sourceDetails">
+                  {{ sourceDetail.jenis_data}} 
+                  <hr>
+                </div>              
               </div>
               <div class="col-sm-2">
-                <div align="left">Personil</div>
+                <div align="left" *ngFor="let sourceDetail of sourceDetails">
+                  {{ sourceDetail.satuan}} 
+                  <hr>
+                </div> 
               </div>
               <div class="col-sm-1">
-                <div align="right">~ 1 file</div>
+                <div align="right">
+                  <button nbButton status="primary" hero>Upload File</button>                  
+                </div>
               </div>
               <div class="col-sm-1">
                 </div>
             </div>
           </nb-card-body>
-
             <!-- button -->
           <nb-card-body>
             <div class="row show-grid">

@@ -29,11 +29,28 @@ export class FormComponent implements OnInit {
   indikators : any;
   index = 1;
   sources: any;
+  sourceDetails: any;
+  i = 0;
   ngOnInit() {
-    this.httpClient.get(this._global.baseAPIUrl + '/View_indikators/').subscribe(indikator => {
+    this.httpClient.get(this._global.baseAPIUrl + '/View_indikators/getDataByidPrinsip?idPrinsip=2').subscribe(indikator => {
       const data = JSON.stringify(indikator);
       this.sources= JSON.parse(data);
-      console.log(this.sources);
+      console.log(this.sources[0].kode);
+      for (var i=0; i<this.sources.length; i++) {
+        var kode = this.sources[i].kode;
+        console.log(kode);
+          this.httpClient.get(this._global.baseAPIUrl + '/Itk_mst_indikator_details/getDataByKodeIndikator?KodeIndikator='+kode).subscribe(indikatorDetails => {
+            const details = JSON.stringify(indikatorDetails);
+            this.sourceDetails = JSON.parse(details);
+            console.log(this.sourceDetails.indikator);  
+          },
+          error  => {
+            console.log("Error", error);
+            this.showToast("warning", "Koneksi bermasalah", error.message);      
+          }
+          );  
+      }
+
     },
     error  => {
       console.log("Error", error);

@@ -49,7 +49,7 @@ export class SmartTableComponent {
   prinsipName: any;
   pilihAh: any;
   wow: any = "WADUH";
-  
+  prinsipx: any;
   ngOnInit(): void {
     this.penilaians = this.loadTableSettings(); 
     this.httpClient.get(this._global.baseAPIUrl + '/View_penilaians/').subscribe(indikator => {
@@ -82,6 +82,7 @@ export class SmartTableComponent {
     this.httpClient.get(this._global.baseAPIUrl + '/Itk_mst_periodes/').subscribe(data => {
       if(data != undefined || data != null)
       {
+      this.prinsipx = data;
       const datas = JSON.stringify(data);
       const datax = JSON.parse(datas);
       console.log(datas);
@@ -98,8 +99,8 @@ export class SmartTableComponent {
   }
   onUserRowSelect(event,contentTemplate) {
     console.log(event);
-    console.log(event.data.kode);
-    this.kodeDetails = event.data.kode;
+    console.log(event.data.id);
+    this.kodeDetails = event.data.id;
     this.windowService.open(
       contentTemplate,
       {
@@ -109,6 +110,7 @@ export class SmartTableComponent {
     this.httpClient.get(this._global.baseAPIUrl + '/View_penilaian_details/getDataBypenilaianId?penilaianId='+this.kodeDetails).subscribe(indikatorDetails => {
       const data = JSON.stringify(indikatorDetails);
       this.sourceDetails.load(JSON.parse(data));
+      console.log(this.sourceDetails);
     },
     error  => {
       console.log("Error", error);
@@ -420,23 +422,28 @@ penilaianDetails = {
       confirmDelete: true,
     },
     columns: {
-      id: {
-        title: 'ID',
+      periode: {
+        title: 'Periode',
         type: 'string',
         editable: false,
       },
-      penilaian: {
-        title: 'Penilaian',
+      satker: {
+        title: 'Satker',
         filter: false,
         editable: false,
       },
-      indikator_satfung: {
-        title: 'Penilaian',
+      singkatan_satfung: {
+        title: 'Satfung',
         filter: false,
         editable: false,
       },
       nilai: {
         title: 'Nilai',
+        type: 'string',
+        filter: false
+      },
+      rumus: {
+        title: 'Rumus',
         type: 'string',
         filter: false
       },
