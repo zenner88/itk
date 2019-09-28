@@ -50,6 +50,7 @@ export class SmartTableComponent {
   pilihAh: any;
   wow: any = "WADUH";
   prinsipx: any;
+  satkerx: any;
   ngOnInit(): void {
     this.penilaians = this.loadTableSettings(); 
     this.httpClient.get(this._global.baseAPIUrl + '/View_penilaians/').subscribe(indikator => {
@@ -65,6 +66,7 @@ export class SmartTableComponent {
     this.httpClient.get(this._global.baseAPIUrl + '/Itk_mst_satkers/').subscribe(data => {
       if(data != undefined || data != null)
       {
+      this.satkerx = data;
       const datas = JSON.stringify(data);
       const datax = JSON.parse(datas);
       console.log(datas);

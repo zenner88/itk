@@ -50,8 +50,8 @@ export class SmartTableComponent {
   findDayNameById: any;
   prinsipName: any;
   pilihAh: any;
-  wow: any;
-  
+  prinsipx: any;
+  datax: any;  
   ngOnInit(): void {
     this.indikators = this.loadTableSettings(); 
     this.httpClient.get(this._global.baseAPIUrl + '/View_indikators/').subscribe(indikator => {
@@ -67,6 +67,7 @@ export class SmartTableComponent {
     this.httpClient.get(this._global.baseAPIUrl + '/Itk_ref_prinsips/').subscribe(data => {
       if(data != undefined || data != null)
       {
+      this.prinsipx = data;
       const datas = JSON.stringify(data);
       const datax = JSON.parse(datas);
       console.log(datas);
@@ -84,6 +85,7 @@ export class SmartTableComponent {
     this.httpClient.get(this._global.baseAPIUrl + '/Itk_ref_jenis_data/').subscribe(data => {
       if(data != undefined || data != null)
       {
+      this.datax = data;
       const datas = JSON.stringify(data);
       const datax = JSON.parse(datas);
       console.log(datas);
@@ -154,6 +156,35 @@ export class SmartTableComponent {
       this.showToast("warning", "Koneksi bermasalah", error.message);      
     }
     );
+  }
+  prinsipClick2(event){
+    console.log(event);
+    if (event == undefined){
+      this.indikators = this.loadTableSettings(); 
+      this.httpClient.get(this._global.baseAPIUrl + '/View_indikators/').subscribe(indikator => {
+        const data = JSON.stringify(indikator);
+        this.source.load(JSON.parse(data));
+        console.log(this.source);
+      },
+      error  => {
+        console.log("Error", error);
+        this.showToast("warning", "Koneksi bermasalah", error.message);      
+      }
+      ); 
+    }else{
+    console.log(event);
+    var kodex = event;
+    this.httpClient.get(this._global.baseAPIUrl + '/View_indikators/getDataByidPrinsip?idPrinsip='+kodex).subscribe(indikator => {
+      const data = JSON.stringify(indikator);
+      this.source.load(JSON.parse(data));
+      console.log(this.source);
+    },
+    error  => {
+      console.log("Error", error);
+      this.showToast("warning", "Koneksi bermasalah", error.message);      
+    }
+    );
+  }
   }
   onUserRowSelect(event,contentTemplate) {
     console.log(event);

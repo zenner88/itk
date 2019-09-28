@@ -27,6 +27,9 @@ export class SmartTableComponent {
   public indikatorSatfungList: any[] = [];    
   public satkerList: any[] = [];    
   bench: any;
+  satfungx: any;
+  periodex: any;
+  satkerx: any;
   constructor(private httpClient : HttpClient, private _global: AppGlobals, private toastrService: NbToastrService) {     
     this.bench = this.loadTableSettings()
     this.httpClient.get(this._global.baseAPIUrl + '/View_penilaian_indikators/').subscribe(indikator => {
@@ -41,6 +44,7 @@ export class SmartTableComponent {
     this.httpClient.get(this._global.baseAPIUrl + '/Itk_ref_satfungs/').subscribe(data => {
       if(data != undefined || data != null)
       {
+      this.satfungx = data;
       const datas = JSON.stringify(data);
       const datax = JSON.parse(datas);
       console.log(datas);
@@ -57,6 +61,7 @@ export class SmartTableComponent {
     this.httpClient.get(this._global.baseAPIUrl + '/Itk_mst_periodes/').subscribe(data => {
       if(data != undefined || data != null)
       {
+      this.periodex = data;
       const datas = JSON.stringify(data);
       const datax = JSON.parse(datas);
       console.log(datas);
@@ -73,6 +78,7 @@ export class SmartTableComponent {
     this.httpClient.get(this._global.baseAPIUrl + '/Itk_mst_satkers/').subscribe(data => {
       if(data != undefined || data != null)
       {
+      this.satkerx = data;
       const datas = JSON.stringify(data);
       const datax = JSON.parse(datas);
       console.log(datas);

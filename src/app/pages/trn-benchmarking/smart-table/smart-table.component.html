@@ -4,6 +4,19 @@
   </nb-card-header>
 
   <nb-card-body>
+      <div class="col-lg-6">
+      <nb-card>
+        <nb-card-body>
+          <div class="form-group">
+          <label class="label">Periode</label>
+          <nb-select selected=0 fullWidth class="pull-right status-info shape-rectangle">
+            <nb-option value=0 (click)="prinsipClick2(event)">Semua</nb-option>
+            <nb-option *ngFor="let x of periodex" value="x.kode" (click)="prinsipClick(x.kode)">{{ x.periode }}</nb-option>
+          </nb-select>
+          </div>
+        </nb-card-body> 
+      </nb-card>
+      </div>
       <ng2-smart-table [settings]="bench" [source]="source" (deleteConfirm)="onDeleteConfirm($event)" (editConfirm)="onSaveConfirm($event)"
       (createConfirm)="onCreateConfirm($event)">
       </ng2-smart-table>

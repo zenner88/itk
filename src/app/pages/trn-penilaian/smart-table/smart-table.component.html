@@ -9,16 +9,16 @@
       <div class="form-group">
       <label class="label">Periode</label>
       <nb-select selected=0 fullWidth class="pull-right status-info shape-rectangle">
-        <nb-option value=0 >Periode</nb-option>
+        <nb-option value=0 (click)="prinsipClick2(event)">Semua</nb-option>
         <nb-option *ngFor="let x of prinsipx" value="x.kode" (click)="prinsipClick(x.kode)">{{ x.periode }}</nb-option>
       </nb-select>
       </div>
       <hr>
       <div class="form-group">
-      <label class="label">POLRES</label>
+      <label class="label">Satker</label>
       <nb-select selected=0 fullWidth class="pull-right status-info shape-rectangle">
-        <nb-option value=0 >Periode</nb-option>
-        <nb-option *ngFor="let x of prinsipx" value="x.kode" (click)="prinsipClick(x.kode)">{{ x.periode }}</nb-option>
+        <nb-option value=0 (click)="prinsipClick2(event)">Semua</nb-option>
+        <nb-option *ngFor="let x of satkerx" value="x.kode" (click)="prinsipClick(x.kode)">{{ x.satker }}</nb-option>
       </nb-select>
       </div>
     </nb-card-body> 

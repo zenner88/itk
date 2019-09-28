@@ -51,6 +51,9 @@ export class SmartTableComponent {
   satfungs: any;
   findDayNameById: any;
   prinsipName: any;
+  satfungx: any;
+  polresx: any;
+
   ngOnInit(): void {
     this.satfungs = this.loadTableSettings(); 
     this.httpClient.get(this._global.baseAPIUrl + '/View_satfungs/').subscribe(indikator => {
@@ -66,6 +69,7 @@ export class SmartTableComponent {
       
       if(data != undefined || data != null)
       {
+        this.polresx = data;
       const datas = JSON.stringify(data);
       const datax = JSON.parse(datas);
       console.log(datas);
@@ -84,6 +88,7 @@ export class SmartTableComponent {
       
       if(data != undefined || data != null)
       {
+        this.satfungx = data;
       const datas = JSON.stringify(data);
       const datax = JSON.parse(datas);
       console.log(datas);

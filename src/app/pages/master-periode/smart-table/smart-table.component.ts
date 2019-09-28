@@ -30,6 +30,8 @@ export class SmartTableComponent {
   public satkerName: any;
   public satkerId: any;
   rowData: any;
+  satkerx: any;
+
   constructor(private httpClient : HttpClient, private _global: AppGlobals, private toastrService: NbToastrService) 
   {  }
   ngOnInit(): void {
@@ -46,6 +48,7 @@ export class SmartTableComponent {
     this.httpClient.get(this._global.baseAPIUrl + '/Itk_ref_tipe_satkers/').subscribe(data => {
       if(data != undefined || data != null)
       {
+        this.satkerx =data;
       const datas = JSON.stringify(data);
       const datax = JSON.parse(datas);
       console.log(datas);
@@ -200,7 +203,7 @@ export class SmartTableComponent {
         type: 'string',
       },
       id_tipe_satker: {
-        title: 'Prinsip',
+        title: 'Satker',
         editor: {
           type: 'list',
           config: {

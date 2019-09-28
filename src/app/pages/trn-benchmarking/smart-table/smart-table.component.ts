@@ -26,6 +26,8 @@ export class SmartTableComponent {
   public periodeList: any[] = [];    
   public indikatorSatfungList: any[] = [];    
   bench: any;
+  periodex: any;
+
   constructor(private httpClient : HttpClient, private _global: AppGlobals, private toastrService: NbToastrService) {     
     this.bench = this.loadTableSettings()
     this.httpClient.get(this._global.baseAPIUrl + '/Itk_trn_brenchmarkings/').subscribe(indikator => {
@@ -56,6 +58,7 @@ export class SmartTableComponent {
     this.httpClient.get(this._global.baseAPIUrl + '/Itk_mst_periodes/').subscribe(data => {
       if(data != undefined || data != null)
       {
+      this.periodex = data;
       const datas = JSON.stringify(data);
       const datax = JSON.parse(datas);
       console.log(datas);

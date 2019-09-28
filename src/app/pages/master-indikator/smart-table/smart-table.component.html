@@ -3,7 +3,35 @@
     Master Indikator
   </nb-card-header>
   <nb-card-body>
-    <button class="btn-primary btn-md" (click)="openWindow(contentBobots)" nbButton>Isi Bobot</button>
+      <div class="row">
+      <div class="col-lg-6">
+      <nb-card>
+        <nb-card-body>
+          <div class="form-group">
+          <label class="label">Prinsip</label>
+          <nb-select selected=0 fullWidth class="pull-right status-info shape-rectangle">
+            <nb-option value=0 (click)="prinsipClick2(event)">Semua</nb-option>
+            <nb-option *ngFor="let x of prinsipx" value="x.id" (click)="prinsipClick2(x.id)">{{ x.prinsip }}</nb-option>
+          </nb-select>
+          </div>
+          <div class="form-group">
+          <label class="label">Jenis Data</label>
+          <nb-select selected=0 fullWidth class="pull-right status-info shape-rectangle">
+            <nb-option value=0 (click)="prinsipClick2(event)">Semua</nb-option>
+            <nb-option *ngFor="let x of datax" value="x.id" (click)="prinsipClick(x.id)">{{ x.jenis }}</nb-option>
+          </nb-select>
+          </div>
+        </nb-card-body> 
+      </nb-card>
+      </div>
+      <div class="col-lg-2">
+      <nb-card>
+        <nb-card-body>
+          <button class="btn-primary btn-md" (click)="openWindow(contentBobots)" nbButton>Isi Bobot</button>
+        </nb-card-body> 
+      </nb-card>
+      </div>
+      </div>
     <ng2-smart-table [settings]="indikators" [source]="source" (deleteConfirm)="onDeleteConfirm($event)" (editConfirm)="onSaveConfirm($event)"
     (createConfirm)="onCreateConfirm($event)" (userRowSelect)="onUserRowSelect($event, contentTemplate)">
     </ng2-smart-table>

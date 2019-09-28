@@ -33,6 +33,8 @@ export class SmartTableComponent {
   public satkerList: any[] = [];  
   public polresList: any[] = [];  
   satkers: any;
+  satkerx: any;
+  polresx: any;
   ngOnInit(): void {
     this.satkers = this.loadTableSettings(); 
     this.httpClient.get(this._global.baseAPIUrl + '/View_satkers/').subscribe(indikator => {
@@ -47,6 +49,7 @@ export class SmartTableComponent {
     this.httpClient.get(this._global.baseAPIUrl + '/Itk_ref_tipe_satkers/').subscribe(data => {
       if(data != undefined || data != null)
       {
+        this.satkerx = data;                
       const datas = JSON.stringify(data);
       const datax = JSON.parse(datas);
       console.log(datas);
@@ -64,6 +67,7 @@ export class SmartTableComponent {
       
       if(data != undefined || data != null)
       {
+        this.polresx = data;                
       const datas = JSON.stringify(data);
       const datax = JSON.parse(datas);
       console.log(datas);
