@@ -15,11 +15,21 @@
                 <div align="center">1.</div>
               </div>
               <div class="col-sm-2">
-                <div align="right">POLDA</div>
+                <div align="right">
+                  POLDA
+                </div>
               </div>
-              <div class="col-sm-8">
-                <div align="left">POLDA SUMUT</div>
+              <div class="col-sm-4">
+                <div align="left">
+                  <div class="form-group">
+                  <nb-select selected=0 fullWidth class="pull-right status-info shape-rectangle">
+                    <nb-option value=0>Pilih</nb-option>
+                    <nb-option *ngFor="let x of satkerx" value="x.kode" (click)="prinsipClick(x.kode)">{{ x.satker }}</nb-option>
+                  </nb-select>
+                  </div>
+                </div>
               </div>
+              <div class="col-sm-4"></div>
             </div>
             <div class="row show-grid">
               <div class="col-sm-2">
@@ -28,9 +38,17 @@
               <div class="col-sm-2">
                 <div align="right">POLRES</div>
               </div>
-              <div class="col-sm-8">
-                <div align="left">POLRES SIMALUNGUN</div>
+              <div class="col-sm-4">
+                <div align="left">
+                  <div class="form-group">
+                  <nb-select selected=0 fullWidth class="pull-right status-info shape-rectangle">
+                    <nb-option value=0>Pilih</nb-option>
+                    <nb-option *ngFor="let x of satkerx2" value="x.kode" (click)="prinsipClick(x.kode)">{{ x.satker }}</nb-option>
+                  </nb-select>
+                  </div>
+                </div>
               </div>
+              <div class="col-sm-4"></div>
             </div>
             <div class="row show-grid">
               <div class="col-sm-2">
@@ -39,9 +57,17 @@
               <div class="col-sm-2">
                 <div align="right">TYPE POLRES</div>
               </div>
-              <div class="col-sm-8">
-                <div align="left">Rawan Konflik</div>
+              <div class="col-sm-4">
+                <div align="left">
+                  <div class="form-group">
+                  <nb-select selected=0 fullWidth class="pull-right status-info shape-rectangle">
+                    <nb-option value=0>Pilih</nb-option>
+                    <nb-option *ngFor="let x of polresx" value="x.id" (click)="prinsipClick(x.id)">{{ x.tipe }}</nb-option>
+                  </nb-select>
+                  </div>
+                </div>
               </div>
+              <div class="col-sm-4"></div>
             </div>
             <div class="row show-grid">
               <div class="col-sm-2">

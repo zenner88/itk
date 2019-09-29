@@ -30,6 +30,9 @@ export class FormComponent implements OnInit {
   index = 1;
   sources: any;
   sourceDetails: any;
+  satkerx: any;
+  satkerx2: any;
+  polresx: any;
   i = 0;
   ngOnInit() {
     this.httpClient.get(this._global.baseAPIUrl + '/View_indikators/getDataByidPrinsip?idPrinsip=2').subscribe(indikator => {
@@ -49,6 +52,29 @@ export class FormComponent implements OnInit {
             this.showToast("warning", "Koneksi bermasalah", error.message);      
           }
           );  
+          this.httpClient.get(this._global.baseAPIUrl + '/Itk_mst_satkers/').subscribe(data => {
+            if(data != undefined || data != null)
+            {
+            this.satkerx = data;
+            }
+          }, 
+          error => { console.log(error) }); 
+          // satker2
+          this.httpClient.get(this._global.baseAPIUrl + '/Itk_mst_satkers/').subscribe(data => {
+            if(data != undefined || data != null)
+            {
+            this.satkerx2 = data;
+            }
+          }, 
+          error => { console.log(error) }); 
+          // tipe polres 
+          this.httpClient.get(this._global.baseAPIUrl + '/Itk_ref_tipe_polres/').subscribe(data => {
+            if(data != undefined || data != null)
+            {
+              this.polresx = data;
+            }
+          }, 
+          error => { console.log(error) }); 
       }
 
     },
