@@ -120,53 +120,64 @@
               DAFTAR DATA OBJEKTIF
           </nb-card-header>
           <nb-card-body>
-            <div class="row show-grid" *ngFor="let source of sources; let i = index">
-              <div class="col-sm-1">
-                <div align="center">
-                  {{i+1}}
-                </div>  
-              </div>
-              <div class="col-sm-3">
-                <div align="left">
-                  {{ source.indikator_induk}} 
-                  <hr>
-                </div>               
-              </div>
-              <div class="col-sm-3">
-                <div align="right">
-                  {{ source.indikator}} 
-                  <hr>
-                </div>
-              </div>
-              <div class="col-sm-1">
-                <div align="left">
-                  <input type="text" nbInput fullWidth placeholder="" value="{{source.nilai}}">
-                  <hr>
-                </div>              
-              </div>
-              <div class="col-sm-1">
-                <div align="left">
-                  {{ source.satuan}} 
-                  <hr>
-                </div> 
-              </div>
-              <div class="col-sm-1">
-                <div align="left">
-                  {{ source.progress}} 
-                  <hr>
-                </div> 
-              </div>
-              <div class="col-sm-1">
-                <div align="right">
-                  <button nbButton status="primary" hero>Upload File</button>                  
-                </div>
-              </div>
-              <div class="col-sm-1">
-                </div>
-            </div>
+        <form [formGroup]="indexForm" (ngSubmit)="onSubmit()">
+          <div style="overflow-x:auto;">
+            <table class="responsive" border="0" *ngFor="let source of objek; let z of source.details; let i = index">
+          <tr width="100%">
+            <td style="vertical-align:top" width="6%">
+              <div align="center">
+                {{i+1}}
+              </div>  
+            </td>
+            <td style="vertical-align:top" width="32%">
+              <div align="left">
+              <!-- <div align="left" *ngIf=" source.Jenis == 'P' "> -->
+                {{ source.indikator}} 
+                <hr>
+              </div>               
+            </td>
+          <!-- <div class="row" *ngFor="let z of source.details"> -->
+          <div *ngFor="let z of source.details; let i = index">
+            <td style="vertical-align:top" width="22%">
+              <!-- <div align="right" *ngFor="let z of source.details"> -->
+                {{ z.indikator}} 
+                <hr>
+              <!-- </div> -->
+            </td>
+            <td style="vertical-align:top" width="10%">
+              <!-- <div align="left" *ngFor="let z of source.details"> -->
+                <input type="text" (change)=savedNilai($event) formControlName="nilai" id="{{z.id}}" nbInput fullWidth value="{{z.nilai}}">
+                <hr>
+              <!-- </div>               -->
+            </td>
+            <td style="vertical-align:top" width="10%">
+              <!-- <div align="left" *ngFor="let z of source.details"> -->
+                {{ z.satuan}} 
+              <!-- </div>  -->
+            </td>
+            <td style="vertical-align:top" width="10%">
+              <!-- <div align="left" *ngFor="let z of source.details"> -->
+                {{ z.progress}} 
+              <!-- </div>  -->
+            </td>
+            <td style="vertical-align:top" width="10%">
+              <!-- <div align="right" *ngFor="let z of source.details"> -->
+                  <!-- {{ z.arsip_link}}  -->
+                <button nbButton status="primary" hero>Upload File</button>      
+              <!-- </div> -->
+            </td>
+            <!-- <div class="col-sm-1">
+              </div> -->
+          </div>
+          </tr>
+          <button class="btn btn-primary mr-1">Simpan</button>
+          </table>
+        </div>
+
+        </form>
           </nb-card-body>
             <!-- button -->
-          <nb-card-body>
+          <!-- <nb-card-body>
             <div class="row show-grid">
                 <div class="col-sm-2">
                   <div align="right">
@@ -180,7 +191,7 @@
                     </div>
                   </div>
               </div>
-          </nb-card-body>
+          </nb-card-body> -->
         </nb-card>
         </nb-card-body>
         </nb-card>

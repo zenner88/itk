@@ -18,6 +18,7 @@ import { FormComponent } from './form/form.component';
 import { IndeksRoutingModule } from './indeks-routing.module';
 import { MiscellaneousModule } from '../pages/miscellaneous/miscellaneous.module';
 import { GridComponent } from './grid/grid.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   imports: [
@@ -36,6 +37,8 @@ import { GridComponent } from './grid/grid.component';
     NbDatepickerModule,
     NbSelectModule,
     NbIconModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   declarations: [
     FormComponent,

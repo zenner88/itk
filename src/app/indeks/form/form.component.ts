@@ -3,49 +3,107 @@ import {
   NbToastrService, 
   NbGlobalPhysicalPosition, 
   NbComponentStatus,
-  NbWindowService,
 } from '@nebular/theme';
 import { HttpClient } from '@angular/common/http';
 import { AppGlobals } from '../../app.global';
-import { LocalDataSource } from 'ng2-smart-table';
-import { FormGroup} from '@angular/forms';
+import { FormGroup, FormBuilder, FormArray } from '@angular/forms';
+import { DatePipe,formatDate } from '@angular/common';
+import { stringify } from '@angular/compiler/src/util';
 
 @Component({
   selector: 'ngx-form',
   templateUrl: './form.component.html',
   styleUrls: ['./form.component.scss'],
-  providers: [AppGlobals],
+  providers: [AppGlobals,DatePipe],
 })
 @Injectable()
 export class FormComponent implements OnInit {
-
   constructor(
-    private windowService: NbWindowService, 
     private httpClient : HttpClient, 
     private _global: AppGlobals, 
-    private toastrService: NbToastrService
-  ) { }
-  form: FormGroup;
+    private toastrService: NbToastrService,
+    private fb: FormBuilder
+  ) { 
+  }
+  indexForm: FormGroup;
+  submitted = false;
   indikators : any;
   index = 1;
-  sources: any;
+  sources: any[]=[];
   sourceDetails: any;
   satkerx: any;
   satkerx2: any;
   polresx: any;
   i = 0;
-  kode = 114;
+  kode : any;
+  objek: any[]=[];
+  objek2: any[]=[];
+  objek3: any[]=[];
+
+  kodeInduk: any;
+  indikator: any;
+  now : any;
+  user = "zenner";
+  items: FormArray;
+  
   ngOnInit() {
-    this.httpClient.get(this._global.baseAPIUrl + '/View_penilaian_indikator_alls/getDataBypenilaianId?penilaianId='+this.kode).subscribe(indikator => {
+    this.now = formatDate(new Date(), 'yyyy/MM/dd', 'en');
+    this.indexForm = this.fb.group({
+      id: [''],
+      nilai: [''],
+      waktu_ubah: this.now,
+      diubah_oleh: this.user,    
+    })
+    console.log(this.now);
+    this.httpClient.get(this._global.baseAPIUrl + '/View_penilaian_indikator_alls/getDataBypenilaianIdDanJenisDanKIIDanKsat?penilaianId=114&jenis=P&kodeSatfung=TSU&kodeIndikatorInduk=K01').subscribe(indikator => {
       const data = JSON.stringify(indikator);
-      this.sources= JSON.parse(data);
-      console.log(this.sources[0].kode);
+      var datax = JSON.parse(data); 
+      // this.objek = this.sources;
+      datax.forEach(xx => {
+        this.objek.push({
+          kode_indikator_induk:xx.kode_indikator_induk,
+          indikator:xx.indikator,
+
+          details:this.objek2
+        })   
+        // this.prinsipName = xx.title;                
+      });
     },
     error  => {
       console.log("Error", error);
-      // this.showToast("warning", "Koneksi bermasalah", error.message);      
+      this.showToast("warning", "Koneksi bermasalah", error.message);      
     }
     ); 
+  
+    console.log("GABUNG");
+    console.log(this.objek);
+
+    this.httpClient.get(this._global.baseAPIUrl + '/View_penilaian_indikator_alls/getDataBypenilaianIdDanJenisDanKIIDanKsat?penilaianId=114&jenis=D&kodeSatfung=TSU&kodeIndikatorInduk=K01').subscribe(indikator => {
+      const data = JSON.stringify(indikator);
+      var datax = JSON.parse(data); 
+    console.log(datax);
+      // this.objek = this.sources;
+      datax.forEach(xx => {
+        this.objek2.push({
+          kode_indikator_induk:xx.kode_indikator_induk,
+          indikator:xx.indikator,
+          satuan:xx.satuan,
+          nilai:xx.nilai,
+          arsip_link:xx.arsip_link,
+          progress:xx.progress,
+          id:xx.id,
+        })   
+        // this.prinsipName = xx.title;                
+      });
+    },
+    error  => {
+      console.log("Error", error);
+      this.showToast("warning", "Koneksi bermasalah", error.message);      
+    }
+    ); 
+    console.log("Details");
+    console.log(this.objek2);
+
     // for (var i=0; i<this.sources.length; i++) {
     //   var kode = this.sources[i].kode;
     //   console.log(kode);
@@ -84,6 +142,40 @@ export class FormComponent implements OnInit {
     //     error => { console.log(error) }); 
     // }
   }
+  savedNilai(event){
+    console.log(event);
+    const data = { 
+      nilai: event.target.value,
+      waktu_ubah: this.now,
+      diubah_oleh: this.user,
+    }
+    console.log("DATA: ",data);
+
+    this.httpClient.put(this._global.baseAPIUrl + '/Itk_trn_penilaian_details/'+event.target.id,data).subscribe(data  => {
+      console.log("Input Berhasil", data);
+      this.showToast("success", "Data Ter update", event.newData.kode);
+      event.confirm.resolve();
+    },
+    error  => {
+      console.log("Error", error);
+      this.showToast("warning", "Input / koneksi bermasalah", error.error.error.message);
+    }
+    );
+  }
+  // onSubmit() {
+  //   var f = JSON.stringify(this.indexForm.value);
+  //   console.log(f);
+  //   this.ngOnInit;
+  //   // var g = JSON.parse(f);
+  //   // g.forEach(h => {
+  //   //   this.objek3.push({
+  //   //     id : h.id
+  //   //   }) 
+  //   // });
+  //   // console.log(this.objek3);
+  //   // console.log(JSON.stringify(this.indexForm.value));
+  //   // alert('SUCCESS!! :-)\n\n' + JSON.stringify(this.indexForm.value, null, 4));
+  // }
   private showToast(type: NbComponentStatus, title: string, body: string) {
     const config = {
       status: type,

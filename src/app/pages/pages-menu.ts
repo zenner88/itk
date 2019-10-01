@@ -145,7 +145,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
   //   ],
   // },
   {
-    title: 'Indeks Form',
+    title: 'Form Objektif',
     link: '/indeks/form',
     icon: 'browser-outline',
   },
