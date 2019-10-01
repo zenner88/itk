@@ -128,25 +128,31 @@
               </div>
               <div class="col-sm-3">
                 <div align="left">
-                  {{ source.indikator}} 
+                  {{ source.indikator_induk}} 
                   <hr>
                 </div>               
               </div>
               <div class="col-sm-3">
-                <div align="right" *ngFor="let sourceDetail of sourceDetails">
-                  {{ sourceDetail.indikator}} 
+                <div align="right">
+                  {{ source.indikator}} 
                   <hr>
                 </div>
               </div>
               <div class="col-sm-1">
-                <div align="left" *ngFor="let sourceDetail of sourceDetails">
-                  {{ sourceDetail.jenis_data}} 
+                <div align="left">
+                  <input type="text" nbInput fullWidth placeholder="" value="{{source.nilai}}">
                   <hr>
                 </div>              
               </div>
-              <div class="col-sm-2">
-                <div align="left" *ngFor="let sourceDetail of sourceDetails">
-                  {{ sourceDetail.satuan}} 
+              <div class="col-sm-1">
+                <div align="left">
+                  {{ source.satuan}} 
+                  <hr>
+                </div> 
+              </div>
+              <div class="col-sm-1">
+                <div align="left">
+                  {{ source.progress}} 
                   <hr>
                 </div> 
               </div>

@@ -34,55 +34,55 @@ export class FormComponent implements OnInit {
   satkerx2: any;
   polresx: any;
   i = 0;
+  kode = 114;
   ngOnInit() {
-    this.httpClient.get(this._global.baseAPIUrl + '/View_indikators/getDataByidPrinsip?idPrinsip=2').subscribe(indikator => {
+    this.httpClient.get(this._global.baseAPIUrl + '/View_penilaian_indikator_alls/getDataBypenilaianId?penilaianId='+this.kode).subscribe(indikator => {
       const data = JSON.stringify(indikator);
       this.sources= JSON.parse(data);
       console.log(this.sources[0].kode);
-      for (var i=0; i<this.sources.length; i++) {
-        var kode = this.sources[i].kode;
-        console.log(kode);
-          this.httpClient.get(this._global.baseAPIUrl + '/Itk_mst_indikator_details/getDataByKodeIndikator?KodeIndikator='+kode).subscribe(indikatorDetails => {
-            const details = JSON.stringify(indikatorDetails);
-            this.sourceDetails = JSON.parse(details);
-            console.log(this.sourceDetails.indikator);  
-          },
-          error  => {
-            console.log("Error", error);
-            this.showToast("warning", "Koneksi bermasalah", error.message);      
-          }
-          );  
-          this.httpClient.get(this._global.baseAPIUrl + '/Itk_mst_satkers/').subscribe(data => {
-            if(data != undefined || data != null)
-            {
-            this.satkerx = data;
-            }
-          }, 
-          error => { console.log(error) }); 
-          // satker2
-          this.httpClient.get(this._global.baseAPIUrl + '/Itk_mst_satkers/').subscribe(data => {
-            if(data != undefined || data != null)
-            {
-            this.satkerx2 = data;
-            }
-          }, 
-          error => { console.log(error) }); 
-          // tipe polres 
-          this.httpClient.get(this._global.baseAPIUrl + '/Itk_ref_tipe_polres/').subscribe(data => {
-            if(data != undefined || data != null)
-            {
-              this.polresx = data;
-            }
-          }, 
-          error => { console.log(error) }); 
-      }
-
     },
     error  => {
       console.log("Error", error);
       // this.showToast("warning", "Koneksi bermasalah", error.message);      
     }
     ); 
+    // for (var i=0; i<this.sources.length; i++) {
+    //   var kode = this.sources[i].kode;
+    //   console.log(kode);
+    //     this.httpClient.get(this._global.baseAPIUrl + '/Itk_mst_indikator_details/getDataByKodeIndikator?KodeIndikator='+kode).subscribe(indikatorDetails => {
+    //       const details = JSON.stringify(indikatorDetails);
+    //       this.sourceDetails = JSON.parse(details);
+    //       console.log(this.sourceDetails.indikator);  
+    //     },
+    //     error  => {
+    //       console.log("Error", error);
+    //       this.showToast("warning", "Koneksi bermasalah", error.message);      
+    //     }
+    //     );  
+    //     this.httpClient.get(this._global.baseAPIUrl + '/Itk_mst_satkers/').subscribe(data => {
+    //       if(data != undefined || data != null)
+    //       {
+    //       this.satkerx = data;
+    //       }
+    //     }, 
+    //     error => { console.log(error) }); 
+    //     // satker2
+    //     this.httpClient.get(this._global.baseAPIUrl + '/Itk_mst_satkers/').subscribe(data => {
+    //       if(data != undefined || data != null)
+    //       {
+    //       this.satkerx2 = data;
+    //       }
+    //     }, 
+    //     error => { console.log(error) }); 
+    //     // tipe polres 
+    //     this.httpClient.get(this._global.baseAPIUrl + '/Itk_ref_tipe_polres/').subscribe(data => {
+    //       if(data != undefined || data != null)
+    //       {
+    //         this.polresx = data;
+    //       }
+    //     }, 
+    //     error => { console.log(error) }); 
+    // }
   }
   private showToast(type: NbComponentStatus, title: string, body: string) {
     const config = {
