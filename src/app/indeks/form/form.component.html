@@ -117,7 +117,8 @@
         </div>
         <nb-card accent="info">
           <nb-card-header>
-              DAFTAR DATA OBJEKTIF
+              DAFTAR DATA OBJEKTIF 
+              <small><i> (Data Otomatis tersimpan setelah anda melakukan pengisian.)</i> </small>
           </nb-card-header>
           <nb-card-body>
         <form [formGroup]="indexForm" (ngSubmit)="onSubmit()">
@@ -138,39 +139,47 @@
             </td>
           <!-- <div class="row" *ngFor="let z of source.details"> -->
           <div *ngFor="let z of source.details; let i = index">
-            <td style="vertical-align:top" width="22%">
+            <td style="vertical-align:top" width="24%">
               <!-- <div align="right" *ngFor="let z of source.details"> -->
                 {{ z.indikator}} 
                 <hr>
               <!-- </div> -->
             </td>
             <td style="vertical-align:top" width="10%">
-              <!-- <div align="left" *ngFor="let z of source.details"> -->
-                <input type="text" (change)=savedNilai($event) formControlName="nilai" id="{{z.id}}" nbInput fullWidth value="{{z.nilai}}">
+                <div align="center">
+                    <input type="text" (change)=savedNilai($event) formControlName="nilai" id="{{z.id}}" nbInput fullWidth value="{{z.nilai}}">
                 <hr>
-              <!-- </div>               -->
+              </div>              
             </td>
             <td style="vertical-align:top" width="10%">
-              <!-- <div align="left" *ngFor="let z of source.details"> -->
-                {{ z.satuan}} 
-              <!-- </div>  -->
+                <div align="center">
+                    {{ z.satuan}} 
+              </div> 
             </td>
             <td style="vertical-align:top" width="10%">
-              <!-- <div align="left" *ngFor="let z of source.details"> -->
-                {{ z.progress}} 
-              <!-- </div>  -->
+              <div align="center">
+               <small><i> {{ z.progress}}</i> </small>
+              </div> 
             </td>
-            <td style="vertical-align:top" width="10%">
+            <td style="vertical-align:top" width="8%">
               <!-- <div align="right" *ngFor="let z of source.details"> -->
                   <!-- {{ z.arsip_link}}  -->
-                <button nbButton status="primary" hero>Upload File</button>      
-              <!-- </div> -->
+                  <div class="drop-container" ngFileDrop [options]="options" (uploadOutput)="onUploadOutput($event)" [uploadInput]="uploadInput" [ngClass]="{ 'is-drop-over': dragOver }">
+                    </div>
+                    
+                    <label>
+                      <input class="btn btn-info btn-sm" type="file" ngFileSelect [options]="options" (uploadOutput)="onUploadOutput($event)" [uploadInput]="uploadInput" multiple>
+                    </label>
+                    <!-- <button type="button" class="start-upload-btn" (click)="startUpload()">
+                        Start Upload
+                      </button>   -->
+                                <!-- </div> -->
             </td>
             <!-- <div class="col-sm-1">
               </div> -->
           </div>
           </tr>
-          <button class="btn btn-primary mr-1">Simpan</button>
+          <!-- <button class="btn btn-primary mr-1">Simpan</button> -->
           </table>
         </div>
 

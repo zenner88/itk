@@ -1,4 +1,4 @@
-import { Component, OnInit, Injectable } from '@angular/core';
+import { Component, OnInit, Injectable, EventEmitter  } from '@angular/core';
 import { 
   NbToastrService, 
   NbGlobalPhysicalPosition, 
@@ -9,7 +9,7 @@ import { AppGlobals } from '../../app.global';
 import { FormGroup, FormBuilder, FormArray } from '@angular/forms';
 import { DatePipe,formatDate } from '@angular/common';
 import { stringify } from '@angular/compiler/src/util';
-
+import { UploadOutput, UploadInput, UploadFile, humanizeBytes, UploaderOptions } from 'ngx-uploader';
 @Component({
   selector: 'ngx-form',
   templateUrl: './form.component.html',
@@ -18,12 +18,22 @@ import { stringify } from '@angular/compiler/src/util';
 })
 @Injectable()
 export class FormComponent implements OnInit {
+  options: UploaderOptions;
+  formData: FormData;
+  files: UploadFile[];
+  uploadInput: EventEmitter<UploadInput>;
+  humanizeBytes: Function;
+  dragOver: boolean;
   constructor(
     private httpClient : HttpClient, 
     private _global: AppGlobals, 
     private toastrService: NbToastrService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
   ) { 
+    this.options = { concurrency: 1, maxUploads: 3 };
+    this.files = []; // local uploading files array
+    this.uploadInput = new EventEmitter<UploadInput>(); // input events, we use this to emit data to ngx-uploader
+    this.humanizeBytes = humanizeBytes;
   }
   indexForm: FormGroup;
   submitted = false;
@@ -192,5 +202,69 @@ export class FormComponent implements OnInit {
       body,
       `${titleContent}`,
       config);
+  }
+  // UPLOAD
+  onUploadOutput(output: UploadOutput): void {
+    switch (output.type) {
+      case 'allAddedToQueue':
+          // uncomment this if you want to auto upload files when added
+          // const event: UploadInput = {
+          //   type: 'uploadAll',
+          //   url: '/upload',
+          //   method: 'POST',
+          //   data: { foo: 'bar' }
+          // };
+          // this.uploadInput.emit(event);
+        break;
+      case 'addedToQueue':
+        if (typeof output.file !== 'undefined') {
+          this.files.push(output.file);
+        }
+        break;
+      case 'uploading':
+        if (typeof output.file !== 'undefined') {
+          // update current data in files array for uploading file
+          const index = this.files.findIndex((file) => typeof output.file !== 'undefined' && file.id === output.file.id);
+          this.files[index] = output.file;
+        }
+        break;
+      case 'removed':
+        // remove file from array when removed
+        this.files = this.files.filter((file: UploadFile) => file !== output.file);
+        break;
+      case 'dragOver':
+        this.dragOver = true;
+        break;
+      case 'dragOut':
+      case 'drop':
+        this.dragOver = false;
+        break;
+      case 'done':
+        // The file is downloaded
+        break;
+    }
+  }
+ 
+  startUpload(): void {
+    const event: UploadInput = {
+      type: 'uploadAll',
+      url: 'http://ngx-uploader.com/upload',
+      method: 'POST',
+      data: { foo: 'bar' }
+    };
+ 
+    this.uploadInput.emit(event);
+  }
+ 
+  cancelUpload(id: string): void {
+    this.uploadInput.emit({ type: 'cancel', id: id });
+  }
+ 
+  removeFile(id: string): void {
+    this.uploadInput.emit({ type: 'remove', id: id });
+  }
+ 
+  removeAllFiles(): void {
+    this.uploadInput.emit({ type: 'removeAll' });
   }
 }

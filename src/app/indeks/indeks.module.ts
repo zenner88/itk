@@ -19,7 +19,7 @@ import { IndeksRoutingModule } from './indeks-routing.module';
 import { MiscellaneousModule } from '../pages/miscellaneous/miscellaneous.module';
 import { GridComponent } from './grid/grid.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-
+import { NgxUploaderModule } from 'ngx-uploader';
 @NgModule({
   imports: [
     IndeksRoutingModule,
@@ -38,7 +38,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     NbSelectModule,
     NbIconModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgxUploaderModule
   ],
   declarations: [
     FormComponent,
