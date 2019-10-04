@@ -6,9 +6,8 @@ import {
 } from '@nebular/theme';
 import { HttpClient } from '@angular/common/http';
 import { AppGlobals } from '../../app.global';
-import { FormGroup, FormBuilder, FormArray } from '@angular/forms';
+import { FormGroup, FormBuilder, FormArray, FormControl, Validators  } from '@angular/forms';
 import { DatePipe,formatDate } from '@angular/common';
-import { stringify } from '@angular/compiler/src/util';
 import { UploadOutput, UploadInput, UploadFile, humanizeBytes, UploaderOptions } from 'ngx-uploader';
 @Component({
   selector: 'ngx-form',
@@ -36,6 +35,7 @@ export class FormComponent implements OnInit {
     this.humanizeBytes = humanizeBytes;
   }
   indexForm: FormGroup;
+  indexForm2: FormGroup;
   submitted = false;
   indikators : any;
   index = 1;
@@ -53,16 +53,27 @@ export class FormComponent implements OnInit {
   kodeInduk: any;
   indikator: any;
   now : any;
+  headers : any;
   user = "zenner";
   items: FormArray;
   
-  ngOnInit() {
+  nama_satker : any;
+  nama_tipe_polres : any;
+  nama_satfung : any;
+
+  ngOnInit():void {
     this.now = formatDate(new Date(), 'yyyy/MM/dd', 'en');
     this.indexForm = this.fb.group({
-      id: [''],
-      nilai: [''],
+      id: new FormControl("", Validators.required),
+      nilai: new FormControl("", Validators.required),
       waktu_ubah: this.now,
       diubah_oleh: this.user,    
+    })
+    this.indexForm2 = this.fb.group({
+      id2: new FormControl("", Validators.required),
+      nilai2: new FormControl("", Validators.required),
+      waktu_ubah: this.now,
+      diubah_oleh: this.user, 
     })
     console.log(this.now);
     this.httpClient.get(this._global.baseAPIUrl + '/View_penilaian_indikator_alls/getDataBypenilaianIdDanJenisDanKIIDanKsat?penilaianId=114&jenis=P&kodeSatfung=TSU&kodeIndikatorInduk=K01').subscribe(indikator => {
@@ -73,7 +84,6 @@ export class FormComponent implements OnInit {
         this.objek.push({
           kode_indikator_induk:xx.kode_indikator_induk,
           indikator:xx.indikator,
-
           details:this.objek2
         })   
         // this.prinsipName = xx.title;                
@@ -113,7 +123,6 @@ export class FormComponent implements OnInit {
     ); 
     console.log("Details");
     console.log(this.objek2);
-
     // for (var i=0; i<this.sources.length; i++) {
     //   var kode = this.sources[i].kode;
     //   console.log(kode);
@@ -151,41 +160,69 @@ export class FormComponent implements OnInit {
     //     }, 
     //     error => { console.log(error) }); 
     // }
+        this.httpClient.get(this._global.baseAPIUrl + '/View_penilaian_satfungs/getDataByPersonalForm?kodeSatker=641017&idSatfung=SU&kodePeriode=1').subscribe(data => {
+          if(data != undefined || data != null)
+          {
+          this.headers = data;
+          console.log(this.headers);
+          this.nama_satker = this.headers.satker;
+          this.nama_tipe_polres = this.headers.tipe_polres;
+          this.nama_satfung = this.headers.singkatan_satfung;
+          }
+        }, 
+        error => { console.log(error) }); 
   }
-  savedNilai(event){
-    console.log(event);
-    const data = { 
-      nilai: event.target.value,
-      waktu_ubah: this.now,
-      diubah_oleh: this.user,
-    }
-    console.log("DATA: ",data);
+  // savedNilai(event){
+  //   console.log(event);
+  //   const data = { 
+  //     nilai: event.target.value,
+  //     waktu_ubah: this.now,
+  //     diubah_oleh: this.user,
+  //   }
+  //   console.log("DATA: ",data);
 
-    this.httpClient.put(this._global.baseAPIUrl + '/Itk_trn_penilaian_details/'+event.target.id,data).subscribe(data  => {
-      console.log("Input Berhasil", data);
-      this.showToast("success", "Data Ter update", event.newData.kode);
-      event.confirm.resolve();
-    },
-    error  => {
-      console.log("Error", error);
-      this.showToast("warning", "Input / koneksi bermasalah", error.error.error.message);
-    }
-    );
-  }
-  // onSubmit() {
-  //   var f = JSON.stringify(this.indexForm.value);
-  //   console.log(f);
-  //   this.ngOnInit;
-  //   // var g = JSON.parse(f);
-  //   // g.forEach(h => {
-  //   //   this.objek3.push({
-  //   //     id : h.id
-  //   //   }) 
-  //   // });
-  //   // console.log(this.objek3);
-  //   // console.log(JSON.stringify(this.indexForm.value));
-  //   // alert('SUCCESS!! :-)\n\n' + JSON.stringify(this.indexForm.value, null, 4));
+  //   this.httpClient.put(this._global.baseAPIUrl + '/Itk_trn_penilaian_details/'+event.target.id,data).subscribe(data  => {
+  //     console.log("Input Berhasil", data);
+  //     this.showToast("success", "Data Ter update", event.newData.kode);
+  //     event.confirm.resolve();
+  //   },
+  //   error  => {
+  //     console.log("Error", error);
+  //     this.showToast("warning", "Input / koneksi bermasalah", error.error.error.message);
+  //   }
+  //   );
   // }
+
+  isi = [];
+  onSubmit(form) {
+    // let index = form.getRawValue().index
+    // console.log(index);
+    console.log(form);
+    // if(index != null) {
+    //   this.userDetails[index] = form.value
+    // } else {
+    //   this.userDetails.push(form.value)      
+    // }
+    // this.formIndex.reset() 
+    // reset form to empty
+    // console.log(this.indexForm2);
+
+    // this.isi = [];
+    // var f = this.indexForm2.value;
+    // console.log(f);
+    // this.isi.push(f);
+    // console.log("ISI");
+    // console.log(this.isi);
+    // var g = JSON.parse(f);
+    // g.forEach(h => {
+    //   this.objek3.push({
+    //     id : h.id
+    //   }) 
+    // });
+    // console.log(this.objek3);
+    // console.log(JSON.stringify(this.indexForm.value));
+    // alert('SUCCESS!! :-)\n\n' + JSON.stringify(this.indexForm.value, null, 4));
+  }
   private showToast(type: NbComponentStatus, title: string, body: string) {
     const config = {
       status: type,
@@ -248,7 +285,7 @@ export class FormComponent implements OnInit {
   startUpload(): void {
     const event: UploadInput = {
       type: 'uploadAll',
-      url: 'http://ngx-uploader.com/upload',
+      url: this._global.baseAppUrl+'assets/',
       method: 'POST',
       data: { foo: 'bar' }
     };

@@ -8,9 +8,9 @@
         KETERANGAN POLRES
       </nb-card-header>
       <nb-card-body>
-        <div class="row">
+        <div class="row" >
           <div class="col-md-12">
-            <div class="row show-grid">
+            <!-- <div class="row show-grid">
               <div class="col-sm-2">
                 <div align="center">1.</div>
               </div>
@@ -22,10 +22,31 @@
               <div class="col-sm-4">
                 <div align="left">
                   <div class="form-group">
+                    
                   <nb-select selected=0 fullWidth class="pull-right status-info shape-rectangle">
                     <nb-option value=0>Pilih</nb-option>
                     <nb-option *ngFor="let x of satkerx" value="x.kode" (click)="prinsipClick(x.kode)">{{ x.satker }}</nb-option>
                   </nb-select>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-4"></div>
+            </div> -->
+            <div class="row show-grid">
+              <div class="col-sm-2">
+                <div align="center">1.</div>
+              </div>
+              <div class="col-sm-2">
+                <div align="right">POLRES</div>
+              </div>
+              <div class="col-sm-4">
+                <div align="left">
+                  <div class="form-group">
+                      <B>{{ nama_satker}} </B>
+                  <!-- <nb-select selected=0 fullWidth class="pull-right status-info shape-rectangle">
+                    <nb-option value=0>Pilih</nb-option>
+                    <nb-option *ngFor="let x of satkerx2" value="x.kode" (click)="prinsipClick(x.kode)">{{ x.satker }}</nb-option>
+                  </nb-select> -->
                   </div>
                 </div>
               </div>
@@ -36,15 +57,16 @@
                 <div align="center">2.</div>
               </div>
               <div class="col-sm-2">
-                <div align="right">POLRES</div>
+                <div align="right">TYPE POLRES</div>
               </div>
               <div class="col-sm-4">
                 <div align="left">
                   <div class="form-group">
-                  <nb-select selected=0 fullWidth class="pull-right status-info shape-rectangle">
+                      <B>{{ nama_tipe_polres}} </B>
+                  <!-- <nb-select selected=0 fullWidth class="pull-right status-info shape-rectangle">
                     <nb-option value=0>Pilih</nb-option>
-                    <nb-option *ngFor="let x of satkerx2" value="x.kode" (click)="prinsipClick(x.kode)">{{ x.satker }}</nb-option>
-                  </nb-select>
+                    <nb-option *ngFor="let x of polresx" value="x.id" (click)="prinsipClick(x.id)">{{ x.tipe }}</nb-option>
+                  </nb-select> -->
                   </div>
                 </div>
               </div>
@@ -55,15 +77,16 @@
                 <div align="center">3.</div>
               </div>
               <div class="col-sm-2">
-                <div align="right">TYPE POLRES</div>
+                <div align="right">Satfung</div>
               </div>
               <div class="col-sm-4">
                 <div align="left">
                   <div class="form-group">
-                  <nb-select selected=0 fullWidth class="pull-right status-info shape-rectangle">
+                      <B>{{ nama_satfung}} </B>
+                  <!-- <nb-select selected=0 fullWidth class="pull-right status-info shape-rectangle">
                     <nb-option value=0>Pilih</nb-option>
                     <nb-option *ngFor="let x of polresx" value="x.id" (click)="prinsipClick(x.id)">{{ x.tipe }}</nb-option>
-                  </nb-select>
+                  </nb-select> -->
                   </div>
                 </div>
               </div>
@@ -74,7 +97,7 @@
                 <div align="center">4.</div>
               </div>
               <div class="col-sm-2">
-                <div align="right">Nama KABAGOPS</div>
+                <div align="right">Nama KA{{nama_satfung}}</div>
               </div>
               <div class="col-sm-8">
                 <div align="left"><input type="text" class="col-lg-4" nbInput placeholder=""></div>
@@ -85,7 +108,7 @@
                 <div align="center">5.</div>
               </div>
               <div class="col-sm-2">
-                <div align="right">Notelp/HP KABAGOPS</div>
+                <div align="right">Notelp/HP KA{{nama_satfung}}</div>
               </div>
               <div class="col-sm-8">
                 <div align="left"><input type="text" class="col-lg-4" nbInput placeholder=""></div>
@@ -96,7 +119,7 @@
                 <div align="center">6.</div>
               </div>
               <div class="col-sm-2">
-                <div align="right">Nama Staff bagops</div>
+                <div align="right">Nama Staff {{nama_satfung}}</div>
               </div>
               <div class="col-sm-8">
                 <div align="left"><input type="text" class="col-lg-4" nbInput placeholder=""></div>
@@ -107,7 +130,7 @@
                 <div align="center">7.</div>
               </div>
               <div class="col-sm-2">
-                <div align="right">Notelp/HP Staff bagops</div>
+                <div align="right">Notelp/HP Staff {{nama_satfung}}</div>
               </div>
               <div class="col-sm-8">
                 <div align="left"><input type="text"  class="col-lg-4" nbInput placeholder=""></div>
@@ -146,14 +169,16 @@
               <!-- </div> -->
             </td>
             <td style="vertical-align:top" width="10%">
-                <div align="center">
-                    <input type="text" (change)=savedNilai($event) formControlName="nilai" id="{{z.id}}" nbInput fullWidth value="{{z.nilai}}">
+              <div align="center">
+                <!-- <input type="text" (change)=savedNilai($event) formControlName="nilai" id="{{z.id}}" nbInput fullWidth value="{{z.nilai}}"> -->
+                <input type="text" formControlName="nilai" id="nilai" nbInput fullWidth value="{{z.nilai}}">
+                <input type="text" formControlName="id" id="id " nbInput fullWidth value="{{z.id}}">
                 <hr>
               </div>              
             </td>
             <td style="vertical-align:top" width="10%">
-                <div align="center">
-                    {{ z.satuan}} 
+              <div align="center">
+                  {{ z.satuan}} 
               </div> 
             </td>
             <td style="vertical-align:top" width="10%">
@@ -163,29 +188,27 @@
             </td>
             <td style="vertical-align:top" width="8%">
               <!-- <div align="right" *ngFor="let z of source.details"> -->
-                  <!-- {{ z.arsip_link}}  -->
-                  <div class="drop-container" ngFileDrop [options]="options" (uploadOutput)="onUploadOutput($event)" [uploadInput]="uploadInput" [ngClass]="{ 'is-drop-over': dragOver }">
-                    </div>
-                    
-                    <label>
-                      <input class="btn btn-info btn-sm" type="file" ngFileSelect [options]="options" (uploadOutput)="onUploadOutput($event)" [uploadInput]="uploadInput" multiple>
-                    </label>
-                    <!-- <button type="button" class="start-upload-btn" (click)="startUpload()">
-                        Start Upload
-                      </button>   -->
-                                <!-- </div> -->
+                <!-- {{ z.arsip_link}}  -->
+                <div class="drop-container" ngFileDrop [options]="options" (uploadOutput)="onUploadOutput($event)" [uploadInput]="uploadInput" [ngClass]="{ 'is-drop-over': dragOver }">
+                  </div>   
+                <label>
+                  <input class="btn btn-info btn-sm" type="file" ngFileSelect [options]="options" (uploadOutput)="onUploadOutput($event)" [uploadInput]="uploadInput" multiple>
+                </label>
+                <button type="button" class="start-upload-btn" (click)="startUpload()">
+                  Start Upload
+                </button>  
+              <!-- </div> -->
             </td>
             <!-- <div class="col-sm-1">
-              </div> -->
+            </div> -->
           </div>
           </tr>
-          <!-- <button class="btn btn-primary mr-1">Simpan</button> -->
+          <button class="btn btn-primary mr-1">Simpan</button>
           </table>
         </div>
-
         </form>
-          </nb-card-body>
-            <!-- button -->
+      </nb-card-body>
+          <!-- button -->
           <!-- <nb-card-body>
             <div class="row show-grid">
                 <div class="col-sm-2">
@@ -205,8 +228,17 @@
         </nb-card-body>
         </nb-card>
         <!-- aaaaaaaaa -->
-        
       </nb-card-body>
     </nb-card>
   </div>
 </div>
+<form [formGroup]="indexForm2" (ngSubmit)="onSubmit(form)" >
+  <!-- <div *ngFor="let source of objek">
+  <div *ngFor="let z of source.details; let i = index"> -->
+  <input type="text" formControlName="nilai2" id="nilai" nbInput fullWidth value="{{nama_satker}}">
+  <input type="text" formControlName="id2" id="id " nbInput fullWidth value="{{nama_tipe_polres}}">
+<!-- </div>
+</div> -->
+  <button class="btn btn-primary mr-1">Simpan</button>
+</form>
+
