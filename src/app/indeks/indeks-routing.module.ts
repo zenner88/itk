@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 
 import { IndeksComponent } from './indeks.component';
 import { FormComponent } from './form/form.component';
+import { FormObjektifComponent } from './formobjektif/formobjektif.component';
 import { TreeGridComponent } from './tree-grid/tree-grid.component';
 import { NotFoundComponent } from '../pages/miscellaneous/not-found/not-found.component';
 
@@ -15,8 +16,12 @@ const routes: Routes = [{
       component: FormComponent,
     },
     {
-      path: 'formObjektif',
+      path: 'objektif',
       component: TreeGridComponent,
+    },
+    {
+      path: 'formObjektif',
+      component: FormObjektifComponent,
     },
     {
       path: '**',
@@ -33,4 +38,5 @@ export class IndeksRoutingModule {
 }
 export const routedComponents = [
   TreeGridComponent,
+  FormObjektifComponent
 ];

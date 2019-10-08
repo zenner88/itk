@@ -25,6 +25,7 @@ import { NgxUploaderModule } from 'ngx-uploader';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { FsIconComponent } from './tree-grid/tree-grid.component';
 import { TreeGridComponent } from './tree-grid/tree-grid.component';
+import { FormObjektifComponent } from './formobjektif/formobjektif.component';
 
 @NgModule({
   imports: [
@@ -55,8 +56,8 @@ import { TreeGridComponent } from './tree-grid/tree-grid.component';
     IndeksComponent,
     GridComponent,
     FsIconComponent,
-    TreeGridComponent
-
+    TreeGridComponent,
+    FormObjektifComponent
   ],
 })
 export class IndeksModule {
