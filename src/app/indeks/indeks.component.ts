@@ -7,7 +7,7 @@ import { MENU_ITEMS } from './indeks-menu';
   styleUrls: ['indeks.component.scss'],
   template: `
     <ngx-one-column-layout>
-      <nb-menu [items]="menu"></nb-menu>
+      
       <router-outlet></router-outlet>
     </ngx-one-column-layout>
   `,

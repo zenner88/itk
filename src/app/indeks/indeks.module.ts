@@ -5,11 +5,13 @@ import {
   NbButtonModule,
   NbCardModule,
   NbCheckboxModule,
-  NbDatepickerModule, NbIconModule,
+  NbDatepickerModule, 
+  NbIconModule,
   NbInputModule,
   NbRadioModule,
   NbSelectModule,
   NbUserModule,
+  NbTreeGridModule,
 } from '@nebular/theme';
 
 import { ThemeModule } from '../@themepublic/theme.module';
@@ -20,6 +22,10 @@ import { MiscellaneousModule } from '../pages/miscellaneous/miscellaneous.module
 import { GridComponent } from './grid/grid.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxUploaderModule } from 'ngx-uploader';
+import { Ng2SmartTableModule } from 'ng2-smart-table';
+import { FsIconComponent } from './tree-grid/tree-grid.component';
+import { TreeGridComponent } from './tree-grid/tree-grid.component';
+
 @NgModule({
   imports: [
     IndeksRoutingModule,
@@ -39,12 +45,17 @@ import { NgxUploaderModule } from 'ngx-uploader';
     NbIconModule,
     FormsModule,
     ReactiveFormsModule,
-    NgxUploaderModule
+    NgxUploaderModule,
+    NbTreeGridModule,
+    Ng2SmartTableModule,
+    
   ],
   declarations: [
     FormComponent,
     IndeksComponent,
-    GridComponent
+    GridComponent,
+    FsIconComponent,
+    TreeGridComponent
 
   ],
 })

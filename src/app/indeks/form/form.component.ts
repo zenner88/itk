@@ -62,6 +62,25 @@ export class FormComponent implements OnInit {
   nama_satfung : any;
 
   ngOnInit():void {
+    this.httpClient.get(this._global.baseAPIUrl + '/View_penilaian_satfungs/getDataByPersonalForm?kodeSatker=641017&idSatfung=SU&kodePeriode=1').subscribe(data => {
+      if(data != undefined || data != null)
+      {
+      this.headers = data;
+      console.log(this.headers);
+      this.nama_satker = this.headers.satker;
+      this.nama_tipe_polres = this.headers.tipe_polres;
+      this.nama_satfung = this.headers.singkatan_satfung;
+
+      this.indexForm2.setValue({  
+        id2: this.nama_satker,
+        nilai2: this.nama_satfung,
+        waktu_ubah: this.now,
+        diubah_oleh: this.user, 
+      });  
+      }
+    }, 
+    error => { console.log(error) }); 
+
     this.now = formatDate(new Date(), 'yyyy/MM/dd', 'en');
     this.indexForm = this.fb.group({
       id: new FormControl("", Validators.required),
@@ -69,12 +88,14 @@ export class FormComponent implements OnInit {
       waktu_ubah: this.now,
       diubah_oleh: this.user,    
     })
+    // this.indexForm2.markAllAsTouched();
     this.indexForm2 = this.fb.group({
-      id2: new FormControl("", Validators.required),
-      nilai2: new FormControl("", Validators.required),
+      id2: [""],
+      nilai2: [""],
       waktu_ubah: this.now,
       diubah_oleh: this.user, 
     })
+   
     console.log(this.now);
     this.httpClient.get(this._global.baseAPIUrl + '/View_penilaian_indikator_alls/getDataBypenilaianIdDanJenisDanKIIDanKsat?penilaianId=114&jenis=P&kodeSatfung=TSU&kodeIndikatorInduk=K01').subscribe(indikator => {
       const data = JSON.stringify(indikator);
@@ -97,7 +118,13 @@ export class FormComponent implements OnInit {
   
     console.log("GABUNG");
     console.log(this.objek);
-
+    for(let i=0; i < this.objek.length; i++){
+      this.indexForm.setValue({  
+        id: this.objek[i].kode_indikator_induk,
+        nilai: this.objek[i].kode_indikator_induk,
+      });  
+    }
+    
     this.httpClient.get(this._global.baseAPIUrl + '/View_penilaian_indikator_alls/getDataBypenilaianIdDanJenisDanKIIDanKsat?penilaianId=114&jenis=D&kodeSatfung=TSU&kodeIndikatorInduk=K01').subscribe(indikator => {
       const data = JSON.stringify(indikator);
       var datax = JSON.parse(data); 
@@ -160,17 +187,6 @@ export class FormComponent implements OnInit {
     //     }, 
     //     error => { console.log(error) }); 
     // }
-        this.httpClient.get(this._global.baseAPIUrl + '/View_penilaian_satfungs/getDataByPersonalForm?kodeSatker=641017&idSatfung=SU&kodePeriode=1').subscribe(data => {
-          if(data != undefined || data != null)
-          {
-          this.headers = data;
-          console.log(this.headers);
-          this.nama_satker = this.headers.satker;
-          this.nama_tipe_polres = this.headers.tipe_polres;
-          this.nama_satfung = this.headers.singkatan_satfung;
-          }
-        }, 
-        error => { console.log(error) }); 
   }
   // savedNilai(event){
   //   console.log(event);
@@ -194,10 +210,10 @@ export class FormComponent implements OnInit {
   // }
 
   isi = [];
-  onSubmit(form) {
+  onSubmit() {
+    console.log(this.indexForm2.value);
     // let index = form.getRawValue().index
     // console.log(index);
-    console.log(form);
     // if(index != null) {
     //   this.userDetails[index] = form.value
     // } else {
@@ -285,7 +301,8 @@ export class FormComponent implements OnInit {
   startUpload(): void {
     const event: UploadInput = {
       type: 'uploadAll',
-      url: this._global.baseAppUrl+'assets/',
+      url: this._global.baseAppUrl+'admin/assets/data/',
+      // url: 'https://localhost:4000/src/assets/data/',
       method: 'POST',
       data: { foo: 'bar' }
     };
