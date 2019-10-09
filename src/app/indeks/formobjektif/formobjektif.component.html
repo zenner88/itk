@@ -1,32 +1,171 @@
-<form [formGroup]="dynamicForm" (ngSubmit)="onSubmit()">
-    <div class="card m-3">
-        <h5 class="card-header">Angular 8 Dynamic Reactive Forms Example</h5>
-        <div *ngFor="let ticket of t.controls; let i = index" class="list-group list-group-flush">
-            <div class="list-group-item">
-                <h5 class="card-title">Ticket {{i + 1}}</h5>
-                <div [formGroup]="ticket" class="form-row">
-                    <div class="form-group col-6">
-                        <label>Name</label>
-                        <input type="text" formControlName="name" class="form-control" [ngClass]="{ 'is-invalid': submitted && ticket.controls.name.errors }" />
-                        <div *ngIf="submitted && ticket.controls.name.errors" class="invalid-feedback">
-                            <div *ngIf="ticket.controls.name.errors.required">Name is required</div>
-                        </div>
+<div class="row">
+    <div class="col-lg-12">
+        <nb-card>
+        <nb-card-header>
+            <div class="text-center">PENGISIAN DATA INDEKS TATA KELOLA KEPOLISIAN</div>
+        </nb-card-header>
+        <nb-card-body>
+        <nb-card accent="danger">
+        <nb-card-header>
+            KETERANGAN POLRES
+        </nb-card-header>
+        <nb-card-body>
+            <div class="row" >
+            <div class="col-md-12">
+                <div class="row show-grid">
+                <div class="col-sm-0 col-md-2">
+                    <div align="center">1.</div>
+                </div>
+                <div class="col-sm-2">
+                    <div align="right">POLRES</div>
+                </div>
+                <div class="col-sm-4">
+                    <div align="left">
+                    <div class="form-group">
+                        <B>{{ nama_satker}} </B>
                     </div>
-                    <div class="form-group col-6">
-                        <label>Email</label>
-                        <input type="text" formControlName="email" class="form-control" [ngClass]="{ 'is-invalid': submitted && ticket.controls.email.errors }" />
-                        <div *ngIf="submitted && ticket.controls.email.errors" class="invalid-feedback">
-                            <div *ngIf="ticket.controls.email.errors.required">Email is required</div>
-                            <div *ngIf="ticket.controls.email.errors.email">Email must be a valid email address</div>
-                        </div>
                     </div>
                 </div>
+                <div class="col-sm-4"></div>
+                </div>
+                <div class="row show-grid">
+                <div class="col-sm-2">
+                    <div align="center">2.</div>
+                </div>
+                <div class="col-sm-2">
+                    <div align="right">TYPE POLRES</div>
+                </div>
+                <div class="col-sm-4">
+                    <div align="left">
+                    <div class="form-group">
+                        <B>{{ nama_tipe_polres}} </B>
+                    </div>
+                    </div>
+                </div>
+                <div class="col-sm-4"></div>
+                </div>
+                <div class="row show-grid">
+                <div class="col-sm-2">
+                    <div align="center">3.</div>
+                </div>
+                <div class="col-sm-2">
+                    <div align="right">Satfung</div>
+                </div>
+                <div class="col-sm-4">
+                    <div align="left">
+                    <div class="form-group">
+                        <B>{{ nama_satfung}} </B>
+                    </div>
+                    </div>
+                </div>
+                <div class="col-sm-4"></div>
+                </div>
+                <div class="row show-grid">
+                <div class="col-sm-2">
+                    <div align="center">4.</div>
+                </div>
+                <div class="col-sm-2">
+                    <div align="right">Nama KA{{nama_satfung}}</div>
+                </div>
+                <div class="col-sm-8">
+                    <div align="left"><input type="text" class="col-lg-4" nbInput fullWidth fieldSize="small"  placeholder=""></div>
+                </div>
+                </div>
+                <div class="row show-grid">
+                <div class="col-sm-2">
+                    <div align="center">5.</div>
+                </div>
+                <div class="col-sm-2">
+                    <div align="right">Notelp/HP KA{{nama_satfung}}</div>
+                </div>
+                <div class="col-sm-8">
+                    <div align="left"><input type="text" class="col-lg-4" nbInput fullWidth fieldSize="small"  placeholder=""></div>
+                </div>
+                </div>
+                <div class="row show-grid">
+                <div class="col-sm-2">
+                    <div align="center">6.</div>
+                </div>
+                <div class="col-sm-2">
+                    <div align="right">Nama Staff {{nama_satfung}}</div>
+                </div>
+                <div class="col-sm-8">
+                    <div align="left"><input type="text" class="col-lg-4" nbInput fullWidth fieldSize="small"  placeholder=""></div>
+                </div>
+                </div>
+                <div class="row show-grid">
+                <div class="col-sm-2">
+                    <div align="center">7.</div>
+                </div>
+                <div class="col-sm-2">
+                    <div align="right">Notelp/HP Staff {{nama_satfung}}</div>
+                </div>
+                <div class="col-sm-8">
+                    <div align="left"><input type="text"  class="col-lg-4" nbInput fullWidth fieldSize="small"  placeholder=""></div>
+                </div>
+                </div>
+                <div class="row show-grid"></div>
             </div>
-        </div>
-        <div class="card-footer text-center">
-            <button class="btn btn-primary mr-1">Buy Tickets</button>
-            <button class="btn btn-secondary mr-1" type="reset" (click)="onReset()">Reset</button>
-            <button class="btn btn-secondary" type="button" (click)="onClear()">Clear</button>
-        </div>
+            </div>
+        </nb-card-body>
+        </nb-card>
+        <nb-card accent="info">
+            <nb-card-header>
+                DAFTAR DATA OBJEKTIF 
+            </nb-card-header>
+            <nb-card-body>
+                <form [formGroup]="dynamicForm" (ngSubmit)="onSubmit()">
+                    <div *ngFor="let ticket of t.controls; let x of ticket; let i = index" class="list-group list-group-flush">
+                        <div [formGroup]="ticket" class="form-row">
+                            <div class="form-group col-1" *ngIf="x.value.jenis === 'P'">
+                                {{i+1}}
+                            </div>
+                            <div class="form-group col-3" *ngIf="x.value.jenis === 'P'">
+                                {{x.value.indikator}}
+                            </div>
+                            <div class="form-group col-4" *ngIf="x.value.jenis === 'D'">
+                            </div>
+                            <div class="form-group col-3" *ngIf="x.value.jenis === 'P'">
+                            </div>
+                            <div class="form-group col-3" *ngIf="x.value.jenis === 'D'">
+                                {{x.value.indikator}}
+                            </div>
+                            <div class="form-group col-1">
+                                <input type="text" formControlName="nilai" class="form-control" [ngClass]="{ 'is-invalid': submitted && ticket.controls.email.errors }" fullWidth fieldSize="small"/>
+                                {{x.value.satuan}}
+                                <div *ngIf="submitted && ticket.controls.email.errors" class="invalid-feedback">
+                                    <div *ngIf="ticket.controls.email.errors.required">Email is required</div>
+                                    <div *ngIf="ticket.controls.email.errors.email">Email must be a valid email address</div>
+                                </div>
+                            <!-- </div>
+                            <div class="form-group col-1"> -->
+                            </div>
+                            <div class="form-group col-2">
+                                <!-- {{x.value.arsip_link}} -->
+                                <!-- <div class="drop-container" ngFileDrop [options]="options" (uploadOutput)="onUploadOutput($event)" [uploadInput]="uploadInput" [ngClass]="{ 'is-drop-over': dragOver }">
+                                </div>   <br> -->
+                                <label><small>
+                                <input class="btn btn-sm" type="file" ngFileSelect [options]="options" (uploadOutput)="onUploadOutput($event)" [uploadInput]="uploadInput" multiple>
+                                </small>
+                                </label>
+                            </div>   
+                            <div class="form-group col-2 text-right">
+                                <!-- {{x.value.progress}} -->|
+                                <nb-icon icon="info-outline" status="info"></nb-icon> | 
+                                <nb-icon icon="checkmark-outline" status="warning"></nb-icon> | 
+                                <nb-icon icon="checkmark-outline"></nb-icon>
+                            </div>                        
+                        </div>
+                    </div>
+                    <div class="card-footer text-right">
+                        <button class="btn btn-primary mr-1" type="submit">Simpan</button>
+                        <!-- <button class="btn btn-secondary mr-1" type="reset" (click)="onReset()">Reset</button>
+                        <button class="btn btn-secondary" type="button" (click)="onClear()">Clear</button> -->
+                    </div>
+                </form>
+            </nb-card-body>
+        </nb-card>
+        </nb-card-body>
+        </nb-card>
     </div>
-</form>
+</div>

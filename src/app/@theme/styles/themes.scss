@@ -150,9 +150,12 @@ $nb-themes: nb-register-theme((
   header-padding:		1.25rem,
   layout-padding-top: 2.25rem,
 
-  menu-item-icon-margin: 0 0.5rem 0 0,
-  card-header-text-color: WHITE,
-  card-header-primary-background-color: #1a2138,
+  menu-item-icon-margin: 0 0.5rem 0 0,  
+  card-text-font-family:	Open Sans, 	
+  card-text-font-size: 0.8000rem,
+  card-header-text-color: black,
+  card-text-line-height: 1rem,
+  // card-header-primary-background-color: #1a2138,
   card-height-tiny: 13.5rem,
   card-height-small: 21.1875rem,
   card-height-medium: 28.875rem,
@@ -167,6 +170,8 @@ $nb-themes: nb-register-theme((
   slide-out-background: linear-gradient(270deg, #2A302E 0%, #444545 100%),
   slide-out-shadow-color: 0 4px 14px 0 #848BBA,
   slide-out-shadow-color-rtl: 0 4px 14px 0 #848BBA,
+
+  icon-line-height: 1,
 ), corporate, corporate);
 
 $nb-themes: nb-register-theme((
