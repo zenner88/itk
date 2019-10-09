@@ -68,7 +68,9 @@
                     <div align="right">Nama KA{{nama_satfung}}</div>
                 </div>
                 <div class="col-sm-8">
-                    <div align="left"><input type="text" class="col-lg-4" nbInput fullWidth fieldSize="small"  placeholder=""></div>
+                    <div class="form-group">
+                        <B>{{ nama_satfung}} </B>
+                    </div>
                 </div>
                 </div>
                 <div class="row show-grid">
@@ -79,8 +81,9 @@
                     <div align="right">Notelp/HP KA{{nama_satfung}}</div>
                 </div>
                 <div class="col-sm-8">
-                    <div align="left"><input type="text" class="col-lg-4" nbInput fullWidth fieldSize="small"  placeholder=""></div>
-                </div>
+                        <div class="form-group">
+                                <B>{{ nama_satfung}} </B>
+                            </div>                </div>
                 </div>
                 <div class="row show-grid">
                 <div class="col-sm-2">
@@ -90,8 +93,9 @@
                     <div align="right">Nama Staff {{nama_satfung}}</div>
                 </div>
                 <div class="col-sm-8">
-                    <div align="left"><input type="text" class="col-lg-4" nbInput fullWidth fieldSize="small"  placeholder=""></div>
-                </div>
+                        <div class="form-group">
+                                <B>{{ nama_satfung}} </B>
+                            </div>                </div>
                 </div>
                 <div class="row show-grid">
                 <div class="col-sm-2">
@@ -101,8 +105,9 @@
                     <div align="right">Notelp/HP Staff {{nama_satfung}}</div>
                 </div>
                 <div class="col-sm-8">
-                    <div align="left"><input type="text"  class="col-lg-4" nbInput fullWidth fieldSize="small"  placeholder=""></div>
-                </div>
+                        <div class="form-group">
+                                <B>{{ nama_satfung}} </B>
+                            </div>                </div>
                 </div>
                 <div class="row show-grid"></div>
             </div>
@@ -131,30 +136,26 @@
                                 {{x.value.indikator}}
                             </div>
                             <div class="form-group col-1">
-                                <input type="text" formControlName="nilai" class="form-control" [ngClass]="{ 'is-invalid': submitted && ticket.controls.email.errors }" fullWidth fieldSize="small"/>
-                                {{x.value.satuan}}
+                                <input disabled type="text" formControlName="nilai" class="form-control" [ngClass]="{ 'is-invalid': submitted && ticket.controls.email.errors }" fullWidth fieldSize="small"/>
+                                {{x.value.satuan}}                                
                                 <div *ngIf="submitted && ticket.controls.email.errors" class="invalid-feedback">
                                     <div *ngIf="ticket.controls.email.errors.required">Email is required</div>
                                     <div *ngIf="ticket.controls.email.errors.email">Email must be a valid email address</div>
                                 </div>
-                            <!-- </div>
-                            <div class="form-group col-1"> -->
                             </div>
-                            <div class="form-group col-2">
-                                <!-- {{x.value.arsip_link}} -->
-                                <!-- <div class="drop-container" ngFileDrop [options]="options" (uploadOutput)="onUploadOutput($event)" [uploadInput]="uploadInput" [ngClass]="{ 'is-drop-over': dragOver }">
-                                </div>   <br> -->
-                                <label><small>
-                                <input class="btn btn-sm" type="file" ngFileSelect [options]="options" (uploadOutput)="onUploadOutput($event)" [uploadInput]="uploadInput" multiple>
-                                </small>
-                                </label>
-                            </div>   
-                            <div class="form-group col-2 text-right">
+                            <div class="form-group col-1">
+                                Link : {{x.value.arsip_link}}
+                            </div>  
+                            <div class="form-group col-1 text-right">
                                 <!-- {{x.value.progress}} -->|
-                                <nb-icon icon="info-outline" status="info" (click)="openWindow(contentTemplate)"></nb-icon> | 
-                                <nb-icon icon="checkmark-outline" status="warning"></nb-icon> | 
-                                <nb-icon icon="checkmark-outline"></nb-icon>
-                            </div>                        
+                                <!-- <nb-icon icon="info-outline" status="info" (click)="openWindow(contentTemplate)"></nb-icon> |  -->
+                                <label>Validasi.</label>
+                                <nb-checkbox status="success"></nb-checkbox>
+                            </div>    
+                            <div class="form-group col-2">
+                                <label>Catatan.</label>
+                                <input  type="text" formControlName="id" class="form-control" fullWidth fieldSize="small"/>                               
+                            </div>                     
                         </div>
                     </div>
                     <div class="card-footer text-right">
@@ -170,5 +171,5 @@
     </div>
 </div>
 <ng-template #contentTemplate let-data>
-<p>DATA HERE..."</p>
+<p>Validasi?</p>
 </ng-template>

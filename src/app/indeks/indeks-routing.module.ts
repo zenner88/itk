@@ -6,6 +6,8 @@ import { FormComponent } from './form/form.component';
 import { FormObjektifComponent } from './formobjektif/formobjektif.component';
 import { TreeGridComponent } from './tree-grid/tree-grid.component';
 import { NotFoundComponent } from '../pages/miscellaneous/not-found/not-found.component';
+import { StepperComponent } from './stepper/stepper.component';
+import { ValidasiFormObjektifComponent } from './validasiFormObjektif/formobjektif.component';
 
 const routes: Routes = [{
   path: '',
@@ -22,6 +24,14 @@ const routes: Routes = [{
     {
       path: 'formObjektif',
       component: FormObjektifComponent,
+    },
+    {
+      path: 'validasiFormObjektif',
+      component: ValidasiFormObjektifComponent,
+    },
+    {
+      path: 'formPIP',
+      component: StepperComponent,
     },
     {
       path: '**',

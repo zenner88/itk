@@ -12,6 +12,7 @@ import {
   NbSelectModule,
   NbUserModule,
   NbTreeGridModule,
+  NbStepperModule
 } from '@nebular/theme';
 
 import { ThemeModule } from '../@themepublic/theme.module';
@@ -26,6 +27,8 @@ import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { FsIconComponent } from './tree-grid/tree-grid.component';
 import { TreeGridComponent } from './tree-grid/tree-grid.component';
 import { FormObjektifComponent } from './formobjektif/formobjektif.component';
+import { StepperComponent } from './stepper/stepper.component';
+import { ValidasiFormObjektifComponent } from './validasiFormObjektif/formobjektif.component';
 
 @NgModule({
   imports: [
@@ -49,7 +52,7 @@ import { FormObjektifComponent } from './formobjektif/formobjektif.component';
     NgxUploaderModule,
     NbTreeGridModule,
     Ng2SmartTableModule,
-    
+    NbStepperModule,
   ],
   declarations: [
     FormComponent,
@@ -57,7 +60,10 @@ import { FormObjektifComponent } from './formobjektif/formobjektif.component';
     GridComponent,
     FsIconComponent,
     TreeGridComponent,
-    FormObjektifComponent
+    FormObjektifComponent,
+    StepperComponent,
+    ValidasiFormObjektifComponent
+    
   ],
 })
 export class IndeksModule {

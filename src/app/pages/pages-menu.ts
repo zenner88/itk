@@ -146,12 +146,22 @@ export const MENU_ITEMS: NbMenuItem[] = [
   // },
   {
     title: 'Form Objektif',
-    link: '/indeks/form',
+    link: '/indeks/formObjektif',
     icon: 'browser-outline',
   },
   {
-    title: 'Public Home',
-    link: '/public/home',
-    icon: 'home-outline',
+    title: 'Validasi Form Objektif',
+    link: '/indeks/validasiFormObjektif',
+    icon: 'browser-outline',
   },
+  {
+    title: 'Form Persepsi Internal Polres',
+    link: '/indeks/formPIP',
+    icon: 'browser-outline',
+  },
+  // {
+  //   title: 'Public Home',
+  //   link: '/public/home',
+  //   icon: 'home-outline',
+  // },
 ];

@@ -17,7 +17,7 @@ import { UploadOutput, UploadInput, UploadFile, humanizeBytes, UploaderOptions }
     providers: [AppGlobals],
 
  })
-export class FormObjektifComponent implements OnInit {
+export class ValidasiFormObjektifComponent implements OnInit {
 @ViewChild('contentTemplate', { static: true }) contentTemplate: TemplateRef<any>;
 
 options: UploaderOptions;
