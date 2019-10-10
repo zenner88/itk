@@ -131,29 +131,26 @@
                                 {{x.value.indikator}}
                             </div>
                             <div class="form-group col-1">
-                                <input type="text" formControlName="nilai" class="form-control" [ngClass]="{ 'is-invalid': submitted && ticket.controls.email.errors }" fullWidth fieldSize="small"/>
+                                <input type="text" formControlName="nilai" class="form-control" fullWidth fieldSize="small"/>
                                 {{x.value.satuan}}
-                                <div *ngIf="submitted && ticket.controls.email.errors" class="invalid-feedback">
-                                    <div *ngIf="ticket.controls.email.errors.required">Email is required</div>
-                                    <div *ngIf="ticket.controls.email.errors.email">Email must be a valid email address</div>
-                                </div>
+                                
                             <!-- </div>
                             <div class="form-group col-1"> -->
                             </div>
-                            <div class="form-group col-2">
+                            <div class="form-group col-2" *ngIf="x.value.arsip_link == ''">
                                 <!-- {{x.value.arsip_link}} -->
-                                <!-- <div class="drop-container" ngFileDrop [options]="options" (uploadOutput)="onUploadOutput($event)" [uploadInput]="uploadInput" [ngClass]="{ 'is-drop-over': dragOver }">
-                                </div>   <br> -->
-                                <label><small>
-                                <input class="btn btn-sm" type="file" ngFileSelect [options]="options" (uploadOutput)="onUploadOutput($event)" [uploadInput]="uploadInput" multiple>
-                                </small>
-                                </label>
+                                <input id="myForm" formControlName="arsip_link" type="file" name="file" (change)="postMethod($event.target.files)">
                             </div>   
+                            <div class="form-group col-2" *ngIf="x.value.arsip_link !== ''">
+                                <a href="{{x.value.arsip_link}}">
+                                <nb-icon icon="file-text-outline" status="primary" [options]="{ animation: { type: 'pulse' } }"></nb-icon>Download
+                                </a>
+                            </div>  
                             <div class="form-group col-2 text-right">
                                 <!-- {{x.value.progress}} -->|
-                                <nb-icon icon="info-outline" status="info" (click)="openWindow(contentTemplate)"></nb-icon> | 
-                                <nb-icon icon="checkmark-outline" status="warning"></nb-icon> | 
-                                <nb-icon icon="checkmark-outline"></nb-icon>
+                                <nb-icon icon="info-outline" status="info" (click)="openWindow(contentTemplate)" [options]="{ animation: { type: 'pulse' } }"></nb-icon> | 
+                                <nb-icon icon="checkmark-outline" status="warning" [options]="{ animation: { type: 'pulse' } }"></nb-icon> | 
+                                <nb-icon icon="checkmark-outline" [options]="{ animation: { type: 'pulse' } }"></nb-icon>
                             </div>                        
                         </div>
                     </div>
