@@ -14,6 +14,7 @@ import { UploadOutput, UploadInput, UploadFile, humanizeBytes, UploaderOptions }
 @Component({ 
     selector: 'ngx-formobjektif', 
     templateUrl: 'formobjektif.component.html',
+    styleUrls: ['./formobjektif.component.scss'],
     providers: [AppGlobals],
 
  })
