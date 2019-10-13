@@ -14,6 +14,7 @@ import { UploadOutput, UploadInput, UploadFile, humanizeBytes, UploaderOptions }
 @Component({ 
     selector: 'ngx-formobjektif', 
     templateUrl: 'formobjektif.component.html',
+    styleUrls: ['./formobjektif.component.scss'],
     providers: [AppGlobals],
 
  })
@@ -58,7 +59,7 @@ get f() { return this.dynamicForm.controls; }
 get t() { return this.f.tickets as FormArray; }
 
 ngOnInit() {
-this.now = formatDate(new Date(), 'dd-MM-yyyy', 'en');
+this.now = formatDate(new Date(), 'yyyy-MM-dd HH:mm:ss Z', 'en');
 this.dynamicForm = this.formBuilder.group({
 numberOfTickets: ['', Validators.required],
 tickets: new FormArray([])
@@ -76,6 +77,24 @@ if(data != undefined || data != null)
 }, 
 error => { console.log(error) }); 
 
+// this.httpClient.get(this._global.baseAPIUrl + '/View_satkers/getDataByIdTipeSatker?idTipeSatker=R').subscribe(data => {
+//   if(data != undefined || data != null)
+//   {
+//   this.prinsipx = data;
+//   const datas = JSON.stringify(data);
+//   const datax = JSON.parse(datas);
+//   console.log(datas);
+//   console.log(datax);
+//     datax.forEach(xx => {
+//       this.prinsipList.push({value:xx.id,title:xx.prinsip})   
+//       this.prinsipName = xx.title;                
+//     });
+//   }
+//   localStorage.setItem('gridServicecList', JSON.stringify(this.prinsipList));
+//   this.indikators = this.loadTableSettings(); 
+// }, 
+// error => { console.log(error) });  
+
 console.log(this.now);
 this.httpClient.get(this._global.baseAPIUrl + '/View_penilaian_indikator_alls/getDataBypenilaianIdDanJenisDanKIIDanKsat?penilaianId=114&jenis=&kodeSatfung=TSU&kodeIndikatorInduk=').subscribe(indikator => {
     const data = JSON.stringify(indikator);
@@ -83,18 +102,19 @@ this.httpClient.get(this._global.baseAPIUrl + '/View_penilaian_indikator_alls/ge
     // this.objek = this.sources;
     datax.forEach(xx => {
     this.objek.push({
-        kode_indikator_induk:xx.kode_indikator_induk,
-        indikator:xx.indikator,
-        indikator_induk:xx.indikator_induk,
-        satuan:xx.satuan,
-        nilai:xx.nilai,
-        arsip_link:xx.arsip_link,
-        progress:xx.progress,
-        id:xx.id,
-        jenis:xx.Jenis,
-        id_progress:xx.id_progress,
-        kode_indikator_satfung:xx.kode_indikator_satfung,
-        penilaian_id:xx.penilaian_id,
+      kode_indikator_induk:xx.kode_indikator_induk,
+      indikator:xx.indikator,
+      indikator_induk:xx.indikator_induk,
+      satuan:xx.satuan,
+      nilai:xx.nilai,
+      arsip_link:xx.arsip_link,
+      progress:xx.progress,
+      id:xx.id,
+      jenis:xx.Jenis,
+      id_progress:xx.id_progress,
+      kode_indikator_satfung:xx.kode_indikator_satfung,
+      penilaian_id:xx.penilaian_id,
+      details:this.objek2,
     })   
     });
 console.log(this.objek.length);
@@ -117,7 +137,7 @@ this.jmlIndikator = this.objek.length;
           waktu_ubah: this.now,
           diubah_oleh: this.user,
           kode_indikator_satfung: [this.objek[i].kode_indikator_satfung],
-
+          details: [this.objek[i].details],          
           }));
         }
     } else {
@@ -134,6 +154,39 @@ error  => {
 
 console.log("OBJEK");
 console.log(this.objek);
+this.httpClient.get(this._global.baseAPIUrl + '/View_penilaian_indikator_alls/getDataBypenilaianIdDanJenisDanKIIDanKsat?penilaianId=114&jenis=D&kodeSatfung=TSU&kodeIndikatorInduk=K01').subscribe(indikator => {
+  const data = JSON.stringify(indikator);
+  var datax = JSON.parse(data); 
+console.log(datax);
+  // this.objek = this.sources;
+  datax.forEach(xx => {
+  this.objek2.push({
+    kode_indikator_induk:xx.kode_indikator_induk,
+    indikator:xx.indikator,
+    indikator_induk:xx.indikator_induk,
+    satuan:xx.satuan,
+    nilai:xx.nilai,
+    arsip_link:xx.arsip_link,
+    progress:xx.progress,
+    id:xx.id,
+    jenis:xx.Jenis,
+    id_progress:xx.id_progress,
+    kode_indikator_satfung:xx.kode_indikator_satfung,
+    penilaian_id:xx.penilaian_id,
+  })   
+  });
+this.jmlDetails = this.objek2.length;
+console.log(this.jmlDetails);
+  
+},
+error  => {
+  console.log("Error", error);
+  this.showToast("warning", "Koneksi bermasalah", error.message);      
+}
+); 
+console.log("Details");
+console.log(this.objek2);
+console.log(this.t.value.name);
 }
 
 onSubmit() {

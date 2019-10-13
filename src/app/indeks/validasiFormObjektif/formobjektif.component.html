@@ -121,41 +121,53 @@
             <nb-card-body>
                 <form [formGroup]="dynamicForm" (ngSubmit)="onSubmit()">
                     <div *ngFor="let ticket of t.controls; let x of ticket; let i = index" class="list-group list-group-flush">
-                        <div [formGroup]="ticket" class="form-row">
-                            <div class="form-group col-1" *ngIf="x.value.jenis === 'P'">
+                        <div [formGroup]="ticket" class="row">
+                            <div class="form-group col-1 text-center" *ngIf="x.value.jenis === 'P'">
                                 {{i+1}}
                             </div>
-                            <div class="form-group col-3" *ngIf="x.value.jenis === 'P'">
+                            <div class="form-group col-1" *ngIf="x.value.jenis === 'D'">
+                            </div>
+                            <div class="form-group col-10" *ngIf="x.value.jenis === 'P'">
+                               <B>{{x.value.indikator}}</B>
+                            </div>
+                            <div class="form-group col-3" *ngIf="x.value.jenis === 'D'">
                                 {{x.value.indikator}}
                             </div>
-                            <div class="form-group col-4" *ngIf="x.value.jenis === 'D'">
+                            <!-- <div class="form-group col-4" *ngIf="x.value.jenis === 'D'">
                             </div>
                             <div class="form-group col-3" *ngIf="x.value.jenis === 'P'">
                             </div>
                             <div class="form-group col-3" *ngIf="x.value.jenis === 'D'">
                                 {{x.value.indikator}}
+                            </div> -->
+                            <div class="form-group col-1" *ngIf="x.value.jenis === 'D'">
+                                <input type="text" formControlName="nilai" class="form-control" fullWidth fieldSize="small"/>
+                                
                             </div>
-                            <div class="form-group col-1">
-                                <input disabled type="text" formControlName="nilai" class="form-control" [ngClass]="{ 'is-invalid': submitted && ticket.controls.email.errors }" fullWidth fieldSize="small"/>
-                                {{x.value.satuan}}                                
-                                <div *ngIf="submitted && ticket.controls.email.errors" class="invalid-feedback">
-                                    <div *ngIf="ticket.controls.email.errors.required">Email is required</div>
-                                    <div *ngIf="ticket.controls.email.errors.email">Email must be a valid email address</div>
-                                </div>
+                            <div class="form-group col-1" *ngIf="x.value.jenis === 'D'">
+                                {{x.value.satuan}}
                             </div>
-                            <div class="form-group col-1">
-                                Link : {{x.value.arsip_link}}
+                            <!-- <div class="form-group col-2" *ngIf="x.value.arsip_link == '' && x.value.jenis === 'D'">
+                                <input id="myForm" formControlName="arsip_link" type="file" name="file" (change)="postMethod($event.target.files)">
+                            </div>    -->
+                            <div class="form-group col-2" *ngIf="x.value.arsip_link == '' && x.value.jenis === 'D'">
+                                Tidak ada file.
+                            </div>   
+                            <div class="form-group col-2" *ngIf="x.value.arsip_link !== '' && x.value.jenis === 'D'">
+                                <a href="{{x.value.arsip_link}}">
+                                <nb-icon icon="file-text-outline" status="primary" [options]="{ animation: { type: 'pulse' } }"></nb-icon>Download
+                                </a>
                             </div>  
-                            <div class="form-group col-1 text-right">
-                                <!-- {{x.value.progress}} -->|
-                                <!-- <nb-icon icon="info-outline" status="info" (click)="openWindow(contentTemplate)"></nb-icon> |  -->
-                                <label>Validasi.</label>
-                                <nb-checkbox status="success"></nb-checkbox>
-                            </div>    
-                            <div class="form-group col-2">
-                                <label>Catatan.</label>
-                                <input  type="text" formControlName="id" class="form-control" fullWidth fieldSize="small"/>                               
-                            </div>                     
+                            <div class="form-group col-1 text-right" *ngIf="x.value.jenis === 'D'">
+                                <nb-checkbox status="success">Validasi</nb-checkbox>
+                            </div> 
+                            <div class="form-group col-1 text-right" *ngIf="x.value.jenis === 'D'">
+                                Catatan : 
+                            </div> 
+                            <div class="form-group col-2 text-right" *ngIf="x.value.jenis === 'D'">
+                                <!-- <small><label>Catatan.</label></small>  -->
+                                <input  type="text" formControlName="id" class="form-control" fullWidth fieldSize="small"/>
+                            </div>                        
                         </div>
                     </div>
                     <div class="card-footer text-right">

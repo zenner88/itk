@@ -111,6 +111,16 @@ const routes: Routes = [{
         .then(m => m.MiscellaneousModule),
     },
     {
+      path: 'list-satfung',
+      loadChildren: () => import('./list-satfung/tables.module')
+        .then(m => m.TablesModule),
+    },
+    {
+      path: 'list-polres',
+      loadChildren: () => import('./list-satfung/tables.module')
+        .then(m => m.TablesModule),
+    },
+    {
       path: '',
       redirectTo: 'dashboard',
       pathMatch: 'full',

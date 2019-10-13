@@ -145,10 +145,27 @@ export const MENU_ITEMS: NbMenuItem[] = [
   //   ],
   // },
   {
-    title: 'Form Objektif',
-    link: '/indeks/formObjektif',
-    icon: 'browser-outline',
+    title: 'Objektif',
+    icon: 'folder-add-outline',
+    children: [
+      {
+        title: 'Form Objektif',
+        link: '/indeks/formObjektif',
+        icon: 'folder-outline',
+      },
+      {
+        title: 'List Polres',
+        link: '/pages/list-polres/smart-table',
+        icon: 'folder-outline',
+      },
+      {
+        title: 'List Satfung',
+        link: '/pages/list-satfung/smart-table',
+        icon: 'folder-outline',
+      },
+    ]
   },
+ 
   {
     title: 'Validasi Form Objektif',
     link: '/indeks/validasiFormObjektif',

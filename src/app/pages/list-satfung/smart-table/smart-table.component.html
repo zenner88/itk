@@ -1,0 +1,41 @@
+<nb-card status="primary">
+  <nb-card-header>
+    List Satfung
+  </nb-card-header>
+
+  <nb-card-body>
+    <!-- <div class="col-lg-6">
+    <nb-card>
+      <nb-card-body>
+        <div class="form-group">
+        <label class="label">Tipe Polres</label>
+        <nb-select selected=0 fullWidth class="pull-right status-info shape-rectangle">
+          <nb-option value=0 (click)="prinsipClick2(event)">Semua</nb-option>
+          <nb-option *ngFor="let x of polresx" value="x.id" (click)="prinsipClick(x.id)">{{ x.tipe }}</nb-option>
+        </nb-select>
+        </div>
+        <div class="form-group">
+        <label class="label">Satfung</label>
+        <nb-select selected=0 fullWidth class="pull-right status-info shape-rectangle">
+          <nb-option value=0 (click)="prinsipClick2(event)">Semua</nb-option>
+          <nb-option *ngFor="let x of satfungx" value="x.id" (click)="prinsipClick(x.id)">{{ x.singkatan }}</nb-option>
+        </nb-select>
+        </div>
+      </nb-card-body> 
+    </nb-card>
+    </div> -->
+    <!-- <button class="btn-primary btn-md" (click)="openWindow(contentBobots)" nbButton>Isi Bobot</button> -->
+    <ng2-smart-table [settings]="satfungs" [source]="source" (deleteConfirm)="onDeleteConfirm($event)" (editConfirm)="onSaveConfirm($event)"
+    (createConfirm)="onCreateConfirm($event)" (userRowSelect)="onUserRowSelect($event, contentTemplate)">
+    </ng2-smart-table>
+</nb-card-body>
+</nb-card>
+<ng-template style="height: 500px" #contentTemplate let-data>
+<nb-card-body>
+  <div style="height: 450px; overflow-y: auto; border-top: 1px solid #dee2e6;">
+  <ng2-smart-table [settings]="satfungsDetails" [source]="sourceDetails" (deleteConfirm)="onDeleteConfirmD($event)" (editConfirm)="onSaveConfirmD($event)"
+  (createConfirm)="onCreateConfirmD($event)">
+  </ng2-smart-table>
+  </div>
+</nb-card-body>  
+</ng-template>
