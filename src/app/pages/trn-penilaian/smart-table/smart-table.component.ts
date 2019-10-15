@@ -51,6 +51,11 @@ export class SmartTableComponent {
   wow: any = "WADUH";
   prinsipx: any;
   satkerx: any;
+  filterPeriode: any;
+  filterSatker: any;
+  satkerz: any;
+  periodez: any;
+
   ngOnInit(): void {
     this.penilaians = this.loadTableSettings(); 
     this.httpClient.get(this._global.baseAPIUrl + '/View_penilaians/').subscribe(indikator => {
@@ -63,7 +68,7 @@ export class SmartTableComponent {
       this.showToast("warning", "Koneksi bermasalah", error.message);      
     }
     ); 
-    this.httpClient.get(this._global.baseAPIUrl + '/Itk_mst_satkers/').subscribe(data => {
+    this.httpClient.get(this._global.baseAPIUrl + '/View_satkers/getDataByIdTipeSatker?idTipeSatker=R').subscribe(data => {
       if(data != undefined || data != null)
       {
       this.satkerx = data;
@@ -326,7 +331,39 @@ export class SmartTableComponent {
       event.confirm.reject();
     }
   }
-  
+  filterKlikPeriode(id,nama){
+    this.filterPeriode = id;
+    this.filterKlik();
+  }
+  filterKlikSatker(id,nama){
+    this.filterSatker = id;
+    this.filterKlik();
+  }
+  filterKlik(){
+    if (this.filterSatker == undefined){
+      this.satkerz = "";
+    }else{
+      this.satkerz = this.filterSatker;
+    }
+
+    if (this.filterPeriode == undefined){
+      this.periodez = "";
+    }else{
+      this.periodez = this.filterPeriode;
+    }
+
+    this.penilaians = this.loadTableSettings(); 
+    this.httpClient.get(this._global.baseAPIUrl + '/View_penilaians/getDataByKPeriodeKsatker?kodePeriode='+this.periodez+'&kodeSatker='+this.satkerz).subscribe(indikator => {
+      const data = JSON.stringify(indikator);
+      this.source.load(JSON.parse(data));
+      console.log(this.source);
+    },
+    error  => {
+      console.log("Error", error);
+      this.showToast("warning", "Koneksi bermasalah", error.message);      
+    }
+    ); 
+  }
   index = 1;
   private showToast(type: NbComponentStatus, title: string, body: string) {
     const config = {
@@ -364,14 +401,15 @@ loadTableSettings(){
       deleteButtonContent: '<i class="nb-trash"></i>',
       confirmDelete: true,
     },
-    // hideSubHeader: true,
+    hideSubHeader: true,
+    actions: false,
     columns: {
-      id: {
-        title: 'ID',
-        type: 'string',
-        editable: false,
-        filter: false
-      },
+      // id: {
+      //   title: 'ID',
+      //   type: 'string',
+      //   editable: false,
+      //   filter: false
+      // },
 
       kode_periode: {
         title: 'Periode',
