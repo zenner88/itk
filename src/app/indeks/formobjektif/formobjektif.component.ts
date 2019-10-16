@@ -96,7 +96,7 @@ error => { console.log(error) });
 // error => { console.log(error) });  
 
 console.log(this.now);
-this.httpClient.get(this._global.baseAPIUrl + '/View_penilaian_indikator_alls/getDataBypenilaianIdDanJenisDanKIIDanKsat?penilaianId=114&jenis=&kodeSatfung=TSU&kodeIndikatorInduk=').subscribe(indikator => {
+this.httpClient.get(this._global.baseAPIUrl + '/View_penilaian_indikator_alls/getDataBypenilaianIdDanJenisDanKIIDanKsat?penilaianId=606&kodeSatfung=PSU').subscribe(indikator => {
     const data = JSON.stringify(indikator);
     var datax = JSON.parse(data); 
     // this.objek = this.sources;
@@ -154,7 +154,7 @@ error  => {
 
 console.log("OBJEK");
 console.log(this.objek);
-this.httpClient.get(this._global.baseAPIUrl + '/View_penilaian_indikator_alls/getDataBypenilaianIdDanJenisDanKIIDanKsat?penilaianId=114&jenis=D&kodeSatfung=TSU&kodeIndikatorInduk=K01').subscribe(indikator => {
+this.httpClient.get(this._global.baseAPIUrl + '/View_penilaian_indikator_alls/getDataBypenilaianIdDanJenisDanKIIDanKsat?penilaianId=606&jenis=D&kodeSatfung=PSU&kodeIndikatorInduk=PSUR05').subscribe(indikator => {
   const data = JSON.stringify(indikator);
   var datax = JSON.parse(data); 
 console.log(datax);
