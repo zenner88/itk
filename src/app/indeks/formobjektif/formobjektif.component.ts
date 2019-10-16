@@ -65,7 +65,7 @@ numberOfTickets: ['', Validators.required],
 tickets: new FormArray([])
 });
 
-this.httpClient.get(this._global.baseAPIUrl + '/View_penilaian_satfungs/getDataByPersonalForm?kodeSatker=641017&idSatfung=SU&kodePeriode=1').subscribe(data => {
+this.httpClient.get(this._global.baseAPIUrl + '/View_penilaian_satfungs/getDataByPersonalForm?kodeSatker=640701&idSatfung=SU&kodePeriode=1').subscribe(data => {
 if(data != undefined || data != null)
 {
     this.headers = data;
@@ -96,7 +96,7 @@ error => { console.log(error) });
 // error => { console.log(error) });  
 
 console.log(this.now);
-this.httpClient.get(this._global.baseAPIUrl + '/View_penilaian_indikator_alls/getDataBypenilaianIdDanJenisDanKIIDanKsat?penilaianId=606&kodeSatfung=PSU').subscribe(indikator => {
+this.httpClient.get(this._global.baseAPIUrl + '/View_penilaian_indikator_alls/getDataBypenilaianIdDanJenisDanKIIDanKsat?penilaianId=862&jenis=P&kodeSatfung=PSU&kodeIndikatorInduk=').subscribe(indikator => {
     const data = JSON.stringify(indikator);
     var datax = JSON.parse(data); 
     // this.objek = this.sources;
@@ -110,10 +110,13 @@ this.httpClient.get(this._global.baseAPIUrl + '/View_penilaian_indikator_alls/ge
       arsip_link:xx.arsip_link,
       progress:xx.progress,
       id:xx.id,
-      jenis:xx.Jenis,
+      jenis:xx.jenis,
       id_progress:xx.id_progress,
       kode_indikator_satfung:xx.kode_indikator_satfung,
+      kode_indikator:xx.kode_indikator,
+      pilihan_jawaban:xx.pilihan_jawaban,
       penilaian_id:xx.penilaian_id,
+      id_tipe_indikator:xx.id_tipe_indikator,
       details:this.objek2,
     })   
     });
@@ -134,9 +137,12 @@ this.jmlIndikator = this.objek.length;
           satuan: [this.objek[i].satuan],
           jenis: [this.objek[i].jenis],
           id_progress: [this.objek[i].id_progress],
+          pilihan_jawaban: [this.objek[i].pilihan_jawaban],
           waktu_ubah: this.now,
           diubah_oleh: this.user,
           kode_indikator_satfung: [this.objek[i].kode_indikator_satfung],
+          kode_indikator: [this.objek[i].kode_indikator],
+          id_tipe_indikator: [this.objek[i].id_tipe_indikator],
           details: [this.objek[i].details],          
           }));
         }
@@ -151,10 +157,11 @@ error  => {
     this.showToast("warning", "Koneksi bermasalah", error.message);      
 }
 ); 
+console.log("T", this.t);
 
 console.log("OBJEK");
 console.log(this.objek);
-this.httpClient.get(this._global.baseAPIUrl + '/View_penilaian_indikator_alls/getDataBypenilaianIdDanJenisDanKIIDanKsat?penilaianId=606&jenis=D&kodeSatfung=PSU&kodeIndikatorInduk=PSUR05').subscribe(indikator => {
+this.httpClient.get(this._global.baseAPIUrl + '/View_penilaian_indikator_alls/getDataBypenilaianIdDanJenisDanKIIDanKsat?penilaianId=862&jenis=D&kodeSatfung=PSU&kodeIndikatorInduk=').subscribe(indikator => {
   const data = JSON.stringify(indikator);
   var datax = JSON.parse(data); 
 console.log(datax);
