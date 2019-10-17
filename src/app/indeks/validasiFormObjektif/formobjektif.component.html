@@ -2,7 +2,9 @@
     <div class="col-lg-12">
         <nb-card>
         <nb-card-header>
-            <div class="text-center">PENGISIAN DATA INDEKS TATA KELOLA KEPOLISIAN</div>
+            <div class="text-center">
+                <h4>VALIDASI</h4>
+                PENGISIAN DATA INDEKS TATA KELOLA KEPOLISIAN</div>
         </nb-card-header>
         <nb-card-body>
         <nb-card accent="danger">
@@ -23,6 +25,10 @@
                     <div align="left">
                     <div class="form-group">
                         <B>{{ nama_satker}} </B>
+                        <!-- <nb-select selected=0 fullWidth class="pull-right status-info shape-rectangle">
+                            <nb-option value=0 (click)="prinsipClick2(event)">Semua</nb-option>
+                            <nb-option *ngFor="let x of prinsipx" value="x.id" (click)="prinsipClick2(x.id)">{{ x.prinsip }}</nb-option>
+                        </nb-select> -->
                     </div>
                     </div>
                 </div>
@@ -68,9 +74,7 @@
                     <div align="right">Nama KA{{nama_satfung}}</div>
                 </div>
                 <div class="col-sm-8">
-                    <div class="form-group">
-                        <B>{{ nama_satfung}} </B>
-                    </div>
+                    <div align="left" class="form-group">Nama</div>
                 </div>
                 </div>
                 <div class="row show-grid">
@@ -81,9 +85,8 @@
                     <div align="right">Notelp/HP KA{{nama_satfung}}</div>
                 </div>
                 <div class="col-sm-8">
-                        <div class="form-group">
-                                <B>{{ nama_satfung}} </B>
-                            </div>                </div>
+                    <div align="left" class="form-group">Nomor</div>
+                </div>
                 </div>
                 <div class="row show-grid">
                 <div class="col-sm-2">
@@ -93,9 +96,8 @@
                     <div align="right">Nama Staff {{nama_satfung}}</div>
                 </div>
                 <div class="col-sm-8">
-                        <div class="form-group">
-                                <B>{{ nama_satfung}} </B>
-                            </div>                </div>
+                    <div align="left" class="form-group">Nama</div>
+                </div>
                 </div>
                 <div class="row show-grid">
                 <div class="col-sm-2">
@@ -105,9 +107,8 @@
                     <div align="right">Notelp/HP Staff {{nama_satfung}}</div>
                 </div>
                 <div class="col-sm-8">
-                        <div class="form-group">
-                                <B>{{ nama_satfung}} </B>
-                            </div>                </div>
+                    <div align="left" class="form-group">Nomor</div>
+                </div>
                 </div>
                 <div class="row show-grid"></div>
             </div>
@@ -119,61 +120,102 @@
                 DAFTAR DATA OBJEKTIF 
             </nb-card-header>
             <nb-card-body>
-                <form [formGroup]="dynamicForm" (ngSubmit)="onSubmit()">
+                <form [formGroup]="dynamicForm" (ngSubmit)="onSubmit()"> 
                     <div *ngFor="let ticket of t.controls; let x of ticket; let i = index" class="list-group list-group-flush">
                         <div [formGroup]="ticket" class="row">
-                            <div class="form-group col-1 text-center" *ngIf="x.value.jenis === 'P'">
-                                {{i+1}}
+                            <div class="form-group col-1 text-center">
+                                <B>{{i+1}}</B>
                             </div>
-                            <div class="form-group col-1" *ngIf="x.value.jenis === 'D'">
+                            <div class="form-group col-3">
+                                <B>{{x.value.indikator}}</B>
                             </div>
-                            <div class="form-group col-10" *ngIf="x.value.jenis === 'P'">
-                               <B>{{x.value.indikator}}</B>
+                            <div class="form-group col-8" *ngIf="x.value.id_tipe_indikator == 0">
+                                <div class="row">
+                                <div class="form-group col-4">
+                                    -
+                                </div>
+                                <div class="form-group col-1">
+                                    <input disabled type="text" formControlName="nilai" class="form-control" fullWidth fieldSize="small"/>
+                                </div>
+                                <div class="form-group col-1">
+                                    {{x.value.satuan}}
+                                </div>
+                                <div class="form-group col-1" *ngIf="x.value.arsip_link == ''">
+                                    <input id="myForm" formControlName="arsip_link" type="file" name="file" (change)="postMethod($event.target.files)">
+                                </div>   
+                                <div class="form-group col-1 text-center" *ngIf="x.value.arsip_link !== ''">
+                                    <a href="{{x.value.arsip_link}}">
+                                    <nb-icon icon="file-text-outline" status="primary" [options]="{ animation: { type: 'pulse' } }"></nb-icon>
+                                    </a>
+                                </div>
+                                <div class="form-group col-2 text-center">
+                                    <nb-checkbox status="success">Validasi </nb-checkbox>
+                                </div> 
+                                <div class="form-group col-3 text-right">
+                                    <!-- <small><label>Catatan.</label></small>  -->
+                                    <textarea formControlName="arsip_link" class="form-control" fullWidth fieldSize="small" placeholder="Catatan..."></textarea>
+                                </div>  
+                                </div>
                             </div>
-                            <div class="form-group col-3" *ngIf="x.value.jenis === 'D'">
-                                {{x.value.indikator}}
+                            <div class="form-group col-8" *ngIf="x.value.id_tipe_indikator == 1">
+                                <div class="row">
+                                <div class="form-group col-4">
+                                    {{x.value.pilihan_jawaban}}
+                                </div>
+                                <div class="form-group col-1">
+                                    <input disabled type="text" formControlName="nilai" class="form-control" fullWidth fieldSize="small"/>
+                                </div>
+                                <div class="form-group col-1">
+                                </div>
+                                <div class="form-group col-1" *ngIf="x.value.arsip_link == ''">
+                                    <input id="myForm" formControlName="arsip_link" type="file" name="file" (change)="postMethod($event.target.files)">
+                                </div>   
+                                <div class="form-group col-1 text-center" *ngIf="x.value.arsip_link !== ''">
+                                    <a href="{{x.value.arsip_link}}">
+                                    <nb-icon icon="file-text-outline" status="primary" [options]="{ animation: { type: 'pulse' } }"></nb-icon>
+                                    </a>
+                                </div>
+                                <div class="form-group col-2 text-center">
+                                    <nb-checkbox status="success">Validasi </nb-checkbox>
+                                </div> 
+                                <div class="form-group col-3 text-right">
+                                    <!-- <small><label>Catatan.</label></small>  -->
+                                    <textarea formControlName="arsip_link" class="form-control" fullWidth fieldSize="small" placeholder="Catatan..."></textarea>
+                                </div>  
+                                </div>
                             </div>
-                            <!-- <div class="form-group col-4" *ngIf="x.value.jenis === 'D'">
+                            <div class="form-group col-8" *ngIf="x.value.id_tipe_indikator == 2">
+                            <div class="row" *ngFor="let z of x.value.details">
+                                <div class="form-group col-4" *ngIf="x.value.kode_indikator == z.kode_indikator_induk">
+                                    {{z.indikator}}
+                                </div>
+                                <div class="form-group col-1" *ngIf="x.value.kode_indikator == z.kode_indikator_induk">
+                                    <input disabled type="text" formControlName="nilai" class="form-control" fullWidth fieldSize="small"/>
+                                </div>
+                                <div class="form-group col-1" *ngIf="x.value.kode_indikator == z.kode_indikator_induk">
+                                    {{z.satuan}}
+                                </div>
+                                <div class="form-group col-1" *ngIf="x.value.kode_indikator == z.kode_indikator_induk && z.arsip_link == ''">
+                                    <input id="myForm" formControlName="arsip_link" type="file" name="file" (change)="postMethod($event.target.files)">
+                                </div>   
+                                <div class="form-group col-1 text-center" *ngIf="x.value.kode_indikator == z.kode_indikator_induk && z.arsip_link !== ''">
+                                    <a href="{{z.arsip_link}}">
+                                    <nb-icon icon="file-text-outline" status="primary" [options]="{ animation: { type: 'pulse' } }"></nb-icon>
+                                    </a>
+                                </div>
+                                <div class="form-group col-2 text-center " *ngIf="x.value.kode_indikator == z.kode_indikator_induk">
+                                    <nb-checkbox status="success">Validasi </nb-checkbox>
+                                </div> 
+                                <div class="form-group col-3 text-right" *ngIf="x.value.kode_indikator == z.kode_indikator_induk">
+                                    <!-- <small><label>Catatan.</label></small>  -->
+                                    <textarea formControlName="arsip_link" class="form-control" fullWidth fieldSize="small" placeholder="Catatan..."></textarea>
+                                </div>  
                             </div>
-                            <div class="form-group col-3" *ngIf="x.value.jenis === 'P'">
-                            </div>
-                            <div class="form-group col-3" *ngIf="x.value.jenis === 'D'">
-                                {{x.value.indikator}}
-                            </div> -->
-                            <div class="form-group col-1" *ngIf="x.value.jenis === 'D'">
-                                <input type="text" formControlName="nilai" class="form-control" fullWidth fieldSize="small"/>
-                                
-                            </div>
-                            <div class="form-group col-1" *ngIf="x.value.jenis === 'D'">
-                                {{x.value.satuan}}
-                            </div>
-                            <!-- <div class="form-group col-2" *ngIf="x.value.arsip_link == '' && x.value.jenis === 'D'">
-                                <input id="myForm" formControlName="arsip_link" type="file" name="file" (change)="postMethod($event.target.files)">
-                            </div>    -->
-                            <div class="form-group col-2" *ngIf="x.value.arsip_link == '' && x.value.jenis === 'D'">
-                                Tidak ada file.
-                            </div>   
-                            <div class="form-group col-2" *ngIf="x.value.arsip_link !== '' && x.value.jenis === 'D'">
-                                <a href="{{x.value.arsip_link}}">
-                                <nb-icon icon="file-text-outline" status="primary" [options]="{ animation: { type: 'pulse' } }"></nb-icon>Download
-                                </a>
-                            </div>  
-                            <div class="form-group col-1 text-right" *ngIf="x.value.jenis === 'D'">
-                                <nb-checkbox status="success">Validasi</nb-checkbox>
-                            </div> 
-                            <div class="form-group col-1 text-right" *ngIf="x.value.jenis === 'D'">
-                                Catatan : 
-                            </div> 
-                            <div class="form-group col-2 text-right" *ngIf="x.value.jenis === 'D'">
-                                <!-- <small><label>Catatan.</label></small>  -->
-                                <input  type="text" formControlName="id" class="form-control" fullWidth fieldSize="small"/>
-                            </div>                        
+                            </div>                     
                         </div>
                     </div>
                     <div class="card-footer text-right">
                         <button class="btn btn-primary mr-1" type="submit">Simpan</button>
-                        <!-- <button class="btn btn-secondary mr-1" type="reset" (click)="onReset()">Reset</button>
-                        <button class="btn btn-secondary" type="button" (click)="onClear()">Clear</button> -->
                     </div>
                 </form>
             </nb-card-body>
@@ -183,5 +225,5 @@
     </div>
 </div>
 <ng-template #contentTemplate let-data>
-<p>Validasi?</p>
+<p>DATA HERE..."</p>
 </ng-template>
