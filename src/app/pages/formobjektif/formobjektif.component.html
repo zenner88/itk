@@ -24,12 +24,12 @@
         </div>
         <div class="upload-item" *ngFor="let f of files; let i = index;">
           <div class="upload-item-content">
-            <div class="filename" *ngIf="f.progress?.data?.percentage !== 100">
+            <div class="filename" *ngIf="f.progress?.data?.percentage !== 100" style="display: flex;">
               <div class="filename-left">
                 <i class="ionicon ion-ios-copy"></i>
                 <span>{{ f.name }}</span>
               </div>
-              <div class="filename-right">
+              <div class="filename-right" style="margin-left: 20px;">
                 <i class="ionicon ion-close-round" (click)="removeFile(f.id)"></i>
               </div>
             </div>
@@ -209,20 +209,20 @@
                       <div class="form-group col-5">
                         -
                       </div>
-                      <div class="form-group col-1">
+                      <div class="form-group col-2">
                         <input type="text" formControlName="nilai" class="form-control" fullWidth fieldSize="small" />
                       </div>
-                      <div class="form-group col-1">
+                      <div class="form-group col-1 text-left">
                         {{x.value.satuan}}
                       </div>
                       <div class="form-group col-1">
-                        <button class="btn btn-primary mr-1"
+                        <button class="btn btn-primary mr-1 text-center"
                           (click)="open(dialogUpload,index_indikator,null)">Upload</button>
 
                         <!-- <input id="myForm" formControlName="arsip_link" type="file" name="file"
                           (change)="postMethod($event.target.files)"> -->
                       </div>
-                      <div class="form-group col-1">
+                      <div class="form-group col-1 text-center">
                         <span style="font-weight: bold;">{{x.value.jml_arsif}}</span>
                         <span *ngIf="x.value.jml_arsif"> File</span>
                         <!-- <a href="{{x.value.arsip_link}}">
@@ -230,7 +230,7 @@
                             [options]="{ animation: { type: 'pulse' } }"></nb-icon>Download
                         </a> -->
                       </div>
-                      <div class="form-group col-3">
+                      <div class="form-group col-2 text-right">
                         <nb-icon icon="info-outline" status="info" (click)="openWindow(contentTemplate)"
                           [options]="{ animation: { type: 'pulse' } }"></nb-icon> |
                         <nb-icon icon="checkmark-outline" status="warning" [options]="{ animation: { type: 'pulse' } }">
@@ -244,19 +244,19 @@
                       <div class="form-group col-5">
                         {{x.value.pilihan_jawaban}}
                       </div>
-                      <div class="form-group col-1">
+                      <div class="form-group col-2">
                         <input type="text" formControlName="nilai" class="form-control" fullWidth fieldSize="small" />
                       </div>
                       <div class="form-group col-1">
                       </div>
                       <div class="form-group col-1">
-                        <button class="btn btn-primary mr-1"
+                        <button class="btn btn-primary mr-1 text-center"
                           (click)="open(dialogUpload,index_indikator,index_detail)">Upload</button>
 
                         <!-- <input id="myForm" formControlName="arsip_link" type="file" name="file"
                           (change)="postMethod($event.target.files)"> -->
                       </div>
-                      <div class="form-group col-1">
+                      <div class="form-group col-1 text-center">
                         <span style="font-weight: bold;">{{x.value.jml_arsif}}</span>
                         <span *ngIf="x.value.jml_arsif"> File</span>
                         <!-- <a href="{{x.value.arsip_link}}">
@@ -264,7 +264,7 @@
                             [options]="{ animation: { type: 'pulse' } }"></nb-icon>Download
                         </a> -->
                       </div>
-                      <div class="form-group col-3">
+                      <div class="form-group col-2 text-right">
                         <nb-icon icon="info-outline" status="info" (click)="openWindow(contentTemplate)"
                           [options]="{ animation: { type: 'pulse' } }"></nb-icon> |
                         <nb-icon icon="checkmark-outline" status="warning" [options]="{ animation: { type: 'pulse' } }">
@@ -278,19 +278,19 @@
                       <div class="form-group col-5">
                         {{z.indikator}}
                       </div>
-                      <div class="form-group col-1">
+                      <div class="form-group col-2">
                         <input type="text" formControlName="nilai" class="form-control" fullWidth fieldSize="small" />
                       </div>
-                      <div class="form-group col-1">
+                      <div class="form-group col-1 text-left">
                         {{z.satuan}}
                       </div>
-                      <div class="form-group col-1">
+                      <div class="form-group col-1 text-center">
                         <button class="btn btn-primary mr-1"
                           (click)="open(dialogUpload,index_indikator,index_detail)">Upload</button>
                         <!-- <input id="myForm" formControlName="arsip_link" type="file" name="file"
                           (change)="postMethod($event.target.files)"> -->
                       </div>
-                      <div class="form-group col-1">
+                      <div class="form-group col-1 text-center">
                         <span style="font-weight: bold;">{{z.jml_arsif}}</span>
                         <span *ngIf="z.jml_arsif"> File</span>
 
@@ -299,7 +299,7 @@
                             [options]="{ animation: { type: 'pulse' } }"></nb-icon>Download
                         </a> -->
                       </div>
-                      <div class="form-group col-3">
+                      <div class="form-group col-2 text-right">
                         <nb-icon icon="info-outline" status="info" (click)="openWindow(contentTemplate)"
                           [options]="{ animation: { type: 'pulse' } }"></nb-icon> |
                         <nb-icon icon="checkmark-outline" status="warning" [options]="{ animation: { type: 'pulse' } }">
