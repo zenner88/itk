@@ -1,0 +1,10 @@
+<nb-card status="primary">
+  <nb-card-header>
+    Polres - Satfung
+  </nb-card-header>
+  <nb-card-body>
+    <ng2-smart-table [settings]="satfungs" [source]="source" (deleteConfirm)="onDeleteConfirm($event)" (editConfirm)="onSaveConfirm($event)"
+    (createConfirm)="onCreateConfirm($event)">
+    </ng2-smart-table>
+</nb-card-body>
+</nb-card>

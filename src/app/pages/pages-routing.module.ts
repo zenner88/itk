@@ -117,7 +117,12 @@ const routes: Routes = [{
     },
     {
       path: 'list-polres',
-      loadChildren: () => import('./list-satfung/tables.module')
+      loadChildren: () => import('./list-polres/tables.module')
+        .then(m => m.TablesModule),
+    },
+    {
+      path: 'list-polres-satfung',
+      loadChildren: () => import('./list-polres-satfung/tables.module')
         .then(m => m.TablesModule),
     },
     {

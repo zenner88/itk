@@ -8,14 +8,47 @@ import { LayoutService } from '../../../../@core/utils/layout.service';
   selector: 'ngx-country-orders-chart',
   styleUrls: ['./country-orders-chart.component.scss'],
   template: `
-    <div class="header">
-      <span class="caption">Selected Country/Region</span>
-      <h2 class="h4">{{ countryName }}</h2>
-    </div>
-    <div echarts
-         [options]="option"
-         class="echart"
-         (chartInit)="onChartInit($event)">
+    <div class="row">
+      <div class="col-3">
+        <div class="header">
+        <B>POLRES UMUM</B>
+        </div><HR>
+        <div echarts
+            [options]="option"
+            class="echart"
+            (chartInit)="onChartInit($event)">
+        </div>
+      </div>
+      <div class="col-3">  
+        <div class="header">
+        <B>POLRES PERBATASAN</B>
+        </div><HR>
+        <div echarts
+            [options]="option"
+            class="echart"
+            (chartInit)="onChartInit($event)">
+        </div>
+      </div>
+      <div class="col-3">
+        <div class="header">
+        <B>POLRES RAWAN KONFLIK</B>
+        </div><HR>
+        <div echarts
+            [options]="option"
+            class="echart"
+            (chartInit)="onChartInit($event)">
+        </div>
+      </div>
+      <div class="col-3">
+        <div class="header">
+        <B>POLRES PERAIRAN</B>
+        </div><HR>
+        <div echarts
+            [options]="option"
+            class="echart"
+            (chartInit)="onChartInit($event)">
+        </div>
+      </div>      
     </div>
   `,
 })

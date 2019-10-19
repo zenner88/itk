@@ -145,12 +145,22 @@ export const MENU_ITEMS: NbMenuItem[] = [
   //   ],
   // },
   {
-    title: 'Objektif',
+    title: 'Form Isian',
     icon: 'folder-add-outline',
     children: [
       {
         title: 'Form Objektif',
         link: '/indeks/formObjektif',
+        icon: 'folder-outline',
+      },
+      {
+        title: 'Form Persepsi Internal Polres',
+        link: '/indeks/formPIP',
+        icon: 'folder-outline',
+      },
+      {
+        title: 'Form Persepsi Eksternal Polres',
+        link: '/indeks/formPIP',
         icon: 'folder-outline',
       },
       {
@@ -165,17 +175,29 @@ export const MENU_ITEMS: NbMenuItem[] = [
       },
     ]
   },
- 
   {
-    title: 'Validasi Form Objektif',
-    link: '/indeks/validasiFormObjektif',
-    icon: 'browser-outline',
-  },
-  {
-    title: 'Form Persepsi Internal Polres',
-    link: '/indeks/formPIP',
-    icon: 'browser-outline',
-  },
+    title: 'Validasi',
+    icon: 'folder-add-outline',
+    children: [
+      {
+        title: 'Kasatfung',
+        link: '/indeks/validasiFormObjektif',
+        icon: 'folder-outline',
+      },
+      {
+        title: 'Kapolres',
+        link: '/indeks/validasiFormObjektif',
+        icon: 'folder-outline',
+      },
+      {
+        title: 'Pokja ITK',
+        link: '/indeks/validasiFormObjektif',
+        icon: 'folder-outline',
+      },
+    ]
+  }
+  
+  
   // {
   //   title: 'Public Home',
   //   link: '/public/home',
