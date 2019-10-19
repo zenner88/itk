@@ -52,6 +52,10 @@ export class SmartTableComponent {
   pilihAh: any;
   prinsipx: any;
   datax: any;  
+  filterPeriode: any;
+  filterSatker: any;
+  satkerz: any;
+  periodez: any;
   ngOnInit(): void {
     this.indikators = this.loadTableSettings(); 
     this.httpClient.get(this._global.baseAPIUrl + '/View_indikators/').subscribe(indikator => {
@@ -430,43 +434,40 @@ export class SmartTableComponent {
       this.showToast("warning", "Koneksi bermasalah", error.message);      
     }
     );
-
-    // if (this.kode == ""){
-    //   this.showToast("warning", "Kolom ID masih Kosong", "Harus di isi");
-    // }
-    // else if (this.bobot == ""){
-    //   this.showToast("warning", "Kolom bobot masih Kosong", "Harus di isi");
-    // }
-    // else{
-    // this.detailsData= {
-    //     kode: event.newData.kode,
-    //     id_prinsip: event.newData.id_prinsip,   
-    //     bobot: event.newData.bobot,
-    //     rumus: event.newData.rumus,
-    //     na: event.newData.na,
-    //     dibuat_oleh: event.newData.dibuat_oleh,
-    //     diubah_oleh: event.newData.diubah_oleh,
-    //     hash: event.newData.hash,
-    //     id_jenis_data: event.newData.id_jenis_data,
-    //     id_satuan: event.newData.id_satuan,
-    //     indikator: event.newData.indikator,
-    //     tipe: event.newData.tipe,
-    //     waktu_buat: event.newData.waktu_buat,
-    //     waktu_ubah: event.newData.waktu_ubah,
-    // };
-    // console.log(this.detailsData);
-    // this.httpClient.put(this._global.baseAPIUrl + '/Itk_mst_indikators/'+event.data.kode,this.detailsData).subscribe(data  => {
-    //   console.log("PUT Request is successful ", data);
-    //   this.showToast("success", "Data Ter update", event.newData.kode);
-    //   event.confirm.resolve();
-    // },
-    // error  => {
-    //   console.log("Error", error);
-    //   this.showToast("warning", "Input / koneksi bermasalah", error.error.error.message);
-    // }
-    // );
+  }
+    filterKlikPeriode(id,nama){
+      this.filterPeriode = id;
+      this.filterKlik();
     }
-  // }
+    filterKlikSatker(id,nama){
+      this.filterSatker = id;
+      this.filterKlik();
+    }
+    filterKlik(){
+      if (this.filterSatker == undefined){
+        this.satkerz = "";
+      }else{
+        this.satkerz = this.filterSatker;
+      }
+  
+      if (this.filterPeriode == undefined){
+        this.periodez = "";
+      }else{
+        this.periodez = this.filterPeriode;
+      }
+  
+      // this.penilaians = this.loadTableSettings(); 
+      // this.httpClient.get(this._global.baseAPIUrl + '/View_penilaians/getDataByKPeriodeKsatker?kodePeriode='+this.periodez+'&kodeSatker='+this.satkerz).subscribe(indikator => {
+      //   const data = JSON.stringify(indikator);
+      //   this.source.load(JSON.parse(data));
+      //   console.log(this.source);
+      // },
+      // error  => {
+      //   console.log("Error", error);
+      //   this.showToast("warning", "Koneksi bermasalah", error.message);      
+      // }
+      // ); 
+}
 
   index = 1;
   private showToast(type: NbComponentStatus, title: string, body: string) {
