@@ -28,6 +28,7 @@ import {
 import { BlockUI, NgBlockUI } from "ng-block-ui";
 
 import { FormComponent } from "../form/form.component";
+import { Router } from "@angular/router";
 
 @Component({
   selector: "ngx-formobjektif",
@@ -55,7 +56,8 @@ export class FormObjektifComponent implements OnInit {
     private _global: AppGlobals,
     private toastrService: NbToastrService,
     private windowService: NbWindowService,
-    private dialogService: NbDialogService
+    private dialogService: NbDialogService,
+    private route: Router
   ) {
     this.options = { concurrency: 1, maxUploads: 4 };
     this.files = []; // local uploading files array
@@ -81,6 +83,8 @@ export class FormObjektifComponent implements OnInit {
   };
   fileDownload: any[];
   user = "zenner";
+  dataObjectif: any;
+  kodeSatker: any;
   // convenience getters for easy access to form fields
 
   open(dialog: TemplateRef<any>, index_indikator, index_detail) {
@@ -129,6 +133,14 @@ export class FormObjektifComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.kodeSatker = localStorage.getItem("kodeSatker");
+
+    this.dataObjectif = JSON.parse(localStorage.getItem("indexObjektif"));
+
+    if (!this.kodeSatker || !this.dataObjectif) {
+      this.route.navigate(["/pages/list-polres-satfung/smart-table/"]);
+    }
+
     this.now = formatDate(new Date(), "yyyy-MM-dd HH:mm:ss Z", "en");
     this.dynamicForm = this.formBuilder.group({
       numberOfTickets: ["", Validators.required],
@@ -139,7 +151,11 @@ export class FormObjektifComponent implements OnInit {
     this.httpClient
       .get(
         this._global.baseAPIUrl +
-          "/View_penilaian_satfungs/getDataByPersonalForm?kodeSatker=640701&idSatfung=SU&kodePeriode=1"
+          "/View_penilaian_satfungs/getDataByPersonalForm?kodeSatker=" +
+          this.kodeSatker +
+          "&idSatfung=" +
+          this.dataObjectif.idSatfung +
+          "&kodePeriode=1"
       )
       .subscribe(
         data => {
@@ -183,7 +199,11 @@ export class FormObjektifComponent implements OnInit {
     this.httpClient
       .get(
         this._global.baseAPIUrl +
-          "/View_penilaian_indikator_alls/getDataBypenilaianIdDanJenisDanKIIDanKsat?penilaianId=862&jenis=&kodeSatfung=PSU&kodeIndikatorInduk="
+          "/View_penilaian_indikator_alls/getDataBypenilaianIdDanJenisDanKIIDanKsat?penilaianId=" +
+          this.dataObjectif.penilaianId +
+          "&jenis=&kodeSatfung=" +
+          this.dataObjectif.kodeSatfung +
+          "&kodeIndikatorInduk="
       )
       .subscribe(
         indikator => {

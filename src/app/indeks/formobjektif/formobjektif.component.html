@@ -24,12 +24,12 @@
         </div>
         <div class="upload-item" *ngFor="let f of files; let i = index;">
           <div class="upload-item-content">
-            <div class="filename" *ngIf="f.progress?.data?.percentage !== 100">
+            <div class="filename" *ngIf="f.progress?.data?.percentage !== 100" style="display: flex;">
               <div class="filename-left">
                 <i class="ionicon ion-ios-copy"></i>
                 <span>{{ f.name }}</span>
               </div>
-              <div class="filename-right">
+              <div class="filename-right" style="margin-left: 20px;">
                 <i class="ionicon ion-close-round" (click)="removeFile(f.id)"></i>
               </div>
             </div>
@@ -40,8 +40,7 @@
               </div>
             </div>
             <div class="progress-text-content" *ngIf="f.progress?.data?.percentage !== 100">
-              <span class="progress-text" 
-                [class.is-done]="f?.progress?.data?.percentage === 100">
+              <span class="progress-text" [class.is-done]="f?.progress?.data?.percentage === 100">
                 <span>{{ f.progress?.data?.percentage }}% </span>
                 <span *ngIf="f.progress?.data?.percentage !== 100">Uploading...</span>
                 <span *ngIf="f.progress?.data?.percentage === 100">Done</span>
