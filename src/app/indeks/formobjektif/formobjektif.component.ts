@@ -10,7 +10,8 @@ import {
   NbToastrService,
   NbComponentStatus,
   NbGlobalPhysicalPosition,
-  NbWindowService
+  NbWindowService,
+  NbDialogService
 } from "@nebular/theme";
 import { HttpClient } from "@angular/common/http";
 import { AppGlobals } from "../../app.global";
@@ -20,10 +21,13 @@ import {
   UploadInput,
   UploadFile,
   humanizeBytes,
-  UploaderOptions
+  UploaderOptions,
+  UploadStatus
 } from "ngx-uploader";
 
 import { BlockUI, NgBlockUI } from "ng-block-ui";
+
+import { FormComponent } from "../form/form.component";
 
 @Component({
   selector: "ngx-formobjektif",
@@ -44,14 +48,16 @@ export class FormObjektifComponent implements OnInit {
   uploadInput: EventEmitter<UploadInput>;
   humanizeBytes: Function;
   dragOver: boolean;
+
   constructor(
     private formBuilder: FormBuilder,
     private httpClient: HttpClient,
     private _global: AppGlobals,
     private toastrService: NbToastrService,
-    private windowService: NbWindowService
+    private windowService: NbWindowService,
+    private dialogService: NbDialogService
   ) {
-    this.options = { concurrency: 1, maxUploads: 3 };
+    this.options = { concurrency: 1, maxUploads: 4 };
     this.files = []; // local uploading files array
     this.uploadInput = new EventEmitter<UploadInput>(); // input events, we use this to emit data to ngx-uploader
     this.humanizeBytes = humanizeBytes;
@@ -69,8 +75,51 @@ export class FormObjektifComponent implements OnInit {
   jmlIndikator: any;
   jmlDetails: any;
   fileToUpload: any;
+  fieldIndex: {
+    index_indikator: null;
+    index_detail: null;
+  };
+  fileDownload: any[];
   user = "zenner";
   // convenience getters for easy access to form fields
+
+  open(dialog: TemplateRef<any>, index_indikator, index_detail) {
+    this.fieldIndex = {
+      index_indikator: index_indikator,
+      index_detail: index_detail
+    };
+    // if (this.files.length > 1) {
+
+    this.inisialisasiFileDownload(index_indikator, index_detail);
+
+    this.dialogService.open(dialog, {
+      context: "this is some additional data passed to dialog"
+    });
+  }
+
+  inisialisasiFileDownload(index_indikator, index_detail) {
+    if (index_detail != null) {
+      if (
+        this.dynamicForm.value.tickets[index_indikator].details[index_detail]
+          .arsip_link
+      ) {
+        this.fileDownload = JSON.parse(
+          this.dynamicForm.value.tickets[index_indikator].details[index_detail]
+            .arsip_link
+        );
+      } else {
+        this.fileDownload = [];
+      }
+    } else {
+      if (this.dynamicForm.value.tickets[index_indikator].arsip_link) {
+        this.fileDownload = JSON.parse(
+          this.dynamicForm.value.tickets[index_indikator].arsip_link
+        );
+      } else {
+        this.fileDownload = [];
+      }
+    }
+  }
 
   get f() {
     return this.dynamicForm.controls;
@@ -138,6 +187,7 @@ export class FormObjektifComponent implements OnInit {
       )
       .subscribe(
         indikator => {
+          this.objek2 = [];
           const data = JSON.stringify(indikator);
           var datax = JSON.parse(data);
           console.log(datax);
@@ -157,7 +207,8 @@ export class FormObjektifComponent implements OnInit {
               kode_indikator_satfung: xx.kode_indikator_satfung,
               penilaian_id: xx.penilaian_id,
               id_tipe_indikator: xx.id_tipe_indikator,
-              pilihan_jawaban: xx.pilihan_jawaban
+              pilihan_jawaban: xx.pilihan_jawaban,
+              jml_arsif: xx.arsip_link ? JSON.parse(xx.arsip_link).length : null
             });
           });
           this.jmlDetails = this.objek2.length;
@@ -182,6 +233,7 @@ export class FormObjektifComponent implements OnInit {
                 kode_indikator_satfung: [datas[i].kode_indikator_satfung],
                 kode_indikator: [datas[i].kode_indikator],
                 id_tipe_indikator: [datas[i].id_tipe_indikator],
+                jml_arsif: [datas[i].jml_arsif],
                 details: [datas[i].children]
               })
             );
@@ -228,6 +280,7 @@ export class FormObjektifComponent implements OnInit {
   }
 
   onSubmit() {
+    this.blockUI.start();
     console.log("WORK!");
     console.log(this.dynamicForm.value.tickets);
     // save
@@ -312,8 +365,15 @@ export class FormObjektifComponent implements OnInit {
         data => {
           // console.log("PUT Request is successful ", data);
           // this.showToast("success", "Data Tersimpan", id);
+          this.ngOnInit();
+          setTimeout(() => {
+            this.blockUI.stop();
+          }, 2500);
         },
         error => {
+          setTimeout(() => {
+            this.blockUI.stop();
+          }, 2500);
           // console.log("Error", error);
           this.showToast(
             "warning",
@@ -333,8 +393,14 @@ export class FormObjektifComponent implements OnInit {
         data => {
           // console.log("PUT Request is successful ", data);
           this.showToast("success", "Data Tersimpan", null);
+          setTimeout(() => {
+            this.blockUI.stop();
+          }, 2500);
         },
         error => {
+          setTimeout(() => {
+            this.blockUI.stop();
+          }, 2500);
           // console.log("Error", error);
           this.showToast(
             "warning",
@@ -374,7 +440,7 @@ export class FormObjektifComponent implements OnInit {
     // alert('SUCCESS!! :-)\n\n' + JSON.stringify(this.dynamicForm.value));
   }
 
-  openWindow(contentTemplate) {
+  openWindow(contentTemplate, data) {
     this.windowService.open(contentTemplate, {
       title: "Window content from template",
       context: {
@@ -383,20 +449,87 @@ export class FormObjektifComponent implements OnInit {
     });
   }
   // UPLOAD
-  postMethod(files: FileList) {
-    this.fileToUpload = files.item(0);
+  postMethod(files: UploadFile, index) {
+    this.fileToUpload = files;
     let formData = new FormData();
-    formData.append("file", this.fileToUpload, this.fileToUpload.name);
+    formData.append(
+      "file",
+      this.fileToUpload.nativeFile,
+      this.fileToUpload.name
+    );
     this.httpClient
       .post(
-        this._global.baseAPIUrl + "/ContainerPenilaianIndi/upload/upload",
+        this._global.baseAPIUrl +
+          "/ContainerPenilaianIndi/upload_document_indikator/upload",
         formData
       )
       .subscribe(val => {
-        console.log("val");
         let da = JSON.stringify(val);
         let dat = JSON.parse(da);
-        console.log(dat.result.files.file[0].name);
+        let index_indikator =
+          this.fieldIndex.index_indikator != undefined &&
+          this.fieldIndex.index_indikator != null
+            ? this.fieldIndex.index_indikator
+            : -1;
+        let index_detail =
+          this.fieldIndex.index_detail != undefined &&
+          this.fieldIndex.index_detail != null
+            ? this.fieldIndex.index_detail
+            : -1;
+        var arsip = [];
+        // if (this.files.length > 1) {
+        if (index_detail != -1) {
+          if (
+            this.dynamicForm.value.tickets[index_indikator].details[
+              index_detail
+            ].arsip_link
+          ) {
+            arsip = JSON.parse(
+              this.dynamicForm.value.tickets[index_indikator].details[
+                index_detail
+              ].arsip_link
+            );
+            arsip.push(dat.result.files.file[0].name);
+            this.dynamicForm.value.tickets[index_indikator].details[
+              index_detail
+            ].arsip_link = JSON.stringify(arsip);
+          } else {
+            arsip = [dat.result.files.file[0].name];
+            this.dynamicForm.value.tickets[index_indikator].details[
+              index_detail
+            ].arsip_link = JSON.stringify(arsip);
+          }
+        } else {
+          if (this.dynamicForm.value.tickets[index_indikator].arsip_link) {
+            arsip = JSON.parse(
+              this.dynamicForm.value.tickets[index_indikator].arsip_link
+            );
+            arsip.push(dat.result.files.file[0].name);
+            this.dynamicForm.value.tickets[
+              index_indikator
+            ].arsip_link = JSON.stringify(arsip);
+          } else {
+            arsip = [dat.result.files.file[0].name];
+            this.dynamicForm.value.tickets[
+              index_indikator
+            ].arsip_link = JSON.stringify(arsip);
+          }
+        }
+
+        let indexS = this.files
+          .map(function(e) {
+            return e.size;
+          })
+          .indexOf(dat.result.files.file[0].size);
+        if (indexS != -1) {
+          this.files[indexS].progress.data.percentage = 100;
+          this.files.splice(indexS, 1);
+        }
+        this.inisialisasiFileDownload(
+          this.fieldIndex.index_indikator,
+          this.fieldIndex.index_detail
+        );
+        // }
       });
     return false;
   }
@@ -412,5 +545,116 @@ export class FormObjektifComponent implements OnInit {
     const titleContent = title ? `${title}` : "";
     this.index += 1;
     this.toastrService.show(body, `${titleContent}`, config);
+  }
+
+  onUploadOutput(output: UploadOutput): void {
+    if (output.type === "allAddedToQueue") {
+      // const event: UploadInput = {
+      //   type: "uploadAll",
+      //   url: "this.url",
+      //   method: "POST",
+      //   data: { foo: "bar" }
+      // };
+      // this.uploadInput.emit(event);
+    } else if (
+      output.type === "addedToQueue" &&
+      typeof output.file !== "undefined"
+    ) {
+      this.files.push(output.file);
+    } else if (
+      output.type === "uploading" &&
+      typeof output.file !== "undefined"
+    ) {
+      const index = this.files.findIndex(
+        file => typeof output.file !== "undefined" && file.id === output.file.id
+      );
+      this.files[index] = output.file;
+    } else if (output.type === "cancelled" || output.type === "removed") {
+      this.files = this.files.filter(
+        (file: UploadFile) => file !== output.file
+      );
+    } else if (output.type === "dragOver") {
+      this.dragOver = true;
+    } else if (output.type === "dragOut") {
+      this.dragOver = false;
+    } else if (output.type === "drop") {
+      this.dragOver = false;
+    } else if (
+      output.type === "rejected" &&
+      typeof output.file !== "undefined"
+    ) {
+      this.files.push(output.file);
+      console.log(output.file.name + " rejected");
+    }
+
+    this.files = this.files.filter(
+      file => file.progress.status !== UploadStatus.Done
+    );
+  }
+
+  startUpload(): void {
+    console.log(this.files);
+    for (let i = 0; i < this.files.length; i++) {
+      this.postMethod(this.files[i], i);
+    }
+    // const event: UploadInput = {
+    //   type: "uploadAll",
+    //   url: this._global.baseAPIUrl + "/ContainerPenilaianIndi/upload_document_indikator/upload",
+    //   method: "POST",
+    //   data: { foo: "bar" }
+    // };
+
+    // this.uploadInput.emit(event);
+  }
+
+  cancelUpload(id: string): void {
+    this.uploadInput.emit({ type: "cancel", id: id });
+  }
+
+  removeFile(id: string): void {
+    this.uploadInput.emit({ type: "remove", id: id });
+  }
+
+  removeAllFiles(): void {
+    this.uploadInput.emit({ type: "removeAll" });
+  }
+
+  downloadFile(fileDownload) {
+    window.open(
+      this._global.baseAPIUrl +
+        "/ContainerPenilaianIndi/upload_document_indikator/download/" +
+        fileDownload
+    );
+  }
+
+  deletFile(i) {
+    this.fileDownload.splice(i, 1);
+    let index_indikator =
+      this.fieldIndex.index_indikator != undefined &&
+      this.fieldIndex.index_indikator != null
+        ? this.fieldIndex.index_indikator
+        : -1;
+    let index_detail =
+      this.fieldIndex.index_detail != undefined &&
+      this.fieldIndex.index_detail != null
+        ? this.fieldIndex.index_detail
+        : -1;
+    if (index_detail != -1) {
+      this.dynamicForm.value.tickets[index_indikator].details[
+        index_detail
+      ].arsip_link = JSON.stringify(this.fileDownload);
+      // this.dynamicForm.value.tickets[index_indikator].details[
+      //   index_detail
+      // ].jml_arsif = this.fileDownload.length;
+    } else {
+      if (this.dynamicForm.value.tickets[index_indikator].details) {
+        this.dynamicForm.value.tickets[index_indikator].details[
+          index_detail
+        ].arsip_link = JSON.stringify(this.fileDownload);
+        // this.dynamicForm.value.tickets[
+        //   index_indikator
+        // ].jml_arsif = this.fileDownload.length;
+      }
+    }
   }
 }
