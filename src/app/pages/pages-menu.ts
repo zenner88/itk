@@ -154,12 +154,12 @@ export const MENU_ITEMS: NbMenuItem[] = [
         icon: 'folder-outline',
       },
       {
-        title: 'Form Persepsi Internal Polres',
+        title: 'Form Persepsi Int Polres',
         link: '/indeks/formPIP',
         icon: 'folder-outline',
       },
       {
-        title: 'Form Persepsi Eksternal Polres',
+        title: 'Form Persepsi Ekst Polres',
         link: '/indeks/formPIP',
         icon: 'folder-outline',
       },
