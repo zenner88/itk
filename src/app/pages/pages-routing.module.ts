@@ -14,11 +14,6 @@ const routes: Routes = [
       {
         path: "dashboard",
         component: DashboardComponent
-      }
-      ,
-      {
-        path: "formObjektif",
-        component: FormObjektifComponent
       },
       {
         path: "layout",
