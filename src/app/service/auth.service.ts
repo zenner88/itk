@@ -43,9 +43,9 @@ export class AuthService {
             this.loginStatus(true);
 
             this.setDataLoginUser({
-              namaUser: user.nama,
-              kdUser: user.username,
-              group: user.group,
+              namaUser: user.userId,
+              kdUser: user.userId,
+              group: user.userId,
               token: user.id
             });
           }

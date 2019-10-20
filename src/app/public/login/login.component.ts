@@ -45,9 +45,8 @@ export class LoginComponent implements OnInit {
       namaUser: ["", Validators.required],
       kataSandi: ["", Validators.required]
     });
-
   }
-  
+
   get f() {
     return this.loginForm.controls;
   }
@@ -55,22 +54,43 @@ export class LoginComponent implements OnInit {
   onSubmit() {
     this.submitted = true;
     if (this.loginForm.invalid) {
-      window.alert('Salah');
+      window.alert("Salah");
       return;
     }
 
     this.loading = true;
     this.authService
-      .login(
-        this.f.namaUser.value,
-        this.f.kataSandi.value,
-        true
-      )
+      .login(this.f.namaUser.value, this.f.kataSandi.value, true)
       .pipe(first())
       .subscribe(
         data => {
-          window.alert('Berhasil');
-          // this.router.navigate(["dashboard"]);
+          window.alert("Berhasil");
+          console.log(data);
+          if (data.userId == 1) {
+            this.router.navigate(["pages"]);
+          } else if (data.userId == 2) {
+            localStorage.setItem(
+              "indexObjektif",
+              JSON.stringify({
+                penilaianId: 862,
+                kodeSatfung: "PSU",
+                idSatfung: "SU"
+              })
+            );
+            localStorage.setItem("kodeSatker", "640701");
+            this.router.navigate(["indeks/formObjektif"]);
+          } else if (data.userId == 3) {
+            localStorage.setItem(
+              "indexObjektif",
+              JSON.stringify({
+                penilaianId: 862,
+                kodeSatfung: "PSU",
+                idSatfung: "SU"
+              })
+            );
+            localStorage.setItem("kodeSatker", "640701");
+            this.router.navigate(["indeks/validasiFormObjektif"]);
+          }
           this.loading = false;
         },
         error => {

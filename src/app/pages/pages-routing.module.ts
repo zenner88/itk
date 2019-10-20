@@ -142,6 +142,10 @@ const routes: Routes = [
           )
       },
       {
+        path: "formObjektif",
+        component: FormObjektifComponent
+      },
+      {
         path: "",
         redirectTo: "dashboard",
         pathMatch: "full"
