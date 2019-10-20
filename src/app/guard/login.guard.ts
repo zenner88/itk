@@ -13,7 +13,7 @@ import { TranslatorService } from "../service/translator.service";
   providedIn: "root"
 })
 export class LoginGuard implements CanActivate {
-  constructor(private router: Router, private translate: TranslatorService) {}
+  constructor(private router: Router) {}
   konfirmLogout: string;
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
     if (localStorage.getItem("currentUser")) {

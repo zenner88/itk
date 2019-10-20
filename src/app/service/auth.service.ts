@@ -23,10 +23,15 @@ export class AuthService {
   private dataLoginUser: dataLoginUser;
   private route: any[];
   private listRoute: any[];
-  login(username: string, password: string, rememberMe: boolean) {
+  login(
+    config: string,
+    username: string,
+    password: string,
+    rememberMe: boolean
+  ) {
     return this.http
       .post<any>(
-        "http://192.168.2.170:3000/api/Users/login",
+        config + "/Users/login",
         { username: username.trim(), password: password.trim() },
         httpOptions
       )

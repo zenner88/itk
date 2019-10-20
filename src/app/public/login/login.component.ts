@@ -37,6 +37,7 @@ export class LoginComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
+    private _global: AppGlobals,
     private authService: AuthService
   ) {}
 
@@ -60,7 +61,12 @@ export class LoginComponent implements OnInit {
 
     this.loading = true;
     this.authService
-      .login(this.f.namaUser.value, this.f.kataSandi.value, true)
+      .login(
+        this._global.baseAPIUrl,
+        this.f.namaUser.value,
+        this.f.kataSandi.value,
+        true
+      )
       .pipe(first())
       .subscribe(
         data => {

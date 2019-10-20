@@ -9,11 +9,11 @@ import {
 	HttpEvent,
 	HttpErrorResponse
 } from '@angular/common/http';
-import { TranslatorService } from './translator.service';
+// import { TranslatorService } from './translator.service';
 
 @Injectable()
 export class HeaderInterceptorService implements HttpInterceptor {
-	constructor (public translate: TranslatorService) {}
+	constructor () {}
 	intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 		let dataLoginUser: any
 		let timeOut:string

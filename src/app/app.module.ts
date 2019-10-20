@@ -26,7 +26,7 @@ import { HeaderInterceptorService } from "./service/header-interceptor.service";
 import { AuthService } from "./service/auth.service";
 import { ApiService } from "./service/api.service";
 import { LoaderService } from "./service/loader.service";
-import { TranslatorService } from "./service/translator.service";
+// import { TranslatorService } from "./service/translator.service";
 @NgModule({
   imports: [
     BrowserModule,
@@ -56,7 +56,7 @@ import { TranslatorService } from "./service/translator.service";
     LoaderService,
     ApiService,
     AuthService,
-    TranslatorService,
+    // TranslatorService,
   ],
   bootstrap: [AppComponent],
 })
