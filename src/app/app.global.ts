@@ -7,8 +7,8 @@ export class AppGlobals {
     // readonly baseAPIUrl: string = 'https://itkpolri.ptcmk.co.id/api';
     // readonly baseAppUrl: string = '';
     // readonly baseAPIUrl: string = 'http://localhost:3000/api'
-    readonly baseAppUrl: string = 'http://192.168.1.249/';
-    readonly baseAPIUrl: string = 'http://192.168.1.249:3000/api';
+    readonly baseAppUrl: string = 'http://192.168.2.170/';
+    readonly baseAPIUrl: string = 'http://192.168.2.170:3000/api';
 }
 export class AuthGuard implements CanActivate {
 
