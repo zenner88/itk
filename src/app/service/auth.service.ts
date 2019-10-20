@@ -26,7 +26,7 @@ export class AuthService {
   login(username: string, password: string, rememberMe: boolean) {
     return this.http
       .post<any>(
-        "http://localhost:3000/api/Users/login",
+        "http://192.168.2.170:3000/api/Users/login",
         { username: username.trim(), password: password.trim() },
         httpOptions
       )
