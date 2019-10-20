@@ -8,7 +8,7 @@ import { CountryOrderData } from '../../../@core/data/country-order';
   styleUrls: ['./country-orders.component.scss'],
   template: `
     <nb-card>
-      <nb-card-header>Ranking ITK</nb-card-header>
+      <nb-card-header>Periode</nb-card-header>
       <nb-card-body>
        
         <ngx-country-orders-chart [countryName]="countryName"
