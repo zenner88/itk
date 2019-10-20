@@ -264,12 +264,12 @@
                       <input type="text"
                         [(ngModel)]="t.value[index_indikator].details[index_detail].nilai"
                         class="form-control" fullWidth fieldSize="small" />
-                      {{x.value.satuan}}
+                      {{z.satuan}}
                     </div>
                     <div class="form-group col-1">
                       <a (click)="open(dialogUpload,index_indikator,null)">
-                        <span style="font-weight: bold;">{{x.value.jml_arsif}}</span>
-                        <span *ngIf="x.value.jml_arsif"> File</span>
+                        <span style="font-weight: bold;">{{z.jml_arsif}}</span>
+                        <span *ngIf="z.jml_arsif"> File</span>
                       </a>
                     </div>
                     <div class="form-group col-2 text-left">
