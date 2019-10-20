@@ -49,6 +49,8 @@ export class ValidasiFormObjektifComponent implements OnInit {
   uploadInput: EventEmitter<UploadInput>;
   humanizeBytes: Function;
   dragOver: boolean;
+  saveP = false;
+  saveD = false;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -302,6 +304,8 @@ export class ValidasiFormObjektifComponent implements OnInit {
   }
 
   onSubmit() {
+    var saveP = false;
+    var saveD = false;
     this.blockUI.start();
     console.log("WORK!");
     console.log(this.t.value);
@@ -320,48 +324,50 @@ export class ValidasiFormObjektifComponent implements OnInit {
 
       if (this.t.value[i].id_progress_temp == true) {
         this.t.value[i].id_progress = 3;
-      }else{
+      } else {
         if (!this.t.value[i].nilai && !this.t.value[i].arsip_link) {
-          this.t.value[i].id_progress=0;
-        }else if (this.t.value[i].nilai && !this.t.value[i].arsip_link) {
-          this.t.value[i].id_progress=1;
-        }else if (!this.t.value[i].nilai && this.t.value[i].arsip_link) {
-          this.t.value[i].id_progress=1;
-        }else if (this.t.value[i].nilai && this.t.value[i].arsip_link) {
-          this.t.value[i].id_progress=2;
+          this.t.value[i].id_progress = 0;
+        } else if (this.t.value[i].nilai && !this.t.value[i].arsip_link) {
+          this.t.value[i].id_progress = 1;
+        } else if (!this.t.value[i].nilai && this.t.value[i].arsip_link) {
+          this.t.value[i].id_progress = 1;
+        } else if (this.t.value[i].nilai && this.t.value[i].arsip_link) {
+          this.t.value[i].id_progress = 2;
         }
       }
-      this.t.value[i].data = this.t.value[
-        i
-      ];
+      this.t.value[i].data = this.t.value[i];
       dataSubmit.push(this.t.value[i]);
       dataSubmitP.push(this.t.value[i]);
-      for (
-        let j = 0;
-        j < this.t.value[i].details.length;
-        j++
-      ) {
+      for (let j = 0; j < this.t.value[i].details.length; j++) {
         if (this.t.value[i].details[j].nilai == null) {
           this.t.value[i].details[j].nilai = 0;
         }
-        if (
-          this.t.value[i].details[j].id_progress_temp == true
-        ) {
+        if (this.t.value[i].details[j].id_progress_temp == true) {
           this.t.value[i].details[j].id_progress = 3;
-        }else{
-          if (!this.t.value[i].details[j].nilai && !this.t.value[i].details[j].arsip_link) {
-            this.t.value[i].details[j].id_progress=0;
-          }else if (this.t.value[i].details[j].nilai && !this.t.value[i].details[j].arsip_link) {
-            this.t.value[i].details[j].id_progress=1;
-          }else if (!this.t.value[i].details[j].nilai && this.t.value[i].details[j].arsip_link) {
-            this.t.value[i].details[j].id_progress=1;
-          }else if (this.t.value[i].details[j].nilai && this.t.value[i].details[j].arsip_link) {
-            this.t.value[i].details[j].id_progress=2;
+        } else {
+          if (
+            !this.t.value[i].details[j].nilai &&
+            !this.t.value[i].details[j].arsip_link
+          ) {
+            this.t.value[i].details[j].id_progress = 0;
+          } else if (
+            this.t.value[i].details[j].nilai &&
+            !this.t.value[i].details[j].arsip_link
+          ) {
+            this.t.value[i].details[j].id_progress = 1;
+          } else if (
+            !this.t.value[i].details[j].nilai &&
+            this.t.value[i].details[j].arsip_link
+          ) {
+            this.t.value[i].details[j].id_progress = 1;
+          } else if (
+            this.t.value[i].details[j].nilai &&
+            this.t.value[i].details[j].arsip_link
+          ) {
+            this.t.value[i].details[j].id_progress = 2;
           }
         }
-        this.t.value[i].data = this.t.value[
-          i
-        ].details[j];
+        this.t.value[i].data = this.t.value[i].details[j];
         dataSubmit.push(this.t.value[i].details[j]);
         dataSubmitD.push(this.t.value[i].details[j]);
       }
@@ -414,12 +420,15 @@ export class ValidasiFormObjektifComponent implements OnInit {
       )
       .subscribe(
         data => {
+          saveP = true;
           // console.log("PUT Request is successful ", data);
           // this.showToast("success", "Data Tersimpan", id);
-          this.ngOnInit();
-          setTimeout(() => {
-            this.blockUI.stop();
-          }, 2500);
+          if (saveP && saveD) {
+            setTimeout(() => {
+              this.blockUI.stop();
+              this.ngOnInit();
+            }, 2500);
+          }
         },
         error => {
           setTimeout(() => {
@@ -442,11 +451,16 @@ export class ValidasiFormObjektifComponent implements OnInit {
       )
       .subscribe(
         data => {
+          saveD = true;
+          // console.log("PUT Request is successful ", data);
+          // this.showToast("success", "Data Tersimpan", id);
+          if (saveP && saveD) {
+            setTimeout(() => {
+              this.blockUI.stop();
+            }, 2500);
+          }
           // console.log("PUT Request is successful ", data);
           this.showToast("success", "Data Tersimpan", null);
-          setTimeout(() => {
-            this.blockUI.stop();
-          }, 2500);
         },
         error => {
           setTimeout(() => {
