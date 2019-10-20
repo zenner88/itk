@@ -21,9 +21,13 @@ import {
   NbWindowModule,
 } from '@nebular/theme';
 import { AuthGuard } from './auth-guard.service';
-
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { HeaderInterceptorService } from "./service/header-interceptor.service";
+import { AuthService } from "./service/auth.service";
+import { ApiService } from "./service/api.service";
+import { LoaderService } from "./service/loader.service";
+import { TranslatorService } from "./service/translator.service";
 @NgModule({
-  declarations: [AppComponent, ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
@@ -42,10 +46,17 @@ import { AuthGuard } from './auth-guard.service';
       messageGoogleMapKey: 'AIzaSyA_wNuCzia92MAmdLRzmqitRGvCF7wCZPY',
     }),
     CoreModule.forRoot(),
+    FormsModule,
+    ReactiveFormsModule,
   ],
+  declarations: [AppComponent],
   providers: [
     // ...
-    AuthGuard
+    AuthGuard,
+    LoaderService,
+    ApiService,
+    AuthService,
+    TranslatorService,
   ],
   bootstrap: [AppComponent],
 })

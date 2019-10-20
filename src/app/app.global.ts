@@ -17,5 +17,5 @@ export class AuthGuard implements CanActivate {
   
     canActivate() {
       return this.authService.isAuthenticated(); // canActive can return Observable<boolean>, which is exactly what isAuthenticated returns
-    }
+    } 
   }
