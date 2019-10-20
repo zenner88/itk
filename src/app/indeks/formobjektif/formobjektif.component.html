@@ -194,10 +194,10 @@
             DAFTAR DATA OBJEKTIF
           </nb-card-header>
           <nb-card-body>
-            <form [formGroup]="dynamicForm">
+            <!-- <form [formGroup]="dynamicForm"> -->
               <div *ngFor="let ticket of t.controls; let x of ticket; let index_indikator = index"
                 class="list-group list-group-flush">
-                <div [formGroup]="ticket" class="row">
+                <div class="row">
                   <div class="form-group col-1 text-center">
                     {{index_indikator+1}}
                   </div>
@@ -210,7 +210,7 @@
                         -
                       </div>
                       <div class="form-group col-2">
-                        <input type="text" formControlName="nilai" class="form-control" fullWidth fieldSize="small" />
+                        <input type="text" [(ngModel)]="t.value[index_indikator].nilai" class="form-control" fullWidth fieldSize="small" />
                       </div>
                       <div class="form-group col-1 text-left">
                         {{x.value.satuan}}
@@ -243,7 +243,7 @@
                         {{x.value.pilihan_jawaban}}
                       </div>
                       <div class="form-group col-2">
-                        <input type="text" status="primary" formControlName="nilai" class="form-control" fullWidth fieldSize="small" />
+                        <input type="text" status="primary" [(ngModel)]="t.value[index_indikator].nilai" class="form-control" fullWidth fieldSize="small" />
                       </div>
                       <div class="form-group col-1">
                       </div>
@@ -275,7 +275,7 @@
                         {{z.indikator}}
                       </div>
                       <div class="form-group col-2">
-                        <input type="text" formControlName="nilai" class="form-control" fullWidth fieldSize="small" />
+                        <input type="text" [(ngModel)]="t.value[index_indikator].details[index_detail].nilai" class="form-control" fullWidth fieldSize="small" />
                       </div>
                       <div class="form-group col-1 text-left">
                         {{z.satuan}}
@@ -307,7 +307,7 @@
               <div class="card-footer text-right">
                 <button class="btn btn-primary mr-1" (click)="onSubmit()">Simpan</button>
               </div>
-            </form>
+            <!-- </form> -->
           </nb-card-body>
         </nb-card>
       </nb-card-body>

@@ -195,91 +195,99 @@
             DAFTAR DATA OBJEKTIF
           </nb-card-header>
           <nb-card-body>
-            <form [formGroup]="dynamicForm">
-              <div *ngFor="let ticket of t.controls; let x of ticket; let index_indikator = index"
-                class="list-group list-group-flush">
-                <div [formGroup]="ticket" class="row">
-                  <div class="form-group col-1 text-center">
-                    {{index_indikator+1}}
-                  </div>
-                  <div class="form-group col-3">
-                    <B>{{x.value.indikator}}</B>
-                  </div>
-                  <div class="form-group col-8" *ngIf="x.value.id_tipe_indikator == 0">
-                    <div class="row">
-                      <div class="form-group col-4">
-                        -
-                      </div>
-                      <div class="form-group col-2">
-                        <input type="text" formControlName="nilai" class="form-control" fullWidth fieldSize="small" />
-                        {{x.value.satuan}}
-                      </div>
-                      <div class="form-group col-1">
-                        <a (click)="open(dialogUpload,index_indikator,null)">
-                          <span style="font-weight: bold;">{{x.value.jml_arsif}}</span>
-                          <span *ngIf="x.value.jml_arsif"> File</span>
-                        </a> 
-                      </div>
-                      <div class="form-group col-2 text-left">
-                        <nb-checkbox formControlName="id_progress" status="success">Validasi</nb-checkbox>
-                      </div> 
-                      <div class="form-group col-3 text-right">
-                        <textarea  class="form-control" fullWidth fieldSize="small" placeholder="Catatan..."></textarea>
-                    </div> 
+            <!-- <form [formGroup]="dynamicForm"> -->
+            <div *ngFor="let ticket of t.controls; let x of ticket; let index_indikator = index"
+              class="list-group list-group-flush">
+              <div class="row">
+                <div class="form-group col-1 text-center">
+                  {{index_indikator+1}}
+                </div>
+                <div class="form-group col-3">
+                  <B>{{x.value.indikator}}</B>
+                </div>
+                <div class="form-group col-8" *ngIf="x.value.id_tipe_indikator == 0">
+                  <div class="row">
+                    <div class="form-group col-4">
+                      -
+                    </div>
+                    <div class="form-group col-2">
+                      <input type="text" [(ngModel)]="t.value[index_indikator].nilai"
+                        class="form-control" fullWidth fieldSize="small" />
+                      {{x.value.satuan}}
+                    </div>
+                    <div class="form-group col-1">
+                      <a (click)="open(dialogUpload,index_indikator,null)">
+                        <span style="font-weight: bold;">{{x.value.jml_arsif}}</span>
+                        <span *ngIf="x.value.jml_arsif"> File</span>
+                      </a>
+                    </div>
+                    <div class="form-group col-2 text-left">
+                      <nb-checkbox [(ngModel)]="t.value[index_indikator].id_progress_temp"
+                        status="success">Validasi</nb-checkbox>
+                    </div>
+                    <div class="form-group col-3 text-right">
+                      <textarea class="form-control" fullWidth fieldSize="small" placeholder="Catatan..."></textarea>
                     </div>
                   </div>
-                  <div class="form-group col-8" *ngIf="x.value.id_tipe_indikator == 1">
-                    <div class="row">
-                      <div class="form-group col-4">
-                        {{x.value.pilihan_jawaban}}
-                      </div>
-                      <div class="form-group col-2">
-                        <input type="text" formControlName="nilai" class="form-control" fullWidth fieldSize="small" />
-                        {{x.value.satuan}}
-                      </div>
-                      <div class="form-group col-1">
-                        <a (click)="open(dialogUpload,index_indikator,null)">
-                          <span style="font-weight: bold;">{{x.value.jml_arsif}}</span>
-                          <span *ngIf="x.value.jml_arsif"> File</span>
-                        </a> 
-                      </div>
-                      <div class="form-group col-2 text-left">
-                        <nb-checkbox formControlName="id_progress" status="success">Validasi</nb-checkbox>
-                      </div> 
-                      <div class="form-group col-3 text-right">
-                        <textarea  class="form-control" fullWidth fieldSize="small" placeholder="Catatan..."></textarea>
-                    </div> 
+                </div>
+                <div class="form-group col-8" *ngIf="x.value.id_tipe_indikator == 1">
+                  <div class="row">
+                    <div class="form-group col-4">
+                      {{x.value.pilihan_jawaban}}
+                    </div>
+                    <div class="form-group col-2">
+                      <input type="text" [(ngModel)]="t.value[index_indikator].nilai"
+                        class="form-control" fullWidth fieldSize="small" />
+                      {{x.value.satuan}}
+                    </div>
+                    <div class="form-group col-1">
+                      <a (click)="open(dialogUpload,index_indikator,null)">
+                        <span style="font-weight: bold;">{{x.value.jml_arsif}}</span>
+                        <span *ngIf="x.value.jml_arsif"> File</span>
+                      </a>
+                    </div>
+                    <div class="form-group col-2 text-left">
+                      <nb-checkbox [(ngModel)]="t.value[index_indikator].id_progress_temp"
+                        status="success">Validasi</nb-checkbox>
+                    </div>
+                    <div class="form-group col-3 text-right">
+                      <textarea class="form-control" fullWidth fieldSize="small" placeholder="Catatan..."></textarea>
                     </div>
                   </div>
-                  <div class="form-group col-8" *ngIf="x.value.id_tipe_indikator == 2">
-                    <div class="row" *ngFor="let z of x.value.details ; let index_detail = index">
-                      <div class="form-group col-4">
-                        {{z.indikator}}
-                      </div>
-                      <div class="form-group col-2">
-                        <input type="text" formControlName="nilai" class="form-control" fullWidth fieldSize="small" />
-                        {{x.value.satuan}}
-                      </div>
-                      <div class="form-group col-1">
-                        <a (click)="open(dialogUpload,index_indikator,null)">
-                          <span style="font-weight: bold;">{{x.value.jml_arsif}}</span>
-                          <span *ngIf="x.value.jml_arsif"> File</span>
-                        </a> 
-                      </div>
-                      <div class="form-group col-2 text-left">
-                        <nb-checkbox formControlName="id_progress" status="success">Validasi</nb-checkbox>
-                      </div> 
-                      <div class="form-group col-3 text-right">
-                        <textarea  class="form-control" fullWidth fieldSize="small" placeholder="Catatan..."></textarea>
-                    </div> 
+                </div>
+                <div class="form-group col-8" *ngIf="x.value.id_tipe_indikator == 2">
+                  <div class="row" *ngFor="let z of x.value.details ; let index_detail = index">
+                    <div class="form-group col-4">
+                      {{z.indikator}}
+                    </div>
+                    <div class="form-group col-2">
+                      <input type="text"
+                        [(ngModel)]="t.value[index_indikator].details[index_detail].nilai"
+                        class="form-control" fullWidth fieldSize="small" />
+                      {{x.value.satuan}}
+                    </div>
+                    <div class="form-group col-1">
+                      <a (click)="open(dialogUpload,index_indikator,null)">
+                        <span style="font-weight: bold;">{{x.value.jml_arsif}}</span>
+                        <span *ngIf="x.value.jml_arsif"> File</span>
+                      </a>
+                    </div>
+                    <div class="form-group col-2 text-left">
+                      <nb-checkbox
+                        [(ngModel)]="t.value[index_indikator].details[index_detail].id_progress_temp"
+                        status="success">Validasi</nb-checkbox>
+                    </div>
+                    <div class="form-group col-3 text-right">
+                      <textarea class="form-control" fullWidth fieldSize="small" placeholder="Catatan..."></textarea>
                     </div>
                   </div>
                 </div>
               </div>
-              <div class="card-footer text-right">
-                <button class="btn btn-primary mr-1" (click)="onSubmit()">Simpan</button>
-              </div>
-            </form>
+            </div>
+            <div class="card-footer text-right">
+              <button class="btn btn-primary mr-1" (click)="onSubmit()">Simpan</button>
+            </div>
+            <!-- </form> -->
           </nb-card-body>
         </nb-card>
       </nb-card-body>

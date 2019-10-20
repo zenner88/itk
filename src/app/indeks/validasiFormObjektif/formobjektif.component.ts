@@ -224,6 +224,7 @@ export class ValidasiFormObjektifComponent implements OnInit {
               id: xx.id,
               jenis: xx.jenis,
               id_progress: xx.id_progress,
+              id_progress_temp: xx.id_progress == 3 ? true : false,
               kode_indikator_satfung: xx.kode_indikator_satfung,
               penilaian_id: xx.penilaian_id,
               id_tipe_indikator: xx.id_tipe_indikator,
@@ -247,6 +248,7 @@ export class ValidasiFormObjektifComponent implements OnInit {
                 satuan: [datas[i].satuan],
                 jenis: [datas[i].jenis],
                 id_progress: [datas[i].id_progress],
+                id_progress_temp: [datas[i].id_progress_temp],
                 pilihan_jawaban: [datas[i].pilihan_jawaban],
                 waktu_ubah: this.now,
                 diubah_oleh: this.user,
@@ -302,37 +304,66 @@ export class ValidasiFormObjektifComponent implements OnInit {
   onSubmit() {
     this.blockUI.start();
     console.log("WORK!");
-    console.log(this.dynamicForm.value.tickets);
+    console.log(this.t.value);
     // save
-    let jml = this.dynamicForm.value.tickets.length;
-    console.log(this.dynamicForm.value.tickets.length);
+    let jml = this.t.value.length;
+    console.log(this.t.value.length);
 
     var dataSubmit = [];
     var dataSubmitP = [];
     var dataSubmitD = [];
 
     for (let i = 0; i < jml; i++) {
-      if (this.dynamicForm.value.tickets[i].nilai == null) {
-        this.dynamicForm.value.tickets[i].nilai = 0;
+      if (this.t.value[i].nilai == null) {
+        this.t.value[i].nilai = 0;
       }
-      this.dynamicForm.value.tickets[i].data = this.dynamicForm.value.tickets[
+
+      if (this.t.value[i].id_progress_temp == true) {
+        this.t.value[i].id_progress = 3;
+      }else{
+        if (!this.t.value[i].nilai && !this.t.value[i].arsip_link) {
+          this.t.value[i].id_progress=0;
+        }else if (this.t.value[i].nilai && !this.t.value[i].arsip_link) {
+          this.t.value[i].id_progress=1;
+        }else if (!this.t.value[i].nilai && this.t.value[i].arsip_link) {
+          this.t.value[i].id_progress=1;
+        }else if (this.t.value[i].nilai && this.t.value[i].arsip_link) {
+          this.t.value[i].id_progress=2;
+        }
+      }
+      this.t.value[i].data = this.t.value[
         i
       ];
-      dataSubmit.push(this.dynamicForm.value.tickets[i]);
-      dataSubmitP.push(this.dynamicForm.value.tickets[i]);
+      dataSubmit.push(this.t.value[i]);
+      dataSubmitP.push(this.t.value[i]);
       for (
         let j = 0;
-        j < this.dynamicForm.value.tickets[i].details.length;
+        j < this.t.value[i].details.length;
         j++
       ) {
-        if (this.dynamicForm.value.tickets[i].details[j].nilai == null) {
-          this.dynamicForm.value.tickets[i].details[j].nilai = 0;
+        if (this.t.value[i].details[j].nilai == null) {
+          this.t.value[i].details[j].nilai = 0;
         }
-        this.dynamicForm.value.tickets[i].data = this.dynamicForm.value.tickets[
+        if (
+          this.t.value[i].details[j].id_progress_temp == true
+        ) {
+          this.t.value[i].details[j].id_progress = 3;
+        }else{
+          if (!this.t.value[i].details[j].nilai && !this.t.value[i].details[j].arsip_link) {
+            this.t.value[i].details[j].id_progress=0;
+          }else if (this.t.value[i].details[j].nilai && !this.t.value[i].details[j].arsip_link) {
+            this.t.value[i].details[j].id_progress=1;
+          }else if (!this.t.value[i].details[j].nilai && this.t.value[i].details[j].arsip_link) {
+            this.t.value[i].details[j].id_progress=1;
+          }else if (this.t.value[i].details[j].nilai && this.t.value[i].details[j].arsip_link) {
+            this.t.value[i].details[j].id_progress=2;
+          }
+        }
+        this.t.value[i].data = this.t.value[
           i
         ].details[j];
-        dataSubmit.push(this.dynamicForm.value.tickets[i].details[j]);
-        dataSubmitD.push(this.dynamicForm.value.tickets[i].details[j]);
+        dataSubmit.push(this.t.value[i].details[j]);
+        dataSubmitD.push(this.t.value[i].details[j]);
       }
     }
 
