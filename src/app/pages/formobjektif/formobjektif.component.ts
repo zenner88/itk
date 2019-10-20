@@ -133,12 +133,14 @@ export class FormObjektifComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.blockUI.start();
     this.kodeSatker = localStorage.getItem("kodeSatker");
 
     this.dataObjectif = JSON.parse(localStorage.getItem("indexObjektif"));
 
     if (!this.kodeSatker || !this.dataObjectif) {
       this.route.navigate(["/pages/list-polres-satfung/smart-table/"]);
+      this.blockUI.stop();
     }
 
     this.now = formatDate(new Date(), "yyyy-MM-dd HH:mm:ss Z", "en");
@@ -146,7 +148,6 @@ export class FormObjektifComponent implements OnInit {
       numberOfTickets: ["", Validators.required],
       tickets: new FormArray([])
     });
-    this.blockUI.start();
 
     this.httpClient
       .get(
@@ -172,30 +173,6 @@ export class FormObjektifComponent implements OnInit {
         }
       );
 
-    // this.httpClient.get(this._global.baseAPIUrl + '/View_satkers/getDataByIdTipeSatker?idTipeSatker=R').subscribe(data => {
-    //   if(data != undefined || data != null)
-    //   {
-    //   this.prinsipx = data;
-    //   const datas = JSON.stringify(data);
-    //   const datax = JSON.parse(datas);
-    //   console.log(datas);
-    //   console.log(datax);
-    //     datax.forEach(xx => {
-    //       this.prinsipList.push({value:xx.id,title:xx.prinsip})
-    //       this.prinsipName = xx.title;
-    //     });
-    //   }
-    //   localStorage.setItem('gridServicecList', JSON.stringify(this.prinsipList));
-    //   this.indikators = this.loadTableSettings();
-    // },
-    // error => { console.log(error) });
-
-    console.log(this.now);
-
-    console.log("T", this.t);
-
-    console.log("OBJEK");
-    console.log(this.objek);
     this.httpClient
       .get(
         this._global.baseAPIUrl +
@@ -272,9 +249,6 @@ export class FormObjektifComponent implements OnInit {
         }
       );
 
-    console.log("Details");
-    console.log(this.objek2);
-    console.log(this.t.value.name);
   }
 
   list_to_tree(list) {

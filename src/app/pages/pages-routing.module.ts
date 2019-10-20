@@ -5,6 +5,9 @@ import { PagesComponent } from "./pages.component";
 import { DashboardComponent } from "./dashboard/dashboard.component";
 import { FormObjektifComponent } from "./formobjektif/formobjektif.component";
 import { NotFoundComponent } from "./miscellaneous/not-found/not-found.component";
+import { AuthGuard, LoginGuard } from "../guard";
+
+
 
 const routes: Routes = [
   {
@@ -13,46 +16,56 @@ const routes: Routes = [
     children: [
       {
         path: "dashboard",
-        component: DashboardComponent
+        canActivate:[AuthGuard],
+        component: DashboardComponent,
+
       },
       {
         path: "layout",
+        canActivate: [AuthGuard],
         loadChildren: () =>
           import("./layout/layout.module").then(m => m.LayoutModule)
       },
       {
         path: "forms",
+        canActivate: [AuthGuard],
         loadChildren: () =>
           import("./forms/forms.module").then(m => m.FormsModule)
       },
       {
         path: "charts",
+        canActivate: [AuthGuard],
         loadChildren: () =>
           import("./charts/charts.module").then(m => m.ChartsModule)
       },
       {
         path: "editors",
+        canActivate: [AuthGuard],
         loadChildren: () =>
           import("./editors/editors.module").then(m => m.EditorsModule)
       },
       {
         path: "tables",
+        canActivate: [AuthGuard],
         loadChildren: () =>
           import("./tables/tables.module").then(m => m.TablesModule)
       },
       // MASTER
       {
         path: "master-indikator",
+        canActivate: [AuthGuard],
         loadChildren: () =>
           import("./master-indikator/tables.module").then(m => m.TablesModule)
       },
       {
         path: "master-periode",
+        canActivate: [AuthGuard],
         loadChildren: () =>
           import("./master-periode/tables.module").then(m => m.TablesModule)
       },
       {
         path: "master-satfung-prinsip",
+        canActivate: [AuthGuard],
         loadChildren: () =>
           import("./master-satfung-prinsip/tables.module").then(
             m => m.TablesModule
@@ -60,16 +73,19 @@ const routes: Routes = [
       },
       {
         path: "master-satfung",
+        canActivate: [AuthGuard],
         loadChildren: () =>
           import("./master-satfung/tables.module").then(m => m.TablesModule)
       },
       {
         path: "master-satker",
+        canActivate: [AuthGuard],
         loadChildren: () =>
           import("./master-satker/tables.module").then(m => m.TablesModule)
       },
       {
         path: "master-i-s",
+        canActivate: [AuthGuard],
         loadChildren: () =>
           import("./master-indikator-satfung/tables.module").then(
             m => m.TablesModule
@@ -78,16 +94,19 @@ const routes: Routes = [
       // TRANSAKSI
       {
         path: "trn-penilaian",
+        canActivate: [AuthGuard],
         loadChildren: () =>
           import("./trn-penilaian/tables.module").then(m => m.TablesModule)
       },
       {
         path: "trn-benchmarking",
+        canActivate: [AuthGuard],
         loadChildren: () =>
           import("./trn-benchmarking/tables.module").then(m => m.TablesModule)
       },
       {
         path: "trn-penilaian-indikator",
+        canActivate: [AuthGuard],
         loadChildren: () =>
           import("./trn-penilaian-indikator/tables.module").then(
             m => m.TablesModule
@@ -95,6 +114,7 @@ const routes: Routes = [
       },
       {
         path: "trn-penilaian-satfung",
+        canActivate: [AuthGuard],
         loadChildren: () =>
           import("./trn-penilaian-satfung/tables.module").then(
             m => m.TablesModule
@@ -102,16 +122,19 @@ const routes: Routes = [
       },
       {
         path: "sys-akses",
+        canActivate: [AuthGuard],
         loadChildren: () =>
           import("./sys-akses/tables.module").then(m => m.TablesModule)
       },
       {
         path: "sys-kelompok",
+        canActivate: [AuthGuard],
         loadChildren: () =>
           import("./sys-kelompok/tables.module").then(m => m.TablesModule)
       },
       {
         path: "sys-kelompok-pengguna",
+        canActivate: [AuthGuard],
         loadChildren: () =>
           import("./sys-kelompok-pengguna/tables.module").then(
             m => m.TablesModule
@@ -119,6 +142,7 @@ const routes: Routes = [
       },
       {
         path: "miscellaneous",
+        canActivate: [AuthGuard],
         loadChildren: () =>
           import("./miscellaneous/miscellaneous.module").then(
             m => m.MiscellaneousModule
@@ -126,16 +150,19 @@ const routes: Routes = [
       },
       {
         path: "list-satfung",
+        canActivate: [AuthGuard],
         loadChildren: () =>
           import("./list-satfung/tables.module").then(m => m.TablesModule)
       },
       {
         path: "list-polres",
+        canActivate: [AuthGuard],
         loadChildren: () =>
           import("./list-polres/tables.module").then(m => m.TablesModule)
       },
       {
         path: "list-polres-satfung",
+        canActivate: [AuthGuard],
         loadChildren: () =>
           import("./list-polres-satfung/tables.module").then(
             m => m.TablesModule
@@ -143,10 +170,12 @@ const routes: Routes = [
       },
       {
         path: "formObjektif",
+        canActivate:[AuthGuard],
         component: FormObjektifComponent
       },
       {
         path: "",
+        canActivate:[AuthGuard],
         redirectTo: "dashboard",
         pathMatch: "full"
       },

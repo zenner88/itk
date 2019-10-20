@@ -5,6 +5,7 @@
  */
 import { Component, OnInit } from '@angular/core';
 import { AnalyticsService } from './@core/utils/analytics.service';
+import { Router } from "@angular/router";
 
 @Component({
   selector: 'ngx-app',
@@ -12,10 +13,16 @@ import { AnalyticsService } from './@core/utils/analytics.service';
 })
 export class AppComponent implements OnInit {
 
-  constructor(private analytics: AnalyticsService) {
+  constructor(private analytics: AnalyticsService,
+    private router: Router) {
   }
 
-  ngOnInit(): void {
+  ngOnInit(){
     this.analytics.trackPageViews();
+    var user =localStorage.getItem('currentUser');
+    if (!user) {
+      this.router.navigate(['public/login']);
+      return true;
+    }
   }
 }

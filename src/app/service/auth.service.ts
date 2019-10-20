@@ -102,12 +102,10 @@ export class AuthService {
 
   logout() {
     // remove user from local storage to log user out
-    localStorage.removeItem("currentUser");
-    sessionStorage.removeItem("currentUser");
+    localStorage.clear();
+    this.router.navigate(["public/login"]);
     this.setDataLoginUser(null);
     this.loginStatus(false);
-
-    this.router.navigate(["/"]);
   }
   loginStatus(value: boolean) {
     this.statusLogin.next(value);
