@@ -15,7 +15,7 @@ import {
   NbStepperModule
 } from "@nebular/theme";
 
-import { ThemeModule } from "../@themepublic/theme.module";
+import { ThemeModule } from "../@themeuser/theme.module";
 import { IndeksComponent } from "./indeks.component";
 import { FormComponent } from "./form/form.component";
 import { IndeksRoutingModule } from "./indeks-routing.module";

@@ -1,0 +1,33 @@
+/**
+ * @license
+ * Copyright Akveo. All Rights Reserved.
+ * Licensed under the MIT License. See License.txt in the project root for license information.
+ */
+
+ @mixin ngx-pace-theme() {
+
+  .pace .pace-progress {
+    background: nb-theme(color-primary-default);
+  }
+
+  .pace .pace-progress-inner {
+    box-shadow: 0 0 10px nb-theme(color-primary-default), 0 0 5px nb-theme(color-primary-default);
+  }
+
+  .pace .pace-activity {
+    display: none;
+  }
+}
+// .ng2-smart-actions ng2-st-tbody-edit-delete{
+//   display: none !important;
+//   }
+// tr .ng2-smart-actions{ display: flex; }
+// ng2-st-tbody-custom {display: flex;}
+
+// ng2-st-tbody-edit-delete a.ng2-smart-action {display: inline-block !important;}
+// ng2-st-tbody-create-cancel a.ng2-smart-action {display: inline-block !important;}
+// ng2-st-tbody-custom a.ng2-smart-action.ng2-smart-action-custom-custom {
+//     display: inline-block;
+//     width: 70px;
+//     text-align: center;
+// }
