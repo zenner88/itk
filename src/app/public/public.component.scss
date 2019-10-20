@@ -1,4 +1,4 @@
-@import '../@theme/styles/themes';
+@import '../@themepublic/styles/themes';
 
 @include nb-install-component() {
   ::ng-deep router-outlet + * {

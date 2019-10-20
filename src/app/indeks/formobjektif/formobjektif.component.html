@@ -1,9 +1,20 @@
 <block-ui>
 </block-ui>
 
-<ng-template #dialogUpload let-data let-ref="dialogRef">
+<ng-template #dialogUpload let-data let-ref="dialogRef" >
   <nb-card>
-    <nb-card-header>Input Dokumen</nb-card-header>
+    <nb-card-header>
+    <div class="row">
+      <div class="col-6">
+      Input Dokumen
+      </div>
+      <div class="col-6 text-right">
+      <a style="cursor: pointer;" (click)="ref.close()">
+        <nb-icon icon="close-outline" status="primary" [options]="{ animation: { type: 'pulse' } }"></nb-icon>
+      </a>
+      </div>
+    </div>
+    </nb-card-header>
     <nb-card-body>
       <!-- <label class="upload-button">
         <input type="file" ngFileSelect [options]="options" (uploadOutput)="onUploadOutput($event)"
