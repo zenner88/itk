@@ -137,10 +137,10 @@ export class FormObjektifComponent implements OnInit {
 
     this.dataObjectif = JSON.parse(localStorage.getItem("indexObjektif"));
 
-    if (!this.kodeSatker || !this.dataObjectif) {
+    if (!this.kodeSatker || !this.dataObjectif.kodeSatfung || !this.dataObjectif.idSatfung  || !this.dataObjectif.penilaianId) {
       this.route.navigate(["/pages/list-polres-satfung/smart-table/"]);
     }
-
+   
     this.now = formatDate(new Date(), "yyyy-MM-dd HH:mm:ss Z", "en");
     this.dynamicForm = this.formBuilder.group({
       numberOfTickets: ["", Validators.required],

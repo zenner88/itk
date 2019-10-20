@@ -26,6 +26,7 @@ import { HeaderInterceptorService } from "./service/header-interceptor.service";
 import { AuthService } from "./service/auth.service";
 import { ApiService } from "./service/api.service";
 import { LoaderService } from "./service/loader.service";
+import { ChartsModule } from 'ng2-charts';
 // import { TranslatorService } from "./service/translator.service";
 @NgModule({
   imports: [
@@ -48,6 +49,7 @@ import { LoaderService } from "./service/loader.service";
     CoreModule.forRoot(),
     FormsModule,
     ReactiveFormsModule,
+    ChartsModule
   ],
   declarations: [AppComponent],
   providers: [
