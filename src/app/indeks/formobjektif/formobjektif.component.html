@@ -242,9 +242,9 @@
                         </a> -->
                       </div>
                       <div class="form-group col-2 text-right">
+                        <B>{{x.value.progress}}</B> |                         
                         <nb-icon icon="info-outline" status="info" (click)="openWindow(contentTemplate)"
-                          [options]="{ animation: { type: 'pulse' } }"></nb-icon> |
-                          <B>{{x.value.progress}}</B>
+                          [options]="{ animation: { type: 'pulse' } }"></nb-icon> 
                       </div>
                     </div>
                   </div>
@@ -274,9 +274,9 @@
                         </a> -->
                       </div>
                       <div class="form-group col-2 text-right">
+                        <B>{{x.value.progress}}</B> |                                                 
                         <nb-icon icon="info-outline" status="info" (click)="openWindow(contentTemplate)"
-                          [options]="{ animation: { type: 'pulse' } }"></nb-icon> |
-                          <B>{{x.value.progress}}</B>
+                          [options]="{ animation: { type: 'pulse' } }"></nb-icon>
                       </div>
                     </div>
                   </div>
@@ -298,18 +298,19 @@
                           (change)="postMethod($event.target.files)"> -->
                       </div>
                       <div class="form-group col-1 text-center">
-                        <span style="font-weight: bold;">{{z.jml_arsif}}</span>
-                        <span *ngIf="z.jml_arsif"> File</span>
-
+                        <a (click)="open(dialogUpload,index_indikator,index_detail)">
+                          <span style="font-weight: bold;">{{z.jml_arsif}}</span>
+                          <span *ngIf="z.jml_arsif"> File</span>
+                        </a>
                         <!-- <a href="{{z.arsip_link}}">
                           <nb-icon icon="file-text-outline" status="primary"
                             [options]="{ animation: { type: 'pulse' } }"></nb-icon>Download
                         </a> -->
                       </div>
                       <div class="form-group col-2 text-right">
+                        <B>{{x.value.progress}}</B> |                         
                         <nb-icon icon="info-outline" status="info" (click)="openWindow(contentTemplate)"
-                          [options]="{ animation: { type: 'pulse' } }"></nb-icon> |
-                          <B>{{z.progress}}</B>
+                          [options]="{ animation: { type: 'pulse' } }"></nb-icon>
                       </div>
                     </div>
                   </div>
