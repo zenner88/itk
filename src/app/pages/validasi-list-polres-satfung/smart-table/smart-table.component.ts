@@ -489,32 +489,17 @@ export class SmartTableComponent {
         singkatan_satfung: {
           title: "Satuan Fungsi",
           type: "string",
-          width: "17%"
+          width: "20%"
         },
         satu: {
-          title: "Data Objektif (%)",
+          title: "Status Pengesahan (%)",
           type: "string",
-          width: "15%"
+          width: "20%"
         },
         dua: {
-          title: "Lampiran (%)",
+          title: "Validasi Kasatfung",
           type: "string",
-          width: "13%"
-        },
-        tiga: {
-          title: "Is Checked",
-          type: "string",
-          width: "12%"
-        },
-        empat: {
-          title: "Inspector",
-          type: "string",
-          width: "10%"
-        },
-        lima: {
-          title: "file Persetujuan",
-          type: "string",
-          width: "10%"
+          width: "20%"
         },
       }
     };

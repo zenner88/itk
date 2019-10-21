@@ -58,7 +58,7 @@ export class ECommerceUserActivityComponent implements OnDestroy {
               periode: data[i].periode,
               polres: data[i].satker,
               deltaUp: true,
-              deviasi: 77,
+              deviasi: data[i].deviasi,
               nilai: data[i].nilai ? data[i].nilai : 0
             };
           }

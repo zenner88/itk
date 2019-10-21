@@ -4,6 +4,37 @@
   nb-card {
     transform: translate3d(0, 0, 0);
   }
+  .show-grid {
+    .row {
+      margin: -0.5rem;
+      vertical-align: middle;
+    }
+
+    div[class^=col-] {
+      padding-top: 0.3rem;
+      box-sizing: border-box;
+      vertical-align: middle;
+      div {
+        // text-align: center;
+        // background-color: nb-theme(background-basic-color-2);
+        padding: 0rem 0rem;
+        border-radius: 0.25rem;
+        vertical-align: middle;
+      }
+    }
+  }
+
+  .grid-h {
+    margin-top: 0rem;
+
+    &:first-child {
+      margin-top: 0;
+    }
+  }
+
+  .table-responsive {
+    margin-top: 1rem;
+  }
 }
 
 :host /deep/ ng2-smart-table table>tbody>tr>td {

@@ -20,13 +20,13 @@ import { AppGlobals } from "../../../../app.global";
   template: `
     <div class="row" *ngIf="loaded">
       <div
-        class="col-6"
+        class="col-md-6 col-sm-12"
         *ngFor="let f of chartRangkingITK; let i = index"
         style="text-align:center"
       >
         <h5>{{ f.label }}</h5>
         <canvas
-          height="40vh"
+          height="60vh"
           width="80vw"
           baseChart
           [data]="f.barChartData"
