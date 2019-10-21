@@ -218,7 +218,7 @@ export class SmartTableComponent {
     console.log(event);
     localStorage.setItem("kodeSatker", event.data.kode);
     // alert(`Custom event '${event.action}' fired on row №: ${event.data.id}`);
-    this.route.navigate(["/pages/list-polres-satfung/smart-table/"]);
+    this.route.navigate(["/pages/validasi-list-polres-satfung/smart-table/"]);
   }
   index = 1;
   private showToast(type: NbComponentStatus, title: string, body: string) {

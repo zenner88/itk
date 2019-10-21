@@ -186,7 +186,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
       },
       {
         title: 'Kapolres',
-        link: '/indeks/validasiFormObjektif',
+        link: '/pages/validasi-list-polres/smart-table',
         icon: 'folder-outline',
       },
       {

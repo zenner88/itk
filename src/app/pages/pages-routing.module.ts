@@ -20,36 +20,6 @@ const routes: Routes = [
         component: DashboardComponent,
 
       },
-      {
-        path: "layout",
-        canActivate: [AuthGuard],
-        loadChildren: () =>
-          import("./layout/layout.module").then(m => m.LayoutModule)
-      },
-      {
-        path: "forms",
-        canActivate: [AuthGuard],
-        loadChildren: () =>
-          import("./forms/forms.module").then(m => m.FormsModule)
-      },
-      {
-        path: "charts",
-        canActivate: [AuthGuard],
-        loadChildren: () =>
-          import("./charts/charts.module").then(m => m.ChartsModule)
-      },
-      {
-        path: "editors",
-        canActivate: [AuthGuard],
-        loadChildren: () =>
-          import("./editors/editors.module").then(m => m.EditorsModule)
-      },
-      {
-        path: "tables",
-        canActivate: [AuthGuard],
-        loadChildren: () =>
-          import("./tables/tables.module").then(m => m.TablesModule)
-      },
       // MASTER
       {
         path: "master-indikator",
@@ -165,6 +135,20 @@ const routes: Routes = [
         canActivate: [AuthGuard],
         loadChildren: () =>
           import("./list-polres-satfung/tables.module").then(
+            m => m.TablesModule
+          )
+      },
+      {
+        path: "validasi-list-polres",
+        canActivate: [AuthGuard],
+        loadChildren: () =>
+          import("./validasi-list-polres/tables.module").then(m => m.TablesModule)
+      },
+      {
+        path: "validasi-list-polres-satfung",
+        canActivate: [AuthGuard],
+        loadChildren: () =>
+          import("./validasi-list-polres-satfung/tables.module").then(
             m => m.TablesModule
           )
       },

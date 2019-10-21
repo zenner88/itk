@@ -64,7 +64,7 @@ export class SmartTableComponent {
     this.kodeSatker = localStorage.getItem("kodeSatker");
 
     if (!this.kodeSatker) {
-      this.route.navigate(["/pages/list-polres/smart-table/"]);
+      this.route.navigate(["/pages/validasi-list-polres/smart-table/"]);
       this.showToast("warning", "Peringatan, Pilih terlebih dahulu polres", "");
     }
     this.satfungs = this.loadTableSettings();
