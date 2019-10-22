@@ -96,6 +96,8 @@ export class LoginComponent implements OnInit {
             );
             localStorage.setItem("kodeSatker", "640701");
             this.router.navigate(["indeks/validasiFormObjektif"]);
+          } else if (data.userId == 4) {
+            this.router.navigate(["pages/validasi-list-polres/smart-table"]);
           }
           this.loading = false;
         },
