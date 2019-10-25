@@ -1,17 +1,14 @@
-import { Component } from '@angular/core';
+import { Component } from "@angular/core";
 
-import { MENU_ITEMS } from './public-menu';
+import { MENU_ITEMS } from "./public-menu";
 
 @Component({
-  selector: 'ngx-pages',
-  styleUrls: ['public.component.scss'],
+  selector: "ngx-pages",
+  styleUrls: ["public.component.scss"],
   template: `
-    <ngx-one-column-layout>
-      <router-outlet></router-outlet>
-    </ngx-one-column-layout>
-  `,
+    <router-outlet></router-outlet>
+  `
 })
 export class PublicComponent {
-
   // menu = MENU_ITEMS;
 }
