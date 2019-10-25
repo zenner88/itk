@@ -6,6 +6,7 @@
 import { Component, OnInit } from "@angular/core";
 import { AnalyticsService } from "./@core/utils/analytics.service";
 import { Router } from "@angular/router";
+import { OneColumnLayoutComponent } from "./@theme/layouts/one-column/one-column.layout";
 
 @Component({
   selector: "ngx-app",
@@ -14,13 +15,18 @@ import { Router } from "@angular/router";
       <nb-menu [items]="menu" autoCollapse="true" *ngIf="isLogin"></nb-menu>
       <router-outlet></router-outlet>
     </ngx-one-column-layout>
-  `
+  `,
+  providers: [OneColumnLayoutComponent]
 })
 export class AppComponent implements OnInit {
   menu: any[];
   isLogin: boolean;
 
-  constructor(private analytics: AnalyticsService, private router: Router) {}
+  constructor(
+    private analytics: AnalyticsService,
+    private router: Router,
+    private layout: OneColumnLayoutComponent
+  ) {}
 
   ngOnInit() {
     this.isLogin = false;
@@ -29,8 +35,10 @@ export class AppComponent implements OnInit {
     var user = JSON.parse(localStorage.getItem("currentUser"));
     if (!user) {
       this.router.navigate(["public/login"]);
+      this.layout.cekLogin(false);
       return true;
     } else {
+      this.layout.cekLogin(true);
       this.isLogin = true;
       this.setMenu(user.menu);
     }
@@ -42,6 +50,7 @@ export class AppComponent implements OnInit {
   }
 
   userIslogin(status) {
+    this.layout.cekLogin(status);
     this.isLogin = status;
   }
 }
