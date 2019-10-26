@@ -1,19 +1,19 @@
 <block-ui>
 </block-ui>
 
-<ng-template #dialogUpload let-data let-ref="dialogRef" >
+<ng-template #dialogUpload let-data let-ref="dialogRef">
   <nb-card status="primary">
     <nb-card-header>
-    <div class="row">
-      <div class="col-6">
-      Input Dokumen
+      <div class="row">
+        <div class="col-6">
+          Input Dokumen
+        </div>
+        <div class="col-6 text-right">
+          <a style="cursor: pointer;" (click)="ref.close()">
+            <nb-icon icon="close-outline" status="primary" [options]="{ animation: { type: 'pulse' } }"></nb-icon>
+          </a>
+        </div>
       </div>
-      <div class="col-6 text-right">
-      <a style="cursor: pointer;" (click)="ref.close()">
-        <nb-icon icon="close-outline" status="primary" [options]="{ animation: { type: 'pulse' } }"></nb-icon>
-      </a>
-      </div>
-    </div>
     </nb-card-header>
     <nb-card-body>
       <!-- <label class="upload-button">
@@ -68,7 +68,7 @@
 
       <div *ngFor="let fileDownload of fileDownload; let i = index">
         <!-- <a style="cursor: pointer;" (click)="downloadFile(fileDownload)"> -->
-        <a style="cursor: pointer;" (click)="openWindow(contentTemplate2)">
+        <a style="cursor: pointer;" (click)="openWindow(contentTemplate2,fileDownload)">
           <nb-icon icon="file-text-outline" status="primary" [options]="{ animation: { type: 'pulse' } }"></nb-icon>
           {{fileDownload}}
         </a>
@@ -77,9 +77,7 @@
         </a>
         <ng-template #contentTemplate2 let-data>
           <div class="pdf-container">
-            <pdf-viewer [src]="fileDownload"
-                        [original-size]="false"
-            ></pdf-viewer>
+            <pdf-viewer [src]="fileViewPdf" [original-size]="false"></pdf-viewer>
           </div>
         </ng-template>
 
@@ -152,7 +150,8 @@
                       <div class="form-group">
                         <nb-select selected=0 fullWidth class="pull-right status-info shape-rectangle">
                           <nb-option value=0 (click)="satfungKlik(x.kode)">Semua</nb-option>
-                          <nb-option *ngFor="let x of satfungx" value="x.kode" (click)="satfungKlik(x.kode)">{{ x.singkatan_satfung }}</nb-option>
+                          <nb-option *ngFor="let x of satfungx" value="x.kode" (click)="satfungKlik(x.kode)">
+                            {{ x.singkatan_satfung }}</nb-option>
                         </nb-select>
                       </div>
                     </div>
@@ -218,120 +217,123 @@
           </nb-card-header>
           <nb-card-body>
             <!-- <form [formGroup]="dynamicForm"> -->
-              <div *ngFor="let ticket of t.controls; let x of ticket; let index_indikator = index"
-                class="list-group list-group-flush">
-                <div class="row">
-                  <div class="form-group col-1 text-center">
-                    {{index_indikator+1}}
-                  </div>
-                  <div class="form-group col-3">
-                    <B>{{x.value.indikator}}</B>
-                  </div>
-                  <div class="form-group col-8" *ngIf="x.value.id_tipe_indikator == 0">
-                    <div class="row">
-                      <div class="form-group col-5">
-                        -
-                      </div>
-                      <div class="form-group col-2">
-                        <input type="text" [(ngModel)]="t.value[index_indikator].nilai" class="form-control" fullWidth fieldSize="small" />
-                      </div>
-                      <div class="form-group col-1 text-left">
-                        {{x.value.satuan}}
-                      </div>
-                      <div class="form-group col-1">
-                        <button class="btn btn-primary mr-1 text-center"
-                          (click)="open(dialogUpload,index_indikator,null)">Upload</button>
-
-                        <!-- <input id="myForm" formControlName="arsip_link" type="file" name="file"
-                          (change)="postMethod($event.target.files)"> -->
-                      </div>
-                      <div class="form-group col-1 text-center">
-                        <span style="font-weight: bold;">{{x.value.jml_arsif}}</span>
-                        <span *ngIf="x.value.jml_arsif"> File</span>
-                        <!-- <a href="{{x.value.arsip_link}}">
-                          <nb-icon icon="file-text-outline" status="primary"
-                            [options]="{ animation: { type: 'pulse' } }"></nb-icon>Download
-                        </a> -->
-                      </div>
-                      <div class="form-group col-2 text-right">
-                        <B>{{x.value.progress}}</B> |                         
-                        <nb-icon icon="info-outline" status="info" (click)="openWindow(contentTemplate)"
-                          [options]="{ animation: { type: 'pulse' } }"></nb-icon> 
-                      </div>
+            <div *ngFor="let ticket of t.controls; let x of ticket; let index_indikator = index"
+              class="list-group list-group-flush">
+              <div class="row">
+                <div class="form-group col-1 text-center">
+                  {{index_indikator+1}}
+                </div>
+                <div class="form-group col-3">
+                  <B>{{x.value.indikator}}</B>
+                </div>
+                <div class="form-group col-8" *ngIf="x.value.id_tipe_indikator == 0">
+                  <div class="row">
+                    <div class="form-group col-5">
+                      -
                     </div>
-                  </div>
-                  <div class="form-group col-8" *ngIf="x.value.id_tipe_indikator == 1">
-                    <div class="row">
-                      <div class="form-group col-5">
-                        {{x.value.pilihan_jawaban}}
-                      </div>
-                      <div class="form-group col-2">
-                        <input type="text" status="primary" [(ngModel)]="t.value[index_indikator].nilai" class="form-control" fullWidth fieldSize="small" />
-                      </div>
-                      <div class="form-group col-1">
-                      </div>
-                      <div class="form-group col-1">
-                        <button class="btn btn-primary mr-1 text-center"
-                          (click)="open(dialogUpload,index_indikator,index_detail)">Upload</button>
-
-                        <!-- <input id="myForm" formControlName="arsip_link" type="file" name="file"
-                          (change)="postMethod($event.target.files)"> -->
-                      </div>
-                      <div class="form-group col-1 text-center">
-                        <span style="font-weight: bold;">{{x.value.jml_arsif}}</span>
-                        <span *ngIf="x.value.jml_arsif"> File</span>
-                        <!-- <a href="{{x.value.arsip_link}}">
-                          <nb-icon icon="file-text-outline" status="primary"
-                            [options]="{ animation: { type: 'pulse' } }"></nb-icon>Download
-                        </a> -->
-                      </div>
-                      <div class="form-group col-2 text-right">
-                        <B>{{x.value.progress}}</B> |                                                 
-                        <nb-icon icon="info-outline" status="info" (click)="openWindow(contentTemplate)"
-                          [options]="{ animation: { type: 'pulse' } }"></nb-icon>
-                      </div>
+                    <div class="form-group col-2">
+                      <input type="text" [(ngModel)]="t.value[index_indikator].nilai" class="form-control" fullWidth
+                        fieldSize="small" />
                     </div>
-                  </div>
-                  <div class="form-group col-8" *ngIf="x.value.id_tipe_indikator == 2">
-                    <div class="row" *ngFor="let z of x.value.details ; let index_detail = index">
-                      <div class="form-group col-5">
-                        {{z.indikator}}
-                      </div>
-                      <div class="form-group col-2">
-                        <input type="text" [(ngModel)]="t.value[index_indikator].details[index_detail].nilai" class="form-control" fullWidth fieldSize="small" />
-                      </div>
-                      <div class="form-group col-1 text-left">
-                        {{z.satuan}}
-                      </div>
-                      <div class="form-group col-1 text-center">
-                        <button class="btn btn-primary mr-1"
-                          (click)="open(dialogUpload,index_indikator,index_detail)">Upload</button>
-                        <!-- <input id="myForm" formControlName="arsip_link" type="file" name="file"
+                    <div class="form-group col-1 text-left">
+                      {{x.value.satuan}}
+                    </div>
+                    <div class="form-group col-1">
+                      <button class="btn btn-primary mr-1 text-center"
+                        (click)="open(dialogUpload,index_indikator,null)">Upload</button>
+
+                      <!-- <input id="myForm" formControlName="arsip_link" type="file" name="file"
                           (change)="postMethod($event.target.files)"> -->
-                      </div>
-                      <div class="form-group col-1 text-center">
-                        <a (click)="open(dialogUpload,index_indikator,index_detail)">
-                          <span style="font-weight: bold;">{{z.jml_arsif}}</span>
-                          <span *ngIf="z.jml_arsif"> File</span>
-                        </a>
-                        <!-- <a href="{{z.arsip_link}}">
+                    </div>
+                    <div class="form-group col-1 text-center">
+                      <span style="font-weight: bold;">{{x.value.jml_arsif}}</span>
+                      <span *ngIf="x.value.jml_arsif"> File</span>
+                      <!-- <a href="{{x.value.arsip_link}}">
                           <nb-icon icon="file-text-outline" status="primary"
                             [options]="{ animation: { type: 'pulse' } }"></nb-icon>Download
                         </a> -->
-                      </div>
-                      <div class="form-group col-2 text-right">
-                        <B>{{x.value.progress}}</B> |                         
-                        <nb-icon icon="info-outline" status="info" (click)="openWindow(contentTemplate)"
-                          [options]="{ animation: { type: 'pulse' } }"></nb-icon>
-                      </div>
+                    </div>
+                    <div class="form-group col-2 text-right">
+                      <B>{{x.value.progress}}</B> |
+                      <nb-icon icon="info-outline" status="info" (click)="openWindow(contentTemplate)"
+                        [options]="{ animation: { type: 'pulse' } }"></nb-icon>
                     </div>
                   </div>
                 </div>
-                <hr>
+                <div class="form-group col-8" *ngIf="x.value.id_tipe_indikator == 1">
+                  <div class="row">
+                    <div class="form-group col-5">
+                      {{x.value.pilihan_jawaban}}
+                    </div>
+                    <div class="form-group col-2">
+                      <input type="text" status="primary" [(ngModel)]="t.value[index_indikator].nilai"
+                        class="form-control" fullWidth fieldSize="small" />
+                    </div>
+                    <div class="form-group col-1">
+                    </div>
+                    <div class="form-group col-1">
+                      <button class="btn btn-primary mr-1 text-center"
+                        (click)="open(dialogUpload,index_indikator,index_detail)">Upload</button>
+
+                      <!-- <input id="myForm" formControlName="arsip_link" type="file" name="file"
+                          (change)="postMethod($event.target.files)"> -->
+                    </div>
+                    <div class="form-group col-1 text-center">
+                      <span style="font-weight: bold;">{{x.value.jml_arsif}}</span>
+                      <span *ngIf="x.value.jml_arsif"> File</span>
+                      <!-- <a href="{{x.value.arsip_link}}">
+                          <nb-icon icon="file-text-outline" status="primary"
+                            [options]="{ animation: { type: 'pulse' } }"></nb-icon>Download
+                        </a> -->
+                    </div>
+                    <div class="form-group col-2 text-right">
+                      <B>{{x.value.progress}}</B> |
+                      <nb-icon icon="info-outline" status="info" (click)="openWindow(contentTemplate)"
+                        [options]="{ animation: { type: 'pulse' } }"></nb-icon>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group col-8" *ngIf="x.value.id_tipe_indikator == 2">
+                  <div class="row" *ngFor="let z of x.value.details ; let index_detail = index">
+                    <div class="form-group col-5">
+                      {{z.indikator}}
+                    </div>
+                    <div class="form-group col-2">
+                      <input type="text" [(ngModel)]="t.value[index_indikator].details[index_detail].nilai"
+                        class="form-control" fullWidth fieldSize="small" />
+                    </div>
+                    <div class="form-group col-1 text-left">
+                      {{z.satuan}}
+                    </div>
+                    <div class="form-group col-1 text-center">
+                      <button class="btn btn-primary mr-1"
+                        (click)="open(dialogUpload,index_indikator,index_detail)">Upload</button>
+                      <!-- <input id="myForm" formControlName="arsip_link" type="file" name="file"
+                          (change)="postMethod($event.target.files)"> -->
+                    </div>
+                    <div class="form-group col-1 text-center">
+                      <a (click)="open(dialogUpload,index_indikator,index_detail)">
+                        <span style="font-weight: bold;">{{z.jml_arsif}}</span>
+                        <span *ngIf="z.jml_arsif"> File</span>
+                      </a>
+                      <!-- <a href="{{z.arsip_link}}">
+                          <nb-icon icon="file-text-outline" status="primary"
+                            [options]="{ animation: { type: 'pulse' } }"></nb-icon>Download
+                        </a> -->
+                    </div>
+                    <div class="form-group col-2 text-right">
+                      <B>{{x.value.progress}}</B> |
+                      <nb-icon icon="info-outline" status="info" (click)="openWindow(contentTemplate)"
+                        [options]="{ animation: { type: 'pulse' } }"></nb-icon>
+                    </div>
+                  </div>
+                </div>
               </div>
-              <div class="card-footer text-right">
-                <button class="btn btn-primary mr-1" (click)="onSubmit()">Simpan</button>
-              </div>
+              <hr>
+            </div>
+            <div class="card-footer text-right">
+              <button class="btn btn-primary mr-1" (click)="onSubmit()">Simpan</button>
+            </div>
             <!-- </form> -->
           </nb-card-body>
         </nb-card>
@@ -341,8 +343,6 @@
 </div>
 <ng-template #contentTemplate let-data>
   <div class="pdf-container">
-    <pdf-viewer [src]="src"
-                [original-size]="false"
-    ></pdf-viewer>
+    <pdf-viewer [src]="src" [original-size]="false"></pdf-viewer>
   </div>
 </ng-template>

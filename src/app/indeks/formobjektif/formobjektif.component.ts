@@ -49,6 +49,7 @@ export class FormObjektifComponent implements OnInit {
   uploadInput: EventEmitter<UploadInput>;
   humanizeBytes: Function;
   dragOver: boolean;
+  fileViewPdf: any;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -86,7 +87,7 @@ export class FormObjektifComponent implements OnInit {
   dataObjectif: any;
   kodeSatker: any;
   satfungx: any;
-  public satfungList: any[] = [];  
+  public satfungList: any[] = [];
 
   src = "https://vadimdez.github.io/ng2-pdf-viewer/assets/pdf-test.pdf";
   // convenience getters for easy access to form fields
@@ -137,36 +138,46 @@ export class FormObjektifComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.httpClient.get(this._global.baseAPIUrl + '/View_satfungs/').subscribe(data => {
-      
-      if(data != undefined || data != null)
-      {
-      this.satfungx = data;
-      const datas = JSON.stringify(data);
-      const datax = JSON.parse(datas);
-      // console.log(datas);
-      // console.log(datax);
-        datax.forEach(xx => {
-          this.satfungList.push({value:xx.kode,title:xx.singkatan_satfung})   
-        });
+    this.httpClient.get(this._global.baseAPIUrl + "/View_satfungs/").subscribe(
+      data => {
+        if (data != undefined || data != null) {
+          this.satfungx = data;
+          const datas = JSON.stringify(data);
+          const datax = JSON.parse(datas);
+          // console.log(datas);
+          // console.log(datax);
+          datax.forEach(xx => {
+            this.satfungList.push({
+              value: xx.kode,
+              title: xx.singkatan_satfung
+            });
+          });
+        }
+      },
+      error => {
+        console.log(error);
       }
-    }, 
-    error => { console.log(error) }); 
+    );
 
     this.kodeSatker = localStorage.getItem("kodeSatker");
 
     this.dataObjectif = JSON.parse(localStorage.getItem("indexObjektif"));
 
-    if (!this.kodeSatker || !this.dataObjectif.kodeSatfung || !this.dataObjectif.idSatfung  || !this.dataObjectif.penilaianId) {
+    if (
+      !this.kodeSatker ||
+      !this.dataObjectif.kodeSatfung ||
+      !this.dataObjectif.idSatfung ||
+      !this.dataObjectif.penilaianId
+    ) {
       this.route.navigate(["/pages/list-polres-satfung/smart-table/"]);
     }
-   
+
     this.now = formatDate(new Date(), "yyyy-MM-dd HH:mm:ss Z", "en");
     this.dynamicForm = this.formBuilder.group({
       numberOfTickets: ["", Validators.required],
       tickets: new FormArray([])
     });
-  
+
     this.httpClient
       .get(
         this._global.baseAPIUrl +
@@ -189,7 +200,7 @@ export class FormObjektifComponent implements OnInit {
         error => {
           console.log(error);
         }
-      );  
+      );
   }
 
   list_to_tree(list) {
@@ -213,9 +224,8 @@ export class FormObjektifComponent implements OnInit {
     }
     return roots;
   }
-satfungKlik(x){
-  
-  this.blockUI.start();
+  satfungKlik(x) {
+    this.blockUI.start();
     this.httpClient
       .get(
         this._global.baseAPIUrl +
@@ -291,7 +301,7 @@ satfungKlik(x){
           this.showToast("warning", "Koneksi bermasalah", error.message);
         }
       );
-}
+  }
   onSubmit() {
     this.blockUI.start();
     console.log("WORK!");
@@ -309,39 +319,43 @@ satfungKlik(x){
         this.t.value[i].nilai = 0;
       }
       if (!this.t.value[i].nilai && !this.t.value[i].arsip_link) {
-        this.t.value[i].id_progress=0;
-      }else if (this.t.value[i].nilai && !this.t.value[i].arsip_link) {
-        this.t.value[i].id_progress=1;
-      }else if (!this.t.value[i].nilai && this.t.value[i].arsip_link) {
-        this.t.value[i].id_progress=1;
-      }else if (this.t.value[i].nilai && this.t.value[i].arsip_link) {
-        this.t.value[i].id_progress=2;
+        this.t.value[i].id_progress = 0;
+      } else if (this.t.value[i].nilai && !this.t.value[i].arsip_link) {
+        this.t.value[i].id_progress = 1;
+      } else if (!this.t.value[i].nilai && this.t.value[i].arsip_link) {
+        this.t.value[i].id_progress = 1;
+      } else if (this.t.value[i].nilai && this.t.value[i].arsip_link) {
+        this.t.value[i].id_progress = 2;
       }
-      this.t.value[i].data = this.t.value[
-        i
-      ];
+      this.t.value[i].data = this.t.value[i];
       dataSubmit.push(this.t.value[i]);
       dataSubmitP.push(this.t.value[i]);
-      for (
-        let j = 0;
-        j < this.t.value[i].details.length;
-        j++
-      ) {
+      for (let j = 0; j < this.t.value[i].details.length; j++) {
         if (this.t.value[i].details[j].nilai == null) {
           this.t.value[i].details[j].nilai = 0;
         }
-        if (!this.t.value[i].details[j].nilai && !this.t.value[i].details[j].arsip_link) {
-          this.t.value[i].details[j].id_progress=0;
-        }else if (this.t.value[i].details[j].nilai && !this.t.value[i].details[j].arsip_link) {
-          this.t.value[i].details[j].id_progress=1;
-        }else if (!this.t.value[i].details[j].nilai && this.t.value[i].details[j].arsip_link) {
-          this.t.value[i].details[j].id_progress=1;
-        }else if (this.t.value[i].details[j].nilai && this.t.value[i].details[j].arsip_link) {
-          this.t.value[i].details[j].id_progress=2;
+        if (
+          !this.t.value[i].details[j].nilai &&
+          !this.t.value[i].details[j].arsip_link
+        ) {
+          this.t.value[i].details[j].id_progress = 0;
+        } else if (
+          this.t.value[i].details[j].nilai &&
+          !this.t.value[i].details[j].arsip_link
+        ) {
+          this.t.value[i].details[j].id_progress = 1;
+        } else if (
+          !this.t.value[i].details[j].nilai &&
+          this.t.value[i].details[j].arsip_link
+        ) {
+          this.t.value[i].details[j].id_progress = 1;
+        } else if (
+          this.t.value[i].details[j].nilai &&
+          this.t.value[i].details[j].arsip_link
+        ) {
+          this.t.value[i].details[j].id_progress = 2;
         }
-        this.t.value[i].data = this.t.value[
-          i
-        ].details[j];
+        this.t.value[i].data = this.t.value[i].details[j];
         dataSubmit.push(this.t.value[i].details[j]);
         dataSubmitD.push(this.t.value[i].details[j]);
       }
@@ -472,6 +486,10 @@ satfungKlik(x){
   }
 
   openWindow(contentTemplate, data) {
+    this.fileViewPdf =
+      this._global.baseAPIUrl +
+      "/ContainerPenilaianIndi/upload_document_indikator/download/" +
+      data;
     this.windowService.open(contentTemplate, {
       title: "Contoh Dokumen.",
       context: {
