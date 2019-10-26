@@ -1,18 +1,48 @@
-<nb-card class="col-md-12 col-lg-12 col-xxxl-12">
-  <nb-card-header status="primary">
+<nb-card class="col-md-12 col-lg-12 col-xxxl-12" status="info">
+  <nb-card-header>
       <div class="text-center">FORM PERSEPSI INTERNAL POLRES</div>
   </nb-card-header>
   <nb-card-body>
     <nb-stepper orientation="horizontal">
       <nb-step [label]="labelOne">
-        <ng-template #labelOne>1. Satfung</ng-template>
-        <h3>Satfung</h3>
+        <ng-template #labelOne>Satfung</ng-template>
+        <hr>
+        <div class="row">
+          <div class="col-md-4 col-sm-1">
+          </div>
+          <div class="col-md-4 col-sm-10 text-center">     
+            <div class="form-group">
+              <h3>Pilih Satfung</h3>
+              <nb-select placeholder="Pilih Satfung" filled status="info" fullWidth class="pull-right status-info shape-rectangle" formControlName="namaSatfung">
+                  <nb-option *ngFor="let x of satfungx" value="x.id">{{ x.singkatan }}</nb-option>
+              </nb-select>
+            </div> 
+          </div>
+          <div class="col-md-4 col-sm-1">
+          </div>
+        </div>
+        <hr>               
         <button nbButton disabled nbStepperNext>prev</button>
         <button nbButton nbStepperNext>next</button>
       </nb-step>
       <nb-step [label]="labelTwo">
-        <ng-template #labelTwo>2. POLDA- POLRES</ng-template>
-        <h3>POLDA- POLRES</h3>
+        <ng-template #labelTwo>POLRES</ng-template>
+        <hr>
+        <div class="row">
+          <div class="col-md-4 col-sm-1">
+          </div>
+          <div class="col-md-4 col-sm-10 text-center">     
+            <div class="form-group">
+              <h3>Pilih POLRES</h3>
+              <nb-select placeholder="Pilih Polres" filled status="info" fullWidth class="pull-right status-info shape-rectangle" formControlName="namaSatfung">
+                  <nb-option *ngFor="let x of satkerx" value="x.kode">{{ x.satker }}</nb-option>
+              </nb-select>
+            </div> 
+          </div>
+          <div class="col-md-4 col-sm-1">
+          </div>
+        </div>
+        <hr> 
         <button nbButton nbStepperPrevious>prev</button>
         <button nbButton nbStepperNext>next</button>
       </nb-step>

@@ -198,6 +198,9 @@
           <nb-card-header>
             DAFTAR DATA OBJEKTIF
           </nb-card-header>
+          <div class="card-footer text-right">
+              <small style="padding-right: 3rem;"> Terakhir diubah : ___</small> <button class="btn btn-primary mr-1" (click)="onSubmit()">Simpan</button>
+          </div>
           <nb-card-body>
             <!-- <form [formGroup]="dynamicForm"> -->
             <div *ngFor="let ticket of t.controls; let x of ticket; let index_indikator = index"
@@ -295,7 +298,7 @@
               </div>
             </div>
             <div class="card-footer text-right">
-              <button class="btn btn-primary mr-1" (click)="onSubmit()">Simpan</button>
+                <small style="padding-right: 3rem;"> Terakhir diubah : ___</small> <button class="btn btn-primary mr-1" (click)="onSubmit()">Simpan</button>
             </div>
             <!-- </form> -->
           </nb-card-body>
