@@ -1,10 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from "@angular/core";
 
 @Component({
-  selector: 'ngx-one-column-layout',
-  styleUrls: ['./one-column.layout.scss'],
+  selector: "ngx-one-column-layout",
+  styleUrls: ["./one-column.layout.scss"],
   template: `
-    <nb-layout windowMode>    
+    <nb-layout windowMode>
       <nb-layout-header fixed>
         <ngx-header></ngx-header>
       </nb-layout-header>
@@ -21,6 +21,26 @@ import { Component } from '@angular/core';
         <ngx-footer></ngx-footer>
       </nb-layout-footer>
     </nb-layout>
-  `,
+  `
 })
-export class OneColumnLayoutComponent {}
+export class OneColumnLayoutComponent implements OnInit {
+  isLogin: boolean;
+  ngOnInit() {
+    this.isLogin = false;
+    var user = JSON.parse(localStorage.getItem("currentUser"));
+    if (!user) {
+      this.isLogin = false;
+    } else {
+      this.isLogin = true;
+    }
+  }
+
+  cekLogin(status) {
+    var user = JSON.parse(localStorage.getItem("currentUser"));
+    if (!user) {
+      this.isLogin = false;
+    } else {
+      this.isLogin = true;
+    }
+  }
+}

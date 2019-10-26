@@ -3,8 +3,10 @@ import { HttpClient, HttpErrorResponse } from "@angular/common/http";
 import { map } from "rxjs/operators";
 import { Router } from "@angular/router";
 import { Config } from "../guard";
-import { Observable, Subject, throwError } from "rxjs";
+import { Observable, Subject, throwError, from } from "rxjs";
 import { HttpHeaders } from "@angular/common/http";
+import { timingSafeEqual } from "crypto";
+
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -17,7 +19,10 @@ const httpOptions = {
   providedIn: "root"
 })
 export class AuthService {
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(
+    private http: HttpClient,
+    private router: Router
+  ) {}
 
   private statusLogin = new Subject<boolean>();
   private dataLoginUser: dataLoginUser;
@@ -39,6 +44,180 @@ export class AuthService {
         map(user => {
           // login successful if there's a jwt token in the response
           if (user) {
+            if (user.userId==1) {
+              user.menu = [
+                {
+                  title: "Dashboard",
+                  icon: "home-outline",
+                  link: "/pages/dashboard"
+                },
+                {
+                  title: "FEATURES",
+                  group: true
+                },
+                {
+                  title: "Master",
+                  icon: "browser-outline",
+                  children: [
+                    {
+                      title: "Master Indikator",
+                      link: "/pages/master-indikator/smart-table"
+                    },
+                    {
+                      title: "Master Indikator Satfung",
+                      link: "/pages/master-i-s/smart-table"
+                    },
+                    {
+                      title: "Master Periode",
+                      link: "/pages/master-periode/smart-table"
+                    },
+                    {
+                      title: "Master Satfung",
+                      link: "/pages/master-satfung/smart-table"
+                    },
+                    {
+                      title: "Master Satker",
+                      link: "/pages/master-satker/smart-table"
+                    }
+                  ]
+                },
+                {
+                  title: "Transaksi",
+                  icon: "browser-outline",
+                  children: [
+                    {
+                      title: "Transaksi Penilaian",
+                      link: "/pages/trn-penilaian/smart-table"
+                    },
+                    {
+                      title: "Transaksi Benchmarking",
+                      link: "/pages/trn-benchmarking/smart-table"
+                    },
+                    {
+                      title: "Transaksi Penilaian Indikator",
+                      link: "/pages/trn-penilaian-indikator/smart-table"
+                    },
+                    {
+                      title: "Transaksi Penilaian Satfung",
+                      link: "/pages/trn-penilaian-satfung/smart-table"
+                    }
+                  ]
+                },
+                {
+                  title: "System",
+                  icon: "lock-outline",
+                  children: [
+                    {
+                      title: "System Akses",
+                      link: "/pages/sys-akses/smart-table"
+                    },
+                    {
+                      title: "System Kelompok",
+                      link: "/pages/sys-kelompok/smart-table"
+                    },
+                    {
+                      title: "System Kelompok Pengguna",
+                      link: "/pages/sys-kelompok-pengguna/smart-table"
+                    },
+                    {
+                      title: "System Menu",
+                      link: "/pages/sys-menu/smart-table"
+                    },
+                    {
+                      title: "System Pengguna",
+                      link: "/pages/sys-pengguna/smart-table"
+                    }
+                  ]
+                },
+                {
+                  title: "Form Isian",
+                  icon: "folder-add-outline",
+                  children: [
+                    {
+                      title: "Form Objektif",
+                      link: "/indeks/formObjektif",
+                      icon: "folder-outline"
+                    },
+                    {
+                      title: "Form Persepsi Int Polres",
+                      link: "/indeks/formPIP",
+                      icon: "folder-outline"
+                    },
+                    {
+                      title: "Form Persepsi Ekst Polres",
+                      link: "/indeks/formPIP",
+                      icon: "folder-outline"
+                    },
+                    {
+                      title: "List Polres",
+                      link: "/pages/list-polres/smart-table",
+                      icon: "folder-outline"
+                    },
+                    {
+                      title: "List Satfung",
+                      link: "/pages/list-satfung/smart-table",
+                      icon: "folder-outline"
+                    }
+                  ]
+                },
+                {
+                  title: "Validasi",
+                  icon: "folder-add-outline",
+                  children: [
+                    {
+                      title: "Kasatfung",
+                      link: "/indeks/validasiFormObjektif",
+                      icon: "folder-outline"
+                    },
+                    {
+                      title: "Kapolres",
+                      link: "/pages/validasi-list-polres/smart-table",
+                      icon: "folder-outline"
+                    },
+                    {
+                      title: "Pokja ITK",
+                      link: "/indeks/validasiFormObjektif",
+                      icon: "folder-outline"
+                    }
+                  ]
+                }
+              ];
+            }else if (user.userId==4) {
+              user.menu = [
+
+                {
+                  title: "Form Isian",
+                  icon: "folder-add-outline",
+                  children: [
+                   
+                    {
+                      title: "Form Persepsi Int Polres",
+                      link: "/indeks/formPIP",
+                      icon: "folder-outline"
+                    },
+                    {
+                      title: "Form Persepsi Ekst Polres",
+                      link: "/indeks/formPIP",
+                      icon: "folder-outline"
+                    },
+                  ]
+                },
+                {
+                  title: "Validasi",
+                  icon: "folder-add-outline",
+                  children: [
+                    {
+                      title: "Kapolres",
+                      link: "/pages/validasi-list-polres/smart-table",
+                      icon: "folder-outline"
+                    }
+                  ]
+                }
+              ];
+            }else{
+              user.menu=[];
+            }
+            
             // store user details and jwt token in local storage to keep user logged in between page refreshes
             if (rememberMe) {
               localStorage.setItem("currentUser", JSON.stringify(user));
@@ -51,8 +230,10 @@ export class AuthService {
               namaUser: user.userId,
               kdUser: user.userId,
               group: user.userId,
-              token: user.id
+              token: user.id,
+              menu: user.menu
             });
+
           }
           return user;
         })
@@ -125,4 +306,5 @@ interface dataLoginUser {
   kdUser: any;
   token: string;
   group: string;
+  menu: any;
 }

@@ -19,6 +19,7 @@ import { AuthService } from "../../service";
 // import { BlockUI, NgBlockUI } from "ng-block-ui";
 
 // import { FormComponent } from "../form/form.component";
+import { AppComponent } from "../../app.component";
 
 @Component({
   selector: "ngx-login",
@@ -38,7 +39,8 @@ export class LoginComponent implements OnInit {
     private formBuilder: FormBuilder,
     private router: Router,
     private _global: AppGlobals,
-    private authService: AuthService
+    private authService: AuthService,
+    private appComp: AppComponent
   ) {}
 
   ngOnInit() {
@@ -46,6 +48,8 @@ export class LoginComponent implements OnInit {
       namaUser: ["", Validators.required],
       kataSandi: ["", Validators.required]
     });
+
+    this.appComp.setMenu([]);
   }
 
   get f() {
@@ -70,6 +74,8 @@ export class LoginComponent implements OnInit {
       .pipe(first())
       .subscribe(
         data => {
+          this.appComp.setMenu(data.menu);
+          this.appComp.userIslogin(true);
           window.alert("Berhasil");
           console.log(data);
           if (data.userId == 1) {
