@@ -4,7 +4,9 @@ import { NgModule } from '@angular/core';
 const routes: Routes = [
   { path: 'pages', loadChildren: 'app/pages/pages.module#PagesModule' },
   { path: 'public', loadChildren: 'app/public/public.module#PublicModule' },  
-  { path: 'indeks', loadChildren: 'app/indeks/indeks.module#IndeksModule' },    
+  { path: 'indeks', loadChildren: 'app/indeks/indeks.module#IndeksModule' },  
+  { path: 'polres', loadChildren: 'app/polres/polres.module#PolresModule' },    
+
   // { path: 'login', component: LoginComponent },
   // {
   //   path: '',

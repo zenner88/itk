@@ -153,6 +153,20 @@ const routes: Routes = [
           )
       },
       {
+        path: "validasi-pokja",
+        canActivate: [AuthGuard],
+        loadChildren: () =>
+          import("./validasi-pokja/tables.module").then(m => m.TablesModule)
+      },
+      {
+        path: "validasi-pokja-prinsip",
+        canActivate: [AuthGuard],
+        loadChildren: () =>
+          import("./validasi-pokja-prinsip/tables.module").then(
+            m => m.TablesModule
+          )
+      },
+      {
         path: "formObjektif",
         canActivate:[AuthGuard],
         component: FormObjektifComponent

@@ -27,7 +27,7 @@ import {
 
 import { BlockUI, NgBlockUI } from "ng-block-ui";
 
-import { FormComponent } from "../form/form.component";
+// import { FormComponent } from "../form/form.component";
 import { Router } from "@angular/router";
 
 @Component({
@@ -85,6 +85,10 @@ export class FormObjektifComponent implements OnInit {
   user = "zenner";
   dataObjectif: any;
   kodeSatker: any;
+  satfungx: any;
+  public satfungList: any[] = [];  
+
+  src = "https://vadimdez.github.io/ng2-pdf-viewer/assets/pdf-test.pdf";
   // convenience getters for easy access to form fields
 
   open(dialog: TemplateRef<any>, index_indikator, index_detail) {
@@ -133,6 +137,22 @@ export class FormObjektifComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.httpClient.get(this._global.baseAPIUrl + '/View_satfungs/').subscribe(data => {
+      
+      if(data != undefined || data != null)
+      {
+      this.satfungx = data;
+      const datas = JSON.stringify(data);
+      const datax = JSON.parse(datas);
+      // console.log(datas);
+      // console.log(datax);
+        datax.forEach(xx => {
+          this.satfungList.push({value:xx.kode,title:xx.singkatan_satfung})   
+        });
+      }
+    }, 
+    error => { console.log(error) }); 
+
     this.kodeSatker = localStorage.getItem("kodeSatker");
 
     this.dataObjectif = JSON.parse(localStorage.getItem("indexObjektif"));
@@ -146,8 +166,7 @@ export class FormObjektifComponent implements OnInit {
       numberOfTickets: ["", Validators.required],
       tickets: new FormArray([])
     });
-    this.blockUI.start();
-
+  
     this.httpClient
       .get(
         this._global.baseAPIUrl +
@@ -170,39 +189,40 @@ export class FormObjektifComponent implements OnInit {
         error => {
           console.log(error);
         }
-      );
+      );  
+  }
 
-    // this.httpClient.get(this._global.baseAPIUrl + '/View_satkers/getDataByIdTipeSatker?idTipeSatker=R').subscribe(data => {
-    //   if(data != undefined || data != null)
-    //   {
-    //   this.prinsipx = data;
-    //   const datas = JSON.stringify(data);
-    //   const datax = JSON.parse(datas);
-    //   console.log(datas);
-    //   console.log(datax);
-    //     datax.forEach(xx => {
-    //       this.prinsipList.push({value:xx.id,title:xx.prinsip})
-    //       this.prinsipName = xx.title;
-    //     });
-    //   }
-    //   localStorage.setItem('gridServicecList', JSON.stringify(this.prinsipList));
-    //   this.indikators = this.loadTableSettings();
-    // },
-    // error => { console.log(error) });
-
-    console.log(this.now);
-
-    console.log("T", this.t);
-
-    console.log("OBJEK");
-    console.log(this.objek);
+  list_to_tree(list) {
+    var map = {},
+      node,
+      roots = [],
+      i;
+    for (i = 0; i < list.length; i += 1) {
+      map[list[i].kode_indikator_induk] = i; // inisialisasi
+      list[i].children = [];
+      // inisialisasi Children
+    }
+    for (i = 0; i < list.length; i += 1) {
+      node = list[i];
+      if (node.jenis == "D") {
+        // jika kdDepartemenHead Tidak Kosong Push Ke Children
+        list[map[node.kode_indikator_induk]].children.push(node);
+      } else {
+        roots.push(node);
+      }
+    }
+    return roots;
+  }
+satfungKlik(x){
+  
+  this.blockUI.start();
     this.httpClient
       .get(
         this._global.baseAPIUrl +
           "/View_penilaian_indikator_alls/getDataBypenilaianIdDanJenisDanKIIDanKsat?penilaianId=" +
           this.dataObjectif.penilaianId +
           "&jenis=&kodeSatfung=" +
-          this.dataObjectif.kodeSatfung +
+          x +
           "&kodeIndikatorInduk="
       )
       .subscribe(
@@ -271,34 +291,7 @@ export class FormObjektifComponent implements OnInit {
           this.showToast("warning", "Koneksi bermasalah", error.message);
         }
       );
-
-    console.log("Details");
-    console.log(this.objek2);
-    console.log(this.t.value.name);
-  }
-
-  list_to_tree(list) {
-    var map = {},
-      node,
-      roots = [],
-      i;
-    for (i = 0; i < list.length; i += 1) {
-      map[list[i].kode_indikator_induk] = i; // inisialisasi
-      list[i].children = [];
-      // inisialisasi Children
-    }
-    for (i = 0; i < list.length; i += 1) {
-      node = list[i];
-      if (node.jenis == "D") {
-        // jika kdDepartemenHead Tidak Kosong Push Ke Children
-        list[map[node.kode_indikator_induk]].children.push(node);
-      } else {
-        roots.push(node);
-      }
-    }
-    return roots;
-  }
-
+}
   onSubmit() {
     this.blockUI.start();
     console.log("WORK!");
@@ -480,7 +473,7 @@ export class FormObjektifComponent implements OnInit {
 
   openWindow(contentTemplate, data) {
     this.windowService.open(contentTemplate, {
-      title: "Window content from template",
+      title: "Contoh Dokumen.",
       context: {
         text: "some text to pass into template"
       }
