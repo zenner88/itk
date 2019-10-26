@@ -320,11 +320,11 @@ loadTableSettings(){
       confirmDelete: true,
     },
     columns: {
-      kode: {
-        title: 'Kode',
-        type: 'string',
-        editable: false,
-      },
+      // kode: {
+      //   title: 'Kode',
+      //   type: 'string',
+      //   editable: false,
+      // },
       nomor: {
         title: 'nomor',
         type: 'string',
@@ -390,11 +390,11 @@ loadTableSettings(){
       confirmDelete: true,
     },
     columns: {
-      kode: {
-        title: 'Kode',
-        type: 'string',
-        editable: false,
-      },
+      // kode: {
+      //   title: 'Kode',
+      //   type: 'string',
+      //   editable: false,
+      // },
       id_satfung: {
         title: 'Satfung',
         editor: {

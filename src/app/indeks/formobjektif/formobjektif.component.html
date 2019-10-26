@@ -67,13 +67,22 @@
       </div>
 
       <div *ngFor="let fileDownload of fileDownload; let i = index">
-        <a style="cursor: pointer;" (click)="downloadFile(fileDownload)">
+        <!-- <a style="cursor: pointer;" (click)="downloadFile(fileDownload)"> -->
+        <a style="cursor: pointer;" (click)="openWindow(contentTemplate2)">
           <nb-icon icon="file-text-outline" status="primary" [options]="{ animation: { type: 'pulse' } }"></nb-icon>
           {{fileDownload}}
         </a>
         <a style="cursor: pointer;" (click)="deletFile(i)">
           <nb-icon icon="trash-2-outline" status="danger" [options]="{ animation: { type: 'pulse' } }"></nb-icon>
         </a>
+        <ng-template #contentTemplate2 let-data>
+          <div class="pdf-container">
+            <pdf-viewer [src]="fileDownload"
+                        [original-size]="false"
+            ></pdf-viewer>
+          </div>
+        </ng-template>
+
       </div>
     </nb-card-body>
     <nb-card-footer>
@@ -141,7 +150,10 @@
                   <div class="col-sm-4">
                     <div align="left">
                       <div class="form-group">
-                        <B>{{ nama_satfung}} </B>
+                        <nb-select selected=0 fullWidth class="pull-right status-info shape-rectangle">
+                          <nb-option value=0 (click)="satfungKlik(x.kode)">Semua</nb-option>
+                          <nb-option *ngFor="let x of satfungx" value="x.kode" (click)="satfungKlik(x.kode)">{{ x.singkatan_satfung }}</nb-option>
+                        </nb-select>
                       </div>
                     </div>
                   </div>
@@ -328,5 +340,9 @@
   </div>
 </div>
 <ng-template #contentTemplate let-data>
-  <p>DATA HERE..."</p>
+  <div class="pdf-container">
+    <pdf-viewer [src]="src"
+                [original-size]="false"
+    ></pdf-viewer>
+  </div>
 </ng-template>

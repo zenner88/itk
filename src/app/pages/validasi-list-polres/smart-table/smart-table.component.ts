@@ -264,27 +264,27 @@ export class SmartTableComponent {
         satker: {
           title: "Nama polres",
           type: "string",
-          width: "20%"
+          width: "25%"
         },
         satker_induk: {
           title: "Polda",
           type: "string",
-          width: "20%"
+          width: "25%"
         },
-        tipe_polres: {
-          title: "Tipe Polres",
-          type: "string",
-          width: "13%"
-        },
+        // tipe_polres: {
+        //   title: "Tipe Polres",
+        //   type: "string",
+        //   width: "13%"
+        // },
         satu: {
           title: "Data Objektif (%)",
           type: "string",
-          width: "17%"
+          width: "18%"
         },
         dua: {
           title: "Lampiran (%)",
           type: "string",
-          width: "13%"
+          width: "15%"
         },
       },
       actions: {

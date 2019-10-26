@@ -248,7 +248,7 @@ export class FormObjektifComponent implements OnInit {
           this.showToast("warning", "Koneksi bermasalah", error.message);
         }
       );
-
+      this.blockUI.start();
   }
 
   list_to_tree(list) {
