@@ -9,8 +9,11 @@ import {
   UploaderOptions,
   UploadStatus
 } from "ngx-uploader";
-
-import { Component, OnInit, ViewEncapsulation } from "@angular/core";
+import {
+  NbDialogService,
+  NbWindowService,
+} from "@nebular/theme";
+import { Component, OnInit, ChangeDetectionStrategy } from "@angular/core";
 import { Router } from "@angular/router";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { first } from "rxjs/operators";
@@ -25,7 +28,9 @@ import { AppComponent } from "../../app.component";
   selector: "ngx-login",
   templateUrl: "login.component.html",
   styleUrls: ["./login.component.scss"],
-  providers: [AppGlobals]
+  providers: [AppGlobals],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+
 })
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
@@ -35,21 +40,59 @@ export class LoginComponent implements OnInit {
   bahasa: any[];
   loginGagal: string;
   usernamePasswordNotNull: string;
+  public satkerList: any[] = [];  
+  satkerx: any;
+  public indikatorSatfungList: any[] = [];  
+  satfungx: any;
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
     private _global: AppGlobals,
     private authService: AuthService,
-    private appComp: AppComponent
+    private appComp: AppComponent,
+    private windowService: NbWindowService,
+    private dialogService: NbDialogService,
+    private httpClient : HttpClient, 
+
   ) {}
 
   ngOnInit() {
+    this.httpClient.get(this._global.baseAPIUrl + '/View_satkers/getDataByIdTipeSatker?idTipeSatker=R').subscribe(data => {
+      if(data != undefined || data != null)
+      {
+      this.satkerx = data;
+      const datas = JSON.stringify(data);
+      const datax = JSON.parse(datas);
+      console.log(datas);
+      console.log(datax);
+        datax.forEach(xx => {
+          this.satkerList.push({value:xx.kode,title:xx.satker})   
+        });
+      }
+    }, 
+    error => { console.log(error) });
+    this.httpClient.get(this._global.baseAPIUrl + '/Itk_ref_satfungs/').subscribe(data => {
+      if(data != undefined || data != null)
+      {
+      this.satfungx = data;
+      const datas = JSON.stringify(data);
+      const datax = JSON.parse(datas);
+      console.log(datas);
+      console.log(datax);
+        datax.forEach(xx => {
+          this.indikatorSatfungList.push({value:xx.id,title:xx.singkatan})   
+        });
+      }
+    }, 
+    error => { console.log(error) });  
+
     this.loginForm = this.formBuilder.group({
       namaUser: ["", Validators.required],
       kataSandi: ["", Validators.required]
     });
 
     this.appComp.setMenu([]);
+
   }
 
   get f() {
@@ -112,5 +155,14 @@ export class LoginComponent implements OnInit {
           this.loading = false;
         }
       );
+  }
+  open(dialog) {
+    this.dialogService.open(dialog);
+  }
+  openPolres(dialogPolres) {
+    this.dialogService.open(dialogPolres);
+  }
+  openOperator(dialogOperator) {
+    this.dialogService.open(dialogOperator);
   }
 }

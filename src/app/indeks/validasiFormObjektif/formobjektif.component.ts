@@ -270,7 +270,7 @@ export class ValidasiFormObjektifComponent implements OnInit {
               penilaian_id: xx.penilaian_id,
               id_tipe_indikator: xx.id_tipe_indikator,
               pilihan_jawaban: xx.pilihan_jawaban,
-              catatan: null,
+              catatan: xx.catatan,
               jml_arsif: xx.arsip_link ? JSON.parse(xx.arsip_link).length : null
             });
           });
@@ -426,7 +426,7 @@ export class ValidasiFormObjektifComponent implements OnInit {
           nilai: dataSubmitD[i].nilai,
           arsip_link: dataSubmitD[i].arsip_link,
           id_progress: dataSubmitD[i].id_progress,
-          catatan: dataSubmitP[i].catatan,
+          catatan: dataSubmitD[i].catatan,
           diubah_oleh: dataSubmitD[i].diubah_oleh,
           waktu_ubah: dataSubmitD[i].waktu_ubah
         }
