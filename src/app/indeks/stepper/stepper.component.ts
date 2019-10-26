@@ -15,6 +15,9 @@ export class StepperComponent implements OnInit {
   firstForm: FormGroup;
   secondForm: FormGroup;
   thirdForm: FormGroup;
+  fourthForm: FormGroup;
+  fifthForm: FormGroup;
+
   public satkerList: any[] = [];  
   satkerx: any;
   public indikatorSatfungList: any[] = [];  
@@ -67,6 +70,14 @@ export class StepperComponent implements OnInit {
     this.thirdForm = this.fb.group({
       thirdCtrl: ['', Validators.required],
     });
+
+    this.fourthForm = this.fb.group({
+      fourthCtrl: ['', Validators.required],
+    });
+
+    this.fifthForm = this.fb.group({
+      fifthCtrl: ['', Validators.required],
+    });
   }
 
   onFirstSubmit() {
@@ -79,5 +90,13 @@ export class StepperComponent implements OnInit {
 
   onThirdSubmit() {
     this.thirdForm.markAsDirty();
+  }
+
+  onFourthSubmit() {
+    this.fourthForm.markAsDirty();
+  }
+
+  onFifthSubmit() {
+    this.fifthForm.markAsDirty();
   }
 }
