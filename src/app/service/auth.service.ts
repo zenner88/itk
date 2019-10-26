@@ -7,7 +7,6 @@ import { Observable, Subject, throwError, from } from "rxjs";
 import { HttpHeaders } from "@angular/common/http";
 import { timingSafeEqual } from "crypto";
 
-
 const httpOptions = {
   headers: new HttpHeaders({
     "Content-Type": "application/json",
@@ -19,10 +18,7 @@ const httpOptions = {
   providedIn: "root"
 })
 export class AuthService {
-  constructor(
-    private http: HttpClient,
-    private router: Router
-  ) {}
+  constructor(private http: HttpClient, private router: Router) {}
 
   private statusLogin = new Subject<boolean>();
   private dataLoginUser: dataLoginUser;
@@ -44,7 +40,7 @@ export class AuthService {
         map(user => {
           // login successful if there's a jwt token in the response
           if (user) {
-            if (user.userId==1) {
+            if (user.userId == 1) {
               user.menu = [
                 {
                   title: "Dashboard",
@@ -182,14 +178,31 @@ export class AuthService {
                   ]
                 }
               ];
-            }else if (user.userId==4) {
+            } else if (user.userId == 3) {
               user.menu = [
-
+                {
+                  title: "Dashboard",
+                  icon: "home-outline",
+                  link: "/pages/dashboard"
+                },
+                {
+                  title: "Validasi",
+                  icon: "folder-add-outline",
+                  children: [
+                    {
+                      title: "List Polres Satfung",
+                      link: "/pages/list-polres-satfung/smart-table",
+                      icon: "folder-outline"
+                    }
+                  ]
+                }
+              ];
+            } else if (user.userId == 4) {
+              user.menu = [
                 {
                   title: "Form Isian",
                   icon: "folder-add-outline",
                   children: [
-                   
                     {
                       title: "Form Persepsi Int Polres",
                       link: "/indeks/formPIP",
@@ -199,7 +212,7 @@ export class AuthService {
                       title: "Form Persepsi Ekst Polres",
                       link: "/indeks/formPIP",
                       icon: "folder-outline"
-                    },
+                    }
                   ]
                 },
                 {
@@ -214,10 +227,10 @@ export class AuthService {
                   ]
                 }
               ];
-            }else{
-              user.menu=[];
+            } else {
+              user.menu = [];
             }
-            
+
             // store user details and jwt token in local storage to keep user logged in between page refreshes
             if (rememberMe) {
               localStorage.setItem("currentUser", JSON.stringify(user));
@@ -233,7 +246,6 @@ export class AuthService {
               token: user.id,
               menu: user.menu
             });
-
           }
           return user;
         })

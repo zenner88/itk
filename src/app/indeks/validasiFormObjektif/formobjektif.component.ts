@@ -88,7 +88,7 @@ export class ValidasiFormObjektifComponent implements OnInit {
   dataObjectif: any;
   kodeSatker: any;
   satfungx: any;
-  public satfungList: any[] = [];  
+  public satfungList: any[] = [];
   // convenience getters for easy access to form fields
 
   open(dialog: TemplateRef<any>, index_indikator, index_detail) {
@@ -137,21 +137,26 @@ export class ValidasiFormObjektifComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.httpClient.get(this._global.baseAPIUrl + '/View_satfungs/').subscribe(data => {
-      
-      if(data != undefined || data != null)
-      {
-      this.satfungx = data;
-      const datas = JSON.stringify(data);
-      const datax = JSON.parse(datas);
-      // console.log(datas);
-      // console.log(datax);
-        datax.forEach(xx => {
-          this.satfungList.push({value:xx.kode,title:xx.singkatan_satfung})   
-        });
+    this.httpClient.get(this._global.baseAPIUrl + "/View_satfungs/").subscribe(
+      data => {
+        if (data != undefined || data != null) {
+          this.satfungx = data;
+          const datas = JSON.stringify(data);
+          const datax = JSON.parse(datas);
+          // console.log(datas);
+          // console.log(datax);
+          datax.forEach(xx => {
+            this.satfungList.push({
+              value: xx.kode,
+              title: xx.singkatan_satfung
+            });
+          });
+        }
+      },
+      error => {
+        console.log(error);
       }
-    }, 
-    error => { console.log(error) }); 
+    );
 
     this.kodeSatker = localStorage.getItem("kodeSatker");
 
@@ -167,7 +172,7 @@ export class ValidasiFormObjektifComponent implements OnInit {
       tickets: new FormArray([])
     });
     // this.blockUI.start();
-
+    this.satfungKlik(this.dataObjectif.kodeSatfung);
     this.httpClient
       .get(
         this._global.baseAPIUrl +
@@ -209,8 +214,6 @@ export class ValidasiFormObjektifComponent implements OnInit {
     //   this.indikators = this.loadTableSettings();
     // },
     // error => { console.log(error) });
-
-    
   }
 
   list_to_tree(list) {
@@ -234,7 +237,7 @@ export class ValidasiFormObjektifComponent implements OnInit {
     }
     return roots;
   }
-  satfungKlik(x){
+  satfungKlik(x) {
     this.blockUI.start();
 
     this.httpClient
@@ -305,13 +308,13 @@ export class ValidasiFormObjektifComponent implements OnInit {
           }
           setTimeout(() => {
             this.blockUI.stop();
-          }, 2500);
+          }, 1000);
           console.log(datas);
         },
         error => {
           setTimeout(() => {
             this.blockUI.stop();
-          }, 2500);
+          }, 1000);
           console.log("Error", error);
           this.showToast("warning", "Koneksi bermasalah", error.message);
         }

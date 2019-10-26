@@ -75,8 +75,9 @@
     <nb-card>
       <nb-card-header>
         <div class="text-center">
-        <h6>VALIDASI KASATFUNG</h6>          
-          DATA INDEKS TATA KELOLA KEPOLISIAN</div>
+          <h6>VALIDASI KASATFUNG</h6>
+          DATA INDEKS TATA KELOLA KEPOLISIAN
+        </div>
       </nb-card-header>
       <nb-card-body>
         <nb-card accent="danger">
@@ -131,12 +132,7 @@
                   </div>
                   <div class="col-sm-4">
                     <div align="left">
-                      <div class="form-group">
-                        <nb-select selected=0 fullWidth class="pull-right status-info shape-rectangle">
-                          <nb-option value=0 (click)="satfungKlik(x.kode)">Semua</nb-option>
-                          <nb-option *ngFor="let x of satfungx" value="x.kode" (click)="satfungKlik(x.kode)">{{ x.singkatan_satfung }}</nb-option>
-                        </nb-select>
-                      </div>
+                      {{ dataObjectif.singkatan_satfung }}
                     </div>
                   </div>
                   <div class="col-sm-4"></div>
@@ -215,8 +211,8 @@
                       -
                     </div>
                     <div class="form-group col-2">
-                      <input type="text" [(ngModel)]="t.value[index_indikator].nilai"
-                        class="form-control" fullWidth fieldSize="small" />
+                      <input type="text" [(ngModel)]="t.value[index_indikator].nilai" class="form-control" fullWidth
+                        fieldSize="small" />
                       {{x.value.satuan}}
                     </div>
                     <div class="form-group col-1">
@@ -226,13 +222,12 @@
                       </a>
                     </div>
                     <div class="form-group col-2 text-left">
-                      <nb-checkbox [(ngModel)]="t.value[index_indikator].id_progress_temp"
-                        status="success">Validasi</nb-checkbox>
+                      <nb-checkbox [(ngModel)]="t.value[index_indikator].id_progress_temp" status="success">Validasi
+                      </nb-checkbox>
                     </div>
                     <div class="form-group col-3 text-right">
-                      <textarea 
-                      [(ngModel)]="t.value[index_indikator].catatan"                      
-                      class="form-control" fullWidth fieldSize="small" placeholder="Catatan..."></textarea>
+                      <textarea [(ngModel)]="t.value[index_indikator].catatan" class="form-control" fullWidth
+                        fieldSize="small" placeholder="Catatan..."></textarea>
                     </div>
                   </div>
                 </div>
@@ -242,8 +237,8 @@
                       {{x.value.pilihan_jawaban}}
                     </div>
                     <div class="form-group col-2">
-                      <input type="text" [(ngModel)]="t.value[index_indikator].nilai"
-                        class="form-control" fullWidth fieldSize="small" />
+                      <input type="text" [(ngModel)]="t.value[index_indikator].nilai" class="form-control" fullWidth
+                        fieldSize="small" />
                       {{x.value.satuan}}
                     </div>
                     <div class="form-group col-1">
@@ -253,13 +248,12 @@
                       </a>
                     </div>
                     <div class="form-group col-2 text-left">
-                      <nb-checkbox [(ngModel)]="t.value[index_indikator].id_progress_temp"
-                        status="success">Validasi</nb-checkbox>
+                      <nb-checkbox [(ngModel)]="t.value[index_indikator].id_progress_temp" status="success">Validasi
+                      </nb-checkbox>
                     </div>
                     <div class="form-group col-3 text-right">
-                      <textarea 
-                      [(ngModel)]="t.value[index_indikator].catatan"                      
-                      class="form-control" fullWidth fieldSize="small" placeholder="Catatan..."></textarea>
+                      <textarea [(ngModel)]="t.value[index_indikator].catatan" class="form-control" fullWidth
+                        fieldSize="small" placeholder="Catatan..."></textarea>
                     </div>
                   </div>
                 </div>
@@ -269,8 +263,7 @@
                       {{z.indikator}}
                     </div>
                     <div class="form-group col-2">
-                      <input type="text"
-                        [(ngModel)]="t.value[index_indikator].details[index_detail].nilai"
+                      <input type="text" [(ngModel)]="t.value[index_indikator].details[index_detail].nilai"
                         class="form-control" fullWidth fieldSize="small" />
                       {{z.satuan}}
                     </div>
@@ -281,14 +274,12 @@
                       </a>
                     </div>
                     <div class="form-group col-2 text-left">
-                      <nb-checkbox
-                        [(ngModel)]="t.value[index_indikator].details[index_detail].id_progress_temp"
+                      <nb-checkbox [(ngModel)]="t.value[index_indikator].details[index_detail].id_progress_temp"
                         status="success">Validasi</nb-checkbox>
                     </div>
                     <div class="form-group col-3 text-right">
-                      <textarea 
-                      [(ngModel)]="t.value[index_indikator].details[index_detail].catatan" 
-                      class="form-control" fullWidth fieldSize="small" placeholder="Catatan..."></textarea>
+                      <textarea [(ngModel)]="t.value[index_indikator].details[index_detail].catatan"
+                        class="form-control" fullWidth fieldSize="small" placeholder="Catatan..."></textarea>
                     </div>
                   </div>
                 </div>

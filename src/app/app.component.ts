@@ -11,7 +11,7 @@ import { MessageEvent } from "./service/message";
 @Component({
   selector: "ngx-app",
   template: `
-    <ngx-one-column-layout [isLogin]="isLogin">
+    <ngx-one-column-layout [isLogin]="isLogin" [isMenu]="isMenu">
       <nb-menu [items]="menu" autoCollapse="true" *ngIf="isLogin"></nb-menu>
       <router-outlet></router-outlet>
     </ngx-one-column-layout>
@@ -21,6 +21,7 @@ import { MessageEvent } from "./service/message";
 export class AppComponent implements OnInit {
   menu: any[];
   isLogin: boolean;
+  isMenu: boolean;
 
   constructor(
     private analytics: AnalyticsService,
@@ -31,30 +32,44 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
     this.isLogin = false;
+    this.isMenu = false;
     this.menu = [];
     this.analytics.trackPageViews();
     var user = JSON.parse(localStorage.getItem("currentUser"));
     if (!user) {
       this.router.navigate(["public/login"]);
-      this.layout.cekLogin(false);
+      // this.layout.cekLogin(false);
       return true;
     } else {
-      this.layout.cekLogin(true);
+      // this.layout.cekLogin(true);
       this.isLogin = true;
       this.setMenu(user.menu);
     }
-    this.messageEvent.fire(this.isLogin);
+    this.messageEvent.fire({ login: this.isLogin, menu: this.isMenu });
   }
 
   setMenu(menu) {
-    if (menu) {
+    if (menu.length > 0) {
+      this.isMenu = true;
       this.menu = menu;
+    } else {
+      this.isMenu = false;
     }
+
+    var user = JSON.parse(localStorage.getItem("currentUser"));
+    if (!user) {
+      this.isLogin = false;
+    } else {
+      this.isLogin = true;
+    }
+
+    this.messageEvent.fire({ login: this.isLogin, menu: this.isMenu });
   }
 
   userIslogin(status) {
-    this.messageEvent.fire(status);
-    this.layout.cekLogin(status);
-    this.isLogin = status;
+    // this.layout.cekLogin(status);
+    this.isLogin = status.login;
+    this.isMenu = status.menu;
+    this.messageEvent.fire({ login: status.login, menu: status.menu });
   }
 }

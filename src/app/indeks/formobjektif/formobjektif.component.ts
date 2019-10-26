@@ -172,6 +172,7 @@ export class FormObjektifComponent implements OnInit {
       this.route.navigate(["/pages/list-polres-satfung/smart-table/"]);
     }
 
+    this.satfungKlik(this.dataObjectif.kodeSatfung);
     this.now = formatDate(new Date(), "yyyy-MM-dd HH:mm:ss Z", "en");
     this.dynamicForm = this.formBuilder.group({
       numberOfTickets: ["", Validators.required],

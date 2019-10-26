@@ -248,7 +248,7 @@ export class FormObjektifComponent implements OnInit {
           this.showToast("warning", "Koneksi bermasalah", error.message);
         }
       );
-      this.blockUI.start();
+    this.blockUI.start();
   }
 
   list_to_tree(list) {
@@ -289,22 +289,14 @@ export class FormObjektifComponent implements OnInit {
       if (this.t.value[i].nilai == null) {
         this.t.value[i].nilai = 0;
       }
-      this.t.value[i].data = this.t.value[
-        i
-      ];
+      this.t.value[i].data = this.t.value[i];
       dataSubmit.push(this.t.value[i]);
       dataSubmitP.push(this.t.value[i]);
-      for (
-        let j = 0;
-        j < this.t.value[i].details.length;
-        j++
-      ) {
+      for (let j = 0; j < this.t.value[i].details.length; j++) {
         if (this.t.value[i].details[j].nilai == null) {
           this.t.value[i].details[j].nilai = 0;
         }
-        this.t.value[i].data = this.t.value[
-          i
-        ].details[j];
+        this.t.value[i].data = this.t.value[i].details[j];
         dataSubmit.push(this.t.value[i].details[j]);
         dataSubmitD.push(this.t.value[i].details[j]);
       }

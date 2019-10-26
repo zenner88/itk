@@ -1,9 +1,11 @@
+<block-ui>
+</block-ui>
 <nb-card status="primary" align="center">
   <nb-card-body>
-    <nb-actions [size]="small" >
-      <nb-action><button nbButton (click)="open(dialog)">LOGIN</button></nb-action>   
-      <nb-action><button nbButton (click)="openPolres(dialogPolres)">LOGIN POLRES</button></nb-action>     
-      <nb-action><button nbButton (click)="openOperator(dialogOperator)">LOGIN OPERATOR</button></nb-action>     
+    <nb-actions [size]="small">
+      <nb-action><button nbButton (click)="open(dialog)">LOGIN</button></nb-action>
+      <nb-action><button nbButton (click)="openPolres(dialogPolres)">LOGIN POLRES</button></nb-action>
+      <nb-action><button nbButton (click)="openOperator(dialogOperator)">LOGIN OPERATOR</button></nb-action>
     </nb-actions>
   </nb-card-body>
 </nb-card>
@@ -12,10 +14,10 @@
   <h2>TINGKAT POLRES</h2>
 </div>
 <div class="row">
-  
+
   <div class="col-md-4 col-sm-1">
   </div>
-  <div class="col-md-4 col-sm-10">     
+  <div class="col-md-4 col-sm-10">
   </div>
   <div class="col-md-4 col-sm-1">
   </div>
@@ -25,65 +27,65 @@
     <nb-card-header>
       <div class="row">
         <div class="col-6">
-            LOGIN
+          LOGIN
         </div>
         <div class="col-6 text-right">
-        <a style="cursor: pointer;" (click)="ref.close()">
-          <nb-icon icon="close-outline" status="danger" [options]="{ animation: { type: 'pulse' } }"></nb-icon>
-        </a>
-        </div>
-      </div>
-      </nb-card-header>
-    <nb-card-body>
-    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-      <div class="form-group">
-        <label for="namaUser">Username</label>
-        <input type="text" formControlName="namaUser" class="form-control"
-          [ngClass]="{ 'is-invalid': submitted && f.namaUser.errors }" />
-        <div *ngIf="submitted && f.namaUser.errors" class="invalid-feedback">
-          <div *ngIf="f.namaUser.errors.required">namaUser is required</div>
-        </div>
-      </div>
-      <div class="form-group">
-        <label for="kataSandi">Password</label>
-        <input type="password" formControlName="kataSandi" class="form-control"
-          [ngClass]="{ 'is-invalid': submitted && f.kataSandi.errors }" />
-        <div *ngIf="submitted && f.kataSandi.errors" class="invalid-feedback">
-          <div *ngIf="f.kataSandi.errors.required">Password is required</div>
-        </div>
-      </div>
-      <div class="form-group">
-        <button [disabled]="loading" class="btn btn-primary">
-          <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
-          Login
-        </button>
-      </div>
-    </form>
-  </nb-card-body>
-  </nb-card>  
-</ng-template>
-
-<ng-template #dialogPolres let-data let-ref="dialogRef">
-    <nb-card status="danger" style="width: 400px;">
-      <nb-card-header>
-        <div class="row">
-          <div class="col-6">
-              LOGIN POLRES
-          </div>
-          <div class="col-6 text-right">
           <a style="cursor: pointer;" (click)="ref.close()">
             <nb-icon icon="close-outline" status="danger" [options]="{ animation: { type: 'pulse' } }"></nb-icon>
           </a>
+        </div>
+      </div>
+    </nb-card-header>
+    <nb-card-body>
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+          <label for="namaUser">Username</label>
+          <input type="text" formControlName="namaUser" class="form-control"
+            [ngClass]="{ 'is-invalid': submitted && f.namaUser.errors }" />
+          <div *ngIf="submitted && f.namaUser.errors" class="invalid-feedback">
+            <div *ngIf="f.namaUser.errors.required">namaUser is required</div>
           </div>
         </div>
-        </nb-card-header>
-      <nb-card-body>
-      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+          <label for="kataSandi">Password</label>
+          <input type="password" formControlName="kataSandi" class="form-control"
+            [ngClass]="{ 'is-invalid': submitted && f.kataSandi.errors }" />
+          <div *ngIf="submitted && f.kataSandi.errors" class="invalid-feedback">
+            <div *ngIf="f.kataSandi.errors.required">Password is required</div>
+          </div>
+        </div>
+        <div class="form-group">
+          <button [disabled]="loading" class="btn btn-primary">
+            <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+            Login
+          </button>
+        </div>
+      </form>
+    </nb-card-body>
+  </nb-card>
+</ng-template>
+
+<ng-template #dialogPolres let-data let-ref="dialogRef">
+  <nb-card status="danger" style="width: 400px;">
+    <nb-card-header>
+      <div class="row">
+        <div class="col-6">
+          LOGIN POLRES
+        </div>
+        <div class="col-6 text-right">
+          <a style="cursor: pointer;" (click)="ref.close()">
+            <nb-icon icon="close-outline" status="danger" [options]="{ animation: { type: 'pulse' } }"></nb-icon>
+          </a>
+        </div>
+      </div>
+    </nb-card-header>
+    <nb-card-body>
+      <form [formGroup]="loginFormPolres" (ngSubmit)="onSubmitPolres()">
         <div class="form-group">
           <label class="label">Pilih Polres</label>
           <nb-select selected=0 fullWidth class="pull-right status-info shape-rectangle" formControlName="namaPolres">
             <nb-option value=0>POLRES</nb-option>
-            <nb-option *ngFor="let x of satkerx" value="x.kode">{{ x.satker }}</nb-option>
+            <nb-option *ngFor="let x of satkerx" value="{{x.kode}}">{{ x.satker }}</nb-option>
           </nb-select>
         </div>
         <div class="form-group">
@@ -110,37 +112,37 @@
         </div>
       </form>
     </nb-card-body>
-    </nb-card>  
-  </ng-template>
+  </nb-card>
+</ng-template>
 
-  <ng-template #dialogOperator let-data let-ref="dialogRef">
-    <nb-card status="success" style="width: 400px;">
-      <nb-card-header>
-        <div class="row">
-          <div class="col-6">
-              LOGIN OPERATOR
-          </div>
-          <div class="col-6 text-right">
+<ng-template #dialogOperator let-data let-ref="dialogRef">
+  <nb-card status="success" style="width: 400px;">
+    <nb-card-header>
+      <div class="row">
+        <div class="col-6">
+          LOGIN OPERATOR
+        </div>
+        <div class="col-6 text-right">
           <a style="cursor: pointer;" (click)="ref.close()">
             <nb-icon icon="close-outline" status="danger" [options]="{ animation: { type: 'pulse' } }"></nb-icon>
           </a>
-          </div>
         </div>
-        </nb-card-header>
-      <nb-card-body>
-      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+      </div>
+    </nb-card-header>
+    <nb-card-body>
+      <form [formGroup]="loginFormOperator" (ngSubmit)="onSubmitOperator()">
         <div class="form-group">
           <label class="label">Polres</label>
           <nb-select selected=0 fullWidth class="pull-right status-info shape-rectangle" formControlName="namaPolres">
             <nb-option value=0>Pilih Polres</nb-option>
-            <nb-option *ngFor="let x of satkerx" value="x.kode">{{ x.satker }}</nb-option>
+            <nb-option *ngFor="let x of satkerx" [value]="x">{{ x.satker }}</nb-option>
           </nb-select>
         </div>
         <div class="form-group">
           <label class="label">Satfung</label>
           <nb-select selected=0 fullWidth class="pull-right status-info shape-rectangle" formControlName="namaSatfung">
-              <nb-option value=0>Pilih Satfung</nb-option>
-              <nb-option *ngFor="let x of satfungx" value="x.id">{{ x.singkatan }}</nb-option>
+            <nb-option value=0>Pilih Satfung</nb-option>
+            <nb-option *ngFor="let x of satfungx" [value]="x">{{ x.singkatan_satfung }}-{{x.tipe_polres}}</nb-option>
           </nb-select>
         </div>
         <div class="form-group">
@@ -167,5 +169,5 @@
         </div>
       </form>
     </nb-card-body>
-    </nb-card>  
-  </ng-template>
+  </nb-card>
+</ng-template>

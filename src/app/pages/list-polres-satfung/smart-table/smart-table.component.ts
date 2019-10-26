@@ -11,6 +11,7 @@ import {
 } from "@nebular/theme";
 import { FormGroup } from "@angular/forms";
 import { Router } from "@angular/router";
+import { BlockUI, NgBlockUI } from "ng-block-ui";
 
 @Component({
   selector: "ngx-smart-table",
@@ -26,6 +27,8 @@ export class SmartTableComponent {
   >;
   @ViewChild("disabledEsc", { read: TemplateRef, static: true })
   disabledEscTemplate: TemplateRef<HTMLElement>;
+  @BlockUI() blockUI: NgBlockUI;
+
   constructor(
     private windowService: NbWindowService,
     private httpClient: HttpClient,
@@ -61,6 +64,9 @@ export class SmartTableComponent {
   polresx: any;
   kodeSatker: any;
   ngOnInit(): void {
+    setTimeout(() => {
+      this.blockUI.stop();
+    }, 1000);
     this.kodeSatker = localStorage.getItem("kodeSatker");
 
     if (!this.kodeSatker) {
@@ -423,11 +429,12 @@ export class SmartTableComponent {
       JSON.stringify({
         penilaianId: event.data.penilaian_id,
         kodeSatfung: event.data.kode_satfung,
-        idSatfung: event.data.id_satfung
+        idSatfung: event.data.id_satfung,
+        singkatan_satfung: event.data.singkatan_satfung
       })
     );
     // alert(`Custom event '${event.action}' fired on row №: ${event.data.id}`);
-    this.route.navigate(["/pages/formObjektif/"]);
+    this.route.navigate(["/indeks/validasiFormObjektif/"]);
   }
 
   index = 1;
@@ -515,7 +522,7 @@ export class SmartTableComponent {
           title: "file Persetujuan",
           type: "string",
           width: "10%"
-        },
+        }
       }
     };
   }
@@ -585,7 +592,7 @@ export class SmartTableComponent {
         title: "file Persetujuan",
         type: "string",
         width: "10%"
-      },
+      }
     }
   };
 }

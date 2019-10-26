@@ -6,11 +6,12 @@ import { Broadcaster } from "./broadcaster";
 export class MessageEvent {
   constructor(private broadcaster: Broadcaster) {}
 
-  fire(data: boolean): void {
+  fire(data: any): void {
     this.broadcaster.broadcast(MessageEvent, data);
   }
 
-  on(): Observable<boolean> {
-    return this.broadcaster.on<boolean>(MessageEvent);
+  on(): Observable<any> {
+    return this.broadcaster.on<any>(MessageEvent);
   }
+ 
 }

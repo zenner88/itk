@@ -112,7 +112,7 @@
                   <div class="col-sm-4">
                     <div align="left">
                       <div class="form-group">
-                        <B>{{ nama_satker}} </B>
+                        <B>{{ dataObjectif.nama_satker}} </B>
                         <!-- <nb-select selected=0 fullWidth class="pull-right status-info shape-rectangle">
                             <nb-option value=0 (click)="prinsipClick2(event)">Semua</nb-option>
                             <nb-option *ngFor="let x of prinsipx" value="x.id" (click)="prinsipClick2(x.id)">{{ x.prinsip }}</nb-option>
@@ -127,12 +127,12 @@
                     <div align="center">2.</div>
                   </div>
                   <div class="col-sm-2">
-                    <div align="right">TYPE POLRES</div>
+                    <div align="right">Satfung</div>
                   </div>
                   <div class="col-sm-4">
                     <div align="left">
                       <div class="form-group">
-                        <B>{{ nama_tipe_polres}} </B>
+                        <B>{{ dataObjectif.singkatan_satfung}} - {{ dataObjectif.tipe_polres}} </B>
                       </div>
                     </div>
                   </div>
@@ -141,26 +141,6 @@
                 <div class="row show-grid">
                   <div class="col-sm-2">
                     <div align="center">3.</div>
-                  </div>
-                  <div class="col-sm-2">
-                    <div align="right">Satfung</div>
-                  </div>
-                  <div class="col-sm-4">
-                    <div align="left">
-                      <div class="form-group">
-                        <nb-select selected=0 fullWidth class="pull-right status-info shape-rectangle">
-                          <nb-option value=0 (click)="satfungKlik(x.kode)">Semua</nb-option>
-                          <nb-option *ngFor="let x of satfungx" value="x.kode" (click)="satfungKlik(x.kode)">
-                            {{ x.singkatan_satfung }}</nb-option>
-                        </nb-select>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-sm-4"></div>
-                </div>
-                <div class="row show-grid">
-                  <div class="col-sm-2">
-                    <div align="center">4.</div>
                   </div>
                   <div class="col-sm-2">
                     <div align="right">Nama KA{{nama_satfung}}</div>
@@ -172,7 +152,7 @@
                 </div>
                 <div class="row show-grid">
                   <div class="col-sm-2">
-                    <div align="center">5.</div>
+                    <div align="center">4.</div>
                   </div>
                   <div class="col-sm-2">
                     <div align="right">Notelp/HP KA{{nama_satfung}}</div>
@@ -184,7 +164,7 @@
                 </div>
                 <div class="row show-grid">
                   <div class="col-sm-2">
-                    <div align="center">6.</div>
+                    <div align="center">5.</div>
                   </div>
                   <div class="col-sm-2">
                     <div align="right">Nama Staff {{nama_satfung}}</div>
@@ -196,7 +176,7 @@
                 </div>
                 <div class="row show-grid">
                   <div class="col-sm-2">
-                    <div align="center">7.</div>
+                    <div align="center">6.</div>
                   </div>
                   <div class="col-sm-2">
                     <div align="right">Notelp/HP Staff {{nama_satfung}}</div>

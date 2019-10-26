@@ -8,6 +8,7 @@ import {
 } from "../../../@core/data/user-activity";
 import { HttpClient } from "@angular/common/http";
 import { AppGlobals } from "../../../app.global";
+import { BlockUI, NgBlockUI } from "ng-block-ui";
 
 @Component({
   selector: "ngx-user-activity",
@@ -17,6 +18,7 @@ import { AppGlobals } from "../../../app.global";
 })
 export class ECommerceUserActivityComponent implements OnDestroy {
   private alive = true;
+  @BlockUI() blockUI: NgBlockUI;
 
   userActivity: any[] = [];
   type = "year";
@@ -38,6 +40,10 @@ export class ECommerceUserActivityComponent implements OnDestroy {
       });
 
     this.getUserActivity(this.type);
+
+    setTimeout(() => {
+      this.blockUI.stop();
+    }, 1000);
   }
 
   getUserActivity(period: string) {
