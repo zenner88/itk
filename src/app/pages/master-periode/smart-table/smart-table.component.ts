@@ -194,10 +194,10 @@ export class SmartTableComponent {
       confirmDelete: true,
     },
     columns: {
-      kode: {
-        title: 'Kode',
-        type: 'string',
-      },
+      // kode: {
+      //   title: 'Kode',
+      //   type: 'string',
+      // },
       periode: {
         title: 'Periode',
         type: 'string',

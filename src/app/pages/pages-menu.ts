@@ -191,7 +191,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
       },
       {
         title: 'Pokja ITK',
-        link: '/indeks/validasiFormObjektif',
+        link: '/pages/validasi-pokja/smart-table',
         icon: 'folder-outline',
       },
     ]

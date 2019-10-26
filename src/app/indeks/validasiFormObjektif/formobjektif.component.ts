@@ -27,7 +27,7 @@ import {
 
 import { BlockUI, NgBlockUI } from "ng-block-ui";
 
-import { FormComponent } from "../form/form.component";
+// import { FormComponent } from "../form/form.component";
 import { Router } from "@angular/router";
 
 @Component({
@@ -87,6 +87,8 @@ export class ValidasiFormObjektifComponent implements OnInit {
   user = "zenner";
   dataObjectif: any;
   kodeSatker: any;
+  satfungx: any;
+  public satfungList: any[] = [];  
   // convenience getters for easy access to form fields
 
   open(dialog: TemplateRef<any>, index_indikator, index_detail) {
@@ -135,6 +137,22 @@ export class ValidasiFormObjektifComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.httpClient.get(this._global.baseAPIUrl + '/View_satfungs/').subscribe(data => {
+      
+      if(data != undefined || data != null)
+      {
+      this.satfungx = data;
+      const datas = JSON.stringify(data);
+      const datax = JSON.parse(datas);
+      // console.log(datas);
+      // console.log(datax);
+        datax.forEach(xx => {
+          this.satfungList.push({value:xx.kode,title:xx.singkatan_satfung})   
+        });
+      }
+    }, 
+    error => { console.log(error) }); 
+
     this.kodeSatker = localStorage.getItem("kodeSatker");
 
     this.dataObjectif = JSON.parse(localStorage.getItem("indexObjektif"));
@@ -148,7 +166,7 @@ export class ValidasiFormObjektifComponent implements OnInit {
       numberOfTickets: ["", Validators.required],
       tickets: new FormArray([])
     });
-    this.blockUI.start();
+    // this.blockUI.start();
 
     this.httpClient
       .get(
@@ -192,19 +210,40 @@ export class ValidasiFormObjektifComponent implements OnInit {
     // },
     // error => { console.log(error) });
 
-    console.log(this.now);
+    
+  }
 
-    console.log("T", this.t);
+  list_to_tree(list) {
+    var map = {},
+      node,
+      roots = [],
+      i;
+    for (i = 0; i < list.length; i += 1) {
+      map[list[i].kode_indikator_induk] = i; // inisialisasi
+      list[i].children = [];
+      // inisialisasi Children
+    }
+    for (i = 0; i < list.length; i += 1) {
+      node = list[i];
+      if (node.jenis == "D") {
+        // jika kdDepartemenHead Tidak Kosong Push Ke Children
+        list[map[node.kode_indikator_induk]].children.push(node);
+      } else {
+        roots.push(node);
+      }
+    }
+    return roots;
+  }
+  satfungKlik(x){
+    this.blockUI.start();
 
-    console.log("OBJEK");
-    console.log(this.objek);
     this.httpClient
       .get(
         this._global.baseAPIUrl +
           "/View_penilaian_indikator_alls/getDataBypenilaianIdDanJenisDanKIIDanKsat?penilaianId=" +
           this.dataObjectif.penilaianId +
           "&jenis=&kodeSatfung=" +
-          this.dataObjectif.kodeSatfung +
+          x +
           "&kodeIndikatorInduk="
       )
       .subscribe(
@@ -282,29 +321,6 @@ export class ValidasiFormObjektifComponent implements OnInit {
     console.log(this.objek2);
     console.log(this.t.value.name);
   }
-
-  list_to_tree(list) {
-    var map = {},
-      node,
-      roots = [],
-      i;
-    for (i = 0; i < list.length; i += 1) {
-      map[list[i].kode_indikator_induk] = i; // inisialisasi
-      list[i].children = [];
-      // inisialisasi Children
-    }
-    for (i = 0; i < list.length; i += 1) {
-      node = list[i];
-      if (node.jenis == "D") {
-        // jika kdDepartemenHead Tidak Kosong Push Ke Children
-        list[map[node.kode_indikator_induk]].children.push(node);
-      } else {
-        roots.push(node);
-      }
-    }
-    return roots;
-  }
-
   onSubmit() {
     var saveP = false;
     var saveD = false;

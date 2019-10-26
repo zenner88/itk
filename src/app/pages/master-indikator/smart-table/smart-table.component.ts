@@ -508,12 +508,12 @@ loadTableSettings(){
     },
     // hideSubHeader: true,
     columns: {
-      kode: {
-        title: 'Kode',
-        type: 'string',
-        editable: false,
-        filter: false
-      },
+      // kode: {
+      //   title: 'Kode',
+      //   type: 'string',
+      //   editable: false,
+      //   filter: false
+      // },
       id_prinsip: {
         title: 'Prinsip',
         filter: false,
@@ -630,11 +630,11 @@ loadTableSettings(){
     },
     hideSubHeader: true,
     columns: {
-      kode: {
-        title: 'Kode',
-        type: 'string',
-        editable: false,
-      },
+      // kode: {
+      //   title: 'Kode',
+      //   type: 'string',
+      //   editable: false,
+      // },
       id_prinsip: {
         title: 'Prinsip',
         editor: {

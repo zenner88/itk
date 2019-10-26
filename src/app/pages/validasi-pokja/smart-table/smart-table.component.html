@@ -1,0 +1,11 @@
+<nb-card status="primary">
+  <nb-card-header>
+    List Polres
+  </nb-card-header>
+
+  <nb-card-body>
+    <ng2-smart-table [settings]="satkers" [source]="source" (deleteConfirm)="onDeleteConfirm($event)" (editConfirm)="onSaveConfirm($event)"
+    (createConfirm)="onCreateConfirm($event)" (custom)="onCustomAction($event)">
+    </ng2-smart-table>
+  </nb-card-body>
+</nb-card>
