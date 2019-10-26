@@ -26,6 +26,7 @@ import { HeaderInterceptorService } from "./service/header-interceptor.service";
 import { AuthService } from "./service/auth.service";
 import { ApiService } from "./service/api.service";
 import { LoaderService } from "./service/loader.service";
+import { Broadcaster } from "./service/broadcaster";
 import { ChartsModule } from 'ng2-charts';
 // import { TranslatorService } from "./service/translator.service";
 @NgModule({
@@ -58,6 +59,7 @@ import { ChartsModule } from 'ng2-charts';
     LoaderService,
     ApiService,
     AuthService,
+    Broadcaster
     // TranslatorService,
   ],
   bootstrap: [AppComponent],

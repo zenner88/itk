@@ -11,13 +11,13 @@ import { LayoutService } from "../../../@core/utils";
 import { map, takeUntil } from "rxjs/operators";
 import { Subject } from "rxjs";
 import { AuthService, TranslatorService } from "../../../service";
-import { OneColumnLayoutComponent } from "../../layouts/one-column/one-column.layout";
+import { AppComponent } from "../../../app.component";
 
 @Component({
   selector: "ngx-header",
   styleUrls: ["./header.component.scss"],
   templateUrl: "./header.component.html",
-  providers: [OneColumnLayoutComponent]
+  providers: [AppComponent]
 })
 export class HeaderComponent implements OnInit, OnDestroy {
   private destroy$: Subject<void> = new Subject<void>();
@@ -55,7 +55,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     private layoutService: LayoutService,
     private breakpointService: NbMediaBreakpointsService,
     public authService: AuthService,
-    private layout: OneColumnLayoutComponent
+    private layout: AppComponent
   ) {}
 
   ngOnInit() {
@@ -113,7 +113,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   onItemSelection(title) {
     if (title === "Log out") {
       this.authService.logout();
-      this.layout.cekLogin(false);
+      this.layout.userIslogin(false);
       console.log("Log out Clicked ");
     } else if (title === "Profile") {
       console.log("Profile Clicked ");
