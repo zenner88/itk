@@ -194,6 +194,9 @@
         <nb-card accent="info">
           <nb-card-header>
             DAFTAR DATA OBJEKTIF
+            <div class="card-footer text-right">
+                <small style="padding-right: 3rem;"> Terakhir diubah : ___</small> <button class="btn btn-primary mr-1" (click)="onSubmit()">Simpan</button>
+            </div>
           </nb-card-header>
           <nb-card-body>
             <!-- <form [formGroup]="dynamicForm"> -->
@@ -308,6 +311,10 @@
                     </div>
                   </div>
                 </div>
+                <hr>
+              </div>
+              <div class="card-footer text-right">
+                  <small style="padding-right: 3rem;"> Terakhir diubah : ___</small> <button class="btn btn-primary mr-1" (click)="onSubmit()">Simpan</button>
               </div>
               <hr>
             </div>

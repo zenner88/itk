@@ -1,38 +1,199 @@
-<nb-card class="col-md-12 col-lg-12 col-xxxl-12">
-  <nb-card-header status="primary">
+<nb-card class="col-md-12 col-lg-12 col-xxxl-12" status="info">
+  <nb-card-header>
       <div class="text-center">FORM PERSEPSI INTERNAL POLRES</div>
   </nb-card-header>
   <nb-card-body>
     <nb-stepper orientation="horizontal">
       <nb-step [label]="labelOne">
-        <ng-template #labelOne>1. Satfung</ng-template>
-        <h3>Satfung</h3>
+        <ng-template #labelOne>Satfung</ng-template>
+        <hr>
+        <div class="row">
+          <div class="col-md-4 col-sm-1">
+          </div>
+          <div class="col-md-4 col-sm-10 text-center">     
+            <div class="form-group">
+              <h3>Pilih Satfung</h3>
+              <nb-select placeholder="Pilih Satfung" filled status="info" fullWidth class="pull-right status-info shape-rectangle" formControlName="namaSatfung">
+                  <nb-option *ngFor="let x of satfungx" value="x.id">{{ x.singkatan }}</nb-option>
+              </nb-select>
+            </div> 
+          </div>
+          <div class="col-md-4 col-sm-1">
+          </div>
+        </div>
+        <hr>               
         <button nbButton disabled nbStepperNext>prev</button>
         <button nbButton nbStepperNext>next</button>
       </nb-step>
       <nb-step [label]="labelTwo">
-        <ng-template #labelTwo>2. POLDA- POLRES</ng-template>
-        <h3>POLDA- POLRES</h3>
+        <ng-template #labelTwo>POLRES</ng-template>
+        <hr>
+        <div class="row">
+          <div class="col-md-4 col-sm-1">
+          </div>
+          <div class="col-md-4 col-sm-10 text-center">     
+            <div class="form-group">
+              <h3>Pilih POLRES</h3>
+              <nb-select placeholder="Pilih Polres" filled status="info" fullWidth class="pull-right status-info shape-rectangle" formControlName="namaSatfung">
+                  <nb-option *ngFor="let x of satkerx" value="x.kode">{{ x.satker }}</nb-option>
+              </nb-select>
+            </div> 
+          </div>
+          <div class="col-md-4 col-sm-1">
+          </div>
+        </div>
+        <hr> 
         <button nbButton nbStepperPrevious>prev</button>
         <button nbButton nbStepperNext>next</button>
       </nb-step>
-      <nb-step label="Third step">
-        <ng-template #labelThree>3. Question</ng-template>
-        <h3>SQuestion</h3>
+      <nb-step label="labelThree">
+        <ng-template #labelThree></ng-template>
+        <hr>
+        <div class="row">
+          <div class="col-md-3 col-sm-1">
+          </div>
+          <div class="col-md-6 col-sm-10 text-center">     
+            <h5>CARA PENGISIAN</h5>
+            <p class="text-left">
+                Selamat pagi/siang Bapak/Ibu kami dari Tim Indeks Tata Kelola Kepolisian Negara Republik Indonesia. Dalam rangka penelitian tersebut kami mohon agar Bapak/ibu berkenan mengisi kuesioner Tata Kelola Polres berdasarkan PENGALAMAN, PENGETAHUAN dan INTERAKSI dengan Satfung lain di Polres.
+                <br>
+                <br>
+                Mohon berikan penilaian dengan JUJUR, TERBUKA dan SESUAI DENGAN KONDISI RIIL. Identitas Bapak/Ibu akan dirahasiakan dan data yang dikumpulkan akan dipergunakan hanya demi kepentingan penelitian.
+            </p>
+          </div>
+          <div class="col-md-3 col-sm-1">
+          </div>
+        </div>
+        <hr> 
         <button nbButton nbStepperPrevious>prev</button>
         <button nbButton nbStepperNext>next</button>
       </nb-step>
       <nb-step [label]="labelFour">
-        <ng-template #labelFour>4. SATSABHARA</ng-template>
-        <h3>SATSABHARA</h3>
+        <ng-template #labelFour></ng-template>
+        <hr>
+        <div class="row">
+          <div class="col-12">     
+            <h5>SATSABHARA</h5>
+            <hr>
+            <table style="width: 100%;">
+              <tr>
+                <td>&nbsp;</td>
+                <td><small>Sangat Tidak Sesuai</small></td>
+                <td><small>Tidak Sesuai</small></td>
+                <td><small>Kurang Sesuai</small></td>
+                <td><small>Cenderung Sesuai</small></td>
+                <td><small>Sesuai</small></td>
+                <td><small>Sangat Sesuai</small></td>
+              </tr>
+              <tr style="background-color: aliceblue;">
+                <td width="40%" class="text-left" style="background-color:whitesmoke;">
+                  <b>Koordinasi penanganan Tindak Pidana Ringan  selalu dilakukan secara cepat dengan instansi terkait (Pengadilan Negeri dan Pemerintah Daerah)</b>
+                </td>
+                <td width="10%">
+                  <div class="text-center"> 
+                  <nb-radio value="1" style="display: inline; margin-left: 2rem;"></nb-radio>
+                </div>
+                </td>
+                <td width="10%" class="text-center"> 
+                  <nb-radio value="2" style="display: inline-block; margin-left: 2rem;"></nb-radio>
+                </td>
+                <td width="10%" class="text-center"> 
+                  <nb-radio value="3" style="display: inline-block; margin-left: 2rem;"></nb-radio>
+                </td>
+                <td width="10%" class="text-center"> 
+                  <nb-radio value="4" style="display: inline-block; margin-left: 2rem;"></nb-radio>
+                </td>
+                <td width="10%" class="text-center"> 
+                  <nb-radio value="5" style="display: inline-block; margin-left: 2rem;"></nb-radio>
+                </td>
+                <td width="10%" class="text-center"> 
+                  <nb-radio value="6" style="display: inline-block; margin-left: 2rem;"></nb-radio>
+                </td>
+                <!-- </nb-radio-group> -->
+              </tr>
+            </table>
+          </div>
+        </div>
+        <hr> 
         <button nbButton nbStepperPrevious>prev</button>
-        <button nbButton disabled nbStepperNext>next</button>
+        <button nbButton nbStepperNext>next</button>
       </nb-step>
-      <nb-step [label]="labelFour">
-        <ng-template #labelFour>5. SIPROPAM</ng-template>
-        <h3>SIPROPAM</h3>
+      <nb-step [label]="labelFive">
+        <ng-template #labelFive></ng-template>
+        <hr>
+        <div class="row">
+          <div class="col-12">     
+            <h5>SIPROPAM</h5>
+            <hr>
+            <table style="width: 100%;">
+              <tr>
+                <td>&nbsp;</td>
+                <td><small>Sangat Tidak Sesuai</small></td>
+                <td><small>Tidak Sesuai</small></td>
+                <td><small>Kurang Sesuai</small></td>
+                <td><small>Cenderung Sesuai</small></td>
+                <td><small>Sesuai</small></td>
+                <td><small>Sangat Sesuai</small></td>
+              </tr>
+              <tr style="background-color: aliceblue;">
+                <td width="40%" class="text-left" style="background-color:whitesmoke;">
+                  <b>Propam memiliki inisiatif tinggi untuk melakukan penegakan disiplin anggota</b>
+                </td>
+                <td width="10%">
+                  <div class="text-center"> 
+                  <nb-radio value="1" style="display: inline; margin-left: 2rem;"></nb-radio>
+                </div>
+                </td>
+                <td width="10%" class="text-center"> 
+                  <nb-radio value="2" style="display: inline-block; margin-left: 2rem;"></nb-radio>
+                </td>
+                <td width="10%" class="text-center"> 
+                  <nb-radio value="3" style="display: inline-block; margin-left: 2rem;"></nb-radio>
+                </td>
+                <td width="10%" class="text-center"> 
+                  <nb-radio value="4" style="display: inline-block; margin-left: 2rem;"></nb-radio>
+                </td>
+                <td width="10%" class="text-center"> 
+                  <nb-radio value="5" style="display: inline-block; margin-left: 2rem;"></nb-radio>
+                </td>
+                <td width="10%" class="text-center"> 
+                  <nb-radio value="6" style="display: inline-block; margin-left: 2rem;"></nb-radio>
+                </td>
+                <!-- </nb-radio-group> -->
+              </tr>
+              <hr> 
+              <tr style="background-color: aliceblue;">
+                <td width="40%" class="text-left" style="background-color:whitesmoke;">
+                  <b>Penegakan disiplin personel dilakukan Propam tanpa melihat latar belakang satuan fungsi dan kepangkatan</b>
+                </td>
+                <td width="10%">
+                  <div class="text-center"> 
+                  <nb-radio value="1" style="display: inline; margin-left: 2rem;"></nb-radio>
+                </div>
+                </td>
+                <td width="10%" class="text-center"> 
+                  <nb-radio value="2" style="display: inline-block; margin-left: 2rem;"></nb-radio>
+                </td>
+                <td width="10%" class="text-center"> 
+                  <nb-radio value="3" style="display: inline-block; margin-left: 2rem;"></nb-radio>
+                </td>
+                <td width="10%" class="text-center"> 
+                  <nb-radio value="4" style="display: inline-block; margin-left: 2rem;"></nb-radio>
+                </td>
+                <td width="10%" class="text-center"> 
+                  <nb-radio value="5" style="display: inline-block; margin-left: 2rem;"></nb-radio>
+                </td>
+                <td width="10%" class="text-center"> 
+                  <nb-radio value="6" style="display: inline-block; margin-left: 2rem;"></nb-radio>
+                </td>
+                <!-- </nb-radio-group> -->
+              </tr>
+            </table>
+          </div>
+        </div>
+        <hr> 
         <button nbButton nbStepperPrevious>prev</button>
-        <button nbButton disabled nbStepperNext>next</button>
+        <button nbButton nbStepperNext>next</button>
       </nb-step>
     </nb-stepper>
   </nb-card-body>
