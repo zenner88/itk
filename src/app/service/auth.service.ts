@@ -191,7 +191,7 @@ export class AuthService {
                   children: [
                     {
                       title: "List Polres Satfung",
-                      link: "/pages/list-polres-satfung/smart-table",
+                      link: "/pages/validasi-list-polres-satfung/smart-table",
                       icon: "folder-outline"
                     }
                   ]
@@ -216,7 +216,7 @@ export class AuthService {
                   ]
                 },
                 {
-                  title: "Validasi",
+                  title: "Form Pengesahan",
                   icon: "folder-add-outline",
                   children: [
                     {

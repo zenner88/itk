@@ -60,6 +60,7 @@ export class SmartTableComponent {
   satfungx: any;
   polresx: any;
   kodeSatker: any;
+  namaSatker: any;
   ngOnInit(): void {
     this.kodeSatker = localStorage.getItem("kodeSatker");
 
@@ -76,8 +77,13 @@ export class SmartTableComponent {
       )
       .subscribe(
         indikator => {
-          const data = JSON.stringify(indikator);
-          this.source.load(JSON.parse(data));
+          let data = JSON.stringify(indikator);
+          var datas = JSON.parse(data);
+          for (let i = 0; i < datas.length; i++) {
+            datas[i].no = i + 1;
+          }
+          this.namaSatker = indikator[0].satker;
+          this.source.load(datas);
         },
         error => {
           console.log("Error", error);
@@ -427,7 +433,7 @@ export class SmartTableComponent {
       })
     );
     // alert(`Custom event '${event.action}' fired on row №: ${event.data.id}`);
-    this.route.navigate(["/pages/formObjektif/"]);
+    this.route.navigate(["/indeks/validasiFormObjektif/"]);
   }
 
   index = 1;
@@ -500,7 +506,7 @@ export class SmartTableComponent {
           title: "Validasi Kasatfung",
           type: "string",
           width: "20%"
-        },
+        }
       }
     };
   }
@@ -570,7 +576,7 @@ export class SmartTableComponent {
         title: "file Persetujuan",
         type: "string",
         width: "10%"
-      },
+      }
     }
   };
 }

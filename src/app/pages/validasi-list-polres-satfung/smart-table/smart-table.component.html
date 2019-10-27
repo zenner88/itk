@@ -20,7 +20,7 @@
               <div class="col-sm-4">
                 <div align="left">
                   <div class="form-group">
-                    <B>POLRES PESISIR SELATAN</B>
+                    <B>{{namaSatker}}</B>
                     <!-- <nb-select selected=0 fullWidth class="pull-right status-info shape-rectangle">
                         <nb-option value=0 (click)="prinsipClick2(event)">Semua</nb-option>
                         <nb-option *ngFor="let x of prinsipx" value="x.id" (click)="prinsipClick2(x.id)">{{ x.prinsip }}</nb-option>
@@ -30,7 +30,7 @@
               </div>
               <div class="col-sm-4"></div>
             </div>
-            <div class="row show-grid">
+            <!-- <div class="row show-grid">
               <div class="col-sm-2">
                 <div align="center">2.</div>
               </div>
@@ -45,10 +45,10 @@
                 </div>
               </div>
               <div class="col-sm-4"></div>
-            </div>
+            </div> -->
             <div class="row show-grid">
               <div class="col-sm-2">
-                <div align="center">3.</div>
+                <div align="center">2.</div>
               </div>
               <div class="col-sm-2">
                 <div align="right">Nama KAPOLRES</div>
@@ -60,7 +60,7 @@
             </div>
             <div class="row show-grid">
               <div class="col-sm-2">
-                <div align="center">4.</div>
+                <div align="center">3.</div>
               </div>
               <div class="col-sm-2">
                 <div align="right">Notelp/HP KAPOLRES</div>
@@ -70,33 +70,33 @@
                     placeholder=""></div>
               </div>
             </div>
-            <div class="row show-grid">
+            <!-- <div class="row show-grid">
               <div class="col-sm-2">
-                <div align="center">5.</div>
+                <div align="center">4.</div>
               </div>
               <div class="col-sm-2">
                 <div align="right">Lembar Pengesahan</div>
               </div>
               <div class="col-sm-8">
                 <div align="left">
-                    <button class="btn btn-primary mr-1 text-center">Upload</button>
+                  <button class="btn btn-primary mr-1 text-center">Upload</button>
                 </div>
               </div>
-            </div>
+            </div> -->
             <div class="row show-grid"></div>
           </div>
         </div>
       </nb-card-body>
     </nb-card>
 
-    <ng2-smart-table [settings]="satfungs" [source]="source" (deleteConfirm)="onDeleteConfirm($event)" (editConfirm)="onSaveConfirm($event)"
-    (createConfirm)="onCreateConfirm($event)" (custom)="onCustomAction($event)">
+    <ng2-smart-table [settings]="satfungs" [source]="source" (deleteConfirm)="onDeleteConfirm($event)"
+      (editConfirm)="onSaveConfirm($event)" (createConfirm)="onCreateConfirm($event)" (custom)="onCustomAction($event)">
     </ng2-smart-table>
     <hr>
     <div class="row">
       <div class="col-12 text-right">
-          <button class="btn btn-primary mr-1 text-center">Simpan</button>
+        <button class="btn btn-primary mr-1 text-center">Simpan</button>
       </div>
     </div>
-</nb-card-body>
+  </nb-card-body>
 </nb-card>

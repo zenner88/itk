@@ -487,16 +487,21 @@ export class FormObjektifComponent implements OnInit {
   }
 
   openWindow(contentTemplate, data) {
-    this.fileViewPdf =
-      this._global.baseAPIUrl +
-      "/ContainerPenilaianIndi/upload_document_indikator/download/" +
-      data;
-    this.windowService.open(contentTemplate, {
-      title: "Contoh Dokumen.",
-      context: {
-        text: "some text to pass into template"
-      }
-    });
+    var isPdf = data.indexOf(".pdf");
+    if (isPdf != -1) {
+      this.fileViewPdf =
+        this._global.baseAPIUrl +
+        "/ContainerPenilaianIndi/upload_document_indikator/download/" +
+        data;
+      this.windowService.open(contentTemplate, {
+        title: "Contoh Dokumen.",
+        context: {
+          text: "some text to pass into template"
+        }
+      });
+    } else {
+      this.downloadFile(data);
+    }
   }
   // UPLOAD
   postMethod(files: UploadFile, index) {

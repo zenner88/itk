@@ -137,6 +137,7 @@ export class ValidasiFormObjektifComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.blockUI.stop();
     this.httpClient.get(this._global.baseAPIUrl + "/View_satfungs/").subscribe(
       data => {
         if (data != undefined || data != null) {
