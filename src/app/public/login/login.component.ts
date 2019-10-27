@@ -225,9 +225,11 @@ export class LoginComponent implements OnInit {
           } else if (data.userId == 3) {
             localStorage.setItem("kodeSatker", this.fPol.namaPolres.value);
             this.blockUI.start();
-            this.router.navigate(["pages/list-polres-satfung/smart-table"]);
+            this.router.navigate([
+              "pages/validasi-list-polres-satfung/smart-table"
+            ]);
           } else if (data.userId == 4) {
-            this.router.navigate(["polres/home"]);
+            this.router.navigate(["pages/dashboard"]);
           }
           this.loading = false;
           this.dialogActive.close();
