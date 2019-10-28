@@ -229,6 +229,8 @@ export class LoginComponent implements OnInit {
               "pages/validasi-list-polres-satfung/smart-table"
             ]);
           } else if (data.userId == 4) {
+            this.blockUI.start();
+            localStorage.setItem("kodeSatker", this.fPol.namaPolres.value);
             this.router.navigate(["pages/dashboard"]);
           }
           this.loading = false;

@@ -221,7 +221,7 @@ export class AuthService {
                   children: [
                     {
                       title: "Kapolres",
-                      link: "/pages/validasi-list-polres/smart-table",
+                      link: "/pages/validasi-list-polres-satfung/smart-table",
                       icon: "folder-outline"
                     }
                   ]

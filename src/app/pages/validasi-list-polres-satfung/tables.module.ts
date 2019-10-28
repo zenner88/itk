@@ -5,7 +5,10 @@ import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { ThemeModule } from '../../@theme/theme.module';
 import { TablesRoutingModule, routedComponents } from './tables-routing.module';
 import { FsIconComponent } from './tree-grid/tree-grid.component';
-
+import { CommonModule } from '@angular/common';
+import { NgxUploaderModule } from 'ngx-uploader';
+import { PdfViewerModule } from 'ng2-pdf-viewer';
+import { FormsModule } from '@angular/forms';
 @NgModule({
   imports: [
     NbCardModule,
@@ -15,7 +18,16 @@ import { FsIconComponent } from './tree-grid/tree-grid.component';
     ThemeModule,
     TablesRoutingModule,
     Ng2SmartTableModule,
-    NbSelectModule
+    NbSelectModule,
+    CommonModule,
+    NgxUploaderModule,
+    PdfViewerModule,
+    FormsModule
+
+  ],
+  exports: [
+    CommonModule,
+    NgxUploaderModule,
   ],
   declarations: [
     ...routedComponents,

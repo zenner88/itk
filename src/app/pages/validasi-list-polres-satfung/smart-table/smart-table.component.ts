@@ -1,4 +1,11 @@
-import { Component, Injectable, TemplateRef, ViewChild } from "@angular/core";
+import {
+  Component,
+  OnInit,
+  Injectable,
+  EventEmitter,
+  TemplateRef,
+  ViewChild
+} from "@angular/core";
 import { LocalDataSource } from "ng2-smart-table";
 import { HttpClient } from "@angular/common/http";
 import { AppGlobals } from "../../../app.global";
@@ -7,11 +14,19 @@ import {
   NbComponentStatus,
   NbGlobalPhysicalPosition,
   NbToastrService,
-  NbWindowService
+  NbWindowService,
+  NbDialogService
 } from "@nebular/theme";
 import { FormGroup } from "@angular/forms";
 import { Router } from "@angular/router";
-
+import {
+  UploadOutput,
+  UploadInput,
+  UploadFile,
+  humanizeBytes,
+  UploaderOptions,
+  UploadStatus
+} from "ngx-uploader";
 @Component({
   selector: "ngx-smart-table",
   templateUrl: "./smart-table.component.html",
@@ -31,8 +46,14 @@ export class SmartTableComponent {
     private httpClient: HttpClient,
     private _global: AppGlobals,
     private toastrService: NbToastrService,
-    private route: Router
-  ) {}
+    private route: Router,
+    private dialogService: NbDialogService
+  ) {
+    this.options = { concurrency: 1, maxUploads: 4 };
+    this.files = []; // local uploading files array
+    this.uploadInput = new EventEmitter<UploadInput>(); // input events, we use this to emit data to ngx-uploader
+    this.humanizeBytes = humanizeBytes;
+  }
   form: FormGroup;
   public polresList: any[] = [];
   public satfungList: any[] = [];
@@ -61,7 +82,26 @@ export class SmartTableComponent {
   polresx: any;
   kodeSatker: any;
   namaSatker: any;
+  user: any;
+  files: UploadFile[];
+  dragOver: boolean;
+  uploadInput: EventEmitter<UploadInput>;
+  fileToUpload: any;
+  fieldIndex: {
+    index_indikator: null;
+    index_detail: null;
+  };
+  dynamicForm: FormGroup;
+  fileDownload: any[];
+  options: UploaderOptions;
+  humanizeBytes: Function;
+  fileViewPdf: any;
+  formData: FormData;
+  nama_kapolres: any;
+  no_kapolres: any;
   ngOnInit(): void {
+    this.fileDownload = [];
+    this.user = JSON.parse(localStorage.getItem("currentUser"));
     this.kodeSatker = localStorage.getItem("kodeSatker");
 
     if (!this.kodeSatker) {
@@ -429,11 +469,18 @@ export class SmartTableComponent {
       JSON.stringify({
         penilaianId: event.data.penilaian_id,
         kodeSatfung: event.data.kode_satfung,
-        idSatfung: event.data.id_satfung
+        idSatfung: event.data.id_satfung,
+        singkatan_satfung: event.data.singkatan_satfung,
+        tipe_polres: event.data.tipe_polres,
+        nama_satker: event.data.satker
       })
     );
     // alert(`Custom event '${event.action}' fired on row №: ${event.data.id}`);
-    this.route.navigate(["/indeks/validasiFormObjektif/"]);
+    if (this.user.userId == 4) {
+      this.route.navigate(["/indeks/formObjektif/"]);
+    } else {
+      this.route.navigate(["/indeks/validasiFormObjektif/"]);
+    }
   }
 
   index = 1;
@@ -579,4 +626,150 @@ export class SmartTableComponent {
       }
     }
   };
+
+  open(dialog: TemplateRef<any>) {
+    this.dialogService.open(dialog, {
+      context: "this is some additional data passed to dialog"
+    });
+  }
+
+  onUploadOutput(output: UploadOutput): void {
+    if (output.type === "allAddedToQueue") {
+      // const event: UploadInput = {
+      //   type: "uploadAll",
+      //   url: "this.url",
+      //   method: "POST",
+      //   data: { foo: "bar" }
+      // };
+      // this.uploadInput.emit(event);
+    } else if (
+      output.type === "addedToQueue" &&
+      typeof output.file !== "undefined"
+    ) {
+      this.files.push(output.file);
+    } else if (
+      output.type === "uploading" &&
+      typeof output.file !== "undefined"
+    ) {
+      const index = this.files.findIndex(
+        file => typeof output.file !== "undefined" && file.id === output.file.id
+      );
+      this.files[index] = output.file;
+    } else if (output.type === "cancelled" || output.type === "removed") {
+      this.files = this.files.filter(
+        (file: UploadFile) => file !== output.file
+      );
+    } else if (output.type === "dragOver") {
+      this.dragOver = true;
+    } else if (output.type === "dragOut") {
+      this.dragOver = false;
+    } else if (output.type === "drop") {
+      this.dragOver = false;
+    } else if (
+      output.type === "rejected" &&
+      typeof output.file !== "undefined"
+    ) {
+      this.files.push(output.file);
+      console.log(output.file.name + " rejected");
+    }
+
+    this.files = this.files.filter(
+      file => file.progress.status !== UploadStatus.Done
+    );
+  }
+
+  startUpload(): void {
+    console.log(this.files);
+    for (let i = 0; i < this.files.length; i++) {
+      this.postMethod(this.files[i], i);
+    }
+  }
+
+  cancelUpload(id: string): void {
+    this.uploadInput.emit({ type: "cancel", id: id });
+  }
+
+  removeFile(id: string): void {
+    this.uploadInput.emit({ type: "remove", id: id });
+  }
+
+  removeAllFiles(): void {
+    this.uploadInput.emit({ type: "removeAll" });
+  }
+
+  postMethod(files: UploadFile, index) {
+    this.fileToUpload = files;
+    let formData = new FormData();
+    formData.append(
+      "file",
+      this.fileToUpload.nativeFile,
+      this.fileToUpload.name
+    );
+    this.httpClient
+      .post(
+        this._global.baseAPIUrl +
+          "/ContainerPenilaianIndi/upload_document_indikator/upload",
+        formData
+      )
+      .subscribe(val => {
+        let da = JSON.stringify(val);
+        let dat = JSON.parse(da);
+
+        var arsip = [];
+        // if (this.files.length > 1) {
+
+        this.fileDownload.push(dat.result.files.file[0].name);
+
+        console.log(arsip);
+        let indexS = this.files
+          .map(function(e) {
+            return e.size;
+          })
+          .indexOf(dat.result.files.file[0].size);
+        if (indexS != -1) {
+          this.files[indexS].progress.data.percentage = 100;
+          this.files.splice(indexS, 1);
+        }
+      });
+    return false;
+  }
+
+  deletFile(i) {
+    this.fileDownload.splice(i, 1);
+  }
+
+  openWindow(contentTemplate, data) {
+    var isPdf = data.indexOf(".pdf");
+    if (isPdf != -1) {
+      this.fileViewPdf =
+        this._global.baseAPIUrl +
+        "/ContainerPenilaianIndi/upload_document_indikator/download/" +
+        data;
+      this.windowService.open(contentTemplate, {
+        title: "Contoh Dokumen.",
+        context: {
+          text: "some text to pass into template"
+        }
+      });
+    } else {
+      this.downloadFile(data);
+    }
+  }
+
+  downloadFile(fileDownload) {
+    window.open(
+      this._global.baseAPIUrl +
+        "/ContainerPenilaianIndi/upload_document_indikator/download/" +
+        fileDownload
+    );
+  }
+
+  simpan() {
+    var data = {
+      nama_kapolres: this.nama_kapolres,
+      no_kapolres: this.no_kapolres,
+      pengesaha:this.fileDownload
+    };
+    window.alert(JSON.stringify(data));
+  }
 }
