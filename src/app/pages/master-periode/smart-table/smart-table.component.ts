@@ -226,7 +226,7 @@ export class SmartTableComponent {
         type: 'string',
       },
       tanggal_mulai: {
-        title: 'Tanngal Mulai',
+        title: 'Tanggal Mulai',
         type: 'date',
         editor:{
           type:'datepicker'

@@ -13,6 +13,7 @@ import {
   NbUserModule,
   NbTreeGridModule,
   NbStepperModule,
+  NbTooltipModule
 } from "@nebular/theme";
 
 import { ThemeModule } from "../@themeuser/theme.module";
@@ -53,7 +54,8 @@ import { PdfViewerModule } from 'ng2-pdf-viewer';
     NbStepperModule,
     BlockUIModule.forRoot(),
     PdfViewerModule,
-    NbActionsModule
+    NbActionsModule,
+    NbTooltipModule
   ],
   declarations: [
     // FormComponent,
