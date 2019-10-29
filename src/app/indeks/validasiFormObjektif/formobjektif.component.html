@@ -70,7 +70,7 @@
     </nb-card-footer> -->
   </nb-card>
 </ng-template>
-<div class="row">
+<div id="contentToConvert" class="row">
   <div class="col-lg-12">
     <nb-card>
       <nb-card-header>
@@ -193,10 +193,15 @@
         <nb-card accent="info">
           <nb-card-header>
             DAFTAR DATA OBJEKTIF
-          </nb-card-header>
-          <div class="card-footer text-right">
-              <small style="padding-right: 3rem;"> Terakhir diubah : ___</small> <button class="btn btn-primary mr-1" (click)="onSubmit()">Simpan</button>
+          <div class="row">
+            <div class="col-6 text-left">
+                <input class="btn btn-info mr-1 text-center" type="button" value="Cetak" (click)="captureScreen()"/>  
+            </div>
+            <div class="col-6 text-right">
+              <button class="btn btn-primary mr-1 text-center" (click)="simpan()">Simpan</button>
+            </div>
           </div>
+          </nb-card-header>
           <nb-card-body>
             <!-- <form [formGroup]="dynamicForm"> -->
             <div *ngFor="let ticket of t.controls; let x of ticket; let index_indikator = index"
@@ -288,8 +293,14 @@
                 </div>
               </div>
             </div>
-            <div class="card-footer text-right">
+
+              <div class="row card-footer">
+              <div class="col-6 text-left">
+                <input class="btn btn-info mr-1 text-center" type="button" value="Cetak" (click)="captureScreen()"/>  
+              </div>
+              <div class="col-6 text-right">
                 <small style="padding-right: 3rem;"> Terakhir diubah : ___</small> <button class="btn btn-primary mr-1" (click)="onSubmit()">Simpan</button>
+              </div>
             </div>
             <!-- </form> -->
           </nb-card-body>

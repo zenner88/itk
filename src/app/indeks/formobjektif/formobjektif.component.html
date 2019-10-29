@@ -88,7 +88,7 @@
     </nb-card-footer>
   </nb-card>
 </ng-template>
-<div class="row">
+<div class="row" id="contentToConvert">
   <div class="col-lg-12">
     <nb-card>
       <nb-card-header>
@@ -194,8 +194,14 @@
         <nb-card accent="info">
           <nb-card-header>
             DAFTAR DATA OBJEKTIF
-            <div class="card-footer text-right">
-                <small style="padding-right: 3rem;"> Terakhir diubah : ___</small> <button class="btn btn-primary mr-1" (click)="onSubmit()">Simpan</button>
+            <hr>
+            <div class="row">
+              <div class="col-6 text-left">
+                  <input class="btn btn-info mr-1 text-center" type="button" value="Cetak" (click)="captureScreen()"/>  
+              </div>
+              <div class="col-6 text-right">
+                <button class="btn btn-primary mr-1 text-center" (click)="onSubmit()">Simpan</button>
+              </div>
             </div>
           </nb-card-header>
           <nb-card-body>
@@ -313,13 +319,15 @@
                 </div>
                 <hr>
               </div>
-              <div class="card-footer text-right">
-                  <small style="padding-right: 3rem;"> Terakhir diubah : ___</small> <button class="btn btn-primary mr-1" (click)="onSubmit()">Simpan</button>
-              </div>
               <hr>
             </div>
-            <div class="card-footer text-right">
-              <button class="btn btn-primary mr-1" (click)="onSubmit()">Simpan</button>
+            <div class="row">
+              <div class="col-6 text-left">
+                  <input class="btn btn-info mr-1 text-center" type="button" value="Cetak" (click)="captureScreen()"/>  
+              </div>
+              <div class="col-6 text-right">
+                <button class="btn btn-primary mr-1 text-center" (click)="onSubmit()">Simpan</button>
+              </div>
             </div>
             <!-- </form> -->
           </nb-card-body>

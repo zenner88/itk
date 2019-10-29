@@ -29,7 +29,8 @@ import { BlockUI, NgBlockUI } from "ng-block-ui";
 
 // import { FormComponent } from "../form/form.component";
 import { Router } from "@angular/router";
-
+import * as jspdf from 'jspdf';  
+import html2canvas from 'html2canvas'; 
 @Component({
   selector: "ngx-formobjektif",
   templateUrl: "formobjektif.component.html",
@@ -680,7 +681,23 @@ export class ValidasiFormObjektifComponent implements OnInit {
       file => file.progress.status !== UploadStatus.Done
     );
   }
-
+  public captureScreen()  
+  {  
+    var data = document.getElementById('contentToConvert');  
+    html2canvas(data).then(canvas => {  
+      // Few necessary setting options  
+      var imgWidth = 208;   
+      var pageHeight = 295;    
+      var imgHeight = canvas.height * imgWidth / canvas.width;  
+      var heightLeft = imgHeight;  
+  
+      const contentDataURL = canvas.toDataURL('image/png')  
+      let pdf = new jspdf('p', 'mm', 'a4'); // A4 size page of PDF  
+      var position = 0;  
+      pdf.addImage(contentDataURL, 'PNG', 0, position, imgWidth, imgHeight)  
+      pdf.save('ValidasiKasatfung_formObjektif.pdf'); // Generated PDF   
+    });  
+  }  
   startUpload(): void {
     console.log(this.files);
     for (let i = 0; i < this.files.length; i++) {

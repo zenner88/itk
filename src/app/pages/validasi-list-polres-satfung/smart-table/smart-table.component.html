@@ -87,9 +87,10 @@
 </ng-template>
 <nb-card status="primary">
   <nb-card-header>
-    Polres - Satfung
+    Validasi Kasatfung
   </nb-card-header>
   <nb-card-body>
+    <div id="contentToConvert">
     <nb-card>
       <nb-card-header>
         KETERANGAN POLRES
@@ -180,8 +181,12 @@
       (editConfirm)="onSaveConfirm($event)" (createConfirm)="onCreateConfirm($event)" (custom)="onCustomAction($event)">
     </ng2-smart-table>
     <hr>
-    <div class="row">
-      <div class="col-12 text-right">
+    </div>
+    <div class="row card-footer">
+      <div class="col-6 text-left">
+          <input class="btn btn-info mr-1 text-center" type="button" value="Cetak" (click)="captureScreen()"/>  
+      </div>
+      <div class="col-6 text-right">
         <button class="btn btn-primary mr-1 text-center" (click)="simpan()">Simpan</button>
       </div>
     </div>
