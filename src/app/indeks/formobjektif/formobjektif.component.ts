@@ -11,7 +11,8 @@ import {
   NbComponentStatus,
   NbGlobalPhysicalPosition,
   NbWindowService,
-  NbDialogService
+  NbDialogService,
+  
 } from "@nebular/theme";
 import { HttpClient } from "@angular/common/http";
 import { AppGlobals } from "../../app.global";
@@ -263,6 +264,7 @@ export class FormObjektifComponent implements OnInit {
               penilaian_id: xx.penilaian_id,
               id_tipe_indikator: xx.id_tipe_indikator,
               pilihan_jawaban: xx.pilihan_jawaban,
+              catatan: xx.catatan,
               jml_arsif: xx.arsip_link ? JSON.parse(xx.arsip_link).length : null
             });
           });
@@ -289,6 +291,7 @@ export class FormObjektifComponent implements OnInit {
                 kode_indikator: [datas[i].kode_indikator],
                 id_tipe_indikator: [datas[i].id_tipe_indikator],
                 jml_arsif: [datas[i].jml_arsif],
+                catatan: [datas[i].catatan],
                 details: [datas[i].children]
               })
             );

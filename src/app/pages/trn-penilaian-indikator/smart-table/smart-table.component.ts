@@ -226,7 +226,7 @@ export class SmartTableComponent {
           filter: false,
         },
         penelitian_id: {
-          title: 'Penelitian',
+          title: 'Penilaian',
           type: 'string',
           filter: false,
         },

@@ -189,11 +189,11 @@ export const MENU_ITEMS: NbMenuItem[] = [
         link: '/pages/validasi-list-polres/smart-table',
         icon: 'folder-outline',
       },
-      {
-        title: 'Pokja ITK',
-        link: '/pages/validasi-pokja/smart-table',
-        icon: 'folder-outline',
-      },
+      // {
+      //   title: 'Pokja ITK',
+      //   link: '/pages/validasi-pokja/smart-table',
+      //   icon: 'folder-outline',
+      // },
     ]
   }
   

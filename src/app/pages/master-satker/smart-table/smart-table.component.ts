@@ -218,18 +218,18 @@ loadTableSettings(){
           },
         valuePrepareFunction: (cell, row) => { return row.tipe_satker },
         },
-        id_tipe_polres: {
-          title: 'Tipe Polres',
-          editor: {
-            type: 'list',
-            config: {
-              // selectText: this.polresList,
-              selectText: 'Select',
-              list:this.polresList,
-            },
-          },
-        valuePrepareFunction: (cell, row) => { return row.tipe_polres },
-        },
+        // id_tipe_polres: {
+        //   title: 'Tipe Polres',
+        //   editor: {
+        //     type: 'list',
+        //     config: {
+        //       // selectText: this.polresList,
+        //       selectText: 'Select',
+        //       list:this.polresList,
+        //     },
+        //   },
+        // valuePrepareFunction: (cell, row) => { return row.tipe_polres },
+        // },
       },
     };
   }

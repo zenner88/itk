@@ -24,7 +24,7 @@ import { AppGlobals } from "../../../../app.global";
         *ngFor="let f of chartRangkingITK; let i = index"
         style="text-align:center"
       >
-        <h5>{{ f.label }}</h5>
+       
         <canvas
           height="60vh"
           width="80vw"
