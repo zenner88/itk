@@ -59,6 +59,7 @@ export class LandingComponent implements OnInit, AfterViewInit {
   loginForm: FormGroup;
   loginFormOperator: FormGroup;
   loginFormPolres: FormGroup;
+  loginFormKasatfung: FormGroup;
   loading = false;
   submitted = false;
   error = "";
@@ -159,6 +160,13 @@ export class LandingComponent implements OnInit, AfterViewInit {
       kataSandi: ["", Validators.required],
       namaPolres: ["", Validators.required]
     });
+
+    this.loginFormKasatfung = this.formBuilder.group({
+      namaUser: ["", Validators.required],
+      kataSandi: ["", Validators.required],
+      namaPolres: ["", Validators.required]
+    });
+
     this.appComp.setMenu([]);
   }
 
@@ -226,6 +234,10 @@ export class LandingComponent implements OnInit, AfterViewInit {
     return this.loginFormPolres.controls;
   }
 
+  get fPung() {
+    return this.loginFormKasatfung.controls;
+  }
+
   onSubmit() {
     this.submitted = true;
     if (this.loginForm.invalid) {
@@ -245,28 +257,27 @@ export class LandingComponent implements OnInit, AfterViewInit {
       .subscribe(
         data => {
           this.appComp.setMenu(data.menu);
-          window.alert("Berhasil");
           console.log(data);
           if (data.userId == 1) {
+            window.alert("Berhasil");
             this.router.navigate(["pages"]);
             this.blockUI.start();
           } else if (data.userId == 2) {
-            this.blockUI.start();
-            localStorage.setItem(
-              "indexObjektif",
-              JSON.stringify({
-                penilaianId: 862,
-                kodeSatfung: "PSU",
-                idSatfung: "SU"
-              })
+            window.alert(
+              "Maaf Anda Tidak diperkenankan Untuk Mengakses Halaman Ini, Login dimenu Polres!"
             );
-            localStorage.setItem("kodeSatker", "640701");
-            this.router.navigate(["indeks/formObjektif"]);
+            localStorage.clear();
           } else if (data.userId == 3) {
-            localStorage.setItem("kodeSatker", "640701");
-            this.router.navigate(["pages/list-polres-satfung/smart-table"]);
+            window.alert(
+              "Maaf Anda Tidak diperkenankan Untuk Mengakses Halaman Ini, Login dimenu Polres!"
+            );
+
+            localStorage.clear();
           } else if (data.userId == 4) {
-            this.router.navigate(["polres/home"]);
+            window.alert(
+              "Maaf Anda Tidak diperkenankan Untuk Mengakses Halaman Ini, Login dimenu Polres!"
+            );
+            localStorage.clear();
           }
           this.loading = false;
           this.dialogActive.close();
@@ -279,60 +290,61 @@ export class LandingComponent implements OnInit, AfterViewInit {
   }
 
   onSubmitPolres() {
-    this.submitted = true;
-    if (this.loginFormPolres.invalid) {
-      window.alert("Salah");
-      return;
-    }
+    window.alert("Maaf Anda Tidak diperkenankan Untuk Mengakses Halaman Ini !");
+    // this.submitted = true;
+    // if (this.loginFormPolres.invalid) {
+    //   window.alert("Salah");
+    //   return;
+    // this.authService
+    // }
 
-    this.loading = true;
-    this.authService
-      .login(
-        this._global.baseAPIUrl,
-        this.fPol.namaUser.value,
-        this.fPol.kataSandi.value,
-        true
-      )
-      .pipe(first())
-      .subscribe(
-        data => {
-          this.appComp.setMenu(data.menu);
-          window.alert("Berhasil");
-          console.log(data);
-          if (data.userId == 1) {
-            this.router.navigate(["pages"]);
-            this.blockUI.start();
-          } else if (data.userId == 2) {
-            this.blockUI.start();
-            localStorage.setItem(
-              "indexObjektif",
-              JSON.stringify({
-                penilaianId: 862,
-                kodeSatfung: "PSU",
-                idSatfung: "SU"
-              })
-            );
-            localStorage.setItem("kodeSatker", "640701");
-            this.router.navigate(["indeks/formObjektif"]);
-          } else if (data.userId == 3) {
-            localStorage.setItem("kodeSatker", this.fPol.namaPolres.value);
-            this.blockUI.start();
-            this.router.navigate([
-              "pages/validasi-list-polres-satfung/smart-table"
-            ]);
-          } else if (data.userId == 4) {
-            this.blockUI.start();
-            localStorage.setItem("kodeSatker", this.fPol.namaPolres.value);
-            this.router.navigate(["pages/dashboard"]);
-          }
-          this.loading = false;
-          this.dialogActive.close();
-        },
-        error => {
-          this.error = error;
-          this.loading = false;
-        }
-      );
+    // this.loading = true;
+    //   .login(
+    //     this._global.baseAPIUrl,
+    //     this.fPol.namaUser.value,
+    //     this.fPol.kataSandi.value,
+    //     true
+    //   )
+    //   .pipe(first())
+    //   .subscribe(
+    //     data => {
+    //       this.appComp.setMenu(data.menu);
+    //       window.alert("Berhasil");
+    //       console.log(data);
+    //       if (data.userId == 1) {
+    //         this.router.navigate(["pages"]);
+    //         this.blockUI.start();
+    //       } else if (data.userId == 2) {
+    //         this.blockUI.start();
+    //         localStorage.setItem(
+    //           "indexObjektif",
+    //           JSON.stringify({
+    //             penilaianId: 862,
+    //             kodeSatfung: "PSU",
+    //             idSatfung: "SU"
+    //           })
+    //         );
+    //         localStorage.setItem("kodeSatker", "640701");
+    //         this.router.navigate(["indeks/formObjektif"]);
+    //       } else if (data.userId == 3) {
+    //         localStorage.setItem("kodeSatker", this.fPol.namaPolres.value);
+    //         this.blockUI.start();
+    //         this.router.navigate([
+    //           "pages/validasi-list-polres-satfung/smart-table"
+    //         ]);
+    //       } else if (data.userId == 4) {
+    //         this.blockUI.start();
+    //         localStorage.setItem("kodeSatker", this.fPol.namaPolres.value);
+    //         this.router.navigate(["pages/dashboard"]);
+    //       }
+    //       this.loading = false;
+    //       this.dialogActive.close();
+    //     },
+    //     error => {
+    //       this.error = error;
+    //       this.loading = false;
+    //     }
+    //   );
   }
 
   onSubmitOperator() {
@@ -354,12 +366,14 @@ export class LandingComponent implements OnInit, AfterViewInit {
       .subscribe(
         data => {
           this.appComp.setMenu(data.menu);
-          window.alert("Berhasil");
           console.log(data);
           if (data.userId == 1) {
-            this.router.navigate(["pages"]);
-            this.blockUI.start();
+            window.alert(
+              "Maaf Anda Tidak diperkenankan Untuk Mengakses Halaman Ini !"
+            );
+            localStorage.clear();
           } else if (data.userId == 2) {
+            window.alert("Berhasil");
             localStorage.setItem(
               "indexObjektif",
               JSON.stringify({
@@ -375,18 +389,15 @@ export class LandingComponent implements OnInit, AfterViewInit {
             this.router.navigate(["indeks/formObjektif"]);
             this.blockUI.start();
           } else if (data.userId == 3) {
-            localStorage.setItem(
-              "indexObjektif",
-              JSON.stringify({
-                penilaianId: 862,
-                kodeSatfung: "PSU",
-                idSatfung: "SU"
-              })
+            window.alert(
+              "Maaf Anda Tidak diperkenankan Untuk Mengakses Halaman Ini !"
             );
-            localStorage.setItem("kodeSatker", "640701");
-            this.router.navigate(["indeks/validasiFormObjektif"]);
+            localStorage.clear();
           } else if (data.userId == 4) {
-            this.router.navigate(["polres/home"]);
+            window.alert(
+              "Maaf Anda Tidak diperkenankan Untuk Mengakses Halaman Ini !"
+            );
+            localStorage.clear();
           }
           this.loading = false;
           this.dialogActive.close();
@@ -397,6 +408,110 @@ export class LandingComponent implements OnInit, AfterViewInit {
         }
       );
   }
+
+  onSubmitKapolres() {
+    this.submitted = true;
+    if (this.loginFormPolres.invalid) {
+      window.alert("Salah");
+      return;
+    }
+
+    this.loading = true;
+    this.authService
+      .login(
+        this._global.baseAPIUrl,
+        this.fPol.namaUser.value,
+        this.fPol.kataSandi.value,
+        true
+      )
+      .pipe(first())
+      .subscribe(
+        data => {
+          this.appComp.setMenu(data.menu);
+          console.log(data);
+          if (data.userId == 1) {
+            window.alert(
+              "Maaf Anda Tidak diperkenankan Untuk Mengakses Halaman Ini !"
+            );
+            localStorage.clear();
+          } else if (data.userId == 2) {
+            window.alert(
+              "Maaf Anda Tidak diperkenankan Untuk Mengakses Halaman Ini !"
+            );
+            localStorage.clear();
+          } else if (data.userId == 3) {
+            window.alert(
+              "Maaf Anda Tidak diperkenankan Untuk Mengakses Halaman Ini !"
+            );
+            localStorage.clear();
+          } else if (data.userId == 4) {
+            this.blockUI.start();
+            localStorage.setItem("kodeSatker", this.fPol.namaPolres.value.kode);
+            this.router.navigate(["pages/dashboard"]);
+          }
+          this.loading = false;
+          this.dialogActive.close();
+        },
+        error => {
+          this.error = error;
+          this.loading = false;
+        }
+      );
+  }
+
+  onSubmitKasatfung() {
+    this.submitted = true;
+    if (this.loginFormKasatfung.invalid) {
+      window.alert("Salah");
+      return;
+    }
+
+    this.loading = true;
+    this.authService
+      .login(
+        this._global.baseAPIUrl,
+        this.fPung.namaUser.value,
+        this.fPung.kataSandi.value,
+        true
+      )
+      .pipe(first())
+      .subscribe(
+        data => {
+          this.appComp.setMenu(data.menu);
+          window.alert("Berhasil");
+          console.log(data);
+          if (data.userId == 1) {
+            window.alert(
+              "Maaf Anda Tidak diperkenankan Untuk Mengakses Halaman Ini !"
+            );
+            localStorage.clear();
+          } else if (data.userId == 2) {
+            window.alert(
+              "Maaf Anda Tidak diperkenankan Untuk Mengakses Halaman Ini !"
+            );
+            localStorage.clear();
+          } else if (data.userId == 3) {
+            localStorage.setItem("kodeSatker", this.fPung.namaPolres.value.kode);
+            this.blockUI.start();
+            this.router.navigate([
+              "pages/validasi-list-polres-satfung/smart-table"
+            ]);
+          } else if (data.userId == 4) {
+            window.alert(
+              "Maaf Anda Tidak diperkenankan Untuk Mengakses Halaman Ini !"
+            );
+            localStorage.clear();
+          }
+          this.loading = false;
+          this.dialogActive.close();
+        },
+        error => {
+          this.error = error;
+          this.loading = false;
+        }
+      );
+  }
+
   open(dialog) {
     this.dialogActive = this.dialogService.open(dialog);
   }

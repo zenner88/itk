@@ -42,7 +42,8 @@ import {
   NbToastrModule,
   NbWindowModule,
   NbDialogModule,
-  NbChatModule
+  NbChatModule,
+  NbTabsetModule
 } from "@nebular/theme";
 
 // import { TranslatorService } from "./service/translator.service";
@@ -80,7 +81,8 @@ import {
     NbUserModule,
     NbTreeGridModule,
     NbStepperModule,
-    BlockUIModule.forRoot()
+    BlockUIModule.forRoot(),
+    NbTabsetModule
   ],
   declarations: [AppComponent, LandingComponent],
   providers: [
