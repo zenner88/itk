@@ -1,11 +1,14 @@
-import { ExtraOptions, RouterModule, Routes } from '@angular/router';
-import { NgModule } from '@angular/core';
+import { ExtraOptions, RouterModule, Routes } from "@angular/router";
+import { NgModule } from "@angular/core";
+import { AppComponent } from "./app.component";
+import { LandingComponent } from "./landing.component";
 
 const routes: Routes = [
-  { path: 'pages', loadChildren: 'app/pages/pages.module#PagesModule' },
-  { path: 'public', loadChildren: 'app/public/public.module#PublicModule' },  
-  { path: 'indeks', loadChildren: 'app/indeks/indeks.module#IndeksModule' },  
-  { path: 'polres', loadChildren: 'app/polres/polres.module#PolresModule' },    
+  { path: "", component: LandingComponent },
+  { path: "pages", loadChildren: "app/pages/pages.module#PagesModule" },
+  { path: "public", loadChildren: "app/public/public.module#PublicModule" },
+  { path: "indeks", loadChildren: "app/indeks/indeks.module#IndeksModule" },
+  { path: "polres", loadChildren: "app/polres/polres.module#PolresModule" }
 
   // { path: 'login', component: LoginComponent },
   // {
@@ -38,17 +41,15 @@ const routes: Routes = [
   //     },
   //   ],
   // },
-  { path: '', redirectTo: 'pages', pathMatch: 'full' },
-  { path: '**', redirectTo: 'pages' },
+  // { path: "**", redirectTo: "pages" }
 ];
 
 const config: ExtraOptions = {
-  useHash: false,
+  useHash: false
 };
 
 @NgModule({
   imports: [RouterModule.forRoot(routes, config)],
-  exports: [RouterModule],
+  exports: [RouterModule]
 })
-export class AppRoutingModule {
-}
+export class AppRoutingModule {}

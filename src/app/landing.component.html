@@ -1,0 +1,352 @@
+<ng-template #dialog let-data let-ref="dialogRef">
+  <nb-card status="primary" style="width: 400px;">
+    <nb-card-header>
+      <div class="row">
+        <div class="col-6">
+          LOGIN MABES
+        </div>
+        <div class="col-6 text-right">
+          <a style="cursor: pointer;" (click)="ref.close()">
+            <nb-icon icon="close-outline" status="danger" [options]="{ animation: { type: 'pulse' } }"></nb-icon>
+          </a>
+        </div>
+      </div>
+    </nb-card-header>
+    <nb-card-body>
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+          <label for="namaUser">Username</label>
+          <input type="text" formControlName="namaUser" class="form-control"
+            [ngClass]="{ 'is-invalid': submitted && f.namaUser.errors }" />
+          <div *ngIf="submitted && f.namaUser.errors" class="invalid-feedback">
+            <div *ngIf="f.namaUser.errors.required">namaUser is required</div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="kataSandi">Password</label>
+          <input type="password" formControlName="kataSandi" class="form-control"
+            [ngClass]="{ 'is-invalid': submitted && f.kataSandi.errors }" />
+          <div *ngIf="submitted && f.kataSandi.errors" class="invalid-feedback">
+            <div *ngIf="f.kataSandi.errors.required">Password is required</div>
+          </div>
+        </div>
+        <div class="form-group">
+          <button [disabled]="loading" class="btn btn-primary">
+            <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+            Login
+          </button>
+        </div>
+      </form>
+    </nb-card-body>
+  </nb-card>
+</ng-template>
+
+<ng-template #dialogPolres let-data let-ref="dialogRef">
+  <nb-card status="danger" style="width: 400px;">
+    <nb-card-header>
+      <div class="row">
+        <div class="col-6">
+          LOGIN POLDA
+        </div>
+        <div class="col-6 text-right">
+          <a style="cursor: pointer;" (click)="ref.close()">
+            <nb-icon icon="close-outline" status="danger" [options]="{ animation: { type: 'pulse' } }"></nb-icon>
+          </a>
+        </div>
+      </div>
+    </nb-card-header>
+    <nb-card-body>
+      <form [formGroup]="loginFormPolres" (ngSubmit)="onSubmitPolres()">
+        <div class="form-group">
+          <label class="label">Pilih Polres</label>
+          <nb-select selected=0 fullWidth class="pull-right status-info shape-rectangle" formControlName="namaPolres">
+            <nb-option value=0>POLRES</nb-option>
+            <nb-option *ngFor="let x of satkerx" value="{{x.kode}}">{{ x.satker }}</nb-option>
+          </nb-select>
+        </div>
+        <div class="form-group">
+          <label for="namaUser">Username</label>
+          <input type="text" formControlName="namaUser" class="form-control"
+            [ngClass]="{ 'is-invalid': submitted && f.namaUser.errors }" />
+          <div *ngIf="submitted && f.namaUser.errors" class="invalid-feedback">
+            <div *ngIf="f.namaUser.errors.required">namaUser is required</div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="kataSandi">Password</label>
+          <input type="password" formControlName="kataSandi" class="form-control"
+            [ngClass]="{ 'is-invalid': submitted && f.kataSandi.errors }" />
+          <div *ngIf="submitted && f.kataSandi.errors" class="invalid-feedback">
+            <div *ngIf="f.kataSandi.errors.required">Password is required</div>
+          </div>
+        </div>
+        <div class="form-group">
+          <button [disabled]="loading" class="btn btn-primary">
+            <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+            Login
+          </button>
+        </div>
+      </form>
+    </nb-card-body>
+  </nb-card>
+</ng-template>
+
+<ng-template #dialogOperator let-data let-ref="dialogRef">
+  <nb-card status="success" style="width: 400px;">
+    <nb-card-header>
+      <div class="row">
+        <div class="col-6">
+          LOGIN POLRES
+        </div>
+        <div class="col-6 text-right">
+          <a style="cursor: pointer;" (click)="ref.close()">
+            <nb-icon icon="close-outline" status="danger" [options]="{ animation: { type: 'pulse' } }"></nb-icon>
+          </a>
+        </div>
+      </div>
+    </nb-card-header>
+    <nb-card-body>
+      <form [formGroup]="loginFormOperator" (ngSubmit)="onSubmitOperator()">
+        <div class="form-group">
+          <label class="label">Polres</label>
+          <nb-select selected=0 fullWidth class="pull-right status-info shape-rectangle" formControlName="namaPolres">
+            <nb-option value=0>Pilih Polres</nb-option>
+            <nb-option *ngFor="let x of satkerx" [value]="x">{{ x.satker }}</nb-option>
+          </nb-select>
+        </div>
+        <div class="form-group">
+          <label class="label">Satfung</label>
+          <nb-select selected=0 fullWidth class="pull-right status-info shape-rectangle" formControlName="namaSatfung">
+            <nb-option value=0>Pilih Satfung</nb-option>
+            <nb-option *ngFor="let x of satfungx" [value]="x">{{ x.singkatan_satfung }}-{{x.tipe_polres}}</nb-option>
+          </nb-select>
+        </div>
+        <div class="form-group">
+          <label for="namaUser">Username</label>
+          <input type="text" formControlName="namaUser" class="form-control"
+            [ngClass]="{ 'is-invalid': submitted && f.namaUser.errors }" />
+          <div *ngIf="submitted && f.namaUser.errors" class="invalid-feedback">
+            <div *ngIf="f.namaUser.errors.required">namaUser is required</div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="kataSandi">Password</label>
+          <input type="password" formControlName="kataSandi" class="form-control"
+            [ngClass]="{ 'is-invalid': submitted && f.kataSandi.errors }" />
+          <div *ngIf="submitted && f.kataSandi.errors" class="invalid-feedback">
+            <div *ngIf="f.kataSandi.errors.required">Password is required</div>
+          </div>
+        </div>
+        <div class="form-group">
+          <button [disabled]="loading" class="btn btn-primary">
+            <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+            Login
+          </button>
+        </div>
+      </form>
+    </nb-card-body>
+  </nb-card>
+</ng-template>
+
+<body class="landing-body">
+  <div class="landing-wrapper" id="landing-wrapper" (scroll)="onScroll($event)">
+    <div id="headermenu">
+      <div class="header-content">
+        <h1 style="text-transform: uppercase;">Indeks Tata Kelola</h1>
+        <h2 style="margin-bottom: 0;text-transform: uppercase;">Kepolisian Negara Republik Indonesia</h2>
+        <br>
+        <h2>(ITK)</h2>
+        <div>
+          <button type="button" class="button-login-header" (click)="open(dialog)">
+            <span class="ui-button-text ui-c">MABES</span>
+          </button>
+          <button type="button" class="button-login-header" (click)="open(dialogPolres)">
+            <span class="ui-button-text ui-c">POLDA</span>
+          </button>
+          <button type="button" class="button-login-header" (click)="open(dialogOperator)">
+            <span class="ui-button-text ui-c">POLRES</span>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div id="header">
+      <div class="header-top">
+        <div style="margin-top:10px;display: inline-block;">
+          <a class="morpheus-logo-link" href="dashboard.html">
+            <img src="../assets/images/polri-2.png" class="morpheus-logo" />
+          </a>
+        </div>
+
+        <a id="menu-button" href="#">
+          <span class="fa fa-bars"></span>
+        </a>
+
+        <ul class="animated menu-active fadeInDown">
+          <li>
+            <a (click)="scroll('headermenu')">HOME</a>
+          </li>
+          <li>
+            <a (click)="scroll('aboutitk')">APA ITU ITK</a>
+          </li>
+          <li>
+            <a (click)="scroll('metode')">METODE</a>
+          </li>
+          <li>
+            <a (click)="scroll('proses')">PROSES PENGOLAHAN DATA</a>
+          </li>
+          <li>
+            <a (click)="scroll('hasil')">HASIL PENGUKURAN INDEKS</a>
+          </li>
+          <!-- <li>
+            <a style="color: #fff;
+              font-size: 12px;
+              background-color: #00baff;
+              border-radius: 100px;
+              border: 1px solid #00baff;
+              box-sizing: border-box;
+              padding: .5em 1.24em;
+              letter-spacing: .04em;
+              transition: all .1s ease-in-out;
+              line-height: 1;
+              margin: auto" *ngIf="!isLogin" (click)="register(1)">SIGN UP</a>
+          </li>
+          <li>
+            <a (click)="manageAccount()" *ngIf="isLogin">DASHBOARD</a>
+          </li> -->
+        </ul>
+      </div>
+    </div>
+    <div id="aboutitk">
+      <div>
+        <div class="row">
+          <div class="col-12 col-md-12">
+            <img src="../assets/images/igi.jpg" />
+          </div>
+          <div class="col-12 col-md-6">
+            <img src="../assets/images/target.jpg" style="width: 100%;
+            height: inherit;
+            padding: 0;
+            margin: 0;
+            font-size: 0;" />
+          </div>
+          <div class="col-12 col-md-6">
+            <img src="../assets/images/target.jpg" style="width: 100%;
+            height: inherit;
+            padding: 0;
+            margin: 0;
+            font-size: 0;" />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- <div id="metode">
+      <div>
+        <div class="row">
+          <div class="col-12">
+            <h1 style="border-bottom:none;">Choose your best solution package!</h1>
+          </div>
+          <div class="col-12 col-md-4">
+            <div class="price-type">
+              <h3>Basic</h3>
+              <span class="price">150</span>
+              <span class="currency">K</span>
+              <span class="term">ourinvita.com/<span style="font-weight: bold;">name</span></span>
+              <ul>
+                <li>Design Template <span style="font-weight: bold;">(Optional)</span></li>
+                <li><span style="font-weight: bold;">Countdown</span> Timer</li>
+                <li><span style="font-weight: bold;">2x Revisi</span></li>
+              </ul>
+              <button type="button" class="ui-button ui-widget ui-state-default ui-corner-all secondary"
+                (click)="order(1)">
+                <span class="ui-button-text ui-c">Order</span>
+              </button>
+            </div>
+          </div>
+          <div class="col-12 col-md-4">
+            <div class="price-type">
+              <h3>Reguler</h3>
+              <span class="price" style="color:#ef8316;">250</span>
+              <span class="currency" style="color:#ef8316;">K</span>
+              <span class="term">ourinvita.com/<span style="font-weight: bold;">name</span></span>
+              <ul>
+                <li>Design Template <span style="font-weight: bold;">(Optional)</span></li>
+                <li><span style="font-weight: bold;">Countdown</span> Timer</li>
+                <li><span style="font-weight: bold;">2x Revisi</span></li>
+                <li><span style="font-weight: bold;">18</span> Photo Gallery</li>
+                <li><span style="font-weight: bold;">Map</span></li>
+                <li><span style="font-weight: bold;">Kalender</span></li>
+                <li><span style="font-weight: bold;">Friend Wishes</span></li>
+                <li><span style="font-weight: bold;">Music</span> Background</li>
+                <li><span style="font-weight: bold;">4x Revisi</span></li>
+              </ul>
+              <button type="button" class="ui-button ui-widget ui-state-default ui-corner-all secondary"
+                (click)="order(2)">
+                <span class="ui-button-text ui-c">Order</span>
+              </button>
+            </div>
+          </div>
+          <div class="col-12 col-md-4">
+
+            <div class="price-type">
+              <h3>Premium</h3>
+              <span class="price" style="color:#4d4d4d;">400</span>
+              <span class="currency" style="color:#4d4d4d;">K</span>
+              <span class="term"><span style="font-weight: bold;">name.</span>ourinvita.com</span>
+              <ul>
+                <li>Design Template <span style="font-weight: bold;">Premium</span></li>
+                <li><span style="font-weight: bold;">Countdown</span> Timer</li>
+                <li><span style="font-weight: bold;">2x Revisi</span></li>
+                <li><span style="font-weight: bold;">Unlimited</span> Photo Gallery</li>
+                <li><span style="font-weight: bold;">Special Video</span> Teaser</li>
+                <li><span style="font-weight: bold;">Map</span></li>
+                <li><span style="font-weight: bold;">Kalender</span></li>
+                <li><span style="font-weight: bold;">Friend Wishes</span></li>
+                <li><span style="font-weight: bold;">Music</span> Background</li>
+                <li><span style="font-weight: bold;">15</span> Special Guest</li>
+                <li><span style="font-weight: bold;">8x Revisi</span></li>
+              </ul>
+              <button type="button" class="ui-button ui-widget ui-state-default ui-corner-all secondary"
+                (click)="order(3)">
+                <span class="ui-button-text ui-c">Order</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="proses">
+      <div>
+        <h1>
+          Contact Us
+        </h1>
+      </div>
+    </div>
+
+    <div id="hasil">
+      <div>
+        <h1>
+          Contact Us
+        </h1>
+      </div>
+    </div> -->
+
+    <div id="footer">
+      <div>
+        <div class="row">
+          <div class="col-12">
+            <p>
+              Copyright .com, 2019
+            </p>
+            <a href="#">Terms</a><span class="link-divider">|</span>
+            <a href="#">About</a><span class="link-divider">|</span>
+            <a href="#">Privacy</a><span class="link-divider">|</span>
+            <a href="#">Contact</a><span class="link-divider">|</span>
+            <a href="#">Map</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>

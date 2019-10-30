@@ -1,0 +1,4 @@
+<ngx-one-column-layout [isLogin]="isLogin" [isMenu]="isMenu">
+  <nb-menu [items]="menu" autoCollapse="true" *ngIf="isLogin"></nb-menu>
+  <router-outlet></router-outlet>
+</ngx-one-column-layout>

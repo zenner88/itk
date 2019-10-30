@@ -10,16 +10,8 @@ import { HttpClientModule } from "@angular/common/http";
 import { CoreModule } from "./@core/core.module";
 import { ThemeModule } from "./@theme/theme.module";
 import { AppComponent } from "./app.component";
+import { LandingComponent } from "./landing.component";
 import { AppRoutingModule } from "./app-routing.module";
-import {
-  NbChatModule,
-  NbDatepickerModule,
-  NbDialogModule,
-  NbMenuModule,
-  NbSidebarModule,
-  NbToastrModule,
-  NbWindowModule
-} from "@nebular/theme";
 import { AuthGuard } from "./auth-guard.service";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { HeaderInterceptorService } from "./service/header-interceptor.service";
@@ -29,6 +21,30 @@ import { LoaderService } from "./service/loader.service";
 import { Broadcaster } from "./service/broadcaster";
 import { ChartsModule } from "ng2-charts";
 import { NgxDocViewerModule } from "ngx-doc-viewer";
+
+import { BlockUIModule } from "ng-block-ui";
+
+import {
+  NbMenuModule,
+  NbActionsModule,
+  NbButtonModule,
+  NbCardModule,
+  NbCheckboxModule,
+  NbDatepickerModule,
+  NbIconModule,
+  NbInputModule,
+  NbRadioModule,
+  NbSelectModule,
+  NbUserModule,
+  NbTreeGridModule,
+  NbStepperModule,
+  NbSidebarModule,
+  NbToastrModule,
+  NbWindowModule,
+  NbDialogModule,
+  NbChatModule
+} from "@nebular/theme";
+
 // import { TranslatorService } from "./service/translator.service";
 @NgModule({
   imports: [
@@ -52,10 +68,21 @@ import { NgxDocViewerModule } from "ngx-doc-viewer";
     FormsModule,
     ReactiveFormsModule,
     ChartsModule,
-    NgxDocViewerModule
-    
+    NgxDocViewerModule,
+    NbMenuModule,
+    NbButtonModule,
+    NbCardModule,
+    NbCheckboxModule,
+    NbIconModule,
+    NbInputModule,
+    NbRadioModule,
+    NbSelectModule,
+    NbUserModule,
+    NbTreeGridModule,
+    NbStepperModule,
+    BlockUIModule.forRoot()
   ],
-  declarations: [AppComponent],
+  declarations: [AppComponent, LandingComponent],
   providers: [
     // ...
     AuthGuard,

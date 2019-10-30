@@ -169,12 +169,13 @@ export class AuthService {
                       title: "Kapolres",
                       link: "/pages/validasi-list-polres/smart-table",
                       icon: "folder-outline"
-                    },
-                    {
-                      title: "Pokja ITK",
-                      link: "/indeks/validasiFormObjektif",
-                      icon: "folder-outline"
                     }
+                    // ,
+                    // {
+                    //   title: "Pokja ITK",
+                    //   link: "/indeks/validasiFormObjektif",
+                    //   icon: "folder-outline"
+                    // }
                   ]
                 }
               ];
@@ -301,7 +302,7 @@ export class AuthService {
   logout() {
     // remove user from local storage to log user out
     localStorage.clear();
-    this.router.navigate(["public/login"]);
+    this.router.navigate([""]);
     this.setDataLoginUser(null);
     this.loginStatus(false);
   }

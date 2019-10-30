@@ -10,12 +10,8 @@ import { OneColumnLayoutComponent } from "./@theme/layouts/one-column/one-column
 import { MessageEvent } from "./service/message";
 @Component({
   selector: "ngx-app",
-  template: `
-    <ngx-one-column-layout [isLogin]="isLogin" [isMenu]="isMenu">
-      <nb-menu [items]="menu" autoCollapse="true" *ngIf="isLogin"></nb-menu>
-      <router-outlet></router-outlet>
-    </ngx-one-column-layout>
-  `,
+  templateUrl: "app.component.html",
+  styleUrls: ["./app.component.scss"],
   providers: [OneColumnLayoutComponent, MessageEvent]
 })
 export class AppComponent implements OnInit {
@@ -37,7 +33,7 @@ export class AppComponent implements OnInit {
     this.analytics.trackPageViews();
     var user = JSON.parse(localStorage.getItem("currentUser"));
     if (!user) {
-      this.router.navigate(["public/login"]);
+      // this.router.navigate(["public/login"]);
       // this.layout.cekLogin(false);
       return true;
     } else {
