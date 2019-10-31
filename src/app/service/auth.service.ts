@@ -45,7 +45,16 @@ export class AuthService {
                 {
                   title: "Dashboard",
                   icon: "home-outline",
-                  link: "/pages/dashboard"
+                  children: [
+                    {
+                      title: "Dashboard",
+                      link: "/pages/dashboard"
+                    },
+                    {
+                      title: "Executive Dashboard",
+                      link: "/pages/dashboard-eks"
+                    }
+                  ]
                 },
                 {
                   title: "FEATURES",
@@ -78,23 +87,23 @@ export class AuthService {
                   ]
                 },
                 {
-                  title: "Transaksi",
+                  title: "Informasi",
                   icon: "browser-outline",
                   children: [
                     {
-                      title: "Transaksi Penilaian",
+                      title: "Informasi Penilaian",
                       link: "/pages/trn-penilaian/smart-table"
                     },
                     {
-                      title: "Transaksi Benchmarking",
+                      title: "Informasi Benchmarking",
                       link: "/pages/trn-benchmarking/smart-table"
                     },
                     {
-                      title: "Transaksi Penilaian Indikator",
+                      title: "Informasi Penilaian Indikator",
                       link: "/pages/trn-penilaian-indikator/smart-table"
                     },
                     {
-                      title: "Transaksi Penilaian Satfung",
+                      title: "Informasi Penilaian Satfung",
                       link: "/pages/trn-penilaian-satfung/smart-table"
                     }
                   ]
@@ -126,7 +135,7 @@ export class AuthService {
                   ]
                 },
                 {
-                  title: "Form Isian",
+                  title: "Transaksi",
                   icon: "folder-add-outline",
                   children: [
                     {
@@ -201,7 +210,7 @@ export class AuthService {
             } else if (user.userId == 4) {
               user.menu = [
                 {
-                  title: "Form Isian",
+                  title: "Transaksi",
                   icon: "folder-add-outline",
                   children: [
                     {
@@ -224,6 +233,23 @@ export class AuthService {
                       title: "Kapolres",
                       link: "/pages/validasi-list-polres-satfung/smart-table",
                       icon: "folder-outline"
+                    }
+                  ]
+                }
+              ];
+            } else if (user.userId == 5) {
+              user.menu = [
+                {
+                  title: "Dashboard",
+                  icon: "home-outline",
+                  children: [
+                    {
+                      title: "Dashboard",
+                      link: "/pages/dashboard"
+                    },
+                    {
+                      title: "Executive Dashboard",
+                      link: "/pages/dashboard-eks"
                     }
                   ]
                 }

@@ -262,6 +262,10 @@ export class LandingComponent implements OnInit, AfterViewInit {
             window.alert("Berhasil");
             this.router.navigate(["pages"]);
             this.blockUI.start();
+          } else if (data.userId == 5) {
+            window.alert("Berhasil");
+            this.router.navigate(["pages"]);
+            this.blockUI.start();
           } else if (data.userId == 2) {
             window.alert(
               "Maaf Anda Tidak diperkenankan Untuk Mengakses Halaman Ini, Login dimenu Polres!"
@@ -491,7 +495,10 @@ export class LandingComponent implements OnInit, AfterViewInit {
             );
             localStorage.clear();
           } else if (data.userId == 3) {
-            localStorage.setItem("kodeSatker", this.fPung.namaPolres.value.kode);
+            localStorage.setItem(
+              "kodeSatker",
+              this.fPung.namaPolres.value.kode
+            );
             this.blockUI.start();
             this.router.navigate([
               "pages/validasi-list-polres-satfung/smart-table"

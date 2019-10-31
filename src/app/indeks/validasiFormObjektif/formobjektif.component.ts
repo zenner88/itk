@@ -173,7 +173,7 @@ export class ValidasiFormObjektifComponent implements OnInit {
       numberOfTickets: ["", Validators.required],
       tickets: new FormArray([])
     });
-    // this.blockUI.start();
+    // //this.blockUI.start();
     this.satfungKlik(this.dataObjectif.kodeSatfung);
     this.httpClient
       .get(
@@ -329,7 +329,7 @@ export class ValidasiFormObjektifComponent implements OnInit {
   onSubmit() {
     var saveP = false;
     var saveD = false;
-    this.blockUI.start();
+    //this.blockUI.start();
     console.log("WORK!");
     console.log(this.t.value);
     // save

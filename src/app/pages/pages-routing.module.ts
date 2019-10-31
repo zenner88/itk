@@ -3,11 +3,10 @@ import { NgModule } from "@angular/core";
 
 import { PagesComponent } from "./pages.component";
 import { DashboardComponent } from "./dashboard/dashboard.component";
+import { DashboardEksComponent } from "./dashboard-eks/dashboard-eks.component";
 import { FormObjektifComponent } from "./formobjektif/formobjektif.component";
 import { NotFoundComponent } from "./miscellaneous/not-found/not-found.component";
 import { AuthGuard, LoginGuard } from "../guard";
-
-
 
 const routes: Routes = [
   {
@@ -16,9 +15,13 @@ const routes: Routes = [
     children: [
       {
         path: "dashboard",
-        canActivate:[AuthGuard],
-        component: DashboardComponent,
-
+        canActivate: [AuthGuard],
+        component: DashboardComponent
+      },
+      {
+        path: "dashboard-eks",
+        canActivate: [AuthGuard],
+        component: DashboardEksComponent
       },
       // MASTER
       {
@@ -142,7 +145,9 @@ const routes: Routes = [
         path: "validasi-list-polres",
         canActivate: [AuthGuard],
         loadChildren: () =>
-          import("./validasi-list-polres/tables.module").then(m => m.TablesModule)
+          import("./validasi-list-polres/tables.module").then(
+            m => m.TablesModule
+          )
       },
       {
         path: "validasi-list-polres-satfung",
@@ -168,12 +173,12 @@ const routes: Routes = [
       },
       {
         path: "formObjektif",
-        canActivate:[AuthGuard],
+        canActivate: [AuthGuard],
         component: FormObjektifComponent
       },
       {
         path: "",
-        canActivate:[AuthGuard],
+        canActivate: [AuthGuard],
         redirectTo: "dashboard",
         pathMatch: "full"
       },
