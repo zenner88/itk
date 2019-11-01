@@ -29,8 +29,8 @@ import { BlockUI, NgBlockUI } from "ng-block-ui";
 
 // import { FormComponent } from "../form/form.component";
 import { Router } from "@angular/router";
-import * as jspdf from 'jspdf';  
-import html2canvas from 'html2canvas'; 
+import * as jspdf from "jspdf";
+import html2canvas from "html2canvas";
 @Component({
   selector: "ngx-formobjektif",
   templateUrl: "formobjektif.component.html",
@@ -437,69 +437,76 @@ export class ValidasiFormObjektifComponent implements OnInit {
         }
       });
     }
-    this.httpClient
-      .put(
-        this._global.baseAPIUrl +
-          "/Itk_trn_penilaian_indikators/updateDataMasal",
-        dataP
-      )
-      .subscribe(
-        data => {
-          saveP = true;
-          // console.log("PUT Request is successful ", data);
-          // this.showToast("success", "Data Tersimpan", id);
-          if (saveP && saveD) {
-            setTimeout(() => {
-              this.blockUI.stop();
-              this.ngOnInit();
-            }, 2500);
-          }
-        },
-        error => {
-          setTimeout(() => {
-            this.blockUI.stop();
-          }, 2500);
-          // console.log("Error", error);
-          this.showToast(
-            "warning",
-            "Input / koneksi bermasalah",
-            "e"
-            // error.error.error.message
-          );
-        }
-      );
 
-    this.httpClient
-      .put(
-        this._global.baseAPIUrl + "/Itk_trn_penilaian_details/updateDataMasal",
-        dataD
-      )
-      .subscribe(
-        data => {
-          saveD = true;
-          // console.log("PUT Request is successful ", data);
-          // this.showToast("success", "Data Tersimpan", id);
-          if (saveP && saveD) {
+    if (dataP.length > 0) {
+      this.httpClient
+        .put(
+          this._global.baseAPIUrl +
+            "/Itk_trn_penilaian_indikators/updateDataMasal",
+          dataP
+        )
+        .subscribe(
+          data => {
+            saveP = true;
+            // console.log("PUT Request is successful ", data);
+            // this.showToast("success", "Data Tersimpan", id);
+            if (saveP && saveD) {
+              setTimeout(() => {
+                this.blockUI.stop();
+                this.ngOnInit();
+              }, 2500);
+            }
+          },
+          error => {
             setTimeout(() => {
               this.blockUI.stop();
             }, 2500);
+            // console.log("Error", error);
+            this.showToast(
+              "warning",
+              "Input / koneksi bermasalah",
+              "e"
+              // error.error.error.message
+            );
           }
-          // console.log("PUT Request is successful ", data);
-          this.showToast("success", "Data Tersimpan", null);
-        },
-        error => {
-          setTimeout(() => {
-            this.blockUI.stop();
-          }, 2500);
-          // console.log("Error", error);
-          this.showToast(
-            "warning",
-            "Input / koneksi bermasalah",
-            null
-            // error.error.error.message
-          );
-        }
-      );
+        );
+    }
+
+    if (dataD.length > 0) {
+      this.httpClient
+        .put(
+          this._global.baseAPIUrl +
+            "/Itk_trn_penilaian_details/updateDataMasal",
+          dataD
+        )
+        .subscribe(
+          data => {
+            saveD = true;
+            // console.log("PUT Request is successful ", data);
+            // this.showToast("success", "Data Tersimpan", id);
+            if (saveP && saveD) {
+              setTimeout(() => {
+                this.blockUI.stop();
+              }, 2500);
+            }
+            // console.log("PUT Request is successful ", data);
+            this.showToast("success", "Data Tersimpan", null);
+          },
+          error => {
+            setTimeout(() => {
+              this.blockUI.stop();
+            }, 2500);
+            // console.log("Error", error);
+            this.showToast(
+              "warning",
+              "Input / koneksi bermasalah",
+              null
+              // error.error.error.message
+            );
+          }
+        );
+    }
+
     // } else if (jenis == "D") {
     //   // console.log(dataSubmit[i].jenis);
     //   // console.log(dataSubmit[i].id);
@@ -681,23 +688,22 @@ export class ValidasiFormObjektifComponent implements OnInit {
       file => file.progress.status !== UploadStatus.Done
     );
   }
-  public captureScreen()  
-  {  
-    var data = document.getElementById('contentToConvert');  
-    html2canvas(data).then(canvas => {  
-      // Few necessary setting options  
-      var imgWidth = 208;   
-      var pageHeight = 295;    
-      var imgHeight = canvas.height * imgWidth / canvas.width;  
-      var heightLeft = imgHeight;  
-  
-      const contentDataURL = canvas.toDataURL('image/png')  
-      let pdf = new jspdf('p', 'mm', 'a4'); // A4 size page of PDF  
-      var position = 0;  
-      pdf.addImage(contentDataURL, 'PNG', 0, position, imgWidth, imgHeight)  
-      pdf.save('ValidasiKasatfung_formObjektif.pdf'); // Generated PDF   
-    });  
-  }  
+  public captureScreen() {
+    var data = document.getElementById("contentToConvert");
+    html2canvas(data).then(canvas => {
+      // Few necessary setting options
+      var imgWidth = 208;
+      var pageHeight = 295;
+      var imgHeight = (canvas.height * imgWidth) / canvas.width;
+      var heightLeft = imgHeight;
+
+      const contentDataURL = canvas.toDataURL("image/png");
+      let pdf = new jspdf("p", "mm", "a4"); // A4 size page of PDF
+      var position = 0;
+      pdf.addImage(contentDataURL, "PNG", 0, position, imgWidth, imgHeight);
+      pdf.save("ValidasiKasatfung_formObjektif.pdf"); // Generated PDF
+    });
+  }
   startUpload(): void {
     console.log(this.files);
     for (let i = 0; i < this.files.length; i++) {
