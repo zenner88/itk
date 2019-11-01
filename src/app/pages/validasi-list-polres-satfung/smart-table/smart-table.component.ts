@@ -27,8 +27,8 @@ import {
   UploaderOptions,
   UploadStatus
 } from "ngx-uploader";
-import * as jspdf from 'jspdf';  
-import html2canvas from 'html2canvas'; 
+import * as jspdf from "jspdf";
+import html2canvas from "html2canvas";
 @Component({
   selector: "ngx-smart-table",
   templateUrl: "./smart-table.component.html",
@@ -500,23 +500,22 @@ export class SmartTableComponent {
     this.index += 1;
     this.toastrService.show(body, `${titleContent}`, config);
   }
-  public captureScreen()  
-  {  
-    var data = document.getElementById('contentToConvert');  
-    html2canvas(data).then(canvas => {  
-      // Few necessary setting options  
-      var imgWidth = 208;   
-      var pageHeight = 295;    
-      var imgHeight = canvas.height * imgWidth / canvas.width;  
-      var heightLeft = imgHeight;  
-  
-      const contentDataURL = canvas.toDataURL('image/png')  
-      let pdf = new jspdf('p', 'mm', 'a4'); // A4 size page of PDF  
-      var position = 0;  
-      pdf.addImage(contentDataURL, 'PNG', 0, position, imgWidth, imgHeight)  
-      pdf.save('ValidasiKasatfung_listSatfung.pdf'); // Generated PDF   
-    });  
-  }  
+  public captureScreen() {
+    var data = document.getElementById("contentToConvert");
+    html2canvas(data).then(canvas => {
+      // Few necessary setting options
+      var imgWidth = 208;
+      var pageHeight = 295;
+      var imgHeight = (canvas.height * imgWidth) / canvas.width;
+      var heightLeft = imgHeight;
+
+      const contentDataURL = canvas.toDataURL("image/png");
+      let pdf = new jspdf("p", "mm", "a4"); // A4 size page of PDF
+      var position = 0;
+      pdf.addImage(contentDataURL, "PNG", 0, position, imgWidth, imgHeight);
+      pdf.save("ValidasiKasatfung_listSatfung.pdf"); // Generated PDF
+    });
+  }
   loadTableSettings() {
     return {
       add: {
@@ -563,7 +562,12 @@ export class SmartTableComponent {
           width: "20%"
         },
         satu: {
-          title: "Status Pengesahan (%)",
+          title: "Data Obyektif (%)",
+          type: "string",
+          width: "20%"
+        },
+        lampiran: {
+          title: "Lampiran (%)",
           type: "string",
           width: "20%"
         },
@@ -786,7 +790,7 @@ export class SmartTableComponent {
     var data = {
       nama_kapolres: this.nama_kapolres,
       no_kapolres: this.no_kapolres,
-      pengesaha:this.fileDownload
+      pengesaha: this.fileDownload
     };
     window.alert(JSON.stringify(data));
   }

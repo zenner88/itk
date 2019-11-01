@@ -245,7 +245,7 @@ export class ValidasiFormObjektifComponent implements OnInit {
     this.httpClient
       .get(
         this._global.baseAPIUrl +
-          "/View_penilaian_indikator_alls/getDataBypenilaianIdDanJenisDanKIIDanKsat?penilaianId=" +
+          "/Itk_tmp_penilaian_indikators/getDataBypenilaianIdDanJenisDanKIIDanKsat?penilaianId=" +
           this.dataObjectif.penilaianId +
           "&jenis=&kodeSatfung=" +
           x +

@@ -197,7 +197,7 @@
             <hr>
             <div class="row">
               <div class="col-6 text-left">
-                  <input class="btn btn-info mr-1 text-center" type="button" value="Cetak" (click)="captureScreen()"/>  
+                <input class="btn btn-info mr-1 text-center" type="button" value="Cetak" (click)="captureScreen()" />
               </div>
               <div class="col-6 text-right">
                 <button class="btn btn-primary mr-1 text-center" (click)="onSubmit()">Simpan</button>
@@ -246,11 +246,8 @@
                       <B>{{x.value.progress}}</B> |
                       <nb-icon icon="info-outline" status="info" (click)="openWindow(contentTemplate)"
                         [options]="{ animation: { type: 'pulse' } }"></nb-icon>
-                      <nb-icon  
-                        *ngIf="x.value.catatan != null"
-                        icon="alert-circle-outline" status="danger" 
-                        nbTooltip="{{x.value.catatan}}"
-                        nbTooltipStatus="danger"></nb-icon>
+                      <nb-icon *ngIf="x.value.catatan != null" icon="alert-circle-outline" status="danger"
+                        nbTooltip="{{x.value.catatan}}" nbTooltipStatus="danger"></nb-icon>
                     </div>
                   </div>
                 </div>
@@ -260,6 +257,27 @@
                       {{x.value.pilihan_jawaban}}
                     </div>
                     <div class="form-group col-2">
+                      <!-- {{x.value.nilai}} -->
+                      <!-- <nb-radio-group name="{{index_indikator}}" [(ngModel)]="x.value.nilai">
+                        <nb-radio name="{{index_indikator}}" value="0">0</nb-radio>
+                        <nb-radio name="{{index_indikator}}" value="1">1</nb-radio>
+                        <nb-radio name="{{index_indikator}}" value="2">2</nb-radio>
+                        <nb-radio name="{{index_indikator}}" value="3">3</nb-radio>
+                        <nb-radio name="{{index_indikator}}" value="4">4</nb-radio>
+                        <nb-radio name="{{index_indikator}}" value="5">5</nb-radio>
+                      </nb-radio-group> -->
+                      <!-- <input type="radio" name="t.value[index_indikator].nilai"
+                        [(ngModel)]="t.value[index_indikator].nilai" value="0"> 0<br>
+                      <input type="radio" name="t.value[index_indikator].nilai"
+                        [(ngModel)]="t.value[index_indikator].nilai" value="1"> 1<br>
+                      <input type="radio" name="t.value[index_indikator].nilai"
+                        [(ngModel)]="t.value[index_indikator].nilai" value="2"> 2<br>
+                      <input type="radio" name="t.value[index_indikator].nilai"
+                        [(ngModel)]="t.value[index_indikator].nilai" value="3"> 3<br>
+                      <input type="radio" name="t.value[index_indikator].nilai"
+                        [(ngModel)]="t.value[index_indikator].nilai" value="4"> 4<br>
+                      <input type="radio" name="t.value[index_indikator].nilai"
+                        [(ngModel)]="t.value[index_indikator].nilai" value="5"> 5 -->
                       <input type="text" status="primary" [(ngModel)]="t.value[index_indikator].nilai"
                         class="form-control" fullWidth fieldSize="small" />
                     </div>
@@ -284,11 +302,8 @@
                       <B>{{x.value.progress}}</B> |
                       <nb-icon icon="info-outline" status="info" (click)="openWindow(contentTemplate)"
                         [options]="{ animation: { type: 'pulse' } }"></nb-icon>
-                      <nb-icon  
-                        *ngIf="x.value.catatan != null"
-                        icon="alert-circle-outline" status="danger" 
-                        nbTooltip="{{x.value.catatan}}"
-                        nbTooltipStatus="danger"></nb-icon>
+                      <nb-icon *ngIf="x.value.catatan != null" icon="alert-circle-outline" status="danger"
+                        nbTooltip="{{x.value.catatan}}" nbTooltipStatus="danger"></nb-icon>
                     </div>
                   </div>
                 </div>
@@ -324,12 +339,8 @@
                       <B>{{x.value.progress}}</B> |
                       <nb-icon icon="info-outline" status="info" (click)="openWindow(contentTemplate)"
                         [options]="{ animation: { type: 'pulse' } }"></nb-icon>
-                      <nb-icon  
-                      *ngIf="z.catatan != null"
-                      icon="alert-circle-outline" status="danger" 
-                      nbTooltip="{{z.catatan}}"
-                      nbTooltipStatus="danger"
-                      ></nb-icon>
+                      <nb-icon *ngIf="z.catatan != null" icon="alert-circle-outline" status="danger"
+                        nbTooltip="{{z.catatan}}" nbTooltipStatus="danger"></nb-icon>
                     </div>
                   </div>
                 </div>
@@ -339,7 +350,7 @@
             </div>
             <div class="row">
               <div class="col-6 text-left">
-                  <input class="btn btn-info mr-1 text-center" type="button" value="Cetak" (click)="captureScreen()"/>  
+                <input class="btn btn-info mr-1 text-center" type="button" value="Cetak" (click)="captureScreen()" />
               </div>
               <div class="col-6 text-right">
                 <button class="btn btn-primary mr-1 text-center" (click)="onSubmit()">Simpan</button>

@@ -11,8 +11,7 @@ import {
   NbComponentStatus,
   NbGlobalPhysicalPosition,
   NbWindowService,
-  NbDialogService,
-  
+  NbDialogService
 } from "@nebular/theme";
 import { HttpClient } from "@angular/common/http";
 import { AppGlobals } from "../../app.global";
@@ -30,8 +29,8 @@ import { BlockUI, NgBlockUI } from "ng-block-ui";
 
 // import { FormComponent } from "../form/form.component";
 import { Router } from "@angular/router";
-import * as jspdf from 'jspdf';  
-import html2canvas from 'html2canvas'; 
+import * as jspdf from "jspdf";
+import html2canvas from "html2canvas";
 @Component({
   selector: "ngx-formobjektif",
   templateUrl: "formobjektif.component.html",
@@ -94,51 +93,6 @@ export class FormObjektifComponent implements OnInit {
   src = "https://vadimdez.github.io/ng2-pdf-viewer/assets/pdf-test.pdf";
   // convenience getters for easy access to form fields
 
-  open(dialog: TemplateRef<any>, index_indikator, index_detail) {
-    this.fieldIndex = {
-      index_indikator: index_indikator,
-      index_detail: index_detail
-    };
-    // if (this.files.length > 1) {
-
-    this.inisialisasiFileDownload(index_indikator, index_detail);
-
-    this.dialogService.open(dialog, {
-      context: "this is some additional data passed to dialog"
-    });
-  }
-
-  inisialisasiFileDownload(index_indikator, index_detail) {
-    if (index_detail != null) {
-      if (
-        this.dynamicForm.value.tickets[index_indikator].details[index_detail]
-          .arsip_link
-      ) {
-        this.fileDownload = JSON.parse(
-          this.dynamicForm.value.tickets[index_indikator].details[index_detail]
-            .arsip_link
-        );
-      } else {
-        this.fileDownload = [];
-      }
-    } else {
-      if (this.dynamicForm.value.tickets[index_indikator].arsip_link) {
-        this.fileDownload = JSON.parse(
-          this.dynamicForm.value.tickets[index_indikator].arsip_link
-        );
-      } else {
-        this.fileDownload = [];
-      }
-    }
-  }
-
-  get f() {
-    return this.dynamicForm.controls;
-  }
-  get t() {
-    return this.f.tickets as FormArray;
-  }
-
   ngOnInit() {
     this.httpClient.get(this._global.baseAPIUrl + "/View_satfungs/").subscribe(
       data => {
@@ -199,16 +153,59 @@ export class FormObjektifComponent implements OnInit {
             this.nama_tipe_polres = this.headers.tipe_polres;
             this.nama_satfung = this.headers.singkatan_satfung;
           }
-    this.blockUI.stop();    
+          this.blockUI.stop();
         },
         error => {
           console.log(error);
-    this.blockUI.stop();    
-
+          this.blockUI.stop();
         }
       );
   }
 
+  open(dialog: TemplateRef<any>, index_indikator, index_detail) {
+    this.fieldIndex = {
+      index_indikator: index_indikator,
+      index_detail: index_detail
+    };
+    // if (this.files.length > 1) {
+
+    this.inisialisasiFileDownload(index_indikator, index_detail);
+
+    this.dialogService.open(dialog, {
+      context: "this is some additional data passed to dialog"
+    });
+  }
+
+  inisialisasiFileDownload(index_indikator, index_detail) {
+    if (index_detail != null) {
+      if (
+        this.dynamicForm.value.tickets[index_indikator].details[index_detail]
+          .arsip_link
+      ) {
+        this.fileDownload = JSON.parse(
+          this.dynamicForm.value.tickets[index_indikator].details[index_detail]
+            .arsip_link
+        );
+      } else {
+        this.fileDownload = [];
+      }
+    } else {
+      if (this.dynamicForm.value.tickets[index_indikator].arsip_link) {
+        this.fileDownload = JSON.parse(
+          this.dynamicForm.value.tickets[index_indikator].arsip_link
+        );
+      } else {
+        this.fileDownload = [];
+      }
+    }
+  }
+
+  get f() {
+    return this.dynamicForm.controls;
+  }
+  get t() {
+    return this.f.tickets as FormArray;
+  }
   list_to_tree(list) {
     var map = {},
       node,
@@ -235,7 +232,7 @@ export class FormObjektifComponent implements OnInit {
     this.httpClient
       .get(
         this._global.baseAPIUrl +
-          "/View_penilaian_indikator_alls/getDataBypenilaianIdDanJenisDanKIIDanKsat?penilaianId=" +
+          "/Itk_tmp_penilaian_indikators/getDataBypenilaianIdDanJenisDanKIIDanKsat?penilaianId=" +
           this.dataObjectif.penilaianId +
           "&jenis=&kodeSatfung=" +
           x +
@@ -254,7 +251,7 @@ export class FormObjektifComponent implements OnInit {
               indikator: xx.indikator,
               indikator_induk: xx.indikator_induk,
               satuan: xx.satuan,
-              nilai: xx.nilai,
+              nilai: xx.nilai.toString(),
               arsip_link: xx.arsip_link,
               progress: xx.progress,
               id: xx.id,
@@ -386,7 +383,7 @@ export class FormObjektifComponent implements OnInit {
       dataP.push({
         id: dataSubmitP[i].id,
         data: {
-          nilai: dataSubmitP[i].nilai,
+          nilai: parseInt(dataSubmitP[i].nilai),
           arsip_link: dataSubmitP[i].arsip_link,
           id_progress: dataSubmitP[i].id_progress,
           diubah_oleh: dataSubmitP[i].diubah_oleh,
@@ -400,7 +397,7 @@ export class FormObjektifComponent implements OnInit {
       dataD.push({
         id: dataSubmitD[i].id,
         data: {
-          nilai: dataSubmitD[i].nilai,
+          nilai: parseInt(dataSubmitD[i].nilai),
           arsip_link: dataSubmitD[i].arsip_link,
           id_progress: dataSubmitD[i].id_progress,
           diubah_oleh: dataSubmitD[i].diubah_oleh,
@@ -408,61 +405,67 @@ export class FormObjektifComponent implements OnInit {
         }
       });
     }
-    this.httpClient
-      .put(
-        this._global.baseAPIUrl +
-          "/Itk_trn_penilaian_indikators/updateDataMasal",
-        dataP
-      )
-      .subscribe(
-        data => {
-          // console.log("PUT Request is successful ", data);
-          // this.showToast("success", "Data Tersimpan", id);
-          this.ngOnInit();
-          setTimeout(() => {
-            this.blockUI.stop();
-          }, 2500);
-        },
-        error => {
-          setTimeout(() => {
-            this.blockUI.stop();
-          }, 2500);
-          // console.log("Error", error);
-          this.showToast(
-            "warning",
-            "Input / koneksi bermasalah",
-            "e"
-            // error.error.error.message
-          );
-        }
-      );
+    if (dataP.length > 0) {
+      this.httpClient
+        .put(
+          this._global.baseAPIUrl +
+            "/Itk_trn_penilaian_indikators/updateDataMasal",
+          dataP
+        )
+        .subscribe(
+          data => {
+            // console.log("PUT Request is successful ", data);
+            // this.showToast("success", "Data Tersimpan", id);
+            this.ngOnInit();
+            setTimeout(() => {
+              this.blockUI.stop();
+            }, 2500);
+          },
+          error => {
+            setTimeout(() => {
+              this.blockUI.stop();
+            }, 2500);
+            // console.log("Error", error);
+            this.showToast(
+              "warning",
+              "Input / koneksi bermasalah",
+              "e"
+              // error.error.error.message
+            );
+          }
+        );
+    }
 
-    this.httpClient
-      .put(
-        this._global.baseAPIUrl + "/Itk_trn_penilaian_details/updateDataMasal",
-        dataD
-      )
-      .subscribe(
-        data => {
-          // console.log("PUT Request is successful ", data);
-          this.showToast("success", "Data Tersimpan", null);
-          setTimeout(() => {
-            this.blockUI.stop();
-          }, 2500);
-        },
-        error => {
-          setTimeout(() => {
-            this.blockUI.stop();
-          }, 2500);
-          // console.log("Error", error);
-          this.showToast(
-            "warning",
-            "Input / koneksi bermasalah",
-            null
-            // error.error.error.message
-          );
-        }
-      );
+    if (dataD.length > 0) {
+      this.httpClient
+        .put(
+          this._global.baseAPIUrl +
+            "/Itk_trn_penilaian_details/updateDataMasal",
+          dataD
+        )
+        .subscribe(
+          data => {
+            // console.log("PUT Request is successful ", data);
+            this.showToast("success", "Data Tersimpan", null);
+            setTimeout(() => {
+              this.blockUI.stop();
+            }, 2500);
+          },
+          error => {
+            setTimeout(() => {
+              this.blockUI.stop();
+            }, 2500);
+            // console.log("Error", error);
+            this.showToast(
+              "warning",
+              "Input / koneksi bermasalah",
+              null
+              // error.error.error.message
+            );
+          }
+        );
+    }
+
     // } else if (jenis == "D") {
     //   // console.log(dataSubmit[i].jenis);
     //   // console.log(dataSubmit[i].id);
@@ -608,23 +611,22 @@ export class FormObjektifComponent implements OnInit {
     this.index += 1;
     this.toastrService.show(body, `${titleContent}`, config);
   }
-  public captureScreen()  
-  {  
-    var data = document.getElementById('contentToConvert');  
-    html2canvas(data).then(canvas => {  
-      // Few necessary setting options  
-      var imgWidth = 208;   
-      var pageHeight = 295;    
-      var imgHeight = canvas.height * imgWidth / canvas.width;  
-      var heightLeft = imgHeight;  
-  
-      const contentDataURL = canvas.toDataURL('image/png')  
-      let pdf = new jspdf('p', 'mm', 'a4'); // A4 size page of PDF  
-      var position = 0;  
-      pdf.addImage(contentDataURL, 'PNG', 0, position, imgWidth, imgHeight)  
-      pdf.save('formObjektif.pdf'); // Generated PDF   
-    });  
-  }  
+  public captureScreen() {
+    var data = document.getElementById("contentToConvert");
+    html2canvas(data).then(canvas => {
+      // Few necessary setting options
+      var imgWidth = 208;
+      var pageHeight = 295;
+      var imgHeight = (canvas.height * imgWidth) / canvas.width;
+      var heightLeft = imgHeight;
+
+      const contentDataURL = canvas.toDataURL("image/png");
+      let pdf = new jspdf("p", "mm", "a4"); // A4 size page of PDF
+      var position = 0;
+      pdf.addImage(contentDataURL, "PNG", 0, position, imgWidth, imgHeight);
+      pdf.save("formObjektif.pdf"); // Generated PDF
+    });
+  }
   onUploadOutput(output: UploadOutput): void {
     if (output.type === "allAddedToQueue") {
       // const event: UploadInput = {
