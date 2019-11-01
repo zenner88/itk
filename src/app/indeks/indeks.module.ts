@@ -25,7 +25,7 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { NgxUploaderModule } from "ngx-uploader";
 import { Ng2SmartTableModule } from "ng2-smart-table";
 import { FormObjektifComponent } from "./formobjektif/formobjektif.component";
-import { StepperComponent } from "./stepper/stepper.component";
+import { StepperComponent } from "../persepsi/stepper/stepper.component";
 import { ValidasiFormObjektifComponent } from "./validasiFormObjektif/formobjektif.component";
 import { BlockUIModule } from "ng-block-ui";
 import { PdfViewerModule } from 'ng2-pdf-viewer';
