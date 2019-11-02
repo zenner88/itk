@@ -279,38 +279,42 @@
                 </td>
  
 <!-- TIPE INDIKATOR = 2 -->
-                  
-                <!-- <td *ngIf="x.value.id_tipe_indikator == 2" class="" width="25%">
-                  -
+                <td *ngIf="x.value.id_tipe_indikator == 2" class="" width="25%">
+              <div *ngFor="let z of x.value.details ; let index_detail = index">                  
+
+                  {{z.indikator}}
+              </div>
+
                 </td>
-                <td *ngIf="x.value.id_tipe_indikator == 2" class="" width="5%">
-                  <input type="text" [(ngModel)]="t.value[index_indikator].nilai" class="form-control" fullWidth
-                    fieldSize="small" />
+                <!-- <td *ngIf="x.value.id_tipe_indikator == 2" class="" width="5%">
+                  <input type="text" [(ngModel)]="t.value[index_indikator].details[index_detail].nilai"
+                  class="form-control" fullWidth fieldSize="small" />
                 </td>
                 <td *ngIf="x.value.id_tipe_indikator == 2" class="text-left" width="7%">
-                  {{x.value.satuan}}
+                  {{z.satuan}}
                 </td>
                 <td *ngIf="x.value.id_tipe_indikator == 2" class="" width="5%">
                   <button class="btn btn-primary mr-1 text-center"
-                    (click)="open(dialogUpload,index_indikator,null)">Upload</button>
+                  (click)="open(dialogUpload,index_indikator,index_detail)">Upload</button>
                 </td>
                 <td *ngIf="x.value.id_tipe_indikator == 2" class="text-center" width="7%">
-                  <span style="font-weight: bold;">{{x.value.jml_arsif}}</span>
-                  <span *ngIf="x.value.jml_arsif"> File</span>
+                  <a (click)="open(dialogUpload,index_indikator,index_detail)">
+                    <span style="font-weight: bold;">{{z.jml_arsif}}</span>
+                    <span *ngIf="z.jml_arsif"> File</span>
+                  </a>
                 </td>
                 <td *ngIf="x.value.id_tipe_indikator == 2" class="text-right" width="12%">
-                  <B>{{x.value.progress}}</B> |
+                  <B>{{z.progress}}</B>
                 </td>
                 <td *ngIf="x.value.id_tipe_indikator == 2" class="text-center" width="3%">
                     <nb-icon icon="info-outline" status="info" (click)="openWindow(contentTemplate)"
                     [options]="{ animation: { type: 'pulse' } }"></nb-icon>
                 </td>
                 <td *ngIf="x.value.id_tipe_indikator == 2" class="text-center" width="3%">
-                    <nb-icon *ngIf="x.value.catatan != null" icon="alert-circle-outline" status="danger"
-                    nbTooltip="{{x.value.catatan}}" nbTooltipStatus="danger"></nb-icon>
+                    <nb-icon *ngIf="z.catatan != null" icon="alert-circle-outline" status="danger"
+                    nbTooltip="{{z.catatan}}" nbTooltipStatus="danger"></nb-icon>
                 </td> -->
-
-                  <td class="form-group col-8" *ngIf="x.value.id_tipe_indikator == 2">
+                  <!-- <td class="form-group col-8" *ngIf="x.value.id_tipe_indikator == 2">
                     <div class="row" *ngFor="let z of x.value.details ; let index_detail = index">
                       <div class="form-group col-5">
                         {{z.indikator}}
@@ -340,14 +344,12 @@
                           nbTooltip="{{z.catatan}}" nbTooltipStatus="danger"></nb-icon>
                       </div>
                     </div>
-                  </td>
+                  </td> -->
   
 <!-- enddd -->
                 </tr>
                 <hr>
                 </div>
-                <!-- <hr> -->
-              <!-- </div> -->
               </table>
               <div class="row">
                 <div class="col-6 text-left">
