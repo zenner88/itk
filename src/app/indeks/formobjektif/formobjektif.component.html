@@ -1,370 +1,337 @@
 <block-ui>
-</block-ui>
-
-<ng-template #dialogUpload let-data let-ref="dialogRef">
-  <nb-card status="primary">
-    <nb-card-header>
-      <div class="row">
-        <div class="col-6">
-          Input Dokumen
-        </div>
-        <div class="col-6 text-right">
-          <a style="cursor: pointer;" (click)="ref.close()">
-            <nb-icon icon="close-outline" status="primary" [options]="{ animation: { type: 'pulse' } }"></nb-icon>
-          </a>
-        </div>
-      </div>
-    </nb-card-header>
-    <nb-card-body>
-      <!-- <label class="upload-button">
-        <input type="file" ngFileSelect [options]="options" (uploadOutput)="onUploadOutput($event)"
-          [uploadInput]="uploadInput" multiple>
-        or choose file(s)
-      </label>
- -->
-      <div class="upload-box-content">
-        <div class="drop-container" ngFileDrop [options]="options" (uploadOutput)="onUploadOutput($event)"
-          [uploadInput]="uploadInput">
-          <p>
-            <label class="upload-button">
-              <input type="file" ngFileSelect [options]="options" (uploadOutput)="onUploadOutput($event)"
-                [uploadInput]="uploadInput" multiple> browse
-            </label>
-            to upload.
-          </p>
-        </div>
-        <div class="upload-item" *ngFor="let f of files; let i = index;">
-          <div class="upload-item-content">
-            <div class="filename" *ngIf="f.progress?.data?.percentage !== 100" style="display: flex;">
-              <div class="filename-left">
-                <i class="ionicon ion-ios-copy"></i>
-                <span>{{ f.name }}</span>
-              </div>
-              <div class="text-right" style="margin-left: 20px;">
-                <i class="ionicon ion-close-round" (click)="removeFile(f.id)"></i>
-              </div>
-            </div>
-            <div class="progress-content" *ngIf="f.progress?.data?.percentage !== 100">
-              <div class="progress">
-                <span class="bar" [style.width]="f?.progress?.data?.percentage + '%'"
-                  [class.is-done]="f?.progress?.data?.percentage === 100"></span>
-              </div>
-            </div>
-            <div class="progress-text-content" *ngIf="f.progress?.data?.percentage !== 100">
-              <span class="progress-text" [class.is-done]="f?.progress?.data?.percentage === 100">
-                <span>{{ f.progress?.data?.percentage }}% </span>
-                <span *ngIf="f.progress?.data?.percentage !== 100">Uploading...</span>
-                <span *ngIf="f.progress?.data?.percentage === 100">Done</span>
-              </span>
-              <span class="speed-and-eta-text"
-                *ngIf="f.progress?.data?.percentage !== 0 && f.progress?.data?.percentage !== 100">
-                <span>{{ f.progress?.data?.speedHuman }} </span>
-                <span>ETA {{ f.progress?.data?.etaHuman }}</span>
-              </span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div *ngFor="let fileDownload of fileDownload; let i = index">
-        <!-- <a style="cursor: pointer;" (click)="downloadFile(fileDownload)"> -->
-        <a style="cursor: pointer;" (click)="openWindow(contentTemplate2,fileDownload)">
-          <nb-icon icon="file-text-outline" status="primary" [options]="{ animation: { type: 'pulse' } }"></nb-icon>
-          {{fileDownload}}
-        </a>
-        <a style="cursor: pointer;" (click)="deletFile(i)">
-          <nb-icon icon="trash-2-outline" status="danger" [options]="{ animation: { type: 'pulse' } }"></nb-icon>
-        </a>
-        <ng-template #contentTemplate2 let-data>
-          <div class="pdf-container">
-            <pdf-viewer [src]="fileViewPdf" [original-size]="false"></pdf-viewer>
-          </div>
-        </ng-template>
-
-      </div>
-    </nb-card-body>
-    <nb-card-footer>
-      <button class="btn btn-primary mr-1 start-upload-btn" (click)="startUpload()">Start Upload</button>
-    </nb-card-footer>
-  </nb-card>
-</ng-template>
-<div class="row" id="contentToConvert">
-  <div class="col-lg-12">
-    <nb-card>
+  </block-ui>
+  
+  <ng-template #dialogUpload let-data let-ref="dialogRef">
+    <nb-card status="primary">
       <nb-card-header>
-        <div class="text-center">PENGISIAN DATA INDEKS TATA KELOLA KEPOLISIAN</div>
+        <div class="row">
+          <div class="col-6">
+            Input Dokumen
+          </div>
+          <div class="col-6 text-right">
+            <a style="cursor: pointer;" (click)="ref.close()">
+              <nb-icon icon="close-outline" status="primary" [options]="{ animation: { type: 'pulse' } }"></nb-icon>
+            </a>
+          </div>
+        </div>
       </nb-card-header>
       <nb-card-body>
-        <nb-card accent="danger">
-          <nb-card-header>
-            KETERANGAN POLRES
-          </nb-card-header>
-          <nb-card-body>
-            <div class="row">
-              <div class="col-md-12">
-                <div class="row show-grid">
-                  <div class="col-sm-0 col-md-2">
-                    <div align="center">1.</div>
-                  </div>
-                  <div class="col-sm-2">
-                    <div align="right">POLRES</div>
-                  </div>
-                  <div class="col-sm-4">
-                    <div align="left">
-                      <div class="form-group">
-                        <B>{{ dataObjectif.nama_satker}} </B>
-                        <!-- <nb-select selected=0 fullWidth class="pull-right status-info shape-rectangle">
-                            <nb-option value=0 (click)="prinsipClick2(event)">Semua</nb-option>
-                            <nb-option *ngFor="let x of prinsipx" value="x.id" (click)="prinsipClick2(x.id)">{{ x.prinsip }}</nb-option>
-                        </nb-select> -->
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-sm-4"></div>
+        <!-- <label class="upload-button">
+          <input type="file" ngFileSelect [options]="options" (uploadOutput)="onUploadOutput($event)"
+            [uploadInput]="uploadInput" multiple>
+          or choose file(s)
+        </label>
+   -->
+        <div class="upload-box-content">
+          <div class="drop-container" ngFileDrop [options]="options" (uploadOutput)="onUploadOutput($event)"
+            [uploadInput]="uploadInput">
+            <p>
+              <label class="upload-button">
+                <input type="file" ngFileSelect [options]="options" (uploadOutput)="onUploadOutput($event)"
+                  [uploadInput]="uploadInput" multiple> browse
+              </label>
+              to upload.
+            </p>
+          </div>
+          <div class="upload-item" *ngFor="let f of files; let i = index;">
+            <div class="upload-item-content">
+              <div class="filename" *ngIf="f.progress?.data?.percentage !== 100" style="display: flex;">
+                <div class="filename-left">
+                  <i class="ionicon ion-ios-copy"></i>
+                  <span>{{ f.name }}</span>
                 </div>
-                <div class="row show-grid">
-                  <div class="col-sm-2">
-                    <div align="center">2.</div>
-                  </div>
-                  <div class="col-sm-2">
-                    <div align="right">Satfung</div>
-                  </div>
-                  <div class="col-sm-4">
-                    <div align="left">
-                      <div class="form-group">
-                        <B>{{ dataObjectif.singkatan_satfung}}</B>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-sm-4"></div>
+                <div class="text-right" style="margin-left: 20px;">
+                  <i class="ionicon ion-close-round" (click)="removeFile(f.id)"></i>
                 </div>
-                <div class="row show-grid">
-                  <div class="col-sm-2">
-                    <div align="center">3.</div>
-                  </div>
-                  <div class="col-sm-2">
-                    <div align="right">Nama KA{{nama_satfung}}</div>
-                  </div>
-                  <div class="col-sm-8">
-                    <div align="left"><input type="text" class="col-lg-4" nbInput fullWidth fieldSize="small"
-                        placeholder=""></div>
-                  </div>
+              </div>
+              <div class="progress-content" *ngIf="f.progress?.data?.percentage !== 100">
+                <div class="progress">
+                  <span class="bar" [style.width]="f?.progress?.data?.percentage + '%'"
+                    [class.is-done]="f?.progress?.data?.percentage === 100"></span>
                 </div>
-                <div class="row show-grid">
-                  <div class="col-sm-2">
-                    <div align="center">4.</div>
-                  </div>
-                  <div class="col-sm-2">
-                    <div align="right">Notelp/HP KA{{nama_satfung}}</div>
-                  </div>
-                  <div class="col-sm-8">
-                    <div align="left"><input type="text" class="col-lg-4" nbInput fullWidth fieldSize="small"
-                        placeholder=""></div>
-                  </div>
-                </div>
-                <div class="row show-grid">
-                  <div class="col-sm-2">
-                    <div align="center">5.</div>
-                  </div>
-                  <div class="col-sm-2">
-                    <div align="right">Nama Staff {{nama_satfung}}</div>
-                  </div>
-                  <div class="col-sm-8">
-                    <div align="left"><input type="text" class="col-lg-4" nbInput fullWidth fieldSize="small"
-                        placeholder=""></div>
-                  </div>
-                </div>
-                <div class="row show-grid">
-                  <div class="col-sm-2">
-                    <div align="center">6.</div>
-                  </div>
-                  <div class="col-sm-2">
-                    <div align="right">Notelp/HP Staff {{nama_satfung}}</div>
-                  </div>
-                  <div class="col-sm-8">
-                    <div align="left"><input type="text" class="col-lg-4" nbInput fullWidth fieldSize="small"
-                        placeholder=""></div>
-                  </div>
-                </div>
-                <div class="row show-grid"></div>
+              </div>
+              <div class="progress-text-content" *ngIf="f.progress?.data?.percentage !== 100">
+                <span class="progress-text" [class.is-done]="f?.progress?.data?.percentage === 100">
+                  <span>{{ f.progress?.data?.percentage }}% </span>
+                  <span *ngIf="f.progress?.data?.percentage !== 100">Uploading...</span>
+                  <span *ngIf="f.progress?.data?.percentage === 100">Done</span>
+                </span>
+                <span class="speed-and-eta-text"
+                  *ngIf="f.progress?.data?.percentage !== 0 && f.progress?.data?.percentage !== 100">
+                  <span>{{ f.progress?.data?.speedHuman }} </span>
+                  <span>ETA {{ f.progress?.data?.etaHuman }}</span>
+                </span>
               </div>
             </div>
-          </nb-card-body>
-        </nb-card>
-        <nb-card accent="info">
-          <nb-card-header>
-            DAFTAR DATA OBJEKTIF
-            <hr>
-            <div class="row">
-              <div class="col-6 text-left">
-                <input class="btn btn-info mr-1 text-center" type="button" value="Cetak" (click)="captureScreen()" />
-              </div>
-              <div class="col-6 text-right">
-                <button class="btn btn-primary mr-1 text-center" (click)="onSubmit()">Simpan</button>
-              </div>
+          </div>
+        </div>
+  
+        <div *ngFor="let fileDownload of fileDownload; let i = index">
+          <!-- <a style="cursor: pointer;" (click)="downloadFile(fileDownload)"> -->
+          <a style="cursor: pointer;" (click)="openWindow(contentTemplate2,fileDownload)">
+            <nb-icon icon="file-text-outline" status="primary" [options]="{ animation: { type: 'pulse' } }"></nb-icon>
+            {{fileDownload}}
+          </a>
+          <a style="cursor: pointer;" (click)="deletFile(i)">
+            <nb-icon icon="trash-2-outline" status="danger" [options]="{ animation: { type: 'pulse' } }"></nb-icon>
+          </a>
+          <ng-template #contentTemplate2 let-data>
+            <div class="pdf-container">
+              <pdf-viewer [src]="fileViewPdf" [original-size]="false"></pdf-viewer>
             </div>
-          </nb-card-header>
-          <nb-card-body>
-            <!-- <form [formGroup]="dynamicForm"> -->
-            <div *ngFor="let ticket of t.controls; let x of ticket; let index_indikator = index"
-              class="list-group list-group-flush">
-              <div class="row">
-                <div class="form-group col-1 text-center">
-                  {{index_indikator+1}}
-                </div>
-                <div class="form-group col-3">
-                  <B>{{x.value.indikator}}</B>
-                </div>
-                <div class="form-group col-8" *ngIf="x.value.id_tipe_indikator == 0">
-                  <div class="row">
-                    <div class="form-group col-5">
-                      -
-                    </div>
-                    <div class="form-group col-2">
-                      <input type="text" [(ngModel)]="t.value[index_indikator].nilai" class="form-control" fullWidth
-                        fieldSize="small" />
-                    </div>
-                    <div class="form-group col-1 text-left">
-                      {{x.value.satuan}}
-                    </div>
-                    <div class="form-group col-1">
-                      <button class="btn btn-primary mr-1 text-center"
-                        (click)="open(dialogUpload,index_indikator,null)">Upload</button>
-
-                      <!-- <input id="myForm" formControlName="arsip_link" type="file" name="file"
-                          (change)="postMethod($event.target.files)"> -->
-                    </div>
-                    <div class="form-group col-1 text-center">
-                      <span style="font-weight: bold;">{{x.value.jml_arsif}}</span>
-                      <span *ngIf="x.value.jml_arsif"> File</span>
-                      <!-- <a href="{{x.value.arsip_link}}">
-                          <nb-icon icon="file-text-outline" status="primary"
-                            [options]="{ animation: { type: 'pulse' } }"></nb-icon>Download
-                        </a> -->
-                    </div>
-                    <div class="form-group col-2 text-right">
-                      <B>{{x.value.progress}}</B> |
-                      <nb-icon icon="info-outline" status="info" (click)="openWindow(contentTemplate)"
-                        [options]="{ animation: { type: 'pulse' } }"></nb-icon>
-                      <nb-icon *ngIf="x.value.catatan != null" icon="alert-circle-outline" status="danger"
-                        nbTooltip="{{x.value.catatan}}" nbTooltipStatus="danger"></nb-icon>
-                    </div>
-                  </div>
-                </div>
-                <div class="form-group col-8" *ngIf="x.value.id_tipe_indikator == 1">
-                  <div class="row">
-                    <div class="form-group col-5">
-                      {{x.value.pilihan_jawaban}}
-                    </div>
-                    <div class="form-group col-2">
-                      <!-- {{x.value.nilai}} -->
-                      <!-- <nb-radio-group name="{{index_indikator}}" [(ngModel)]="x.value.nilai">
-                        <nb-radio name="{{index_indikator}}" value="0">0</nb-radio>
-                        <nb-radio name="{{index_indikator}}" value="1">1</nb-radio>
-                        <nb-radio name="{{index_indikator}}" value="2">2</nb-radio>
-                        <nb-radio name="{{index_indikator}}" value="3">3</nb-radio>
-                        <nb-radio name="{{index_indikator}}" value="4">4</nb-radio>
-                        <nb-radio name="{{index_indikator}}" value="5">5</nb-radio>
-                      </nb-radio-group> -->
-                      <!-- <input type="radio" name="t.value[index_indikator].nilai"
-                        [(ngModel)]="t.value[index_indikator].nilai" value="0"> 0<br>
-                      <input type="radio" name="t.value[index_indikator].nilai"
-                        [(ngModel)]="t.value[index_indikator].nilai" value="1"> 1<br>
-                      <input type="radio" name="t.value[index_indikator].nilai"
-                        [(ngModel)]="t.value[index_indikator].nilai" value="2"> 2<br>
-                      <input type="radio" name="t.value[index_indikator].nilai"
-                        [(ngModel)]="t.value[index_indikator].nilai" value="3"> 3<br>
-                      <input type="radio" name="t.value[index_indikator].nilai"
-                        [(ngModel)]="t.value[index_indikator].nilai" value="4"> 4<br>
-                      <input type="radio" name="t.value[index_indikator].nilai"
-                        [(ngModel)]="t.value[index_indikator].nilai" value="5"> 5 -->
-                      <input type="text" status="primary" [(ngModel)]="t.value[index_indikator].nilai"
-                        class="form-control" fullWidth fieldSize="small" />
-                    </div>
-                    <div class="form-group col-1">
-                    </div>
-                    <div class="form-group col-1">
-                      <button class="btn btn-primary mr-1 text-center"
-                        (click)="open(dialogUpload,index_indikator,index_detail)">Upload</button>
-
-                      <!-- <input id="myForm" formControlName="arsip_link" type="file" name="file"
-                          (change)="postMethod($event.target.files)"> -->
-                    </div>
-                    <div class="form-group col-1 text-center">
-                      <span style="font-weight: bold;">{{x.value.jml_arsif}}</span>
-                      <span *ngIf="x.value.jml_arsif"> File</span>
-                      <!-- <a href="{{x.value.arsip_link}}">
-                          <nb-icon icon="file-text-outline" status="primary"
-                            [options]="{ animation: { type: 'pulse' } }"></nb-icon>Download
-                        </a> -->
-                    </div>
-                    <div class="form-group col-2 text-right">
-                      <B>{{x.value.progress}}</B> |
-                      <nb-icon icon="info-outline" status="info" (click)="openWindow(contentTemplate)"
-                        [options]="{ animation: { type: 'pulse' } }"></nb-icon>
-                      <nb-icon *ngIf="x.value.catatan != null" icon="alert-circle-outline" status="danger"
-                        nbTooltip="{{x.value.catatan}}" nbTooltipStatus="danger"></nb-icon>
-                    </div>
-                  </div>
-                </div>
-                <div class="form-group col-8" *ngIf="x.value.id_tipe_indikator == 2">
-                  <div class="row" *ngFor="let z of x.value.details ; let index_detail = index">
-                    <div class="form-group col-5">
-                      {{z.indikator}}
-                    </div>
-                    <div class="form-group col-2">
-                      <input type="text" [(ngModel)]="t.value[index_indikator].details[index_detail].nilai"
-                        class="form-control" fullWidth fieldSize="small" />
-                    </div>
-                    <div class="form-group col-1 text-left">
-                      {{z.satuan}}
-                    </div>
-                    <div class="form-group col-1 text-center">
-                      <button class="btn btn-primary mr-1"
-                        (click)="open(dialogUpload,index_indikator,index_detail)">Upload</button>
-                      <!-- <input id="myForm" formControlName="arsip_link" type="file" name="file"
-                          (change)="postMethod($event.target.files)"> -->
-                    </div>
-                    <div class="form-group col-1 text-center">
-                      <a (click)="open(dialogUpload,index_indikator,index_detail)">
-                        <span style="font-weight: bold;">{{z.jml_arsif}}</span>
-                        <span *ngIf="z.jml_arsif"> File</span>
-                      </a>
-                      <!-- <a href="{{z.arsip_link}}">
-                          <nb-icon icon="file-text-outline" status="primary"
-                            [options]="{ animation: { type: 'pulse' } }"></nb-icon>Download
-                        </a> -->
-                    </div>
-                    <div class="form-group col-2 text-right">
-                      <B>{{z.progress}}</B> |
-                      <nb-icon icon="info-outline" status="info" (click)="openWindow(contentTemplate)"
-                        [options]="{ animation: { type: 'pulse' } }"></nb-icon>
-                      <nb-icon *ngIf="z.catatan != null" icon="alert-circle-outline" status="danger"
-                        nbTooltip="{{z.catatan}}" nbTooltipStatus="danger"></nb-icon>
-                    </div>
-                  </div>
-                </div>
-                <hr>
-              </div>
-              <hr>
-            </div>
-            <div class="row">
-              <div class="col-6 text-left">
-                <input class="btn btn-info mr-1 text-center" type="button" value="Cetak" (click)="captureScreen()" />
-              </div>
-              <div class="col-6 text-right">
-                <button class="btn btn-primary mr-1 text-center" (click)="onSubmit()">Simpan</button>
-              </div>
-            </div>
-            <!-- </form> -->
-          </nb-card-body>
-        </nb-card>
+          </ng-template>
+  
+        </div>
       </nb-card-body>
+      <nb-card-footer>
+        <button class="btn btn-primary mr-1 start-upload-btn" (click)="startUpload()">Start Upload</button>
+      </nb-card-footer>
     </nb-card>
+  </ng-template>
+  <div class="row" id="contentToConvert">
+    <div class="col-lg-12">
+      <nb-card>
+        <nb-card-header>
+          <div class="text-center">PENGISIAN DATA INDEKS TATA KELOLA KEPOLISIAN</div>
+        </nb-card-header>
+        <nb-card-body>
+          <nb-card accent="danger">
+            <nb-card-header>
+              KETERANGAN POLRES
+            </nb-card-header>
+            <nb-card-body>
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="row show-grid">
+                    <div class="col-sm-0 col-md-2">
+                      <div align="center">1.</div>
+                    </div>
+                    <div class="col-sm-2">
+                      <div align="right">POLRES</div>
+                    </div>
+                    <div class="col-sm-4">
+                      <div align="left">
+                        <div class="form-group">
+                          <B>{{ dataObjectif.nama_satker}} </B>
+                          <!-- <nb-select selected=0 fullWidth class="pull-right status-info shape-rectangle">
+                              <nb-option value=0 (click)="prinsipClick2(event)">Semua</nb-option>
+                              <nb-option *ngFor="let x of prinsipx" value="x.id" (click)="prinsipClick2(x.id)">{{ x.prinsip }}</nb-option>
+                          </nb-select> -->
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-sm-4"></div>
+                  </div>
+                  <div class="row show-grid">
+                    <div class="col-sm-2">
+                      <div align="center">2.</div>
+                    </div>
+                    <div class="col-sm-2">
+                      <div align="right">Satfung</div>
+                    </div>
+                    <div class="col-sm-4">
+                      <div align="left">
+                        <div class="form-group">
+                          <B>{{ dataObjectif.singkatan_satfung}}</B>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-sm-4"></div>
+                  </div>
+                  <div class="row show-grid">
+                    <div class="col-sm-2">
+                      <div align="center">3.</div>
+                    </div>
+                    <div class="col-sm-2">
+                      <div align="right">Nama KA{{nama_satfung}}</div>
+                    </div>
+                    <div class="col-sm-8">
+                      <div align="left"><input type="text" class="col-lg-4" nbInput fullWidth fieldSize="small"
+                          placeholder=""></div>
+                    </div>
+                  </div>
+                  <div class="row show-grid">
+                    <div class="col-sm-2">
+                      <div align="center">4.</div>
+                    </div>
+                    <div class="col-sm-2">
+                      <div align="right">Notelp/HP KA{{nama_satfung}}</div>
+                    </div>
+                    <div class="col-sm-8">
+                      <div align="left"><input type="text" class="col-lg-4" nbInput fullWidth fieldSize="small"
+                          placeholder=""></div>
+                    </div>
+                  </div>
+                  <div class="row show-grid">
+                    <div class="col-sm-2">
+                      <div align="center">5.</div>
+                    </div>
+                    <div class="col-sm-2">
+                      <div align="right">Nama Staff {{nama_satfung}}</div>
+                    </div>
+                    <div class="col-sm-8">
+                      <div align="left"><input type="text" class="col-lg-4" nbInput fullWidth fieldSize="small"
+                          placeholder=""></div>
+                    </div>
+                  </div>
+                  <div class="row show-grid">
+                    <div class="col-sm-2">
+                      <div align="center">6.</div>
+                    </div>
+                    <div class="col-sm-2">
+                      <div align="right">Notelp/HP Staff {{nama_satfung}}</div>
+                    </div>
+                    <div class="col-sm-8">
+                      <div align="left"><input type="text" class="col-lg-4" nbInput fullWidth fieldSize="small"
+                          placeholder=""></div>
+                    </div>
+                  </div>
+                  <div class="row show-grid"></div>
+                </div>
+              </div>
+            </nb-card-body>
+          </nb-card>
+          <nb-card accent="info">
+            <nb-card-header>
+              DAFTAR DATA OBJEKTIF
+              <hr>
+              <div class="row">
+                <div class="col-6 text-left">
+                  <input class="btn btn-info mr-1 text-center" type="button" value="Cetak" (click)="captureScreen()" />
+                </div>
+                <div class="col-6 text-right">
+                  <button class="btn btn-primary mr-1 text-center" (click)="onSubmit()">Simpan</button>
+                </div>
+              </div>
+            </nb-card-header>
+            <nb-card-body>
+  
+            <table border="1" width="100%">
+              <div *ngFor="let ticket of t.controls; let x of ticket; let index_indikator = index">
+                <!-- <div class="row"> -->
+              <tr>
+                <td class="text-center" width="5%">
+                  {{index_indikator+1}}
+                </td>
+                <td class="" width="15%">
+                  <B>{{x.value.indikator}}</B>
+                </td>
+              <!-- <div *ngIf="x.value.id_tipe_indikator == 0"> -->
+                <td class="" width="15%">
+                  -
+                </td>
+                <td class="" width="10%">
+                  <input type="text" [(ngModel)]="t.value[index_indikator].nilai" class="form-control" fullWidth
+                    fieldSize="small" />
+                </td>
+                <td class="text-left" width="10%">
+                  {{x.value.satuan}}
+                </td>
+                <td class="" width="10%">
+                  <button class="btn btn-primary mr-1 text-center"
+                    (click)="open(dialogUpload,index_indikator,null)">Upload</button>
+                </td>
+                <td class="text-center" width="15%">
+                  <span style="font-weight: bold;">{{x.value.jml_arsif}}</span>
+                  <span *ngIf="x.value.jml_arsif"> File</span>
+                </td>
+                <td class="text-right" width="10%">
+                  <B>{{x.value.progress}}</B> |
+                </td>
+                <td class="text-center" width="5%">
+                    <nb-icon icon="info-outline" status="info" (click)="openWindow(contentTemplate)"
+                    [options]="{ animation: { type: 'pulse' } }"></nb-icon>
+                </td>
+                <td class="text-center" width="5%">
+                    <nb-icon *ngIf="x.value.catatan != null" icon="alert-circle-outline" status="danger"
+                    nbTooltip="{{x.value.catatan}}" nbTooltipStatus="danger"></nb-icon>
+                </td>
+              <!-- </div> -->
+              </tr>
+  <!-- 
+                  <div class="form-group col-8" *ngIf="x.value.id_tipe_indikator == 1">
+                    <div class="row">
+                      <div class="form-group col-5">
+                        {{x.value.pilihan_jawaban}}
+                      </div>
+                      <div class="form-group col-2">
+                        <input type="text" status="primary" [(ngModel)]="t.value[index_indikator].nilai"
+                          class="form-control" fullWidth fieldSize="small" />
+                      </div>
+                      <div class="form-group col-1">
+                      </div>
+                      <div class="form-group col-1">
+                        <button class="btn btn-primary mr-1 text-center"
+                          (click)="open(dialogUpload,index_indikator,index_detail)">Upload</button>
+                      </div>
+                      <div class="form-group col-1 text-center">
+                        <span style="font-weight: bold;">{{x.value.jml_arsif}}</span>
+                        <span *ngIf="x.value.jml_arsif"> File</span>
+                      </div>
+                      <div class="form-group col-2 text-right">
+                        <B>{{x.value.progress}}</B> |
+                        <nb-icon icon="info-outline" status="info" (click)="openWindow(contentTemplate)"
+                          [options]="{ animation: { type: 'pulse' } }"></nb-icon>
+                        <nb-icon *ngIf="x.value.catatan != null" icon="alert-circle-outline" status="danger"
+                          nbTooltip="{{x.value.catatan}}" nbTooltipStatus="danger"></nb-icon>
+                      </div>
+                    </div>
+                  </div>
+  
+                  <div class="form-group col-8" *ngIf="x.value.id_tipe_indikator == 2">
+                    <div class="row" *ngFor="let z of x.value.details ; let index_detail = index">
+                      <div class="form-group col-5">
+                        {{z.indikator}}
+                      </div>
+                      <div class="form-group col-2">
+                        <input type="text" [(ngModel)]="t.value[index_indikator].details[index_detail].nilai"
+                          class="form-control" fullWidth fieldSize="small" />
+                      </div>
+                      <div class="form-group col-1 text-left">
+                        {{z.satuan}}
+                      </div>
+                      <div class="form-group col-1 text-center">
+                        <button class="btn btn-primary mr-1"
+                          (click)="open(dialogUpload,index_indikator,index_detail)">Upload</button>
+                      </div>
+                      <div class="form-group col-1 text-center">
+                        <a (click)="open(dialogUpload,index_indikator,index_detail)">
+                          <span style="font-weight: bold;">{{z.jml_arsif}}</span>
+                          <span *ngIf="z.jml_arsif"> File</span>
+                        </a>
+                      </div>
+                      <div class="form-group col-2 text-right">
+                        <B>{{z.progress}}</B> |
+                        <nb-icon icon="info-outline" status="info" (click)="openWindow(contentTemplate)"
+                          [options]="{ animation: { type: 'pulse' } }"></nb-icon>
+                        <nb-icon *ngIf="z.catatan != null" icon="alert-circle-outline" status="danger"
+                          nbTooltip="{{z.catatan}}" nbTooltipStatus="danger"></nb-icon>
+                      </div>
+                    </div>
+                  </div> -->
+  
+                  <hr>
+                </div>
+                <!-- <hr> -->
+              <!-- </div> -->
+              </table>
+              <div class="row">
+                <div class="col-6 text-left">
+                  <input class="btn btn-info mr-1 text-center" type="button" value="Cetak" (click)="captureScreen()" />
+                </div>
+                <div class="col-6 text-right">
+                  <button class="btn btn-primary mr-1 text-center" (click)="onSubmit()">Simpan</button>
+                </div>
+              </div>
+            </nb-card-body>
+          </nb-card>
+        </nb-card-body>
+      </nb-card>
+    </div>
   </div>
-</div>
-<ng-template #contentTemplate let-data>
-  <div class="pdf-container">
-    <pdf-viewer [src]="src" [original-size]="false"></pdf-viewer>
-  </div>
-</ng-template>
+  <ng-template #contentTemplate let-data>
+    <div class="pdf-container">
+      <pdf-viewer [src]="src" [original-size]="false"></pdf-viewer>
+    </div>
+  </ng-template>
+  

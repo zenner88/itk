@@ -142,7 +142,7 @@ export class FormObjektifComponent implements OnInit {
           this.kodeSatker +
           "&idSatfung=" +
           this.dataObjectif.idSatfung +
-          "&kodePeriode=1"
+          "&kodePeriode=10"
       )
       .subscribe(
         data => {
@@ -233,7 +233,7 @@ export class FormObjektifComponent implements OnInit {
     this.httpClient
       .get(
         this._global.baseAPIUrl +
-          "/Itk_tmp_penilaian_indikators/getDataBypenilaianIdDanJenisDanKIIDanKsat?penilaianId=" +
+          "/View_penilaian_indikator_alls/getDataBypenilaianIdDanJenisDanKIIDanKsat?penilaianId=" +
           this.dataObjectif.penilaianId +
           "&jenis=&kodeSatfung=" +
           x +
@@ -263,7 +263,8 @@ export class FormObjektifComponent implements OnInit {
               id_tipe_indikator: xx.id_tipe_indikator,
               pilihan_jawaban: xx.pilihan_jawaban,
               catatan: xx.catatan,
-              jml_arsif: xx.arsip_link ? JSON.parse(xx.arsip_link).length : null
+              jml_arsif: xx.arsip_link
+              // jml_arsif: xx.arsip_link ? JSON.parse(xx.arsip_link).length : null
             });
           });
           this.jmlDetails = this.objek2.length;
