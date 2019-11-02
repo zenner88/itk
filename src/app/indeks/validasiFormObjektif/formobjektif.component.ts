@@ -186,7 +186,6 @@ export class ValidasiFormObjektifComponent implements OnInit {
       tickets: new FormArray([])
     });
     // //this.blockUI.start();
-    this.satfungKlik(this.dataObjectif.kodeSatfung);
     this.httpClient
       .get(
         this._global.baseAPIUrl +
@@ -207,6 +206,7 @@ export class ValidasiFormObjektifComponent implements OnInit {
             this.nama_tipe_polres = this.headers.tipe_polres;
             this.nama_satfung = this.headers.singkatan_satfung;
           }
+          this.satfungKlik(this.dataObjectif.kodeSatfung);
         },
         error => {
           console.log(error);
@@ -260,7 +260,7 @@ export class ValidasiFormObjektifComponent implements OnInit {
       .get(
         this._global.baseAPIUrl +
           "/View_penilaian_indikator_alls/getDataBypenilaianIdDanJenisDanKIIDanKsat?penilaianId=" +
-          this.dataObjectif.penilaianId +
+          this.headers.penilaian_id +
           "&jenis=&kodeSatfung=" +
           x +
           "&kodeIndikatorInduk=",
@@ -291,8 +291,7 @@ export class ValidasiFormObjektifComponent implements OnInit {
               id_tipe_indikator: xx.id_tipe_indikator,
               pilihan_jawaban: xx.pilihan_jawaban,
               catatan: xx.catatan,
-              // jml_arsif: xx.arsip_link ? JSON.parse(xx.arsip_link).length : null
-              jml_arsif: xx.arsip_link
+              jml_arsif: (xx.arsip_link) ? JSON.parse(xx.arsip_link).length : null
             });
           });
           this.jmlDetails = this.objek2.length;
