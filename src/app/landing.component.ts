@@ -396,10 +396,10 @@ export class LandingComponent implements OnInit, AfterViewInit {
 
   onSubmitOperator() {
     this.submitted = true;
-    if (this.loginFormOperator.invalid) {
-      window.alert("Salah");
-      return;
-    }
+    // if (this.loginFormOperator.invalid) {
+    //   window.alert("Salah");
+    //   return;
+    // }
 
     this.loading = true;
     this.authService
