@@ -405,7 +405,7 @@ export class LandingComponent implements OnInit, AfterViewInit {
     this.authService
       .login(
         this._global.baseAPIUrl,
-        this.fo.namaUser.value,
+        this.idKelompok + "" + this.fo.namaPolres.value.kode,
         this.fo.kataSandi.value,
         true
       )
@@ -419,7 +419,7 @@ export class LandingComponent implements OnInit, AfterViewInit {
               "Maaf Anda Tidak diperkenankan Untuk Mengakses Halaman Ini !"
             );
             localStorage.clear();
-          } else if (data.kelompok == 2) {
+          } else if (data.kelompok == 90) {
             window.alert("Berhasil");
             localStorage.setItem(
               "indexObjektif",
