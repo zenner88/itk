@@ -8,11 +8,13 @@ import { AnalyticsService } from "./@core/utils/analytics.service";
 import { Router } from "@angular/router";
 import { OneColumnLayoutComponent } from "./@theme/layouts/one-column/one-column.layout";
 import { MessageEvent } from "./service/message";
+import { HttpClient } from "@angular/common/http";
+import { AppGlobals } from "./app.global";
 @Component({
   selector: "ngx-app",
   templateUrl: "app.component.html",
   styleUrls: ["./app.component.scss"],
-  providers: [OneColumnLayoutComponent, MessageEvent]
+  providers: [OneColumnLayoutComponent, MessageEvent, AppGlobals]
 })
 export class AppComponent implements OnInit {
   menu: any[];
@@ -23,7 +25,9 @@ export class AppComponent implements OnInit {
     private analytics: AnalyticsService,
     private router: Router,
     private layout: OneColumnLayoutComponent,
-    private messageEvent: MessageEvent
+    private messageEvent: MessageEvent,
+    private httpClient: HttpClient,
+    private _global: AppGlobals
   ) {}
 
   ngOnInit() {
@@ -38,6 +42,7 @@ export class AppComponent implements OnInit {
       return true;
     } else {
       // this.layout.cekLogin(true);
+      this.getPeriode();
       this.isLogin = true;
       this.setMenu(user.menu);
     }
@@ -67,5 +72,21 @@ export class AppComponent implements OnInit {
     this.isLogin = status.login;
     this.isMenu = status.menu;
     this.messageEvent.fire({ login: status.login, menu: status.menu });
+  }
+
+  getPeriode() {
+    this.httpClient
+      .get(
+        this._global.baseAPIUrl +
+          "/Itk_mst_periodes?filter=" +
+          JSON.stringify({ where: { na: "N" } })
+      )
+      .subscribe(
+        periode => {
+          localStorage.setItem("idPeriode", periode[0].kode);
+          console.log(periode);
+        },
+        error => {}
+      );
   }
 }

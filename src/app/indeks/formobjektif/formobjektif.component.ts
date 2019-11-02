@@ -89,11 +89,13 @@ export class FormObjektifComponent implements OnInit {
   kodeSatker: any;
   satfungx: any;
   public satfungList: any[] = [];
+  periode:any;
 
   src = "https://vadimdez.github.io/ng2-pdf-viewer/assets/pdf-test.pdf";
   // convenience getters for easy access to form fields
 
   ngOnInit() {
+    this.periode=localStorage.getItem('idPeriode');
     this.httpClient.get(this._global.baseAPIUrl + "/View_satfungs/").subscribe(
       data => {
         if (data != undefined || data != null) {
@@ -142,7 +144,7 @@ export class FormObjektifComponent implements OnInit {
           this.kodeSatker +
           "&idSatfung=" +
           this.dataObjectif.idSatfung +
-          "&kodePeriode=1"
+          "&kodePeriode="+this.periode
       )
       .subscribe(
         data => {
@@ -263,7 +265,8 @@ export class FormObjektifComponent implements OnInit {
               id_tipe_indikator: xx.id_tipe_indikator,
               pilihan_jawaban: xx.pilihan_jawaban,
               catatan: xx.catatan,
-              jml_arsif: xx.arsip_link ? JSON.parse(xx.arsip_link).length : null
+              // jml_arsif: xx.arsip_link ? JSON.parse(xx.arsip_link).length : null
+              jml_arsif: xx.arsip_link
             });
           });
           this.jmlDetails = this.objek2.length;

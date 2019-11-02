@@ -90,6 +90,7 @@ export class ValidasiFormObjektifComponent implements OnInit {
   kodeSatker: any;
   satfungx: any;
   public satfungList: any[] = [];
+  periode:any;
   // convenience getters for easy access to form fields
 
   open(dialog: TemplateRef<any>, index_indikator, index_detail) {
@@ -138,6 +139,7 @@ export class ValidasiFormObjektifComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.periode=localStorage.getItem('idPeriode');
     this.blockUI.stop();
     this.httpClient.get(this._global.baseAPIUrl + "/View_satfungs/").subscribe(
       data => {
@@ -182,7 +184,7 @@ export class ValidasiFormObjektifComponent implements OnInit {
           this.kodeSatker +
           "&idSatfung=" +
           this.dataObjectif.idSatfung +
-          "&kodePeriode=1"
+          "&kodePeriode="+this.periode
       )
       .subscribe(
         data => {
@@ -276,7 +278,8 @@ export class ValidasiFormObjektifComponent implements OnInit {
               id_tipe_indikator: xx.id_tipe_indikator,
               pilihan_jawaban: xx.pilihan_jawaban,
               catatan: xx.catatan,
-              jml_arsif: xx.arsip_link ? JSON.parse(xx.arsip_link).length : null
+              // jml_arsif: xx.arsip_link ? JSON.parse(xx.arsip_link).length : null
+              jml_arsif: xx.arsip_link
             });
           });
           this.jmlDetails = this.objek2.length;
@@ -348,14 +351,18 @@ export class ValidasiFormObjektifComponent implements OnInit {
       if (this.t.value[i].id_progress_temp == true) {
         this.t.value[i].id_progress = 3;
       } else {
-        if (!this.t.value[i].nilai && !this.t.value[i].arsip_link) {
-          this.t.value[i].id_progress = 0;
-        } else if (this.t.value[i].nilai && !this.t.value[i].arsip_link) {
-          this.t.value[i].id_progress = 1;
-        } else if (!this.t.value[i].nilai && this.t.value[i].arsip_link) {
-          this.t.value[i].id_progress = 1;
-        } else if (this.t.value[i].nilai && this.t.value[i].arsip_link) {
+        if (this.t.value[i].id_progress == 3) {
           this.t.value[i].id_progress = 2;
+        } else {
+          if (!this.t.value[i].nilai && !this.t.value[i].arsip_link) {
+            this.t.value[i].id_progress = 0;
+          } else if (this.t.value[i].nilai && !this.t.value[i].arsip_link) {
+            this.t.value[i].id_progress = 1;
+          } else if (!this.t.value[i].nilai && this.t.value[i].arsip_link) {
+            this.t.value[i].id_progress = 1;
+          } else if (this.t.value[i].nilai && this.t.value[i].arsip_link) {
+            this.t.value[i].id_progress = 2;
+          }
         }
       }
       this.t.value[i].data = this.t.value[i];
