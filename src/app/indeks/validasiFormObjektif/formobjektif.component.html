@@ -243,16 +243,16 @@
                 <div class="form-group col-8" *ngIf="x.value.id_tipe_indikator == 1">
                   <div class="row">
                     <div class="form-group col-4">
-                      <nb-radio-group [(ngModel)]="t.value.pilihan_jawaban" *ngIf="x.value.radio.length > 0">
+                      <nb-radio-group name="{{x.value.kode_indikator_satfung}}" [(ngModel)]="x.value.nilai" *ngIf="x.value.radio.length > 0">
                         <nb-radio name="{{opt.kode_indikator_satfung}}" value="{{opt.nilai}}" *ngFor="let opt of x.value.radio">{{opt.pilihan}}</nb-radio>
                       </nb-radio-group>
                       <span *ngIf="x.value.radio.length ==0">
                           {{x.value.pilihan_jawaban}}
                       </span>
                     </div>
-                    <div class="form-group col-2">
+                    <div class="form-group col-2" >
                       <input type="text" [(ngModel)]="t.value[index_indikator].nilai" class="form-control" fullWidth
-                        fieldSize="small" />
+                        fieldSize="small" *ngIf="x.value.radio.length ==0" />
                       {{x.value.satuan}}
                     </div>
                     <div class="form-group col-1">

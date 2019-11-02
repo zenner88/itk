@@ -280,7 +280,7 @@ export class ValidasiFormObjektifComponent implements OnInit {
               indikator: xx.indikator,
               indikator_induk: xx.indikator_induk,
               satuan: xx.satuan,
-              nilai: xx.nilai,
+              nilai: xx.nilai ? xx.nilai.toString() : null,
               arsip_link: xx.arsip_link,
               progress: xx.progress,
               id: xx.id,

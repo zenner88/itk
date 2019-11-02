@@ -9,12 +9,6 @@ import "rxjs/add/operator/catch";
 import "rxjs/add/operator/finally";
 import { Observable } from "rxjs/Rx";
 
-const httpOptions = {
-  headers: new HttpHeaders({
-    "Content-Type": "application/json",
-    Authorization: JSON.parse(localStorage.getItem("currentUser")).token
-  })
-};
 
 @Injectable({
   providedIn: "root"

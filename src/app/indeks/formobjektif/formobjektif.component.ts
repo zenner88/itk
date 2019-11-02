@@ -100,7 +100,7 @@ export class FormObjektifComponent implements OnInit {
   periode: any;
   listOption: any[];
   keteranganUpload: any[];
-
+  listDataOptions:any;
   src = "https://vadimdez.github.io/ng2-pdf-viewer/assets/pdf-test.pdf";
   // convenience getters for easy access to form fields
 
@@ -144,7 +144,6 @@ export class FormObjektifComponent implements OnInit {
         httpOptions
       ]);
     }
-    this.getOption();
     this.now = formatDate(new Date(), "yyyy-MM-dd HH:mm:ss Z", "en");
     this.dynamicForm = this.formBuilder.group({
       numberOfTickets: ["", Validators.required],
@@ -170,6 +169,7 @@ export class FormObjektifComponent implements OnInit {
             this.nama_satker = this.headers.satker;
             this.nama_tipe_polres = this.headers.tipe_polres;
             this.nama_satfung = this.headers.singkatan_satfung;
+    this.getOption();
           }
           this.blockUI.stop();
         },
@@ -276,8 +276,8 @@ export class FormObjektifComponent implements OnInit {
               kode_indikator_induk: xx.kode_indikator_induk,
               indikator: xx.indikator,
               indikator_induk: xx.indikator_induk,
+              nilai: xx.nilai ? xx.nilai.toString() : null,
               satuan: xx.satuan,
-              nilai: xx.nilai,
               arsip_link: xx.arsip_link,
               progress: xx.progress,
               id: xx.id,
@@ -297,6 +297,15 @@ export class FormObjektifComponent implements OnInit {
 
           var datas = this.list_to_tree(this.objek2);
           for (let i = 0; i < datas.length; i++) {
+            datas[i].options = [];
+            for (let j = 0; j < this.listDataOptions.length; j++) {
+              if (
+                this.listDataOptions[j].kode_indikator_satfung ==
+                datas[i].kode_indikator_satfung
+              ) {
+                datas[i].options.push(this.listDataOptions[j]);
+              }
+            }
             this.t.push(
               this.formBuilder.group({
                 id: [datas[i].id],
@@ -318,7 +327,8 @@ export class FormObjektifComponent implements OnInit {
                 jml_arsif: [datas[i].jml_arsif],
                 catatan: [datas[i].catatan],
                 details: [datas[i].children],
-                dokumen: [datas[i].dokumen]
+                dokumen: [datas[i].dokumen],
+                radio: [datas[i].options]
               })
             );
           }
@@ -780,6 +790,8 @@ export class FormObjektifComponent implements OnInit {
       )
       .subscribe(
         data => {
+          this.listDataOptions = [];
+          this.listDataOptions = data;
           this.satfungKlik(this.dataObjectif.kodeSatfung);
           console.log(data);
         },
