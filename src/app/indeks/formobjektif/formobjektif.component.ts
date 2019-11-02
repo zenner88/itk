@@ -13,7 +13,7 @@ import {
   NbWindowService,
   NbDialogService
 } from "@nebular/theme";
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { AppGlobals } from "../../app.global";
 import { formatDate } from "@angular/common";
 import {
@@ -31,6 +31,14 @@ import { BlockUI, NgBlockUI } from "ng-block-ui";
 import { Router } from "@angular/router";
 import * as jspdf from "jspdf";
 import html2canvas from "html2canvas";
+
+const httpOptions = {
+  headers: new HttpHeaders({
+    "Content-Type": "application/json",
+    Authorization: JSON.parse(localStorage.getItem("currentUser")).token
+  })
+};
+
 @Component({
   selector: "ngx-formobjektif",
   templateUrl: "formobjektif.component.html",
@@ -96,7 +104,7 @@ export class FormObjektifComponent implements OnInit {
 
   ngOnInit() {
     this.periode=localStorage.getItem('idPeriode');
-    this.httpClient.get(this._global.baseAPIUrl + "/View_satfungs/").subscribe(
+    this.httpClient.get(this._global.baseAPIUrl + "/View_satfungs/", httpOptions).subscribe(
       data => {
         if (data != undefined || data != null) {
           this.satfungx = data;
@@ -127,7 +135,7 @@ export class FormObjektifComponent implements OnInit {
       !this.dataObjectif.idSatfung ||
       !this.dataObjectif.penilaianId
     ) {
-      this.route.navigate(["/pages/list-polres-satfung/smart-table/"]);
+      this.route.navigate(["/pages/list-polres-satfung/smart-table/", httpOptions]);
     }
 
     this.satfungKlik(this.dataObjectif.kodeSatfung);
@@ -144,7 +152,8 @@ export class FormObjektifComponent implements OnInit {
           this.kodeSatker +
           "&idSatfung=" +
           this.dataObjectif.idSatfung +
-          "&kodePeriode="+this.periode
+          "&kodePeriode="+this.periode,
+          httpOptions
       )
       .subscribe(
         data => {
@@ -239,7 +248,8 @@ export class FormObjektifComponent implements OnInit {
           this.dataObjectif.penilaianId +
           "&jenis=&kodeSatfung=" +
           x +
-          "&kodeIndikatorInduk="
+          "&kodeIndikatorInduk=",
+          httpOptions
       )
       .subscribe(
         indikator => {
@@ -415,7 +425,8 @@ export class FormObjektifComponent implements OnInit {
         .put(
           this._global.baseAPIUrl +
             "/Itk_trn_penilaian_indikators/updateDataMasal",
-          dataP
+          dataP,
+          httpOptions
         )
         .subscribe(
           data => {
@@ -446,7 +457,8 @@ export class FormObjektifComponent implements OnInit {
         .put(
           this._global.baseAPIUrl +
             "/Itk_trn_penilaian_details/updateDataMasal",
-          dataD
+          dataD,
+          httpOptions
         )
         .subscribe(
           data => {
@@ -507,7 +519,8 @@ export class FormObjektifComponent implements OnInit {
       this.fileViewPdf =
         this._global.baseAPIUrl +
         "/ContainerPenilaianIndi/upload_document_indikator/download/" +
-        data;
+        data,
+        httpOptions;
       this.windowService.open(contentTemplate, {
         title: "Contoh Dokumen.",
         context: {
@@ -531,7 +544,8 @@ export class FormObjektifComponent implements OnInit {
       .post(
         this._global.baseAPIUrl +
           "/ContainerPenilaianIndi/upload_document_indikator/upload",
-        formData
+        formData,
+        httpOptions
       )
       .subscribe(val => {
         let da = JSON.stringify(val);
@@ -708,7 +722,8 @@ export class FormObjektifComponent implements OnInit {
     window.open(
       this._global.baseAPIUrl +
         "/ContainerPenilaianIndi/upload_document_indikator/download/" +
-        fileDownload
+        fileDownload,
+        httpOptions
     );
   }
 
