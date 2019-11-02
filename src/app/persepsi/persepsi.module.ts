@@ -1,7 +1,8 @@
 import { NgModule } from "@angular/core";
 
 import { ThemeModule } from "../@themepublic/theme.module";
-import { StepperComponent } from "./stepper/stepper.component";
+import { StepperIntComponent } from "./persepsi-int/stepper.component";
+import { StepperExtComponent } from "./persepsi-ext/stepper.component";
 import { PersepsiRoutingModule } from "./persepsi-routing.module";
 import { MiscellaneousModule } from "../pages/miscellaneous/miscellaneous.module";
 import { PersepsiComponent } from './persepsi.component';
@@ -47,6 +48,6 @@ import {
     FormsModule,
     ReactiveFormsModule
   ],
-  declarations: [StepperComponent, PersepsiComponent]
+  declarations: [StepperIntComponent, StepperExtComponent, PersepsiComponent]
 })
 export class PersepsiModule {}
