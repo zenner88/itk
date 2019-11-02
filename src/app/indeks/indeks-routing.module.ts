@@ -5,7 +5,7 @@ import { IndeksComponent } from "./indeks.component";
 // import { FormComponent } from "./form/form.component";
 import { FormObjektifComponent } from "./formobjektif/formobjektif.component";
 import { NotFoundComponent } from "../pages/miscellaneous/not-found/not-found.component";
-import { StepperComponent } from "../persepsi/stepper/stepper.component";
+import { StepperIntComponent } from "../persepsi/persepsi-int/stepper.component";
 import { ValidasiFormObjektifComponent } from "./validasiFormObjektif/formobjektif.component";
 import { AuthGuard, LoginGuard } from "../guard";
 
@@ -27,7 +27,7 @@ const routes: Routes = [
       {
         path: "formPIP",
         canActivate: [AuthGuard],
-        component: StepperComponent
+        component: StepperIntComponent
       },
       {
         path: "**",

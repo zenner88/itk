@@ -17,7 +17,7 @@ const httpOptions = {
   providers: [AppGlobals],
 
 })
-export class StepperComponent implements OnInit {
+export class StepperExtComponent implements OnInit {
 
   firstForm: FormGroup;
   secondForm: FormGroup;
