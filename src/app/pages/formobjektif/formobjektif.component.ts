@@ -85,6 +85,7 @@ export class FormObjektifComponent implements OnInit {
   user = "zenner";
   dataObjectif: any;
   kodeSatker: any;
+  periode: any;
   // convenience getters for easy access to form fields
 
   open(dialog: TemplateRef<any>, index_indikator, index_detail) {
@@ -133,6 +134,7 @@ export class FormObjektifComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.periode = localStorage.getItem("idPeriode");
     this.blockUI.start();
     this.kodeSatker = localStorage.getItem("kodeSatker");
 
@@ -156,7 +158,8 @@ export class FormObjektifComponent implements OnInit {
           this.kodeSatker +
           "&idSatfung=" +
           this.dataObjectif.idSatfung +
-          "&kodePeriode=1"
+          "&kodePeriode=" +
+          this.periode
       )
       .subscribe(
         data => {

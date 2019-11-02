@@ -230,7 +230,7 @@
                       </a>
                     </div>
                     <div class="form-group col-2 text-left">
-                      <nb-checkbox [(ngModel)]="t.value[index_indikator].id_progress_temp" status="success">Validasi
+                      <nb-checkbox [(ngModel)]="t.value[index_indikator].id_progress_temp" status="success" [disabled]="t.value[index_indikator].id_progress <= 1 ">Validasi
                       </nb-checkbox>
                     </div>
                     <div class="form-group col-3 text-right">
@@ -256,7 +256,7 @@
                       </a>
                     </div>
                     <div class="form-group col-2 text-left">
-                      <nb-checkbox [(ngModel)]="t.value[index_indikator].id_progress_temp" status="success">Validasi
+                      <nb-checkbox [(ngModel)]="t.value[index_indikator].id_progress_temp" status="success" [disabled]="t.value[index_indikator].id_progress <= 1 ">Validasi
                       </nb-checkbox>
                     </div>
                     <div class="form-group col-3 text-right">
@@ -283,7 +283,7 @@
                     </div>
                     <div class="form-group col-2 text-left">
                       <nb-checkbox [(ngModel)]="t.value[index_indikator].details[index_detail].id_progress_temp"
-                        status="success">Validasi</nb-checkbox>
+                        status="success" [disabled]="t.value[index_indikator].details[index_detail].id_progress <= 1 ">Validasi</nb-checkbox>
                     </div>
                     <div class="form-group col-3 text-right">
                       <textarea [(ngModel)]="t.value[index_indikator].details[index_detail].catatan"
