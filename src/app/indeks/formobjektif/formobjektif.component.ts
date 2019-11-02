@@ -227,12 +227,13 @@ export class FormObjektifComponent implements OnInit {
     }
     return roots;
   }
+
   satfungKlik(x) {
     this.blockUI.start();
     this.httpClient
       .get(
         this._global.baseAPIUrl +
-          "/View_penilaian_indikator_alls/getDataBypenilaianIdDanJenisDanKIIDanKsat?penilaianId=" +
+          "/Itk_tmp_penilaian_indikators/getDataBypenilaianIdDanJenisDanKIIDanKsat?penilaianId=" +
           this.dataObjectif.penilaianId +
           "&jenis=&kodeSatfung=" +
           x +
@@ -251,7 +252,7 @@ export class FormObjektifComponent implements OnInit {
               indikator: xx.indikator,
               indikator_induk: xx.indikator_induk,
               satuan: xx.satuan,
-              nilai: xx.nilai.toString(),
+              nilai: xx.nilai,
               arsip_link: xx.arsip_link,
               progress: xx.progress,
               id: xx.id,
@@ -307,6 +308,7 @@ export class FormObjektifComponent implements OnInit {
         }
       );
   }
+
   onSubmit() {
     this.blockUI.start();
     console.log("WORK!");
@@ -736,5 +738,9 @@ export class FormObjektifComponent implements OnInit {
         // ].jml_arsif = this.fileDownload.length;
       }
     }
+  }
+
+  getOption(){
+    
   }
 }
