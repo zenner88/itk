@@ -12,8 +12,16 @@ import { takeWhile } from "rxjs/operators";
 import { LayoutService } from "../../../../@core/utils/layout.service";
 import { ChartOptions, ChartType, ChartDataSets } from "chart.js";
 import { Label } from "ng2-charts";
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { AppGlobals } from "../../../../app.global";
+
+const httpOptions = {
+  headers: new HttpHeaders({
+    "Content-Type": "application/json",
+    Authorization: JSON.parse(localStorage.getItem("currentUser")).token
+  })
+};
+
 @Component({
   selector: "ngx-top-ten-chart",
   styleUrls: ["./top-ten-chart.component.scss"],
@@ -126,7 +134,8 @@ export class TopTenChartComponent
     this.chartRangkingITK = [];
     this.httpClient
       .get(
-        this._global.baseAPIUrl + "/View_penilaian_satfungs/getNilaiPerSatker"
+        this._global.baseAPIUrl + "/View_penilaian_satfungs/getNilaiPerSatker",
+        httpOptions
       )
       .subscribe(
         datas => {

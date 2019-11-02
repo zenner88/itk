@@ -268,9 +268,10 @@ export class AuthService {
 
             this.setDataLoginUser({
               namaUser: user.kelompok,
+              satker: user.satker,
               kdUser: user.kelompok,
               group: user.kelompok,
-              token: user.id,
+              token: user.token,
               menu: user.menu
             });
           }
@@ -346,4 +347,5 @@ interface dataLoginUser {
   token: string;
   group: string;
   menu: any;
+  satker: any;
 }

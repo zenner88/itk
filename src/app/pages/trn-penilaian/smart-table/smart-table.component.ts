@@ -1,6 +1,6 @@
 import { Component, Injectable, TemplateRef, ViewChild } from '@angular/core';
 import { LocalDataSource } from 'ng2-smart-table';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { AppGlobals } from '../../../app.global'
 import 'style-loader!angular2-toaster/toaster.css';
 import {
@@ -10,6 +10,14 @@ import {
   NbWindowService
 } from '@nebular/theme';
 import { FormGroup} from '@angular/forms';
+
+const httpOptions = {
+  headers: new HttpHeaders({
+    "Content-Type": "application/json",
+    Authorization: JSON.parse(localStorage.getItem("currentUser")).token
+  })
+};
+
 @Component({
   selector: 'ngx-smart-table',
   templateUrl: './smart-table.component.html',
@@ -58,7 +66,7 @@ export class SmartTableComponent {
 
   ngOnInit(): void {
     this.penilaians = this.loadTableSettings(); 
-    this.httpClient.get(this._global.baseAPIUrl + '/View_penilaians/').subscribe(indikator => {
+    this.httpClient.get(this._global.baseAPIUrl + '/View_penilaians/',httpOptions).subscribe(indikator => {
       const data = JSON.stringify(indikator);
       this.source.load(JSON.parse(data));
       console.log(this.source);
@@ -68,7 +76,7 @@ export class SmartTableComponent {
       this.showToast("warning", "Koneksi bermasalah", error.message);      
     }
     ); 
-    this.httpClient.get(this._global.baseAPIUrl + '/View_satkers/getDataByIdTipeSatker?idTipeSatker=R').subscribe(data => {
+    this.httpClient.get(this._global.baseAPIUrl + '/View_satkers/getDataByIdTipeSatker?idTipeSatker=R',httpOptions).subscribe(data => {
       if(data != undefined || data != null)
       {
       this.satkerx = data;
@@ -86,7 +94,7 @@ export class SmartTableComponent {
     }, 
     error => { console.log(error) });  
 
-    this.httpClient.get(this._global.baseAPIUrl + '/Itk_mst_periodes/').subscribe(data => {
+    this.httpClient.get(this._global.baseAPIUrl + '/Itk_mst_periodes/',httpOptions).subscribe(data => {
       if(data != undefined || data != null)
       {
       this.prinsipx = data;
@@ -114,7 +122,7 @@ export class SmartTableComponent {
         title: 'Details Penilaian',
       },
     );   
-    this.httpClient.get(this._global.baseAPIUrl + '/View_penilaian_details/getDataBypenilaianId?penilaianId='+this.kodeDetails).subscribe(indikatorDetails => {
+    this.httpClient.get(this._global.baseAPIUrl + '/View_penilaian_details/getDataBypenilaianId?penilaianId='+this.kodeDetails,httpOptions).subscribe(indikatorDetails => {
       const data = JSON.stringify(indikatorDetails);
       this.sourceDetails.load(JSON.parse(data));
       console.log(this.sourceDetails);
@@ -152,7 +160,7 @@ export class SmartTableComponent {
     // //   this.showToast("warning", "Kolom id_jenis_data masih Kosong", "Harus di isi");
     // // }
     // else{
-    this.httpClient.post(this._global.baseAPIUrl + '/Itk_trn_penilaians/',event.newData).subscribe(data  => {
+    this.httpClient.post(this._global.baseAPIUrl + '/Itk_trn_penilaians/',event.newData,httpOptions).subscribe(data  => {
       console.log("POST Request is successful ", data);
       this.showToast("success", "Data Tersimpan", event.newData.jenis);
       event.confirm.resolve();
@@ -192,7 +200,7 @@ export class SmartTableComponent {
     //   this.showToast("warning", "Kolom id_jenis_data masih Kosong", "Harus di isi");
     // }
     // else{
-    this.httpClient.put(this._global.baseAPIUrl + '/Itk_trn_penilaians/'+event.data.kode,event.newData).subscribe(data  => {
+    this.httpClient.put(this._global.baseAPIUrl + '/Itk_trn_penilaians/'+event.data.kode,event.newData,httpOptions).subscribe(data  => {
       console.log("PUT Request is successful ", data);
       this.showToast("success", "Data Ter update", event.newData.kode);
       event.confirm.resolve();
@@ -206,7 +214,7 @@ export class SmartTableComponent {
   }
   onDeleteConfirm(event): void {
     if (window.confirm('Are you sure you want to delete?')) {
-      this.httpClient.delete(this._global.baseAPIUrl + '/Itk_trn_penilaians/'+event.data.kode).subscribe(data => {
+      this.httpClient.delete(this._global.baseAPIUrl + '/Itk_trn_penilaians/'+event.data.kode,httpOptions).subscribe(data => {
         event.confirm.resolve();
         console.log(event.data.kode);
         this.showToast("danger", "Data terhapus", event.data.jenis+"("+event.data.id+")");
@@ -255,7 +263,7 @@ export class SmartTableComponent {
     };
     console.log(this.detailsData);
     console.log(this.kodeDetails);
-    this.httpClient.post(this._global.baseAPIUrl + '/Itk_trn_penilaian_details',this.detailsData).subscribe(data  => {
+    this.httpClient.post(this._global.baseAPIUrl + '/Itk_trn_penilaian_details',this.detailsData,httpOptions).subscribe(data  => {
       console.log("POST Request is successful ", data);
       this.showToast("success", "Data Tersimpan", event.newData.jenis);
       event.confirm.resolve();
@@ -308,7 +316,7 @@ export class SmartTableComponent {
         na: "Y"
     };
     console.log(this.detailsData);
-    this.httpClient.put(this._global.baseAPIUrl + '/Itk_trn_penilaian_details/'+event.data.kode,this.detailsData).subscribe(data  => {
+    this.httpClient.put(this._global.baseAPIUrl + '/Itk_trn_penilaian_details/'+event.data.kode,this.detailsData,httpOptions).subscribe(data  => {
       console.log("PUT Request is successful ", data);
       this.showToast("success", "Data Ter update", event.newData.kode);
       event.confirm.resolve();
@@ -322,7 +330,7 @@ export class SmartTableComponent {
   // }
   onDeleteConfirmD(event): void {
     if (window.confirm('Are you sure you want to delete?')) {
-      this.httpClient.delete(this._global.baseAPIUrl + '/Itk_trn_penilaian_details/'+event.data.kode).subscribe(data => {
+      this.httpClient.delete(this._global.baseAPIUrl + '/Itk_trn_penilaian_details/'+event.data.kode,httpOptions).subscribe(data => {
         event.confirm.resolve();
         console.log(event.data.kode);
         this.showToast("danger", "Data terhapus", event.data.jenis+"("+event.data.id+")");
@@ -353,7 +361,7 @@ export class SmartTableComponent {
     }
 
     this.penilaians = this.loadTableSettings(); 
-    this.httpClient.get(this._global.baseAPIUrl + '/View_penilaians/getDataByKPeriodeKsatker?kodePeriode='+this.periodez+'&kodeSatker='+this.satkerz).subscribe(indikator => {
+    this.httpClient.get(this._global.baseAPIUrl + '/View_penilaians/getDataByKPeriodeKsatker?kodePeriode='+this.periodez+'&kodeSatker='+this.satkerz,httpOptions).subscribe(indikator => {
       const data = JSON.stringify(indikator);
       this.source.load(JSON.parse(data));
       console.log(this.source);

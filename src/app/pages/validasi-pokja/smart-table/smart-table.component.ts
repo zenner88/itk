@@ -1,6 +1,6 @@
 import { Component, Injectable } from "@angular/core";
 import { LocalDataSource } from "ng2-smart-table";
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { AppGlobals } from "../../../app.global";
 import "style-loader!angular2-toaster/toaster.css";
 import {
@@ -11,6 +11,13 @@ import {
 } from "@nebular/theme";
 
 import { Router } from "@angular/router";
+
+const httpOptions = {
+  headers: new HttpHeaders({
+    "Content-Type": "application/json",
+    Authorization: JSON.parse(localStorage.getItem("currentUser")).token
+  })
+};
 
 @Component({
   selector: "ngx-smart-table",
@@ -44,7 +51,8 @@ export class SmartTableComponent {
     this.httpClient
       .get(
         this._global.baseAPIUrl +
-          "/View_satkers/getDataByIdTipeSatker?idTipeSatker=R"
+          "/View_satkers/getDataByIdTipeSatker?idTipeSatker=R",
+          httpOptions
       )
       .subscribe(
         indikator => {
@@ -57,7 +65,7 @@ export class SmartTableComponent {
         }
       );
     this.httpClient
-      .get(this._global.baseAPIUrl + "/Itk_ref_tipe_satkers/")
+      .get(this._global.baseAPIUrl + "/Itk_ref_tipe_satkers/",httpOptions)
       .subscribe(
         data => {
           if (data != undefined || data != null) {
@@ -82,7 +90,7 @@ export class SmartTableComponent {
         }
       );
     this.httpClient
-      .get(this._global.baseAPIUrl + "/Itk_ref_tipe_polres/")
+      .get(this._global.baseAPIUrl + "/Itk_ref_tipe_polres/",httpOptions)
       .subscribe(
         data => {
           if (data != undefined || data != null) {
@@ -131,7 +139,7 @@ export class SmartTableComponent {
       );
     } else {
       this.httpClient
-        .post(this._global.baseAPIUrl + "/Itk_mst_satkers/", event.newData)
+        .post(this._global.baseAPIUrl + "/Itk_mst_satkers/", event.newData,httpOptions)
         .subscribe(
           data => {
             console.log("POST Request is successful ", data);
@@ -176,7 +184,7 @@ export class SmartTableComponent {
       this.httpClient
         .put(
           this._global.baseAPIUrl + "/Itk_mst_satkers/" + event.data.kode,
-          event.newData
+          event.newData,httpOptions
         )
         .subscribe(
           data => {
@@ -198,7 +206,7 @@ export class SmartTableComponent {
   onDeleteConfirm(event): void {
     if (window.confirm("Are you sure you want to delete?")) {
       this.httpClient
-        .delete(this._global.baseAPIUrl + "/Itk_mst_satkers/" + event.data.kode)
+        .delete(this._global.baseAPIUrl + "/Itk_mst_satkers/" + event.data.kode,httpOptions)
         .subscribe(data => {
           event.confirm.resolve();
           console.log(event.data.kode);

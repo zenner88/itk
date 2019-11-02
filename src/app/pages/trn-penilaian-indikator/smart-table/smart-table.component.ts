@@ -1,6 +1,6 @@
 import { Component, Injectable } from '@angular/core';
 import { LocalDataSource } from 'ng2-smart-table';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient,HttpHeaders } from '@angular/common/http';
 import { AppGlobals } from '../../../app.global'
 import 'style-loader!angular2-toaster/toaster.css';
 import {
@@ -8,6 +8,14 @@ import {
   NbGlobalPhysicalPosition,
   NbToastrService,
 } from '@nebular/theme';
+
+const httpOptions = {
+  headers: new HttpHeaders({
+    "Content-Type": "application/json",
+    Authorization: JSON.parse(localStorage.getItem("currentUser")).token
+  })
+};
+
 @Component({
   selector: 'ngx-smart-table',
   templateUrl: './smart-table.component.html',
@@ -32,7 +40,7 @@ export class SmartTableComponent {
   satkerx: any;
   constructor(private httpClient : HttpClient, private _global: AppGlobals, private toastrService: NbToastrService) {     
     this.bench = this.loadTableSettings()
-    this.httpClient.get(this._global.baseAPIUrl + '/View_penilaian_indikators/').subscribe(indikator => {
+    this.httpClient.get(this._global.baseAPIUrl + '/View_penilaian_indikators/',httpOptions).subscribe(indikator => {
       const data = JSON.stringify(indikator);
       this.source.load(JSON.parse(data));
     },
@@ -41,7 +49,7 @@ export class SmartTableComponent {
       this.showToast("warning", "Koneksi bermasalah", error.message);      
     }
     ); 
-    this.httpClient.get(this._global.baseAPIUrl + '/Itk_ref_satfungs/').subscribe(data => {
+    this.httpClient.get(this._global.baseAPIUrl + '/Itk_ref_satfungs/',httpOptions).subscribe(data => {
       if(data != undefined || data != null)
       {
       this.satfungx = data;
@@ -58,7 +66,7 @@ export class SmartTableComponent {
     }, 
     error => { console.log(error) });  
 
-    this.httpClient.get(this._global.baseAPIUrl + '/Itk_mst_periodes/').subscribe(data => {
+    this.httpClient.get(this._global.baseAPIUrl + '/Itk_mst_periodes/',httpOptions).subscribe(data => {
       if(data != undefined || data != null)
       {
       this.periodex = data;
@@ -75,7 +83,7 @@ export class SmartTableComponent {
     }, 
     error => { console.log(error) }); 
 
-    this.httpClient.get(this._global.baseAPIUrl + '/Itk_mst_satkers/').subscribe(data => {
+    this.httpClient.get(this._global.baseAPIUrl + '/Itk_mst_satkers/',httpOptions).subscribe(data => {
       if(data != undefined || data != null)
       {
       this.satkerx = data;
@@ -120,7 +128,7 @@ export class SmartTableComponent {
       //   this.showToast("warning", "Kolom tanggal_selesai masih Kosong", "Harus di isi");
       // }
       // else{
-      this.httpClient.post(this._global.baseAPIUrl + '/Itk_trn_penilaian_indikators/',event.newData).subscribe(data  => {
+      this.httpClient.post(this._global.baseAPIUrl + '/Itk_trn_penilaian_indikators/',event.newData,httpOptions).subscribe(data  => {
         console.log("POST Request is successful ", data);
         this.showToast("success", "Data Tersimpan", event.newData.jenis);
         event.confirm.resolve();
@@ -160,7 +168,7 @@ export class SmartTableComponent {
       //   this.showToast("warning", "Kolom tanggal_selesai masih Kosong", "Harus di isi");
       // }
       // else{
-      this.httpClient.put(this._global.baseAPIUrl + '/Itk_trn_penilaian_indikators/'+event.data.kode,event.newData).subscribe(data  => {
+      this.httpClient.put(this._global.baseAPIUrl + '/Itk_trn_penilaian_indikators/'+event.data.kode,event.newData,httpOptions).subscribe(data  => {
         console.log("PUT Request is successful ", data);
         this.showToast("success", "Data Ter update", event.newData.kode);
         event.confirm.resolve();
@@ -174,7 +182,7 @@ export class SmartTableComponent {
     }
     onDeleteConfirm(event): void {
       if (window.confirm('Are you sure you want to delete?')) {
-        this.httpClient.delete(this._global.baseAPIUrl + '/Itk_trn_penilaian_indikators/'+event.data.kode).subscribe(data => {
+        this.httpClient.delete(this._global.baseAPIUrl + '/Itk_trn_penilaian_indikators/'+event.data.kode,httpOptions).subscribe(data => {
           event.confirm.resolve();
           console.log(event.data.kode);
           this.showToast("danger", "Data terhapus", event.data.jenis+"("+event.data.id+")");

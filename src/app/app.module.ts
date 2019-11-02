@@ -18,6 +18,7 @@ import { HeaderInterceptorService } from "./service/header-interceptor.service";
 import { AuthService } from "./service/auth.service";
 import { ApiService } from "./service/api.service";
 import { LoaderService } from "./service/loader.service";
+import { HttpClientService } from "./service/HttpClient";
 import { Broadcaster } from "./service/broadcaster";
 import { ChartsModule } from "ng2-charts";
 import { NgxDocViewerModule } from "ngx-doc-viewer";
@@ -91,7 +92,8 @@ import {
     LoaderService,
     ApiService,
     AuthService,
-    Broadcaster
+    Broadcaster,
+    HttpClientService
     // TranslatorService,
   ],
   bootstrap: [AppComponent]

@@ -1,7 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AppGlobals } from "../../app.global";
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
+
+const httpOptions = {
+  headers: new HttpHeaders({
+    "Content-Type": "application/json",
+    Authorization: JSON.parse(localStorage.getItem("currentUser")).token
+  })
+};
 
 @Component({
   selector: 'ngx-stepper',
@@ -30,7 +37,7 @@ export class StepperComponent implements OnInit {
     ) {}
 
   ngOnInit() {
-    this.httpClient.get(this._global.baseAPIUrl + '/View_satkers/getDataByIdTipeSatker?idTipeSatker=R').subscribe(data => {
+    this.httpClient.get(this._global.baseAPIUrl + '/View_satkers/getDataByIdTipeSatker?idTipeSatker=R',httpOptions).subscribe(data => {
       if(data != undefined || data != null)
       {
       this.satkerx = data;
@@ -44,7 +51,7 @@ export class StepperComponent implements OnInit {
       }
     }, 
     error => { console.log(error) });
-    this.httpClient.get(this._global.baseAPIUrl + '/Itk_ref_satfungs/').subscribe(data => {
+    this.httpClient.get(this._global.baseAPIUrl + '/Itk_ref_satfungs/',httpOptions).subscribe(data => {
       if(data != undefined || data != null)
       {
       this.satfungx = data;

@@ -13,7 +13,7 @@ import {
   NbWindowService,
   NbDialogService
 } from "@nebular/theme";
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { AppGlobals } from "../../app.global";
 import { formatDate } from "@angular/common";
 import {
@@ -29,6 +29,13 @@ import { BlockUI, NgBlockUI } from "ng-block-ui";
 
 // import { FormComponent } from "../form/form.component";
 import { Router } from "@angular/router";
+
+const httpOptions = {
+  headers: new HttpHeaders({
+    "Content-Type": "application/json",
+    Authorization: JSON.parse(localStorage.getItem("currentUser")).token
+  })
+};
 
 @Component({
   selector: "ngx-formobjektif",
@@ -159,7 +166,8 @@ export class FormObjektifComponent implements OnInit {
           "&idSatfung=" +
           this.dataObjectif.idSatfung +
           "&kodePeriode=" +
-          this.periode
+          this.periode,
+        httpOptions
       )
       .subscribe(
         data => {
@@ -183,7 +191,8 @@ export class FormObjektifComponent implements OnInit {
           this.dataObjectif.penilaianId +
           "&jenis=&kodeSatfung=" +
           this.dataObjectif.kodeSatfung +
-          "&kodeIndikatorInduk="
+          "&kodeIndikatorInduk=",
+        httpOptions
       )
       .subscribe(
         indikator => {
@@ -348,7 +357,8 @@ export class FormObjektifComponent implements OnInit {
       .put(
         this._global.baseAPIUrl +
           "/Itk_trn_penilaian_indikators/updateDataMasal",
-        dataP
+        dataP,
+        httpOptions
       )
       .subscribe(
         data => {
@@ -376,7 +386,8 @@ export class FormObjektifComponent implements OnInit {
     this.httpClient
       .put(
         this._global.baseAPIUrl + "/Itk_trn_penilaian_details/updateDataMasal",
-        dataD
+        dataD,
+        httpOptions
       )
       .subscribe(
         data => {
@@ -450,7 +461,8 @@ export class FormObjektifComponent implements OnInit {
       .post(
         this._global.baseAPIUrl +
           "/ContainerPenilaianIndi/upload_document_indikator/upload",
-        formData
+        formData,
+        httpOptions
       )
       .subscribe(val => {
         let da = JSON.stringify(val);

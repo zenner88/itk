@@ -1,6 +1,6 @@
 import { Component, Injectable } from '@angular/core';
 import { LocalDataSource } from 'ng2-smart-table';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { AppGlobals } from '../../../app.global'
 import 'style-loader!angular2-toaster/toaster.css';
 import {
@@ -8,6 +8,13 @@ import {
   NbGlobalPhysicalPosition,
   NbToastrService,
 } from '@nebular/theme';
+
+const httpOptions = {
+  headers: new HttpHeaders({
+    "Content-Type": "application/json",
+    Authorization: JSON.parse(localStorage.getItem("currentUser")).token
+  })
+};
 
 @Component({
   selector: 'ngx-smart-table',
@@ -64,7 +71,7 @@ export class SmartTableComponent {
   nama : string;
 
   constructor(private httpClient : HttpClient, private _global: AppGlobals, private toastrService: NbToastrService) {
-    this.httpClient.get(this._global.baseAPIUrl + '/Itk_sys_kelompok_penggunas').subscribe(indikator => {
+    this.httpClient.get(this._global.baseAPIUrl + '/Itk_sys_kelompok_penggunas',httpOptions).subscribe(indikator => {
     const data = JSON.stringify(indikator);
     this.source.load(JSON.parse(data));
     },
@@ -93,7 +100,7 @@ export class SmartTableComponent {
       this.showToast("warning", "Kolom nama masih Kosong", "Harus di isi");
     }
     else{
-    this.httpClient.post(this._global.baseAPIUrl + '/Itk_sys_kelompok_penggunas',event.newData).subscribe(data  => {
+    this.httpClient.post(this._global.baseAPIUrl + '/Itk_sys_kelompok_penggunas',event.newData,httpOptions).subscribe(data  => {
       console.log("POST Request is successful ", data);
       this.showToast("success", "Data Tersimpan", event.newData.jenis);
       event.confirm.resolve();
@@ -125,7 +132,7 @@ export class SmartTableComponent {
       this.showToast("warning", "Kolom nama masih Kosong", "Harus di isi");
     }
     else{
-    this.httpClient.put(this._global.baseAPIUrl + '/Itk_sys_kelompok_penggunas/'+event.data.id,event.newData).subscribe(data  => {
+    this.httpClient.put(this._global.baseAPIUrl + '/Itk_sys_kelompok_penggunas/'+event.data.id,event.newData,httpOptions).subscribe(data  => {
       console.log("PUT Request is successful ", data);
       this.showToast("success", "Data Ter update", event.newData.jenis);
       event.confirm.resolve();
@@ -139,7 +146,7 @@ export class SmartTableComponent {
   }
   onDeleteConfirm(event): void {
     if (window.confirm('Are you sure you want to delete?')) {
-      this.httpClient.delete(this._global.baseAPIUrl + '/Itk_sys_kelompok_penggunas/'+event.data.id).subscribe(data => {
+      this.httpClient.delete(this._global.baseAPIUrl + '/Itk_sys_kelompok_penggunas/'+event.data.id,httpOptions).subscribe(data => {
         event.confirm.resolve();
         console.log(event.data.jenis);
         this.showToast("danger", "Data terhapus", event.data.jenis+"("+event.data.id+")");

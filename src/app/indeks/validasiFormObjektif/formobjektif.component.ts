@@ -13,7 +13,7 @@ import {
   NbWindowService,
   NbDialogService
 } from "@nebular/theme";
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { AppGlobals } from "../../app.global";
 import { formatDate } from "@angular/common";
 import {
@@ -31,6 +31,14 @@ import { BlockUI, NgBlockUI } from "ng-block-ui";
 import { Router } from "@angular/router";
 import * as jspdf from "jspdf";
 import html2canvas from "html2canvas";
+
+const httpOptions = {
+  headers: new HttpHeaders({
+    "Content-Type": "application/json",
+    Authorization: JSON.parse(localStorage.getItem("currentUser")).token
+  })
+};
+
 @Component({
   selector: "ngx-formobjektif",
   templateUrl: "formobjektif.component.html",
@@ -90,7 +98,7 @@ export class ValidasiFormObjektifComponent implements OnInit {
   kodeSatker: any;
   satfungx: any;
   public satfungList: any[] = [];
-  periode:any;
+  periode: any;
   // convenience getters for easy access to form fields
 
   open(dialog: TemplateRef<any>, index_indikator, index_detail) {
@@ -139,28 +147,30 @@ export class ValidasiFormObjektifComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.periode=localStorage.getItem('idPeriode');
+    this.periode = localStorage.getItem("idPeriode");
     this.blockUI.stop();
-    this.httpClient.get(this._global.baseAPIUrl + "/View_satfungs/").subscribe(
-      data => {
-        if (data != undefined || data != null) {
-          this.satfungx = data;
-          const datas = JSON.stringify(data);
-          const datax = JSON.parse(datas);
-          // console.log(datas);
-          // console.log(datax);
-          datax.forEach(xx => {
-            this.satfungList.push({
-              value: xx.kode,
-              title: xx.singkatan_satfung
+    this.httpClient
+      .get(this._global.baseAPIUrl + "/View_satfungs/", httpOptions)
+      .subscribe(
+        data => {
+          if (data != undefined || data != null) {
+            this.satfungx = data;
+            const datas = JSON.stringify(data);
+            const datax = JSON.parse(datas);
+            // console.log(datas);
+            // console.log(datax);
+            datax.forEach(xx => {
+              this.satfungList.push({
+                value: xx.kode,
+                title: xx.singkatan_satfung
+              });
             });
-          });
+          }
+        },
+        error => {
+          console.log(error);
         }
-      },
-      error => {
-        console.log(error);
-      }
-    );
+      );
 
     this.kodeSatker = localStorage.getItem("kodeSatker");
 
@@ -184,7 +194,9 @@ export class ValidasiFormObjektifComponent implements OnInit {
           this.kodeSatker +
           "&idSatfung=" +
           this.dataObjectif.idSatfung +
-          "&kodePeriode="+this.periode
+          "&kodePeriode=" +
+          this.periode,
+        httpOptions
       )
       .subscribe(
         data => {
@@ -251,7 +263,8 @@ export class ValidasiFormObjektifComponent implements OnInit {
           this.dataObjectif.penilaianId +
           "&jenis=&kodeSatfung=" +
           x +
-          "&kodeIndikatorInduk="
+          "&kodeIndikatorInduk=",
+        httpOptions
       )
       .subscribe(
         indikator => {
@@ -450,7 +463,8 @@ export class ValidasiFormObjektifComponent implements OnInit {
         .put(
           this._global.baseAPIUrl +
             "/Itk_trn_penilaian_indikators/updateDataMasal",
-          dataP
+          dataP,
+          httpOptions
         )
         .subscribe(
           data => {
@@ -484,7 +498,8 @@ export class ValidasiFormObjektifComponent implements OnInit {
         .put(
           this._global.baseAPIUrl +
             "/Itk_trn_penilaian_details/updateDataMasal",
-          dataD
+          dataD,
+          httpOptions
         )
         .subscribe(
           data => {
@@ -565,7 +580,8 @@ export class ValidasiFormObjektifComponent implements OnInit {
       .post(
         this._global.baseAPIUrl +
           "/ContainerPenilaianIndi/upload_document_indikator/upload",
-        formData
+        formData,
+        httpOptions
       )
       .subscribe(val => {
         let da = JSON.stringify(val);

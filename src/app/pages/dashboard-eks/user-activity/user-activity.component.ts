@@ -6,9 +6,16 @@ import {
   UserActivityData,
   UserActive
 } from "../../../@core/data/user-activity";
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { AppGlobals } from "../../../app.global";
 import { BlockUI, NgBlockUI } from "ng-block-ui";
+
+const httpOptions = {
+  headers: new HttpHeaders({
+    "Content-Type": "application/json",
+    Authorization: JSON.parse(localStorage.getItem("currentUser")).token
+  })
+};
 
 @Component({
   selector: "ngx-user-activity",
@@ -55,7 +62,7 @@ export class ECommerceUserActivityComponent implements OnDestroy {
     //   });
 
     this.httpClient
-      .get(this._global.baseAPIUrl + "/View_penilaians/getNilai")
+      .get(this._global.baseAPIUrl + "/View_penilaians/getNilai", httpOptions)
       .subscribe(
         datas => {
           let data = JSON.parse(JSON.stringify(datas));

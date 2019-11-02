@@ -1,6 +1,6 @@
 import { Component, Injectable, TemplateRef, ViewChild } from '@angular/core';
 import { LocalDataSource } from 'ng2-smart-table';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { AppGlobals } from '../../../app.global'
 import 'style-loader!angular2-toaster/toaster.css';
 import {
@@ -10,6 +10,14 @@ import {
   NbWindowService
 } from '@nebular/theme';
 import { FormGroup} from '@angular/forms';
+
+const httpOptions = {
+  headers: new HttpHeaders({
+    "Content-Type": "application/json",
+    Authorization: JSON.parse(localStorage.getItem("currentUser")).token
+  })
+};
+
 @Component({
   selector: 'ngx-smart-table',
   templateUrl: './smart-table.component.html',
@@ -56,7 +64,7 @@ export class SmartTableComponent {
 
   ngOnInit(): void {
     this.satfungs = this.loadTableSettings(); 
-    this.httpClient.get(this._global.baseAPIUrl + '/View_satfungs/').subscribe(indikator => {
+    this.httpClient.get(this._global.baseAPIUrl + '/View_satfungs/',httpOptions).subscribe(indikator => {
       const data = JSON.stringify(indikator);
       this.source.load(JSON.parse(data));
     },
@@ -65,7 +73,7 @@ export class SmartTableComponent {
       this.showToast("warning", "Koneksi bermasalah", error.message);      
     }
     ); 
-    this.httpClient.get(this._global.baseAPIUrl + '/Itk_ref_tipe_polres/').subscribe(data => {
+    this.httpClient.get(this._global.baseAPIUrl + '/Itk_ref_tipe_polres/',httpOptions).subscribe(data => {
       
       if(data != undefined || data != null)
       {
@@ -84,7 +92,7 @@ export class SmartTableComponent {
       console.log(JSON.stringify(this.polresList));
     }, 
     error => { console.log(error) });  
-    this.httpClient.get(this._global.baseAPIUrl + '/Itk_ref_satfungs/').subscribe(data => {
+    this.httpClient.get(this._global.baseAPIUrl + '/Itk_ref_satfungs/',httpOptions).subscribe(data => {
       
       if(data != undefined || data != null)
       {
@@ -103,7 +111,7 @@ export class SmartTableComponent {
       console.log(JSON.stringify(this.satfungList));
     }, 
     error => { console.log(error) }); 
-    this.httpClient.get(this._global.baseAPIUrl + '/Itk_ref_prinsips/').subscribe(data => {
+    this.httpClient.get(this._global.baseAPIUrl + '/Itk_ref_prinsips/',httpOptions).subscribe(data => {
       if(data != undefined || data != null)
       {
       const datas = JSON.stringify(data);
@@ -127,7 +135,7 @@ export class SmartTableComponent {
   //       title: 'Pengisian Bobot Berdasarkan Prinsip',
   //     },
   //   );
-  //   this.httpClient.get(this._global.baseAPIUrl + '/Itk_mst_indikators/getDataByIdPrinsip?idPrinsip=1').subscribe(indikator => {
+  //   this.httpClient.get(this._global.baseAPIUrl + '/Itk_mst_indikators/getDataByIdPrinsip?idPrinsip=1',httpOptions).subscribe(indikator => {
   //     const data = JSON.stringify(indikator);
   //     this.sourceBobots.load(JSON.parse(data));
   //     console.log("data bobot");      
@@ -149,7 +157,7 @@ export class SmartTableComponent {
         title: 'Details Indikator Satfung '+this.kodeDetails,
       },
     );   
-    this.httpClient.get(this._global.baseAPIUrl + '/View_satfung_prinsips/getDataBykodeSatfung?kodeSatfung='+this.kodeDetails).subscribe(indikatorDetails => {
+    this.httpClient.get(this._global.baseAPIUrl + '/View_satfung_prinsips/getDataBykodeSatfung?kodeSatfung='+this.kodeDetails,httpOptions).subscribe(indikatorDetails => {
       const data = JSON.stringify(indikatorDetails);
       this.sourceDetails.load(JSON.parse(data));
     },
@@ -169,7 +177,7 @@ export class SmartTableComponent {
     this.bobot = event.newData.bobot;
     this.rumus = event.newData.rumus;
     this.ada_detail = event.newData.ada_detail;
-    this.httpClient.post(this._global.baseAPIUrl + '/Itk_mst_indikator_satfungs/',event.newData).subscribe(data  => {
+    this.httpClient.post(this._global.baseAPIUrl + '/Itk_mst_indikator_satfungs/',event.newData,httpOptions).subscribe(data  => {
       console.log("POST Request is successful ", data);
       this.showToast("success", "Data Tersimpan", event.newData.jenis);
       event.confirm.resolve();
@@ -183,7 +191,7 @@ export class SmartTableComponent {
   onSaveConfirm(event): void {
     console.log(event.newData);
     console.log(event);
-    this.httpClient.put(this._global.baseAPIUrl + '/Itk_mst_indikator_satfungs/'+event.data.kode,event.newData).subscribe(data  => {
+    this.httpClient.put(this._global.baseAPIUrl + '/Itk_mst_indikator_satfungs/'+event.data.kode,event.newData,httpOptions).subscribe(data  => {
       console.log("PUT Request is successful ", data);
       this.showToast("success", "Data Ter update", event.newData.kode);
       event.confirm.resolve();
@@ -196,7 +204,7 @@ export class SmartTableComponent {
   }
   onDeleteConfirm(event): void {
     if (window.confirm('Are you sure you want to delete?')) {
-      this.httpClient.delete(this._global.baseAPIUrl + '/Itk_mst_indikator_satfungs/'+event.data.kode).subscribe(data => {
+      this.httpClient.delete(this._global.baseAPIUrl + '/Itk_mst_indikator_satfungs/'+event.data.kode,httpOptions).subscribe(data => {
         event.confirm.resolve();
         console.log(event.data.kode);
         this.showToast("danger", "Data terhapus", event.data.jenis+"("+event.data.id+")");
@@ -226,7 +234,7 @@ export class SmartTableComponent {
     };
     console.log(this.detailsData);
     console.log(this.kodeDetails);
-    this.httpClient.post(this._global.baseAPIUrl + '/Itk_mst_indikator_satfung_details',this.detailsData).subscribe(data  => {
+    this.httpClient.post(this._global.baseAPIUrl + '/Itk_mst_indikator_satfung_details',this.detailsData,httpOptions).subscribe(data  => {
       console.log("POST Request is successful ", data);
       this.showToast("success", "Data Tersimpan", event.newData.jenis);
       event.confirm.resolve();
@@ -259,7 +267,7 @@ export class SmartTableComponent {
         na: "Y"
     };
     console.log(this.detailsData);
-    this.httpClient.put(this._global.baseAPIUrl + '/Itk_mst_indikator_satfung_details/'+event.data.kode,this.detailsData).subscribe(data  => {
+    this.httpClient.put(this._global.baseAPIUrl + '/Itk_mst_indikator_satfung_details/'+event.data.kode,this.detailsData,httpOptions).subscribe(data  => {
       console.log("PUT Request is successful ", data);
       this.showToast("success", "Data Ter update", event.newData.kode);
       event.confirm.resolve();
@@ -273,7 +281,7 @@ export class SmartTableComponent {
   // }
   onDeleteConfirmD(event): void {
     if (window.confirm('Are you sure you want to delete?')) {
-      this.httpClient.delete(this._global.baseAPIUrl + '/Itk_mst_indikator_satfung_details/'+event.data.kode).subscribe(data => {
+      this.httpClient.delete(this._global.baseAPIUrl + '/Itk_mst_indikator_satfung_details/'+event.data.kode,httpOptions).subscribe(data => {
         event.confirm.resolve();
         console.log(event.data.kode);
         this.showToast("danger", "Data terhapus", event.data.jenis+"("+event.data.id+")");
@@ -287,7 +295,7 @@ export class SmartTableComponent {
   onSaveBobot(event): void {
     this.kode = event.newData.kode;
     this.bobot = event.newData.bobot;
-    this.httpClient.get(this._global.baseAPIUrl + '/Itk_mst_indikator_satfung_details/getDataByIdPrinsip?idPrinsip=1').subscribe(bobots => {
+    this.httpClient.get(this._global.baseAPIUrl + '/Itk_mst_indikator_satfung_details/getDataByIdPrinsip?idPrinsip=1',httpOptions).subscribe(bobots => {
     const datas = JSON.stringify(bobots);
     const datax = JSON.parse(datas);
       datax.forEach(xx => {  

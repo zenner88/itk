@@ -7,8 +7,9 @@ import {
   ViewChild
 } from "@angular/core";
 import { LocalDataSource } from "ng2-smart-table";
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { AppGlobals } from "../../../app.global";
+import { HttpClientService } from "../../../service/HttpClient";
 import "style-loader!angular2-toaster/toaster.css";
 import {
   NbComponentStatus,
@@ -29,12 +30,23 @@ import {
 } from "ngx-uploader";
 import * as jspdf from "jspdf";
 import html2canvas from "html2canvas";
+import { Observable } from "rxjs/Rx";
+
+const httpOptions = {
+  headers: new HttpHeaders({
+    "Content-Type": "application/json",
+    Authorization: JSON.parse(localStorage.getItem("currentUser")).token
+  })
+};
+
 @Component({
   selector: "ngx-smart-table",
   templateUrl: "./smart-table.component.html",
   styleUrls: ["./smart-table.component.scss"],
   providers: [AppGlobals]
 })
+
+
 @Injectable()
 export class SmartTableComponent {
   @ViewChild("item", { static: true }) accordion;
@@ -49,7 +61,8 @@ export class SmartTableComponent {
     private _global: AppGlobals,
     private toastrService: NbToastrService,
     private route: Router,
-    private dialogService: NbDialogService
+    private dialogService: NbDialogService,
+    private http: HttpClientService
   ) {
     this.options = { concurrency: 1, maxUploads: 4 };
     this.files = []; // local uploading files array
@@ -115,7 +128,8 @@ export class SmartTableComponent {
       .get(
         this._global.baseAPIUrl +
           "/View_penilaian_satfungs/getDataBykodeSatker?kodeSatker=" +
-          this.kodeSatker
+          this.kodeSatker,
+        httpOptions
       )
       .subscribe(
         indikator => {
@@ -133,7 +147,7 @@ export class SmartTableComponent {
         }
       );
     this.httpClient
-      .get(this._global.baseAPIUrl + "/Itk_ref_tipe_polres/")
+      .get(this._global.baseAPIUrl + "/Itk_ref_tipe_polres/", httpOptions)
       .subscribe(
         data => {
           if (data != undefined || data != null) {
@@ -159,7 +173,7 @@ export class SmartTableComponent {
         }
       );
     this.httpClient
-      .get(this._global.baseAPIUrl + "/Itk_ref_satfungs/")
+      .get(this._global.baseAPIUrl + "/Itk_ref_satfungs/", httpOptions)
       .subscribe(
         data => {
           if (data != undefined || data != null) {
@@ -185,7 +199,7 @@ export class SmartTableComponent {
         }
       );
     this.httpClient
-      .get(this._global.baseAPIUrl + "/Itk_ref_prinsips/")
+      .get(this._global.baseAPIUrl + "/Itk_ref_prinsips/", httpOptions)
       .subscribe(
         data => {
           if (data != undefined || data != null) {
@@ -239,7 +253,8 @@ export class SmartTableComponent {
       .get(
         this._global.baseAPIUrl +
           "/View_satfung_prinsips/getDataBykodeSatfung?kodeSatfung=" +
-          this.kodeDetails
+          this.kodeDetails,
+        httpOptions
       )
       .subscribe(
         indikatorDetails => {
@@ -265,7 +280,8 @@ export class SmartTableComponent {
     this.httpClient
       .post(
         this._global.baseAPIUrl + "/Itk_mst_indikator_satfungs/",
-        event.newData
+        event.newData,
+        httpOptions
       )
       .subscribe(
         data => {
@@ -291,7 +307,8 @@ export class SmartTableComponent {
         this._global.baseAPIUrl +
           "/Itk_mst_indikator_satfungs/" +
           event.data.kode,
-        event.newData
+        event.newData,
+        httpOptions
       )
       .subscribe(
         data => {
@@ -315,7 +332,8 @@ export class SmartTableComponent {
         .delete(
           this._global.baseAPIUrl +
             "/Itk_mst_indikator_satfungs/" +
-            event.data.kode
+            event.data.kode,
+          httpOptions
         )
         .subscribe(data => {
           event.confirm.resolve();
@@ -354,7 +372,8 @@ export class SmartTableComponent {
     this.httpClient
       .post(
         this._global.baseAPIUrl + "/Itk_mst_indikator_satfung_details",
-        this.detailsData
+        this.detailsData,
+        httpOptions
       )
       .subscribe(
         data => {
@@ -399,7 +418,8 @@ export class SmartTableComponent {
         this._global.baseAPIUrl +
           "/Itk_mst_indikator_satfung_details/" +
           event.data.kode,
-        this.detailsData
+        this.detailsData,
+        httpOptions
       )
       .subscribe(
         data => {
@@ -424,7 +444,8 @@ export class SmartTableComponent {
         .delete(
           this._global.baseAPIUrl +
             "/Itk_mst_indikator_satfung_details/" +
-            event.data.kode
+            event.data.kode,
+          httpOptions
         )
         .subscribe(data => {
           event.confirm.resolve();
@@ -447,7 +468,8 @@ export class SmartTableComponent {
     this.httpClient
       .get(
         this._global.baseAPIUrl +
-          "/Itk_mst_indikator_satfung_details/getDataByIdPrinsip?idPrinsip=1"
+          "/Itk_mst_indikator_satfung_details/getDataByIdPrinsip?idPrinsip=1",
+        httpOptions
       )
       .subscribe(
         bobots => {
@@ -731,7 +753,8 @@ export class SmartTableComponent {
       .post(
         this._global.baseAPIUrl +
           "/ContainerPenilaianIndi/upload_document_indikator/upload",
-        formData
+        formData,
+        httpOptions
       )
       .subscribe(val => {
         let da = JSON.stringify(val);
