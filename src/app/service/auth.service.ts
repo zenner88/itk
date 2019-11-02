@@ -32,15 +32,15 @@ export class AuthService {
   ) {
     return this.http
       .post<any>(
-        config + "/Users/login",
-        { username: username.trim(), password: password.trim() },
+        config + "/pengguna/login",
+        { kode: username.trim(), sandi: password.trim() },
         httpOptions
       )
       .pipe(
         map(user => {
           // login successful if there's a jwt token in the response
           if (user) {
-            if (user.userId == 1) {
+            if (user.kelompok == 10) {
               user.menu = [
                 {
                   title: "Dashboard",
@@ -188,7 +188,7 @@ export class AuthService {
                   ]
                 }
               ];
-            } else if (user.userId == 3) {
+            } else if (user.kelompok == 80) {
               user.menu = [
                 {
                   title: "Dashboard",
@@ -207,7 +207,7 @@ export class AuthService {
                   ]
                 }
               ];
-            } else if (user.userId == 4) {
+            } else if (user.kelompok == 70) {
               user.menu = [
                 {
                   title: "Transaksi",
@@ -237,7 +237,7 @@ export class AuthService {
                   ]
                 }
               ];
-            } else if (user.userId == 5) {
+            } else if (user.kelompok == 5) {
               user.menu = [
                 {
                   title: "Dashboard",
@@ -267,9 +267,9 @@ export class AuthService {
             this.loginStatus(true);
 
             this.setDataLoginUser({
-              namaUser: user.userId,
-              kdUser: user.userId,
-              group: user.userId,
+              namaUser: user.kelompok,
+              kdUser: user.kelompok,
+              group: user.kelompok,
               token: user.id,
               menu: user.menu
             });

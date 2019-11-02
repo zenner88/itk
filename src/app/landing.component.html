@@ -107,9 +107,17 @@
     </nb-card-header>
     <nb-card-body>
       <nb-tabset>
-        <nb-tab tabTitle="KAPOLRES">
+        <nb-tab tabTitle="KAPOLRES" (change)="changeDataTab(70)">
           <form [formGroup]="loginFormPolres" (ngSubmit)="onSubmitKapolres()">
             <div class="form-group">
+              <label class="label">Polda</label>
+              <nb-select selected=0 fullWidth class="pull-right status-info shape-rectangle" formControlName="namaPolda"
+                (ngModelChange)="getDropdownPolres($event)">
+                <nb-option value=0>Pilih Polda</nb-option>
+                <nb-option *ngFor="let x of satkerPolda" [value]="x">{{ x.satker }}</nb-option>
+              </nb-select>
+            </div>
+            <div class="form-group">
               <label class="label">Polres</label>
               <nb-select selected=0 fullWidth class="pull-right status-info shape-rectangle"
                 formControlName="namaPolres">
@@ -117,7 +125,7 @@
                 <nb-option *ngFor="let x of satkerx" [value]="x">{{ x.satker }}</nb-option>
               </nb-select>
             </div>
-            <div class="form-group">
+            <div class="form-group" hidden>
               <label for="namaUser">Username</label>
               <input type="text" formControlName="namaUser" class="form-control"
                 [ngClass]="{ 'is-invalid': submitted && f.namaUser.errors }" />
@@ -141,9 +149,17 @@
             </div>
           </form>
         </nb-tab>
-        <nb-tab tabTitle="KASATFUNG">
+        <nb-tab tabTitle="KASATFUNG" (change)="changeDataTab(80)">
           <form [formGroup]="loginFormKasatfung" (ngSubmit)="onSubmitKasatfung()">
             <div class="form-group">
+              <div class="form-group">
+                <label class="label">Polda</label>
+                <nb-select selected=0 fullWidth class="pull-right status-info shape-rectangle"
+                  formControlName="namaPolda" (ngModelChange)="getDropdownPolres($event)">
+                  <nb-option value=0>Pilih Polda</nb-option>
+                  <nb-option *ngFor="let x of satkerPolda" [value]="x">{{ x.satker }}</nb-option>
+                </nb-select>
+              </div>
               <label class="label">Polres</label>
               <nb-select selected=0 fullWidth class="pull-right status-info shape-rectangle"
                 formControlName="namaPolres">
@@ -151,7 +167,7 @@
                 <nb-option *ngFor="let x of satkerx" [value]="x">{{ x.satker }}</nb-option>
               </nb-select>
             </div>
-            <div class="form-group">
+            <div class="form-group" hidden>
               <label for="namaUser">Username</label>
               <input type="text" formControlName="namaUser" class="form-control"
                 [ngClass]="{ 'is-invalid': submitted && f.namaUser.errors }" />
@@ -175,8 +191,16 @@
             </div>
           </form>
         </nb-tab>
-        <nb-tab tabTitle="OPERATOR">
+        <nb-tab tabTitle="OPERATOR" (change)="changeDataTab(90)">
           <form [formGroup]="loginFormOperator" (ngSubmit)="onSubmitOperator()">
+            <div class="form-group">
+              <label class="label">Polda</label>
+              <nb-select selected=0 fullWidth class="pull-right status-info shape-rectangle" formControlName="namaPolda"
+                (ngModelChange)="getDropdownPolres($event)">
+                <nb-option value=0>Pilih Polda</nb-option>
+                <nb-option *ngFor="let x of satkerPolda" [value]="x">{{ x.satker }}</nb-option>
+              </nb-select>
+            </div>
             <div class="form-group">
               <label class="label">Polres</label>
               <nb-select selected=0 fullWidth class="pull-right status-info shape-rectangle"
@@ -195,7 +219,7 @@
                 </nb-option>
               </nb-select>
             </div>
-            <div class="form-group">
+            <div class="form-group" hidden>
               <label for="namaUser">Username</label>
               <input type="text" formControlName="namaUser" class="form-control"
                 [ngClass]="{ 'is-invalid': submitted && f.namaUser.errors }" />
