@@ -69,6 +69,7 @@ export class AppComponent implements OnInit {
 
   userIslogin(status) {
     // this.layout.cekLogin(status);
+    this.getPeriode();
     this.isLogin = status.login;
     this.isMenu = status.menu;
     this.messageEvent.fire({ login: status.login, menu: status.menu });
