@@ -99,6 +99,7 @@ export class ValidasiFormObjektifComponent implements OnInit {
   satfungx: any;
   public satfungList: any[] = [];
   periode: any;
+  listDataOptions: any;
   // convenience getters for easy access to form fields
 
   open(dialog: TemplateRef<any>, index_indikator, index_detail) {
@@ -205,8 +206,8 @@ export class ValidasiFormObjektifComponent implements OnInit {
             this.nama_satker = this.headers.satker;
             this.nama_tipe_polres = this.headers.tipe_polres;
             this.nama_satfung = this.headers.singkatan_satfung;
+            this.getOption();
           }
-          this.satfungKlik(this.dataObjectif.kodeSatfung);
         },
         error => {
           console.log(error);
@@ -259,7 +260,7 @@ export class ValidasiFormObjektifComponent implements OnInit {
     this.httpClient
       .get(
         this._global.baseAPIUrl +
-          "/View_penilaian_indikator_alls/getDataBypenilaianIdDanJenisDanKIIDanKsat?penilaianId=" +
+          "/Itk_tmp_penilaian_indikators/getDataBypenilaianIdDanJenisDanKIIDanKsat?penilaianId=" +
           this.headers.penilaian_id +
           "&jenis=&kodeSatfung=" +
           x +
@@ -291,13 +292,25 @@ export class ValidasiFormObjektifComponent implements OnInit {
               id_tipe_indikator: xx.id_tipe_indikator,
               pilihan_jawaban: xx.pilihan_jawaban,
               catatan: xx.catatan,
-              jml_arsif: (xx.arsip_link) ? JSON.parse(xx.arsip_link).length : null
+              jml_arsif:
+                xx.arsip_link && xx.arsip_link != "-"
+                  ? JSON.parse(xx.arsip_link).length
+                  : null
             });
           });
           this.jmlDetails = this.objek2.length;
 
           var datas = this.list_to_tree(this.objek2);
           for (let i = 0; i < datas.length; i++) {
+            datas[i].options = [];
+            for (let j = 0; j < this.listDataOptions.length; j++) {
+              if (
+                this.listDataOptions[j].kode_indikator_satfung ==
+                datas[i].kode_indikator_satfung
+              ) {
+                datas[i].options.push(this.listDataOptions[j]);
+              }
+            }
             this.t.push(
               this.formBuilder.group({
                 id: [datas[i].id],
@@ -319,7 +332,8 @@ export class ValidasiFormObjektifComponent implements OnInit {
                 id_tipe_indikator: [datas[i].id_tipe_indikator],
                 jml_arsif: [datas[i].jml_arsif],
                 catatan: [datas[i].catatan],
-                details: [datas[i].children]
+                details: [datas[i].children],
+                radio: [datas[i].options]
               })
             );
           }
@@ -790,5 +804,24 @@ export class ValidasiFormObjektifComponent implements OnInit {
         // ].jml_arsif = this.fileDownload.length;
       }
     }
+  }
+
+  getOption() {
+    this.httpClient
+      .get(
+        this._global.baseAPIUrl + "/Itk_mst_indikator_satfung_options",
+        httpOptions
+      )
+      .subscribe(
+        data => {
+          this.listDataOptions = [];
+          this.listDataOptions = data;
+          this.satfungKlik(this.dataObjectif.kodeSatfung);
+          console.log(data);
+        },
+        error => {
+          console.log(error);
+        }
+      );
   }
 }

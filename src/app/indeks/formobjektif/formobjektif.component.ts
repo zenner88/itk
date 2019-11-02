@@ -97,33 +97,37 @@ export class FormObjektifComponent implements OnInit {
   kodeSatker: any;
   satfungx: any;
   public satfungList: any[] = [];
-  periode:any;
+  periode: any;
+  listOption: any[];
+  keteranganUpload: any[];
 
   src = "https://vadimdez.github.io/ng2-pdf-viewer/assets/pdf-test.pdf";
   // convenience getters for easy access to form fields
 
   ngOnInit() {
-    this.periode=localStorage.getItem('idPeriode');
-    this.httpClient.get(this._global.baseAPIUrl + "/View_satfungs/", httpOptions).subscribe(
-      data => {
-        if (data != undefined || data != null) {
-          this.satfungx = data;
-          const datas = JSON.stringify(data);
-          const datax = JSON.parse(datas);
-          // console.log(datas);
-          // console.log(datax);
-          datax.forEach(xx => {
-            this.satfungList.push({
-              value: xx.kode,
-              title: xx.singkatan_satfung
+    this.periode = localStorage.getItem("idPeriode");
+    this.httpClient
+      .get(this._global.baseAPIUrl + "/View_satfungs/", httpOptions)
+      .subscribe(
+        data => {
+          if (data != undefined || data != null) {
+            this.satfungx = data;
+            const datas = JSON.stringify(data);
+            const datax = JSON.parse(datas);
+            // console.log(datas);
+            // console.log(datax);
+            datax.forEach(xx => {
+              this.satfungList.push({
+                value: xx.kode,
+                title: xx.singkatan_satfung
+              });
             });
-          });
+          }
+        },
+        error => {
+          console.log(error);
         }
-      },
-      error => {
-        console.log(error);
-      }
-    );
+      );
 
     this.kodeSatker = localStorage.getItem("kodeSatker");
 
@@ -135,10 +139,12 @@ export class FormObjektifComponent implements OnInit {
       !this.dataObjectif.idSatfung ||
       !this.dataObjectif.penilaianId
     ) {
-      this.route.navigate(["/pages/list-polres-satfung/smart-table/", httpOptions]);
+      this.route.navigate([
+        "/pages/list-polres-satfung/smart-table/",
+        httpOptions
+      ]);
     }
-
-    this.satfungKlik(this.dataObjectif.kodeSatfung);
+    this.getOption();
     this.now = formatDate(new Date(), "yyyy-MM-dd HH:mm:ss Z", "en");
     this.dynamicForm = this.formBuilder.group({
       numberOfTickets: ["", Validators.required],
@@ -152,8 +158,9 @@ export class FormObjektifComponent implements OnInit {
           this.kodeSatker +
           "&idSatfung=" +
           this.dataObjectif.idSatfung +
-          "&kodePeriode="+this.periode,
-          httpOptions
+          "&kodePeriode=" +
+          this.periode,
+        httpOptions
       )
       .subscribe(
         data => {
@@ -189,6 +196,9 @@ export class FormObjektifComponent implements OnInit {
 
   inisialisasiFileDownload(index_indikator, index_detail) {
     if (index_detail != null) {
+      this.keteranganUpload = this.dynamicForm.value.tickets[
+        index_indikator
+      ].details[index_detail].documen;
       if (
         this.dynamicForm.value.tickets[index_indikator].details[index_detail]
           .arsip_link
@@ -201,6 +211,9 @@ export class FormObjektifComponent implements OnInit {
         this.fileDownload = [];
       }
     } else {
+      this.keteranganUpload = this.dynamicForm.value.tickets[
+        index_indikator
+      ].dokumen;
       if (this.dynamicForm.value.tickets[index_indikator].arsip_link) {
         this.fileDownload = JSON.parse(
           this.dynamicForm.value.tickets[index_indikator].arsip_link
@@ -244,12 +257,12 @@ export class FormObjektifComponent implements OnInit {
     this.httpClient
       .get(
         this._global.baseAPIUrl +
-          "/View_penilaian_indikator_alls/getDataBypenilaianIdDanJenisDanKIIDanKsat?penilaianId=" +
+          "/Itk_tmp_penilaian_indikators/getDataBypenilaianIdDanJenisDanKIIDanKsat?penilaianId=" +
           this.dataObjectif.penilaianId +
           "&jenis=&kodeSatfung=" +
           x +
           "&kodeIndikatorInduk=",
-          httpOptions
+        httpOptions
       )
       .subscribe(
         indikator => {
@@ -275,6 +288,7 @@ export class FormObjektifComponent implements OnInit {
               id_tipe_indikator: xx.id_tipe_indikator,
               pilihan_jawaban: xx.pilihan_jawaban,
               catatan: xx.catatan,
+              dokumen: xx.dokumen,
               // jml_arsif: xx.arsip_link ? JSON.parse(xx.arsip_link).length : null
               jml_arsif: xx.arsip_link
             });
@@ -303,7 +317,8 @@ export class FormObjektifComponent implements OnInit {
                 id_tipe_indikator: [datas[i].id_tipe_indikator],
                 jml_arsif: [datas[i].jml_arsif],
                 catatan: [datas[i].catatan],
-                details: [datas[i].children]
+                details: [datas[i].children],
+                dokumen: [datas[i].dokumen]
               })
             );
           }
@@ -516,10 +531,10 @@ export class FormObjektifComponent implements OnInit {
   openWindow(contentTemplate, data) {
     var isPdf = data.indexOf(".pdf");
     if (isPdf != -1) {
-      this.fileViewPdf =
+      (this.fileViewPdf =
         this._global.baseAPIUrl +
         "/ContainerPenilaianIndi/upload_document_indikator/download/" +
-        data,
+        data),
         httpOptions;
       this.windowService.open(contentTemplate, {
         title: "Contoh Dokumen.",
@@ -722,8 +737,7 @@ export class FormObjektifComponent implements OnInit {
     window.open(
       this._global.baseAPIUrl +
         "/ContainerPenilaianIndi/upload_document_indikator/download/" +
-        fileDownload,
-        httpOptions
+        fileDownload
     );
   }
 
@@ -758,7 +772,20 @@ export class FormObjektifComponent implements OnInit {
     }
   }
 
-  getOption(){
-    
+  getOption() {
+    this.httpClient
+      .get(
+        this._global.baseAPIUrl + "/Itk_mst_indikator_satfung_options",
+        httpOptions
+      )
+      .subscribe(
+        data => {
+          this.satfungKlik(this.dataObjectif.kodeSatfung);
+          console.log(data);
+        },
+        error => {
+          console.log(error);
+        }
+      );
   }
 }

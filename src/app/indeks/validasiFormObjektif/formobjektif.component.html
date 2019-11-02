@@ -193,14 +193,14 @@
         <nb-card accent="info">
           <nb-card-header>
             DAFTAR DATA OBJEKTIF
-          <div class="row">
-            <div class="col-6 text-left">
-                <input class="btn btn-info mr-1 text-center" type="button" value="Cetak" (click)="captureScreen()"/>  
+            <div class="row">
+              <div class="col-6 text-left">
+                <input class="btn btn-info mr-1 text-center" type="button" value="Cetak" (click)="captureScreen()" />
+              </div>
+              <div class="col-6 text-right">
+                <button class="btn btn-primary mr-1 text-center" (click)="onSubmit()">Simpan</button>
+              </div>
             </div>
-            <div class="col-6 text-right">
-              <button class="btn btn-primary mr-1 text-center" (click)="onSubmit()">Simpan</button>
-            </div>
-          </div>
           </nb-card-header>
           <nb-card-body>
             <!-- <form [formGroup]="dynamicForm"> -->
@@ -230,7 +230,8 @@
                       </a>
                     </div>
                     <div class="form-group col-2 text-left">
-                      <nb-checkbox [(ngModel)]="t.value[index_indikator].id_progress_temp" status="success" [disabled]="t.value[index_indikator].id_progress <= 1 ">Validasi
+                      <nb-checkbox [(ngModel)]="t.value[index_indikator].id_progress_temp" status="success"
+                        [disabled]="t.value[index_indikator].id_progress <= 1 ">Validasi
                       </nb-checkbox>
                     </div>
                     <div class="form-group col-3 text-right">
@@ -242,7 +243,12 @@
                 <div class="form-group col-8" *ngIf="x.value.id_tipe_indikator == 1">
                   <div class="row">
                     <div class="form-group col-4">
-                      {{x.value.pilihan_jawaban}}
+                      <nb-radio-group [(ngModel)]="t.value.pilihan_jawaban" *ngIf="x.value.radio.length > 0">
+                        <nb-radio name="{{opt.kode_indikator_satfung}}" value="{{opt.nilai}}" *ngFor="let opt of x.value.radio">{{opt.pilihan}}</nb-radio>
+                      </nb-radio-group>
+                      <span *ngIf="x.value.radio.length ==0">
+                          {{x.value.pilihan_jawaban}}
+                      </span>
                     </div>
                     <div class="form-group col-2">
                       <input type="text" [(ngModel)]="t.value[index_indikator].nilai" class="form-control" fullWidth
@@ -256,7 +262,8 @@
                       </a>
                     </div>
                     <div class="form-group col-2 text-left">
-                      <nb-checkbox [(ngModel)]="t.value[index_indikator].id_progress_temp" status="success" [disabled]="t.value[index_indikator].id_progress <= 1 ">Validasi
+                      <nb-checkbox [(ngModel)]="t.value[index_indikator].id_progress_temp" status="success"
+                        [disabled]="t.value[index_indikator].id_progress <= 1 ">Validasi
                       </nb-checkbox>
                     </div>
                     <div class="form-group col-3 text-right">
@@ -283,7 +290,8 @@
                     </div>
                     <div class="form-group col-2 text-left">
                       <nb-checkbox [(ngModel)]="t.value[index_indikator].details[index_detail].id_progress_temp"
-                        status="success" [disabled]="t.value[index_indikator].details[index_detail].id_progress <= 1 ">Validasi</nb-checkbox>
+                        status="success" [disabled]="t.value[index_indikator].details[index_detail].id_progress <= 1 ">
+                        Validasi</nb-checkbox>
                     </div>
                     <div class="form-group col-3 text-right">
                       <textarea [(ngModel)]="t.value[index_indikator].details[index_detail].catatan"
@@ -294,12 +302,13 @@
               </div>
             </div>
 
-              <div class="row card-footer">
+            <div class="row card-footer">
               <div class="col-6 text-left">
-                <input class="btn btn-info mr-1 text-center" type="button" value="Cetak" (click)="captureScreen()"/>  
+                <input class="btn btn-info mr-1 text-center" type="button" value="Cetak" (click)="captureScreen()" />
               </div>
               <div class="col-6 text-right">
-                <small style="padding-right: 3rem;"> Terakhir diubah : ___</small> <button class="btn btn-primary mr-1" (click)="onSubmit()">Simpan</button>
+                <small style="padding-right: 3rem;"> Terakhir diubah : ___</small> <button class="btn btn-primary mr-1"
+                  (click)="onSubmit()">Simpan</button>
               </div>
             </div>
             <!-- </form> -->
