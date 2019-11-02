@@ -210,75 +210,107 @@
               <div *ngFor="let ticket of t.controls; let x of ticket; let index_indikator = index">
                 <!-- <div class="row"> -->
               <tr>
-                <td class="text-center" width="5%">
+                <td class="text-center" width="3%">
                   {{index_indikator+1}}
                 </td>
-                <td class="" width="15%">
+                <td class="" width="30%">
                   <B>{{x.value.indikator}}</B>
                 </td>
-              <!-- <div *ngIf="x.value.id_tipe_indikator == 0"> -->
-                <td class="" width="15%">
+<!-- TIPE INDIKATOR = 0 -->
+                <td *ngIf="x.value.id_tipe_indikator == 0" class="" width="25%">
                   -
                 </td>
-                <td class="" width="10%">
+                <td *ngIf="x.value.id_tipe_indikator == 0" class="" width="5%">
                   <input type="text" [(ngModel)]="t.value[index_indikator].nilai" class="form-control" fullWidth
                     fieldSize="small" />
                 </td>
-                <td class="text-left" width="10%">
+                <td *ngIf="x.value.id_tipe_indikator == 0" class="text-left" width="7%">
                   {{x.value.satuan}}
                 </td>
-                <td class="" width="10%">
+                <td *ngIf="x.value.id_tipe_indikator == 0" class="" width="5%">
                   <button class="btn btn-primary mr-1 text-center"
                     (click)="open(dialogUpload,index_indikator,null)">Upload</button>
                 </td>
-                <td class="text-center" width="15%">
+                <td *ngIf="x.value.id_tipe_indikator == 0" class="text-center" width="7%">
                   <span style="font-weight: bold;">{{x.value.jml_arsif}}</span>
                   <span *ngIf="x.value.jml_arsif"> File</span>
                 </td>
-                <td class="text-right" width="10%">
+                <td *ngIf="x.value.id_tipe_indikator == 0" class="text-right" width="12%">
                   <B>{{x.value.progress}}</B> |
                 </td>
-                <td class="text-center" width="5%">
+                <td *ngIf="x.value.id_tipe_indikator == 0" class="text-center" width="3%">
                     <nb-icon icon="info-outline" status="info" (click)="openWindow(contentTemplate)"
                     [options]="{ animation: { type: 'pulse' } }"></nb-icon>
                 </td>
-                <td class="text-center" width="5%">
+                <td *ngIf="x.value.id_tipe_indikator == 0" class="text-center" width="3%">
                     <nb-icon *ngIf="x.value.catatan != null" icon="alert-circle-outline" status="danger"
                     nbTooltip="{{x.value.catatan}}" nbTooltipStatus="danger"></nb-icon>
                 </td>
-              <!-- </div> -->
-              </tr>
-  <!-- 
-                  <div class="form-group col-8" *ngIf="x.value.id_tipe_indikator == 1">
-                    <div class="row">
-                      <div class="form-group col-5">
-                        {{x.value.pilihan_jawaban}}
-                      </div>
-                      <div class="form-group col-2">
-                        <input type="text" status="primary" [(ngModel)]="t.value[index_indikator].nilai"
-                          class="form-control" fullWidth fieldSize="small" />
-                      </div>
-                      <div class="form-group col-1">
-                      </div>
-                      <div class="form-group col-1">
-                        <button class="btn btn-primary mr-1 text-center"
-                          (click)="open(dialogUpload,index_indikator,index_detail)">Upload</button>
-                      </div>
-                      <div class="form-group col-1 text-center">
-                        <span style="font-weight: bold;">{{x.value.jml_arsif}}</span>
-                        <span *ngIf="x.value.jml_arsif"> File</span>
-                      </div>
-                      <div class="form-group col-2 text-right">
-                        <B>{{x.value.progress}}</B> |
-                        <nb-icon icon="info-outline" status="info" (click)="openWindow(contentTemplate)"
-                          [options]="{ animation: { type: 'pulse' } }"></nb-icon>
-                        <nb-icon *ngIf="x.value.catatan != null" icon="alert-circle-outline" status="danger"
-                          nbTooltip="{{x.value.catatan}}" nbTooltipStatus="danger"></nb-icon>
-                      </div>
-                    </div>
-                  </div>
-  
-                  <div class="form-group col-8" *ngIf="x.value.id_tipe_indikator == 2">
+
+<!-- TIPE INDIKATOR = 1 -->
+
+                <td *ngIf="x.value.id_tipe_indikator == 1" class="" width="25%">
+                    {{x.value.pilihan_jawaban}}
+                  </td>
+                <td *ngIf="x.value.id_tipe_indikator == 1" class="" width="5%">
+                  <input type="text" [(ngModel)]="t.value[index_indikator].nilai" class="form-control" fullWidth
+                    fieldSize="small" />
+                </td>
+                <td *ngIf="x.value.id_tipe_indikator == 1" class="text-left" width="7%">
+                </td>
+                <td *ngIf="x.value.id_tipe_indikator == 1" class="" width="5%">
+                  <button class="btn btn-primary mr-1 text-center"
+                    (click)="open(dialogUpload,index_indikator,null)">Upload</button>
+                </td>
+                <td *ngIf="x.value.id_tipe_indikator == 1" class="text-center" width="7%">
+                  <span style="font-weight: bold;">{{x.value.jml_arsif}}</span>
+                  <span *ngIf="x.value.jml_arsif"> File</span>
+                </td>
+                <td *ngIf="x.value.id_tipe_indikator == 1" class="text-right" width="12%">
+                  <B>{{x.value.progress}}</B> |
+                </td>
+                <td *ngIf="x.value.id_tipe_indikator == 1" class="text-center" width="3%">
+                    <nb-icon icon="info-outline" status="info" (click)="openWindow(contentTemplate)"
+                    [options]="{ animation: { type: 'pulse' } }"></nb-icon>
+                </td>
+                <td *ngIf="x.value.id_tipe_indikator == 1" class="text-center" width="3%">
+                    <nb-icon *ngIf="x.value.catatan != null" icon="alert-circle-outline" status="danger"
+                    nbTooltip="{{x.value.catatan}}" nbTooltipStatus="danger"></nb-icon>
+                </td>
+ 
+<!-- TIPE INDIKATOR = 2 -->
+                  
+                <!-- <td *ngIf="x.value.id_tipe_indikator == 2" class="" width="25%">
+                  -
+                </td>
+                <td *ngIf="x.value.id_tipe_indikator == 2" class="" width="5%">
+                  <input type="text" [(ngModel)]="t.value[index_indikator].nilai" class="form-control" fullWidth
+                    fieldSize="small" />
+                </td>
+                <td *ngIf="x.value.id_tipe_indikator == 2" class="text-left" width="7%">
+                  {{x.value.satuan}}
+                </td>
+                <td *ngIf="x.value.id_tipe_indikator == 2" class="" width="5%">
+                  <button class="btn btn-primary mr-1 text-center"
+                    (click)="open(dialogUpload,index_indikator,null)">Upload</button>
+                </td>
+                <td *ngIf="x.value.id_tipe_indikator == 2" class="text-center" width="7%">
+                  <span style="font-weight: bold;">{{x.value.jml_arsif}}</span>
+                  <span *ngIf="x.value.jml_arsif"> File</span>
+                </td>
+                <td *ngIf="x.value.id_tipe_indikator == 2" class="text-right" width="12%">
+                  <B>{{x.value.progress}}</B> |
+                </td>
+                <td *ngIf="x.value.id_tipe_indikator == 2" class="text-center" width="3%">
+                    <nb-icon icon="info-outline" status="info" (click)="openWindow(contentTemplate)"
+                    [options]="{ animation: { type: 'pulse' } }"></nb-icon>
+                </td>
+                <td *ngIf="x.value.id_tipe_indikator == 2" class="text-center" width="3%">
+                    <nb-icon *ngIf="x.value.catatan != null" icon="alert-circle-outline" status="danger"
+                    nbTooltip="{{x.value.catatan}}" nbTooltipStatus="danger"></nb-icon>
+                </td> -->
+
+                  <td class="form-group col-8" *ngIf="x.value.id_tipe_indikator == 2">
                     <div class="row" *ngFor="let z of x.value.details ; let index_detail = index">
                       <div class="form-group col-5">
                         {{z.indikator}}
@@ -308,9 +340,11 @@
                           nbTooltip="{{z.catatan}}" nbTooltipStatus="danger"></nb-icon>
                       </div>
                     </div>
-                  </div> -->
+                  </td>
   
-                  <hr>
+<!-- enddd -->
+                </tr>
+                <hr>
                 </div>
                 <!-- <hr> -->
               <!-- </div> -->
