@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 
 import { PokjaComponent } from './pokja.component';
 import { HomeComponent } from './home/home.component';
-import { TablesComponent } from './trn-benchmarking/tables.component';
+import { TablesComponent } from './validasi-pokja/tables.component';
 import { NotFoundComponent } from '../pages/miscellaneous/not-found/not-found.component';
 import { AuthGuard, LoginGuard } from "../guard";
 
@@ -16,9 +16,9 @@ const routes: Routes = [{
       component: HomeComponent,
     },
     {
-      path: "trn-benchmarking",
+      path: "validasi-pokja",
       loadChildren: () =>
-        import("./trn-benchmarking/tables.module").then(m => m.TablesModule)
+      import("./validasi-pokja/tables.module").then(m => m.TablesModule)
     },
     {
       path: '**',
