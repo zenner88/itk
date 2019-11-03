@@ -28,8 +28,5 @@ export class HttpClientService implements OnInit, OnDestroy {
   navigateURL() {}
 
 
-  header() {
-    return httpOptions;
-  }
-
+  
 }

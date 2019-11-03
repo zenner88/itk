@@ -36,13 +36,14 @@ export class AppComponent implements OnInit {
     this.menu = [];
     this.analytics.trackPageViews();
     var user = JSON.parse(localStorage.getItem("currentUser"));
+    this.getPeriode();
+
     if (!user) {
       // this.router.navigate(["public/login"]);
       // this.layout.cekLogin(false);
       return true;
     } else {
       // this.layout.cekLogin(true);
-      this.getPeriode();
       this.isLogin = true;
       this.setMenu(user.menu);
     }
