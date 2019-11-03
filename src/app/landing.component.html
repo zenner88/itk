@@ -58,10 +58,11 @@
     <nb-card-body>
       <form [formGroup]="loginFormPolres" (ngSubmit)="onSubmitPolres()">
         <div class="form-group">
-          <label class="label">Pilih Polres</label>
-          <nb-select selected=0 fullWidth class="pull-right status-info shape-rectangle" formControlName="namaPolres">
-            <nb-option value=0>POLRES</nb-option>
-            <nb-option *ngFor="let x of satkerx" value="{{x.kode}}">{{ x.satker }}</nb-option>
+          <label class="label">Polda</label>
+          <nb-select selected=0 fullWidth class="pull-right status-info shape-rectangle" formControlName="namaPolda"
+            (ngModelChange)="getDropdownPolres($event)">
+            <nb-option value=0>Pilih Polda</nb-option>
+            <nb-option *ngFor="let x of satkerPolda" [value]="x">{{ x.satker }}</nb-option>
           </nb-select>
         </div>
         <div class="form-group">

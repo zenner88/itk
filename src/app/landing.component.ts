@@ -175,8 +175,7 @@ export class LandingComponent implements OnInit, AfterViewInit {
             this.satkerPolda = data;
             const datas = JSON.stringify(data);
             const datax = JSON.parse(datas);
-            console.log(datas);
-            console.log(datax);
+           
             datax.forEach(xx => {
               this.satkerListPolda.push({ value: xx.kode, title: xx.satker });
             });
@@ -186,13 +185,15 @@ export class LandingComponent implements OnInit, AfterViewInit {
           console.log(error);
         }
       );
+      console.log("datas");
+      console.log(this.satkerPolda);
   }
 
   getDropdownPolres(idPolda) {
     this.httpClient
       .get(
         this._global.baseAPIUrl +
-          "/View_satkers/getDataByIdTipeSatker?idTipeSatker=R"
+          "/View_satkers/getDataByKiIts?kodeInduk="+idPolda.kode+"&idTipeSatker=R"
       )
       .subscribe(
         data => {
@@ -200,8 +201,6 @@ export class LandingComponent implements OnInit, AfterViewInit {
             this.satkerx = data;
             const datas = JSON.stringify(data);
             const datax = JSON.parse(datas);
-            console.log(datas);
-            console.log(datax);
             datax.forEach(xx => {
               this.satkerList.push({ value: xx.kode, title: xx.satker });
             });
