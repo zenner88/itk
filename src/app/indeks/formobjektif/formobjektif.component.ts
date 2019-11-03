@@ -258,7 +258,7 @@ export class FormObjektifComponent implements OnInit {
       .get(
         this._global.baseAPIUrl +
           "/View_penilaian_indikator_alls/getDataBypenilaianIdDanJenisDanKIIDanKsat?penilaianId=" +
-          this.dataObjectif.penilaianId +
+          this.headers.penilaian_id +
           "&jenis=&kodeSatfung=" +
           x +
           "&kodeIndikatorInduk=",
