@@ -210,20 +210,9 @@ export class AuthService {
             } else if (user.kelompok == 70) {
               user.menu = [
                 {
-                  title: "Transaksi",
-                  icon: "folder-add-outline",
-                  children: [
-                    {
-                      title: "Form Persepsi Int Polres",
-                      link: "/indeks/formPIP",
-                      icon: "folder-outline"
-                    },
-                    {
-                      title: "Form Persepsi Ekst Polres",
-                      link: "/indeks/formPIP",
-                      icon: "folder-outline"
-                    }
-                  ]
+                  title: "Dashboard",
+                  icon: "home-outline",
+                  link: "/pages/dashboard"
                 },
                 {
                   title: "Form Pengesahan",

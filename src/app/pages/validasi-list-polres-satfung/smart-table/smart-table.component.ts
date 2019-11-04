@@ -45,8 +45,6 @@ const httpOptions = {
   styleUrls: ["./smart-table.component.scss"],
   providers: [AppGlobals]
 })
-
-
 @Injectable()
 export class SmartTableComponent {
   @ViewChild("item", { static: true }) accordion;
@@ -114,11 +112,27 @@ export class SmartTableComponent {
   formData: FormData;
   nama_kapolres: any;
   no_kapolres: any;
+  classColor: any;
+  dataObjectif: any;
+  keteranganPolres: any[] = [
+    {
+      lembar_pengesahan: ""
+    }
+  ];
+  periode: any;
   ngOnInit(): void {
     this.fileDownload = [];
+
     this.user = JSON.parse(localStorage.getItem("currentUser"));
     this.kodeSatker = localStorage.getItem("kodeSatker");
+    this.periode = localStorage.getItem("idPeriode");
+    this.dataObjectif = JSON.parse(localStorage.getItem("indexObjektif"));
 
+    if (this.user.kelompok == 70) {
+      this.classColor = "warning";
+    } else {
+      this.classColor = "success";
+    }
     if (!this.kodeSatker) {
       this.route.navigate(["/pages/validasi-list-polres/smart-table/"]);
       this.showToast("warning", "Peringatan, Pilih terlebih dahulu polres", "");
@@ -220,6 +234,38 @@ export class SmartTableComponent {
         },
         error => {
           console.log(error);
+        }
+      );
+
+    let params = JSON.stringify({
+      where: {
+        penilaian_id: this.dataObjectif.penilaianId,
+        kode_satfung: this.dataObjectif.kodeSatfung
+      }
+    });
+    this.httpClient
+      .get(
+        this._global.baseAPIUrl +
+          "/Itk_trn_penilaian_satfungs?filter=" +
+          params,
+        httpOptions
+      )
+      .subscribe(
+        dataKeterangan => {
+          const datas = JSON.stringify(dataKeterangan);
+          const datax = JSON.parse(datas);
+          this.keteranganPolres = [];
+          this.keteranganPolres = datax;
+          JSON.parse(datax[0].lembar_pengesahan).length > 0
+            ? this.fileDownload.push(JSON.parse(datax[0].lembar_pengesahan))
+            : (this.fileDownload = []);
+        },
+        error => {
+          // this.showToast(
+          //   "warning",
+          //   "Koneksi bermasalah",
+          //   error.message
+          // );
         }
       );
   }
@@ -500,7 +546,7 @@ export class SmartTableComponent {
       })
     );
     // alert(`Custom event '${event.action}' fired on row №: ${event.data.id}`);
-    if (this.user.userId == 4) {
+    if (this.user.kelompok == 70) {
       this.route.navigate(["/indeks/formObjektif/"]);
     } else {
       this.route.navigate(["/indeks/validasiFormObjektif/"]);
@@ -752,9 +798,9 @@ export class SmartTableComponent {
     this.httpClient
       .post(
         this._global.baseAPIUrl +
-          "/ContainerPenilaianIndi/upload_document_indikator/upload",
-        formData,
-        httpOptions
+          "/ContainerPenilaianIndi/upload_document_indikator/upload?access_token=" +
+          JSON.parse(localStorage.getItem("currentUser")).token,
+        formData
       )
       .subscribe(val => {
         let da = JSON.stringify(val);
@@ -789,7 +835,9 @@ export class SmartTableComponent {
       this.fileViewPdf =
         this._global.baseAPIUrl +
         "/ContainerPenilaianIndi/upload_document_indikator/download/" +
-        data;
+        data +
+        "?access_token=" +
+        JSON.parse(localStorage.getItem("currentUser")).token;
       this.windowService.open(contentTemplate, {
         title: "Contoh Dokumen.",
         context: {
@@ -805,7 +853,9 @@ export class SmartTableComponent {
     window.open(
       this._global.baseAPIUrl +
         "/ContainerPenilaianIndi/upload_document_indikator/download/" +
-        fileDownload
+        fileDownload +
+        "?access_token=" +
+        JSON.parse(localStorage.getItem("currentUser")).token
     );
   }
 
@@ -813,8 +863,42 @@ export class SmartTableComponent {
     var data = {
       nama_kapolres: this.nama_kapolres,
       no_kapolres: this.no_kapolres,
-      pengesaha: this.fileDownload
+      pengesaha: this.fileDownload[this.fileDownload.length - 1]
     };
+
+    this.keteranganPolres[0].diubah_oleh = JSON.parse(
+      localStorage.getItem("currentUser")
+    ).kode;
+    this.keteranganPolres[0].waktu_ubah = new Date();
+    this.keteranganPolres[0].lembar_pengesahan =
+      this.fileDownload.length > 0
+        ? JSON.stringify(this.fileDownload[this.fileDownload.length - 1])
+        : null;
+
+    this.httpClient
+      .put(
+        this._global.baseAPIUrl + "/Itk_trn_penilaian_satfungs",
+        this.keteranganPolres[0],
+        httpOptions
+      )
+      .subscribe(
+        data => {
+          // console.log("PUT Request is successful ", data);
+          // this.showToast("success", "Data Tersimpan", id);
+          this.ngOnInit();
+          setTimeout(() => {}, 2500);
+        },
+        error => {
+          setTimeout(() => {}, 2500);
+          // console.log("Error", error);
+          this.showToast(
+            "warning",
+            "Input / koneksi bermasalah",
+            "e"
+            // error.error.error.message
+          );
+        }
+      );
     window.alert(JSON.stringify(data));
   }
 }
