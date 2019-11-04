@@ -152,7 +152,7 @@
                   </div>
                   <div class="col-sm-8">
                     <div align="left"><input type="text" class="col-lg-4" nbInput fullWidth fieldSize="small"
-                        placeholder=""></div>
+                        placeholder="" [(ngModel)]="keteranganPolres[0].kasatfung"></div>
                   </div>
                 </div>
                 <div class="row show-grid">
@@ -164,7 +164,7 @@
                   </div>
                   <div class="col-sm-8">
                     <div align="left"><input type="text" class="col-lg-4" nbInput fullWidth fieldSize="small"
-                        placeholder=""></div>
+                        placeholder="" [(ngModel)]="keteranganPolres[0].hp_kasatfung"></div>
                   </div>
                 </div>
                 <div class="row show-grid">
@@ -176,7 +176,7 @@
                   </div>
                   <div class="col-sm-8">
                     <div align="left"><input type="text" class="col-lg-4" nbInput fullWidth fieldSize="small"
-                        placeholder=""></div>
+                        placeholder="" [(ngModel)]="keteranganPolres[0].staff_satfung"></div>
                   </div>
                 </div>
                 <div class="row show-grid">
@@ -188,7 +188,7 @@
                   </div>
                   <div class="col-sm-8">
                     <div align="left"><input type="text" class="col-lg-4" nbInput fullWidth fieldSize="small"
-                        placeholder=""></div>
+                        placeholder="" [(ngModel)]="keteranganPolres[0].hp_staff_satfung"></div>
                   </div>
                 </div>
                 <div class="row show-grid"></div>
@@ -255,7 +255,8 @@
                   <!-- TIPE INDIKATOR = 1 -->
 
                   <td *ngIf="x.value.id_tipe_indikator == 1" class="" width="25%">
-                    <nb-radio-group name="{{x.value.kode_indikator_satfung}}" [(ngModel)]="x.value.nilai" *ngIf="x.value.radio.length > 0">
+                    <nb-radio-group name="{{x.value.kode_indikator_satfung}}" [(ngModel)]="x.value.nilai"
+                      *ngIf="x.value.radio.length > 0">
                       <nb-radio name="{{opt.kode_indikator_satfung}}" value="{{opt.nilai}}"
                         *ngFor="let opt of x.value.radio">{{opt.pilihan}}</nb-radio>
                     </nb-radio-group>
@@ -271,7 +272,7 @@
                   </td>
                   <td *ngIf="x.value.id_tipe_indikator == 1" class="" width="5%">
                     <button class="btn btn-primary mr-1 text-center"
-                    (click)="open(dialogUpload,index_indikator,index_detail)">Upload</button>
+                      (click)="open(dialogUpload,index_indikator,index_detail)">Upload</button>
                   </td>
                   <td *ngIf="x.value.id_tipe_indikator == 1" class="text-center" width="7%">
                     <span style="font-weight: bold;">{{x.value.jml_arsif}}</span>
@@ -291,41 +292,41 @@
 
                   <!-- TIPE INDIKATOR = 2 -->
                   <td width="67%" *ngIf="x.value.id_tipe_indikator == 2">
-                  <table border="0" cellpadding="4">
-                    <tr width="100%" *ngFor="let z of x.value.details ; let index_detail = index">
-                      <td width="40%">
+                    <table border="0" cellpadding="4">
+                      <tr width="100%" *ngFor="let z of x.value.details ; let index_detail = index">
+                        <td width="40%">
                           {{z.indikator}}
-                      </td>
-                      <td width="9%">
-                        <input type="text" [(ngModel)]="t.value[index_indikator].details[index_detail].nilai"
-                        class="form-control" fullWidth fieldSize="small" />
-                      </td>
-                      <td width="10%">
-                        {{z.satuan}}
-                      </td>
-                      <td width="9%">
-                        <button class="btn btn-primary mr-1 text-center"
-                        (click)="open(dialogUpload,index_indikator,index_detail)">Upload</button>
-                      </td>
-                      <td width="11%">
-                        <a (click)="open(dialogUpload,index_indikator,index_detail)">
-                          <span style="font-weight: bold;">{{z.jml_arsif}}</span>
-                          <span *ngIf="z.jml_arsif"> File</span>
-                        </a>
-                      </td>
-                      <td width="11%">
-                        <B>{{z.progress}}</B>
-                      </td>
-                      <td width="5%">
-                        <nb-icon icon="info-outline" status="info" (click)="openWindow(contentTemplate)"
-                          [options]="{ animation: { type: 'pulse' } }"></nb-icon>
-                      </td>
-                      <td width="5%">
-                        <nb-icon *ngIf="z.catatan != null" icon="alert-circle-outline" status="danger"
-                          nbTooltip="{{z.catatan}}" nbTooltipStatus="danger"></nb-icon>
-                      </td>
-                    </tr>
-                  </table>
+                        </td>
+                        <td width="9%">
+                          <input type="text" [(ngModel)]="t.value[index_indikator].details[index_detail].nilai"
+                            class="form-control" fullWidth fieldSize="small" />
+                        </td>
+                        <td width="10%">
+                          {{z.satuan}}
+                        </td>
+                        <td width="9%">
+                          <button class="btn btn-primary mr-1 text-center"
+                            (click)="open(dialogUpload,index_indikator,index_detail)">Upload</button>
+                        </td>
+                        <td width="11%">
+                          <a (click)="open(dialogUpload,index_indikator,index_detail)">
+                            <span style="font-weight: bold;">{{z.jml_arsif}}</span>
+                            <span *ngIf="z.jml_arsif"> File</span>
+                          </a>
+                        </td>
+                        <td width="11%">
+                          <B>{{z.progress}}</B>
+                        </td>
+                        <td width="5%">
+                          <nb-icon icon="info-outline" status="info" (click)="openWindow(contentTemplate)"
+                            [options]="{ animation: { type: 'pulse' } }"></nb-icon>
+                        </td>
+                        <td width="5%">
+                          <nb-icon *ngIf="z.catatan != null" icon="alert-circle-outline" status="danger"
+                            nbTooltip="{{z.catatan}}" nbTooltipStatus="danger"></nb-icon>
+                        </td>
+                      </tr>
+                    </table>
                   </td>
 
                   <!-- enddd -->

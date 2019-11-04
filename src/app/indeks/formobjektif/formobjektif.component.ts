@@ -100,7 +100,15 @@ export class FormObjektifComponent implements OnInit {
   periode: any;
   listOption: any[];
   keteranganUpload: any[];
-  listDataOptions:any;
+  listDataOptions: any;
+  keteranganPolres: any[] = [
+    {
+      kasatfung: "",
+      hp_kasatfung: "",
+      staff_satfung: "",
+      hp_staff_satfung: ""
+    }
+  ];
   src = "https://vadimdez.github.io/ng2-pdf-viewer/assets/pdf-test.pdf";
   // convenience getters for easy access to form fields
 
@@ -169,7 +177,7 @@ export class FormObjektifComponent implements OnInit {
             this.nama_satker = this.headers.satker;
             this.nama_tipe_polres = this.headers.tipe_polres;
             this.nama_satfung = this.headers.singkatan_satfung;
-    this.getOption();
+            this.getOption();
           }
           this.blockUI.stop();
         },
@@ -345,6 +353,28 @@ export class FormObjektifComponent implements OnInit {
           this.showToast("warning", "Koneksi bermasalah", error.message);
         }
       );
+
+    let params = JSON.stringify({
+      where: { penilaian_id: this.headers.penilaian_id, kode_satfung: x }
+    });
+    this.httpClient
+      .get(
+        this._global.baseAPIUrl +
+          "/Itk_trn_penilaian_satfungs?filter=" +
+          params,
+        httpOptions
+      )
+      .subscribe(
+        dataKeterangan => {
+          const datas = JSON.stringify(dataKeterangan);
+          const datax = JSON.parse(datas);
+          this.keteranganPolres = [];
+          this.keteranganPolres = datax;
+        },
+        error => {
+          this.showToast("warning", "Koneksi bermasalah", error.message);
+        }
+      );
   }
 
   onSubmit() {
@@ -508,6 +538,40 @@ export class FormObjektifComponent implements OnInit {
         );
     }
 
+    this.keteranganPolres[0].diubah_oleh = JSON.parse(
+      localStorage.getItem("currentUser")
+    ).kode;
+    this.keteranganPolres[0].waktu_ubah = new Date();
+
+    this.httpClient
+      .put(
+        this._global.baseAPIUrl + "/Itk_trn_penilaian_satfungs",
+        this.keteranganPolres[0],
+        httpOptions
+      )
+      .subscribe(
+        data => {
+          // console.log("PUT Request is successful ", data);
+          // this.showToast("success", "Data Tersimpan", id);
+          this.ngOnInit();
+          setTimeout(() => {
+            this.blockUI.stop();
+          }, 2500);
+        },
+        error => {
+          setTimeout(() => {
+            this.blockUI.stop();
+          }, 2500);
+          // console.log("Error", error);
+          this.showToast(
+            "warning",
+            "Input / koneksi bermasalah",
+            "e"
+            // error.error.error.message
+          );
+        }
+      );
+
     // } else if (jenis == "D") {
     //   // console.log(dataSubmit[i].jenis);
     //   // console.log(dataSubmit[i].id);
@@ -568,9 +632,9 @@ export class FormObjektifComponent implements OnInit {
     this.httpClient
       .post(
         this._global.baseAPIUrl +
-          "/ContainerPenilaianIndi/upload_document_indikator/upload",
-        formData,
-        httpOptions
+          "/ContainerPenilaianIndi/upload_document_indikator/upload?access_token=" +
+          JSON.parse(localStorage.getItem("currentUser")).token,
+        formData
       )
       .subscribe(val => {
         let da = JSON.stringify(val);
