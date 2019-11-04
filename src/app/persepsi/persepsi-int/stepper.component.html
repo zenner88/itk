@@ -1,4 +1,7 @@
-<nb-card class="col-md-12 col-lg-12 col-xxxl-12" status="info">
+<block-ui>
+</block-ui>
+<nb-card class="col-md-12 col-lg-12 col-xxxl-12" status="info"
+  style="margin-top: 15vh;margin-left: auto;margin-right: auto;width: 80vw;">
   <nb-card-header>
     <div class="text-center">FORM PERSEPSI INTERNAL POLRES</div>
   </nb-card-header>
@@ -26,7 +29,7 @@
         </div>
         <hr>
         <button nbButton disabled nbStepperNext>prev</button>
-        <button nbButton nbStepperNext>next</button>
+        <button nbButton nbStepperNext [disabled]="formSatfung.value.namaSatfung == ''">next</button>
       </nb-step>
       <nb-step [label]="labelTwo">
         <ng-template #labelTwo>POLRES</ng-template>
@@ -51,7 +54,7 @@
         </div>
         <hr>
         <button nbButton nbStepperPrevious>prev</button>
-        <button nbButton nbStepperNext>next</button>
+        <button nbButton nbStepperNext [disabled]="formPolres.value.namaPolres == ''">next</button>
       </nb-step>
       <nb-step label="Cara Pengisian">
         <ng-template #labelThree></ng-template>
@@ -112,7 +115,10 @@
         </div>
         <hr>
         <button nbButton nbStepperPrevious>prev</button>
-        <button nbButton nbStepperNext>next</button>
+        <button nbButton nbStepperNext *ngIf="i != listPertanyaan.length-1"
+          [disabled]="kuesioner.value == null">next</button>
+        <button nbButton *ngIf="i == listPertanyaan.length-1" [disabled]="kuesioner.value == null"
+          (click)="onSubmit()">Submit</button>
       </nb-step>
 
     </nb-stepper>

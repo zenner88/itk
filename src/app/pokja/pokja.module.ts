@@ -3,7 +3,7 @@ import { NgModule } from "@angular/core";
 import { ThemeModule } from "../@themepublic/theme.module";
 import { PokjaComponent } from "./pokja.component";
 import { HomeComponent } from "./home/home.component";
-import { TablesComponent } from "./trn-benchmarking/tables.component";
+import { TablesModule } from "./trn-benchmarking/tables.module";
 import { PokjaRoutingModule } from "./pokja-routing.module";
 import { MiscellaneousModule } from "../pages/miscellaneous/miscellaneous.module";
 
@@ -46,7 +46,8 @@ import {
     MiscellaneousModule,
     BlockUIModule.forRoot(),
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    TablesModule
   ],
   declarations: [HomeComponent, PokjaComponent]
 })
