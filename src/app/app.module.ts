@@ -24,7 +24,7 @@ import { ChartsModule } from "ng2-charts";
 import { NgxDocViewerModule } from "ngx-doc-viewer";
 
 import { BlockUIModule } from "ng-block-ui";
-
+import { SelectDropDownModule } from 'ngx-select-dropdown';
 import {
   NbMenuModule,
   NbActionsModule,
@@ -44,7 +44,7 @@ import {
   NbWindowModule,
   NbDialogModule,
   NbChatModule,
-  NbTabsetModule
+  NbTabsetModule,
 } from "@nebular/theme";
 
 // import { TranslatorService } from "./service/translator.service";
@@ -83,7 +83,8 @@ import {
     NbTreeGridModule,
     NbStepperModule,
     BlockUIModule.forRoot(),
-    NbTabsetModule
+    NbTabsetModule,
+    SelectDropDownModule
   ],
   declarations: [AppComponent, LandingComponent],
   providers: [
