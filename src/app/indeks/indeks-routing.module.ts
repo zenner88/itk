@@ -5,7 +5,7 @@ import { IndeksComponent } from "./indeks.component";
 // import { FormComponent } from "./form/form.component";
 import { FormObjektifComponent } from "./formobjektif/formobjektif.component";
 import { NotFoundComponent } from "../pages/miscellaneous/not-found/not-found.component";
-import { StepperIntComponent } from "../persepsi/persepsi-int/stepper.component";
+// import { StepperIntComponent } from "../persepsi/persepsi-int/stepper.component";
 import { ValidasiFormObjektifComponent } from "./validasiFormObjektif/formobjektif.component";
 import { AuthGuard, LoginGuard } from "../guard";
 
@@ -24,11 +24,11 @@ const routes: Routes = [
         canActivate: [AuthGuard],
         component: ValidasiFormObjektifComponent
       },
-      {
-        path: "formPIP",
-        canActivate: [AuthGuard],
-        component: StepperIntComponent
-      },
+      // {
+      //   path: "formPIP",
+      //   canActivate: [AuthGuard],
+      //   component: StepperIntComponent
+      // },
       {
         path: "**",
         component: NotFoundComponent
