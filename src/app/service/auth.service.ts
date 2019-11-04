@@ -254,6 +254,25 @@ export class AuthService {
                   ]
                 }
               ];
+            } else if (user.kelompok == 60) {
+              user.menu = [
+                {
+                  title: "Dashboard",
+                  icon: "home-outline",
+                  link: "/pages/dashboard"
+                },
+                {
+                  title: "Validasi",
+                  icon: "folder-add-outline",
+                  children: [
+                    {
+                      title: "Validasi Pokja",
+                      link: "/pokja/validasi-pokja/smart-table",
+                      icon: "folder-outline"
+                    }
+                  ]
+                }
+              ];
             } else {
               user.menu = [];
             }

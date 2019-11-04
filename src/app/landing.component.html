@@ -56,7 +56,7 @@
       </div>
     </nb-card-header>
     <nb-card-body>
-      <form [formGroup]="loginFormPolres" (ngSubmit)="onSubmitPolres()">
+      <form [formGroup]="loginFormPokja" (ngSubmit)="onSubmitPolres()">
         <div class="form-group">
           <label class="label">Polda</label>
           <nb-select selected=0 fullWidth class="pull-right status-info shape-rectangle" formControlName="namaPolda"
@@ -64,14 +64,6 @@
             <nb-option value=0>Pilih Polda</nb-option>
             <nb-option *ngFor="let x of satkerPolda" [value]="x">{{ x.satker }}</nb-option>
           </nb-select>
-        </div>
-        <div class="form-group">
-          <label for="namaUser">Username</label>
-          <input type="text" formControlName="namaUser" class="form-control"
-            [ngClass]="{ 'is-invalid': submitted && f.namaUser.errors }" />
-          <div *ngIf="submitted && f.namaUser.errors" class="invalid-feedback">
-            <div *ngIf="f.namaUser.errors.required">namaUser is required</div>
-          </div>
         </div>
         <div class="form-group">
           <label for="kataSandi">Password</label>

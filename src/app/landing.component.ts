@@ -57,6 +57,7 @@ export class LandingComponent implements OnInit, AfterViewInit {
   landing_scroll: any;
 
   loginForm: FormGroup;
+  loginFormPokja: FormGroup;
   loginFormOperator: FormGroup;
   loginFormPolres: FormGroup;
   loginFormKasatfung: FormGroup;
@@ -123,14 +124,20 @@ export class LandingComponent implements OnInit, AfterViewInit {
         console.log(error);
       }
     );
+    this.getDropdownPolda();
 
     this.loginForm = this.formBuilder.group({
       namaUser: ["", Validators.required],
       kataSandi: ["", Validators.required]
     });
 
+    this.loginFormPokja = this.formBuilder.group({
+      namaPolda: ["", Validators.required],
+      kataSandi: ["", Validators.required]
+    });
+
     this.loginFormOperator = this.formBuilder.group({
-      namaUser: ["", Validators.required],
+      namaUser: [""],
       namaPolda: ["", Validators.required],
       kataSandi: ["", Validators.required],
       namaPolres: ["", Validators.required],
@@ -138,14 +145,14 @@ export class LandingComponent implements OnInit, AfterViewInit {
     });
 
     this.loginFormPolres = this.formBuilder.group({
-      namaUser: ["", Validators.required],
+      namaUser: [""],
       namaPolda: ["", Validators.required],
       kataSandi: ["", Validators.required],
       namaPolres: ["", Validators.required]
     });
 
     this.loginFormKasatfung = this.formBuilder.group({
-      namaUser: ["", Validators.required],
+      namaUser: [""],
       namaPolda: ["", Validators.required],
       kataSandi: ["", Validators.required],
       namaPolres: ["", Validators.required]
@@ -270,6 +277,10 @@ export class LandingComponent implements OnInit, AfterViewInit {
     return this.loginForm.controls;
   }
 
+  get fok() {
+    return this.loginFormPokja.controls;
+  }
+
   get fo() {
     return this.loginFormOperator.controls;
   }
@@ -302,26 +313,11 @@ export class LandingComponent implements OnInit, AfterViewInit {
         data => {
           this.appComp.setMenu(data.menu);
           console.log(data);
-          if (data.kelompok == 1) {
+          if (data.kelompok == 10) {
             window.alert("Berhasil");
             this.router.navigate(["pages"]);
             this.blockUI.start();
-          } else if (data.kelompok == 5) {
-            window.alert("Berhasil");
-            this.router.navigate(["pages"]);
-            this.blockUI.start();
-          } else if (data.kelompok == 2) {
-            window.alert(
-              "Maaf Anda Tidak diperkenankan Untuk Mengakses Halaman Ini, Login dimenu Polres!"
-            );
-            localStorage.clear();
-          } else if (data.kelompok == 3) {
-            window.alert(
-              "Maaf Anda Tidak diperkenankan Untuk Mengakses Halaman Ini, Login dimenu Polres!"
-            );
-
-            localStorage.clear();
-          } else if (data.kelompok == 4) {
+          } else {
             window.alert(
               "Maaf Anda Tidak diperkenankan Untuk Mengakses Halaman Ini, Login dimenu Polres!"
             );
@@ -338,61 +334,43 @@ export class LandingComponent implements OnInit, AfterViewInit {
   }
 
   onSubmitPolres() {
-    window.alert("Maaf Anda Tidak diperkenankan Untuk Mengakses Halaman Ini !");
-    // this.submitted = true;
-    // if (this.loginFormPolres.invalid) {
-    //   window.alert("Salah");
-    //   return;
-    // this.authService
-    // }
+    this.submitted = true;
+    if (this.loginFormPokja.invalid) {
+      window.alert("Salah");
+      return;
+    }
 
-    // this.loading = true;
-    //   .login(
-    //     this._global.baseAPIUrl,
-    //     this.fPol.namaUser.value,
-    //     this.fPol.kataSandi.value,
-    //     true
-    //   )
-    //   .pipe(first())
-    //   .subscribe(
-    //     data => {
-    //       this.appComp.setMenu(data.menu);
-    //       window.alert("Berhasil");
-    //       console.log(data);
-    //       if (data.kelompok == 1) {
-    //         this.router.navigate(["pages"]);
-    //         this.blockUI.start();
-    //       } else if (data.kelompok == 2) {
-    //         this.blockUI.start();
-    //         localStorage.setItem(
-    //           "indexObjektif",
-    //           JSON.stringify({
-    //             penilaianId: 862,
-    //             kodeSatfung: "PSU",
-    //             idSatfung: "SU"
-    //           })
-    //         );
-    //         localStorage.setItem("kodeSatker", "640701");
-    //         this.router.navigate(["indeks/formObjektif"]);
-    //       } else if (data.kelompok == 3) {
-    //         localStorage.setItem("kodeSatker", this.fPol.namaPolres.value);
-    //         this.blockUI.start();
-    //         this.router.navigate([
-    //           "pages/validasi-list-polres-satfung/smart-table"
-    //         ]);
-    //       } else if (data.kelompok == 4) {
-    //         this.blockUI.start();
-    //         localStorage.setItem("kodeSatker", this.fPol.namaPolres.value);
-    //         this.router.navigate(["pages/dashboard"]);
-    //       }
-    //       this.loading = false;
-    //       this.dialogActive.close();
-    //     },
-    //     error => {
-    //       this.error = error;
-    //       this.loading = false;
-    //     }
-    //   );
+    this.loading = true;
+    this.authService
+      .login(
+        this._global.baseAPIUrl,
+        60 + "" + this.fok.namaPolda.value.kode,
+        this.fok.kataSandi.value,
+        true
+      )
+      .pipe(first())
+      .subscribe(
+        data => {
+          this.appComp.setMenu(data.menu);
+          console.log(data);
+          if (data.kelompok == 60) {
+            window.alert("Berhasil");
+            this.router.navigate(["pages"]);
+            this.blockUI.start();
+          } else {
+            window.alert(
+              "Maaf Anda Tidak diperkenankan Untuk Mengakses Halaman Ini, Login dimenu Polres!"
+            );
+            localStorage.clear();
+          }
+          this.loading = false;
+          this.dialogActive.close();
+        },
+        error => {
+          this.error = error;
+          this.loading = false;
+        }
+      );
   }
 
   onSubmitOperator() {
@@ -492,7 +470,7 @@ export class LandingComponent implements OnInit, AfterViewInit {
               "Maaf Anda Tidak diperkenankan Untuk Mengakses Halaman Ini !"
             );
             localStorage.clear();
-          } else if (data.kelompok == 4) {
+          } else if (data.kelompok == 70) {
             this.blockUI.start();
             localStorage.setItem("kodeSatker", this.fPol.namaPolres.value.kode);
             this.router.navigate(["pages/dashboard"]);
