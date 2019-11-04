@@ -59,14 +59,14 @@
       <form [formGroup]="loginFormPokja" (ngSubmit)="onSubmitPolres()">
         <div class="form-group">
           <label class="label">Polda</label>
-          <nb-select selected=0 fullWidth class="pull-right status-info shape-rectangle" formControlName="namaPolda"
+          <!-- <nb-select selected=0 fullWidth class="pull-right status-info shape-rectangle" formControlName="namaPolda"
             (ngModelChange)="getDropdownPolres($event)">
             <nb-option value=0>Pilih Polda</nb-option>
             <nb-option *ngFor="let x of satkerPolda" [value]="x">{{ x.satker }}</nb-option>
-          </nb-select>
-
-          <ngx-select-dropdown (change)="selectionChanged($event)" formControlName="namaPolda" [config]="config" [options]="dropdownOptions"></ngx-select-dropdown>
-
+          </nb-select> -->
+          <ngx-select-dropdown class="pull-right status-info shape-rectangle"
+            (ngModelChange)="getDropdownPolres($event)" formControlName="namaPolda" [config]="config"
+            [options]="satkerListPolda"></ngx-select-dropdown>
         </div>
         <div class="form-group">
           <label for="kataSandi">Password</label>
@@ -107,11 +107,14 @@
           <form [formGroup]="loginFormPolres" (ngSubmit)="onSubmitKapolres()">
             <div class="form-group">
               <label class="label">Polda</label>
-              <nb-select selected=0 fullWidth class="pull-right status-info shape-rectangle" formControlName="namaPolda"
+              <!-- <nb-select selected=0 fullWidth class="pull-right status-info shape-rectangle" formControlName="namaPolda"
                 (ngModelChange)="getDropdownPolres($event)">
                 <nb-option value=0>Pilih Polda</nb-option>
                 <nb-option *ngFor="let x of satkerPolda" [value]="x">{{ x.satker }}</nb-option>
-              </nb-select>
+              </nb-select> -->
+              <ngx-select-dropdown class="pull-right status-info shape-rectangle"
+                (ngModelChange)="getDropdownPolres($event)" formControlName="namaPolda" [config]="config"
+                [options]="satkerListPolda"></ngx-select-dropdown>
             </div>
             <div class="form-group">
               <label class="label">Polres</label>
@@ -120,6 +123,9 @@
                 <nb-option value=0>Pilih Polres</nb-option>
                 <nb-option *ngFor="let x of satkerx" [value]="x">{{ x.satker }}</nb-option>
               </nb-select>
+              <!-- <ngx-select-dropdown class="pull-right status-info shape-rectangle" formControlName="namaPolres"
+                [config]="configPolres" [options]="satkerList"></ngx-select-dropdown>
+                {{satkerList.length}} -->
             </div>
             <div class="form-group" hidden>
               <label for="namaUser">Username</label>
@@ -150,11 +156,15 @@
             <div class="form-group">
               <div class="form-group">
                 <label class="label">Polda</label>
-                <nb-select selected=0 fullWidth class="pull-right status-info shape-rectangle"
+                <!-- <nb-select selected=0 fullWidth class="pull-right status-info shape-rectangle"
                   formControlName="namaPolda" (ngModelChange)="getDropdownPolres($event)">
                   <nb-option value=0>Pilih Polda</nb-option>
                   <nb-option *ngFor="let x of satkerPolda" [value]="x">{{ x.satker }}</nb-option>
-                </nb-select>
+                </nb-select> -->
+                <ngx-select-dropdown class="pull-right status-info shape-rectangle"
+                  (ngModelChange)="getDropdownPolres($event)" formControlName="namaPolda" [config]="config"
+                  [options]="satkerListPolda"></ngx-select-dropdown>
+
               </div>
               <label class="label">Polres</label>
               <nb-select selected=0 fullWidth class="pull-right status-info shape-rectangle"
@@ -162,6 +172,9 @@
                 <nb-option value=0>Pilih Polres</nb-option>
                 <nb-option *ngFor="let x of satkerx" [value]="x">{{ x.satker }}</nb-option>
               </nb-select>
+              <!-- <ngx-select-dropdown class="pull-right status-info shape-rectangle" formControlName="namaPolres"
+                [config]="config" [options]="satkerList"></ngx-select-dropdown> -->
+
             </div>
             <div class="form-group" hidden>
               <label for="namaUser">Username</label>
@@ -191,11 +204,15 @@
           <form [formGroup]="loginFormOperator" (ngSubmit)="onSubmitOperator()">
             <div class="form-group">
               <label class="label">Polda</label>
-              <nb-select selected=0 fullWidth class="pull-right status-info shape-rectangle" formControlName="namaPolda"
+              <!-- <nb-select selected=0 fullWidth class="pull-right status-info shape-rectangle" formControlName="namaPolda"
                 (ngModelChange)="getDropdownPolres($event)">
                 <nb-option value=0>Pilih Polda</nb-option>
                 <nb-option *ngFor="let x of satkerPolda" [value]="x">{{ x.satker }}</nb-option>
-              </nb-select>
+              </nb-select> -->
+              <ngx-select-dropdown class="pull-right status-info shape-rectangle"
+                (ngModelChange)="getDropdownPolres($event)" formControlName="namaPolda" [config]="config"
+                [options]="satkerListPolda"></ngx-select-dropdown>
+
             </div>
             <div class="form-group">
               <label class="label">Polres</label>
@@ -204,16 +221,21 @@
                 <nb-option value=0>Pilih Polres</nb-option>
                 <nb-option *ngFor="let x of satkerx" [value]="x">{{ x.satker }}</nb-option>
               </nb-select>
+              <!-- <ngx-select-dropdown class="pull-right status-info shape-rectangle" formControlName="namaPolres"
+                [config]="config" [options]="satkerList"></ngx-select-dropdown> -->
+
             </div>
             <div class="form-group">
               <label class="label">Satfung</label>
-              <nb-select selected=0 fullWidth class="pull-right status-info shape-rectangle"
+              <!-- <nb-select selected=0 fullWidth class="pull-right status-info shape-rectangle"
                 formControlName="namaSatfung">
                 <nb-option value=0>Pilih Satfung</nb-option>
                 <nb-option *ngFor="let x of satfungx" [value]="x">{{ x.singkatan_satfung }}
-                  <!-- -{{x.tipe_polres}} -->
+                   -{{x.tipe_polres}}
                 </nb-option>
-              </nb-select>
+              </nb-select> -->
+              <ngx-select-dropdown class="pull-right status-info shape-rectangle" formControlName="namaSatfung"
+                [config]="config" [options]="indikatorSatfungList"></ngx-select-dropdown>
             </div>
             <div class="form-group" hidden>
               <label for="namaUser">Username</label>
