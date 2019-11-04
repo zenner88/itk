@@ -620,6 +620,15 @@ export class FormObjektifComponent implements OnInit {
       this.downloadFile(data);
     }
   }
+
+  openWindowInfo(contentTemplate) {
+      this.windowService.open(contentTemplate, {
+        title: "Contoh Dokumen.",
+        context: {
+          text: "some text to pass into template"
+        }
+      });
+  }
   // UPLOAD
   postMethod(files: UploadFile, index) {
     this.fileToUpload = files;

@@ -244,7 +244,7 @@
                     <B>{{x.value.progress}}</B>
                   </td>
                   <td *ngIf="x.value.id_tipe_indikator == 0" class="text-center" width="3%">
-                    <nb-icon icon="info-outline" status="info" (click)="openWindow(contentTemplate)"
+                    <nb-icon icon="info-outline" status="info" (click)="openWindowInfo(contentTemplate)"
                       [options]="{ animation: { type: 'pulse' } }"></nb-icon>
                   </td>
                   <td *ngIf="x.value.id_tipe_indikator == 0" class="text-center" width="3%">
@@ -282,7 +282,7 @@
                     <B>{{x.value.progress}}</B>
                   </td>
                   <td *ngIf="x.value.id_tipe_indikator == 1" class="text-center" width="3%">
-                    <nb-icon icon="info-outline" status="info" (click)="openWindow(contentTemplate)"
+                    <nb-icon icon="info-outline" status="info" (click)="openWindowInfo(contentTemplate)"
                       [options]="{ animation: { type: 'pulse' } }"></nb-icon>
                   </td>
                   <td *ngIf="x.value.id_tipe_indikator == 1" class="text-center" width="3%">
@@ -318,7 +318,7 @@
                           <B>{{z.progress}}</B>
                         </td>
                         <td width="5%">
-                          <nb-icon icon="info-outline" status="info" (click)="openWindow(contentTemplate)"
+                          <nb-icon icon="info-outline" status="info" (click)="openWindowInfo(contentTemplate)"
                             [options]="{ animation: { type: 'pulse' } }"></nb-icon>
                         </td>
                         <td width="5%">
