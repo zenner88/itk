@@ -47,7 +47,7 @@ import {
     BlockUIModule.forRoot(),
     FormsModule,
     ReactiveFormsModule,
-    TablesModule
+    
   ],
   declarations: [HomeComponent, PokjaComponent]
 })
