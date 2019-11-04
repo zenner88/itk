@@ -60,6 +60,7 @@ export class ValidasiFormObjektifComponent implements OnInit {
   dragOver: boolean;
   saveP = false;
   saveD = false;
+  lastUpdate: any;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -206,6 +207,7 @@ export class ValidasiFormObjektifComponent implements OnInit {
             this.nama_satker = this.headers.satker;
             this.nama_tipe_polres = this.headers.tipe_polres;
             this.nama_satfung = this.headers.singkatan_satfung;
+            this.lastUpdate=this.headers.waktu_ubah;
             this.getOption();
           }
         },
@@ -260,7 +262,7 @@ export class ValidasiFormObjektifComponent implements OnInit {
     this.httpClient
       .get(
         this._global.baseAPIUrl +
-          "/Itk_tmp_penilaian_indikators/getDataBypenilaianIdDanJenisDanKIIDanKsat?penilaianId=" +
+          "/View_penilaian_indikator_alls/getDataBypenilaianIdDanJenisDanKIIDanKsat?penilaianId=" +
           this.headers.penilaian_id +
           "&jenis=&kodeSatfung=" +
           x +

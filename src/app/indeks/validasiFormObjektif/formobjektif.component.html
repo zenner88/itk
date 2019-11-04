@@ -198,6 +198,7 @@
                 <input class="btn btn-info mr-1 text-center" type="button" value="Cetak" (click)="captureScreen()" />
               </div>
               <div class="col-6 text-right">
+                <small style="padding-right: 3rem;"> Terakhir diubah : {{lastUpdate | date: 'dd/MM/yyyy HH:mm'}}</small>
                 <button class="btn btn-primary mr-1 text-center" (click)="onSubmit()">Simpan</button>
               </div>
             </div>
@@ -243,14 +244,16 @@
                 <div class="form-group col-8" *ngIf="x.value.id_tipe_indikator == 1">
                   <div class="row">
                     <div class="form-group col-4">
-                      <nb-radio-group name="{{x.value.kode_indikator_satfung}}" [(ngModel)]="x.value.nilai" *ngIf="x.value.radio.length > 0">
-                        <nb-radio name="{{opt.kode_indikator_satfung}}" value="{{opt.nilai}}" *ngFor="let opt of x.value.radio">{{opt.pilihan}}</nb-radio>
+                      <nb-radio-group name="{{x.value.kode_indikator_satfung}}" [(ngModel)]="x.value.nilai"
+                        *ngIf="x.value.radio.length > 0">
+                        <nb-radio name="{{opt.kode_indikator_satfung}}" value="{{opt.nilai}}"
+                          *ngFor="let opt of x.value.radio">{{opt.pilihan}}</nb-radio>
                       </nb-radio-group>
                       <span *ngIf="x.value.radio.length ==0">
-                          {{x.value.pilihan_jawaban}}
+                        {{x.value.pilihan_jawaban}}
                       </span>
                     </div>
-                    <div class="form-group col-2" >
+                    <div class="form-group col-2">
                       <input type="text" [(ngModel)]="t.value[index_indikator].nilai" class="form-control" fullWidth
                         fieldSize="small" *ngIf="x.value.radio.length ==0" />
                       {{x.value.satuan}}
@@ -307,8 +310,8 @@
                 <input class="btn btn-info mr-1 text-center" type="button" value="Cetak" (click)="captureScreen()" />
               </div>
               <div class="col-6 text-right">
-                <small style="padding-right: 3rem;"> Terakhir diubah : ___</small> <button class="btn btn-primary mr-1"
-                  (click)="onSubmit()">Simpan</button>
+                <small style="padding-right: 3rem;"> Terakhir diubah : {{lastUpdate | date: 'dd/MM/yyyy HH:mm'}}</small>
+                <button class="btn btn-primary mr-1" (click)="onSubmit()">Simpan</button>
               </div>
             </div>
             <!-- </form> -->

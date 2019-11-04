@@ -313,6 +313,7 @@ export class LandingComponent implements OnInit, AfterViewInit {
         data => {
           this.appComp.setMenu(data.menu);
           console.log(data);
+          localStorage.setItem("namaUser", this.f.namaUser.value);
           if (data.kelompok == 10) {
             window.alert("Berhasil");
             this.router.navigate(["pages"]);
@@ -353,6 +354,7 @@ export class LandingComponent implements OnInit, AfterViewInit {
         data => {
           this.appComp.setMenu(data.menu);
           console.log(data);
+          localStorage.setItem("namaUser", this.fok.namaPolda.value.satker);
           if (data.kelompok == 60) {
             window.alert("Berhasil");
             this.router.navigate(["pages"]);
@@ -392,6 +394,8 @@ export class LandingComponent implements OnInit, AfterViewInit {
       .subscribe(
         data => {
           this.appComp.setMenu(data.menu);
+          localStorage.setItem("namaUser", this.fo.namaPolres.value.satker);
+
           console.log(data);
           if (data.kelompok == 1) {
             window.alert(
@@ -454,6 +458,7 @@ export class LandingComponent implements OnInit, AfterViewInit {
       .subscribe(
         data => {
           this.appComp.setMenu(data.menu);
+          localStorage.setItem("namaUser", this.fPol.namaPolres.value.satker);
           console.log(data);
           if (data.kelompok == 1) {
             window.alert(
@@ -504,6 +509,7 @@ export class LandingComponent implements OnInit, AfterViewInit {
       .subscribe(
         data => {
           this.appComp.setMenu(data.menu);
+          localStorage.setItem("namaUser", this.fPung.namaPolres.value.satker);
           window.alert("Berhasil");
           console.log(data);
           if (data.kelompok == 80) {

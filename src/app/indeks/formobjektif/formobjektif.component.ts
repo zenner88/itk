@@ -101,6 +101,7 @@ export class FormObjektifComponent implements OnInit {
   listOption: any[];
   keteranganUpload: any[];
   listDataOptions: any;
+  lastUpdate:any;
   keteranganPolres: any[] = [
     {
       kasatfung: "",
@@ -177,6 +178,7 @@ export class FormObjektifComponent implements OnInit {
             this.nama_satker = this.headers.satker;
             this.nama_tipe_polres = this.headers.tipe_polres;
             this.nama_satfung = this.headers.singkatan_satfung;
+            this.lastUpdate=this.headers.waktu_ubah;
             this.getOption();
           }
           this.blockUI.stop();
