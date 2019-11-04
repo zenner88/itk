@@ -297,8 +297,8 @@ export class FormObjektifComponent implements OnInit {
               pilihan_jawaban: xx.pilihan_jawaban,
               catatan: xx.catatan,
               dokumen: xx.dokumen,
-              // jml_arsif: xx.arsip_link ? JSON.parse(xx.arsip_link).length : null
-              jml_arsif: xx.arsip_link
+              jml_arsif: xx.arsip_link ? JSON.parse(xx.arsip_link).length : null
+              // jml_arsif: xx.arsip_link
             });
           });
           this.jmlDetails = this.objek2.length;

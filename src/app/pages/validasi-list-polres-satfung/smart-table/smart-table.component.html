@@ -1,5 +1,5 @@
 <ng-template #dialogUpload let-data let-ref="dialogRef">
-  <nb-card status="primary">
+  <nb-card status="{{classColor}}">
     <nb-card-header>
       <div class="row">
         <div class="col-6">
@@ -7,7 +7,8 @@
         </div>
         <div class="col-6 text-right">
           <a style="cursor: pointer;" (click)="ref.close()">
-            <nb-icon icon="close-outline" status="primary" [options]="{ animation: { type: 'pulse' } }"></nb-icon>
+            <nb-icon icon="close-outline" status="{{classColor}}" [options]="{ animation: { type: 'pulse' } }">
+            </nb-icon>
           </a>
         </div>
       </div>
@@ -66,7 +67,8 @@
       <div *ngFor="let fileDownload of fileDownload; let i = index">
         <!-- <a style="cursor: pointer;" (click)="downloadFile(fileDownload)"> -->
         <a style="cursor: pointer;" (click)="openWindow(contentTemplate2,fileDownload)">
-          <nb-icon icon="file-text-outline" status="primary" [options]="{ animation: { type: 'pulse' } }"></nb-icon>
+          <nb-icon icon="file-text-outline" status="{{classColor}}" [options]="{ animation: { type: 'pulse' } }">
+          </nb-icon>
           {{fileDownload}}
         </a>
         <a style="cursor: pointer;" (click)="deletFile(i)">
@@ -85,40 +87,48 @@
     </nb-card-footer>
   </nb-card>
 </ng-template>
-<nb-card status="primary">
-  <nb-card-header>
+<ng-template #contentTemplate3 let-data>
+  <div class="pdf-container">
+    <pdf-viewer [src]="fileViewPdf" [original-size]="false"></pdf-viewer>
+  </div>
+</ng-template>
+<nb-card status="{{classColor}}">
+  <nb-card-header *ngIf="user.kelompok == 70">
     Pengesahan Kapolres
+  </nb-card-header>
+  <nb-card-header *ngIf="user.kelompok == 80">
+    Validasi Kasatfung
   </nb-card-header>
   <nb-card-body>
     <div id="contentToConvert">
-    <nb-card>
-      <nb-card-header>
-        KETERANGAN POLRES
-      </nb-card-header>
-      <nb-card-body>
-        <div class="row">
-          <div class="col-md-12">
-            <div class="row show-grid">
-              <div class="col-sm-0 col-md-2">
-                <div align="center">1.</div>
-              </div>
-              <div class="col-sm-2">
-                <div align="right">NAMA POLRES</div>
-              </div>
-              <div class="col-sm-4">
-                <div align="left">
-                  <div class="form-group">
-                    <B>{{namaSatker}}</B>
-                    <!-- <nb-select selected=0 fullWidth class="pull-right status-info shape-rectangle">
+      <nb-card>
+        <nb-card-header>
+          KETERANGAN POLRES
+        </nb-card-header>
+        <nb-card-body>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="row show-grid">
+                <div class="col-sm-0 col-md-2">
+                  <div align="center">1.</div>
+                </div>
+                <div class="col-sm-2">
+                  <div align="right">NAMA POLRES</div>
+                </div>
+                <div class="col-sm-4">
+                  <div align="left">
+                    <div class="form-group">
+                      <B>{{namaSatker}}</B>
+                      <!-- <nb-select selected=0 fullWidth class="pull-right status-info shape-rectangle">
                         <nb-option value=0 (click)="prinsipClick2(event)">Semua</nb-option>
                         <nb-option *ngFor="let x of prinsipx" value="x.id" (click)="prinsipClick2(x.id)">{{ x.prinsip }}</nb-option>
                     </nb-select> -->
+                    </div>
                   </div>
                 </div>
+                <div class="col-sm-4"></div>
               </div>
-              <div class="col-sm-4"></div>
-            </div>
-            <!-- <div class="row show-grid">
+              <!-- <div class="row show-grid">
               <div class="col-sm-2">
                 <div align="center">2.</div>
               </div>
@@ -134,60 +144,64 @@
               </div>
               <div class="col-sm-4"></div>
             </div> -->
-            <div class="row show-grid">
-              <div class="col-sm-2">
-                <div align="center">2.</div>
-              </div>
-              <div class="col-sm-2">
-                <div align="right">Nama KAPOLRES</div>
-              </div>
-              <div class="col-sm-8">
-                <div align="left"><input type="text" class="col-lg-4" nbInput fullWidth fieldSize="small" placeholder=""
-                    [(ngModel)]="nama_kapolres"></div>
-              </div>
-            </div>
-            <div class="row show-grid">
-              <div class="col-sm-2">
-                <div align="center">3.</div>
-              </div>
-              <div class="col-sm-2">
-                <div align="right">Notelp/HP KAPOLRES</div>
-              </div>
-              <div class="col-sm-8">
-                <div align="left"><input type="text" class="col-lg-4" nbInput fullWidth fieldSize="small" placeholder=""
-                    [(ngModel)]="no_kapolres"></div>
-              </div>
-            </div>
-            <div class="row show-grid" *ngIf="user.userId == 4">
-              <div class="col-sm-2">
-                <div align="center">4.</div>
-              </div>
-              <div class="col-sm-2">
-                <div align="right">Lembar Pengesahan</div>
-              </div>
-              <div class="col-sm-8">
-                <div align="left">
-                  <button class="btn btn-primary mr-1 text-center" (click)="open(dialogUpload)">Upload</button>
+              <div class="row show-grid" *ngIf="user.kelompok == 70">
+                <div class="col-sm-2">
+                  <div align="center">2.</div>
+                </div>
+                <div class="col-sm-2">
+                  <div align="right">Nama KAPOLRES</div>
+                </div>
+                <div class="col-sm-8">
+                  <div align="left"><input type="text" class="col-lg-4" nbInput fullWidth fieldSize="small"
+                      placeholder="" [(ngModel)]="nama_kapolres"></div>
                 </div>
               </div>
+              <div class="row show-grid" *ngIf="user.kelompok == 70">
+                <div class="col-sm-2">
+                  <div align="center">3.</div>
+                </div>
+                <div class="col-sm-2">
+                  <div align="right">Notelp/HP KAPOLRES</div>
+                </div>
+                <div class="col-sm-8">
+                  <div align="left"><input type="text" class="col-lg-4" nbInput fullWidth fieldSize="small"
+                      placeholder="" [(ngModel)]="no_kapolres"></div>
+                </div>
+              </div>
+              <div class="row show-grid" *ngIf="user.kelompok == 70">
+                <div class="col-sm-2">
+                  <div align="center">4.</div>
+                </div>
+                <div class="col-sm-2">
+                  <div align="right">Lembar Pengesahan</div>
+                </div>
+                <div class="col-sm-8">
+                  <div align="left">
+                    <button class="btn btn-primary mr-1 text-center" (click)="open(dialogUpload)">Upload</button>
+                    <button class="btn btn-primary mr-1 text-center"
+                      (click)="openWindow(contentTemplate3,fileDownload[fileDownload.length - 1])" *ngIf="fileDownload.length > 0">Lihat
+                      Pengesahan</button>
+                  </div>
+                </div>
+              </div>
+              <div class="row show-grid"></div>
             </div>
-            <div class="row show-grid"></div>
           </div>
-        </div>
-      </nb-card-body>
-    </nb-card>
+        </nb-card-body>
+      </nb-card>
 
-    <ng2-smart-table [settings]="satfungs" [source]="source" (deleteConfirm)="onDeleteConfirm($event)"
-      (editConfirm)="onSaveConfirm($event)" (createConfirm)="onCreateConfirm($event)" (custom)="onCustomAction($event)">
-    </ng2-smart-table>
-    <hr>
+      <ng2-smart-table [settings]="satfungs" [source]="source" (deleteConfirm)="onDeleteConfirm($event)"
+        (editConfirm)="onSaveConfirm($event)" (createConfirm)="onCreateConfirm($event)"
+        (custom)="onCustomAction($event)">
+      </ng2-smart-table>
+      <hr>
     </div>
     <div class="row card-footer">
       <div class="col-6 text-left">
-          <input class="btn btn-info mr-1 text-center" type="button" value="Cetak" (click)="captureScreen()"/>  
+        <input class="btn btn-info mr-1 text-center" type="button" value="Cetak" (click)="captureScreen()" />
       </div>
       <div class="col-6 text-right">
-        <button class="btn btn-primary mr-1 text-center" (click)="simpan()">Simpan</button>
+        <button class="btn btn-primary mr-1 text-center" (click)="simpan()" *ngIf="user.kelompok == 70">Simpan</button>
       </div>
     </div>
   </nb-card-body>
