@@ -4,7 +4,7 @@
  * Licensed under the MIT License. See License.txt in the project root for license information.
  */
 
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { AppGlobals } from "./app.global";
 import { formatDate } from "@angular/common";
 import {
@@ -41,6 +41,14 @@ import { MessageEvent } from "./service/message";
 import * as $ from "jquery";
 // declare var $: any;
 
+const httpOptions = {
+  headers: new HttpHeaders({
+    "Content-Type": "application/json",
+    Authorization:
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJrb2RlIjoiOTA2NDAxMzkiLCJuYW1hIjoiT1BFUkFUT1IgUE9MUkVTIEFDRUggQkVTQVIiLCJrZWxvbXBvayI6IjkwIiwic2F0a2VyIjoiNjQwMTM5IiwiZXhwIjoxNjA0NDc2NDY3LCJpYXQiOjE1NzI5NDA0Njd9.6W0ZMcZSyPWFpK6QJ3rIhpKId5i8zeXDIP0PCoLL2go"
+  })
+};
+
 @Component({
   selector: "landing-app",
   templateUrl: "landing.component.html",
@@ -73,6 +81,7 @@ export class LandingComponent implements OnInit, AfterViewInit {
   satkerPolda: any;
   public indikatorSatfungList: any[] = [];
   satfungx: any;
+  listPrinsip: any[];
   dialogActive: any;
   idKelompok: any;
   config = {
@@ -142,8 +151,8 @@ export class LandingComponent implements OnInit, AfterViewInit {
               title: xx.singkatan_satfung,
               singkatan_satfung: xx.singkatan_satfung,
               kode: xx.kode,
-              tipe_polres:xx.tipe_polres,
-              id_satfung:xx.id_satfung
+              tipe_polres: xx.tipe_polres,
+              id_satfung: xx.id_satfung
             });
           });
         }
@@ -153,6 +162,7 @@ export class LandingComponent implements OnInit, AfterViewInit {
       }
     );
     this.getDropdownPolda();
+    this.getDropdownPrinsip();
 
     this.loginForm = this.formBuilder.group({
       namaUser: ["", Validators.required],
@@ -161,6 +171,7 @@ export class LandingComponent implements OnInit, AfterViewInit {
 
     this.loginFormPokja = this.formBuilder.group({
       namaPolda: ["", Validators.required],
+      namaPrinsip: ["", Validators.required],
       kataSandi: ["", Validators.required]
     });
 
@@ -227,6 +238,30 @@ export class LandingComponent implements OnInit, AfterViewInit {
       );
     console.log("datas");
     console.log(this.satkerPolda);
+  }
+
+  getDropdownPrinsip() {
+    this.listPrinsip = [];
+    this.httpClient
+      .get(this._global.baseAPIUrl + "/Itk_ref_prinsips", httpOptions)
+      .subscribe(
+        data => {
+          if (data != undefined || data != null) {
+            const datas = JSON.stringify(data);
+            const datax = JSON.parse(datas);
+            datax.forEach(xx => {
+              this.listPrinsip.push({
+                value: xx.id,
+                title: xx.prinsip,
+                kode: xx.id
+              });
+            });
+          }
+        },
+        error => {
+          console.log(error);
+        }
+      );
   }
 
   getDropdownPolres(idPolda) {
@@ -392,6 +427,8 @@ export class LandingComponent implements OnInit, AfterViewInit {
           this.appComp.setMenu(data.menu);
           console.log(data);
           localStorage.setItem("namaUser", this.fok.namaPolda.value.satker);
+          localStorage.setItem("prinsip_id", this.fok.namaPrinsip.value.kode);
+          localStorage.setItem("kodeSatker", this.fok.namaPolda.value.kode);
           if (data.kelompok == 60) {
             window.alert("Berhasil");
             this.router.navigate(["pages"]);
@@ -559,16 +596,15 @@ export class LandingComponent implements OnInit, AfterViewInit {
               JSON.stringify({
                 penilaianId: 862,
                 kodeSatfung: this.fPung.namaSatfung.value.kode,
-                singkatan_satfung: this.fPung.namaSatfung.value.singkatan_satfung,
+                singkatan_satfung: this.fPung.namaSatfung.value
+                  .singkatan_satfung,
                 tipe_polres: this.fPung.namaSatfung.value.tipe_polres,
                 idSatfung: this.fPung.namaSatfung.value.id_satfung,
                 nama_satker: this.fPung.namaPolres.value.satker
               })
             );
             this.blockUI.start();
-            this.router.navigate([
-              "indeks/validasiFormObjektif"
-            ]);
+            this.router.navigate(["indeks/validasiFormObjektif"]);
           } else {
             window.alert(
               "Maaf Anda Tidak diperkenankan Untuk Mengakses Halaman Ini !"
