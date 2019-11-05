@@ -183,7 +183,8 @@ export class LandingComponent implements OnInit, AfterViewInit {
       namaUser: [""],
       namaPolda: ["", Validators.required],
       kataSandi: ["", Validators.required],
-      namaPolres: ["", Validators.required]
+      namaPolres: ["", Validators.required],
+      namaSatfung: ["", Validators.required]
     });
 
     this.appComp.setMenu([]);
@@ -553,9 +554,20 @@ export class LandingComponent implements OnInit, AfterViewInit {
               "kodeSatker",
               this.fPung.namaPolres.value.kode
             );
+            localStorage.setItem(
+              "indexObjektif",
+              JSON.stringify({
+                penilaianId: 862,
+                kodeSatfung: this.fo.namaSatfung.value.kode,
+                singkatan_satfung: this.fo.namaSatfung.value.singkatan_satfung,
+                tipe_polres: this.fo.namaSatfung.value.tipe_polres,
+                idSatfung: this.fo.namaSatfung.value.id_satfung,
+                nama_satker: this.fo.namaPolres.value.satker
+              })
+            );
             this.blockUI.start();
             this.router.navigate([
-              "pages/validasi-list-polres-satfung/smart-table"
+              "indeks/validasiFormObjektif"
             ]);
           } else {
             window.alert(
