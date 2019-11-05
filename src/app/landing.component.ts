@@ -138,10 +138,11 @@ export class LandingComponent implements OnInit, AfterViewInit {
           console.log(datax);
           datax.forEach(xx => {
             this.indikatorSatfungList.push({
-              value: xx.id,
+              value: xx.kode,
               title: xx.singkatan_satfung,
               singkatan_satfung: xx.singkatan_satfung,
-              id: xx.id
+              kode: xx.kode,
+              tipe_polres:xx.tipe_polres
             });
           });
         }
@@ -445,7 +446,7 @@ export class LandingComponent implements OnInit, AfterViewInit {
                 kodeSatfung: this.fo.namaSatfung.value.kode,
                 singkatan_satfung: this.fo.namaSatfung.value.singkatan_satfung,
                 tipe_polres: this.fo.namaSatfung.value.tipe_polres,
-                idSatfung: this.fo.namaSatfung.value.id_satfung,
+                idSatfung: this.fo.namaSatfung.value.kode,
                 nama_satker: this.fo.namaPolres.value.satker
               })
             );
