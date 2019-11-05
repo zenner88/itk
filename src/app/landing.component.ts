@@ -558,11 +558,11 @@ export class LandingComponent implements OnInit, AfterViewInit {
               "indexObjektif",
               JSON.stringify({
                 penilaianId: 862,
-                kodeSatfung: this.fo.namaSatfung.value.kode,
-                singkatan_satfung: this.fo.namaSatfung.value.singkatan_satfung,
-                tipe_polres: this.fo.namaSatfung.value.tipe_polres,
-                idSatfung: this.fo.namaSatfung.value.id_satfung,
-                nama_satker: this.fo.namaPolres.value.satker
+                kodeSatfung: this.fPung.namaSatfung.value.kode,
+                singkatan_satfung: this.fPung.namaSatfung.value.singkatan_satfung,
+                tipe_polres: this.fPung.namaSatfung.value.tipe_polres,
+                idSatfung: this.fPung.namaSatfung.value.id_satfung,
+                nama_satker: this.fPung.namaPolres.value.satker
               })
             );
             this.blockUI.start();
