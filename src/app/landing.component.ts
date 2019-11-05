@@ -142,7 +142,8 @@ export class LandingComponent implements OnInit, AfterViewInit {
               title: xx.singkatan_satfung,
               singkatan_satfung: xx.singkatan_satfung,
               kode: xx.kode,
-              tipe_polres:xx.tipe_polres
+              tipe_polres:xx.tipe_polres,
+              id_satfung:xx.id_satfung
             });
           });
         }
@@ -446,7 +447,7 @@ export class LandingComponent implements OnInit, AfterViewInit {
                 kodeSatfung: this.fo.namaSatfung.value.kode,
                 singkatan_satfung: this.fo.namaSatfung.value.singkatan_satfung,
                 tipe_polres: this.fo.namaSatfung.value.tipe_polres,
-                idSatfung: this.fo.namaSatfung.value.kode,
+                idSatfung: this.fo.namaSatfung.value.id_satfung,
                 nama_satker: this.fo.namaPolres.value.satker
               })
             );
