@@ -92,7 +92,7 @@ export class FormObjektifComponent implements OnInit {
     index_detail: null;
   };
   fileDownload: any[];
-  user = "zenner";
+  user = JSON.parse(localStorage.getItem("currentUser")).kode;
   dataObjectif: any;
   kodeSatker: any;
   satfungx: any;

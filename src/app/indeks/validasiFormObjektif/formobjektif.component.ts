@@ -94,13 +94,21 @@ export class ValidasiFormObjektifComponent implements OnInit {
     index_detail: null;
   };
   fileDownload: any[];
-  user = "zenner";
+  user = JSON.parse(localStorage.getItem("currentUser")).kode;
   dataObjectif: any;
   kodeSatker: any;
   satfungx: any;
   public satfungList: any[] = [];
   periode: any;
   listDataOptions: any;
+  keteranganPolres: any[] = [
+    {
+      kasatfung: "",
+      hp_kasatfung: "",
+      staff_satfung: "",
+      hp_staff_satfung: ""
+    }
+  ];
   // convenience getters for easy access to form fields
 
   open(dialog: TemplateRef<any>, index_indikator, index_detail) {
@@ -356,6 +364,27 @@ export class ValidasiFormObjektifComponent implements OnInit {
     console.log("Details");
     console.log(this.objek2);
     console.log(this.t.value.name);
+    let params = JSON.stringify({
+      where: { penilaian_id: this.headers.penilaian_id, kode_satfung: x }
+    });
+    this.httpClient
+      .get(
+        this._global.baseAPIUrl +
+          "/Itk_trn_penilaian_satfungs?filter=" +
+          params,
+        httpOptions
+      )
+      .subscribe(
+        dataKeterangan => {
+          const datas = JSON.stringify(dataKeterangan);
+          const datax = JSON.parse(datas);
+          this.keteranganPolres = [];
+          this.keteranganPolres = datax;
+        },
+        error => {
+          this.showToast("warning", "Koneksi bermasalah", error.message);
+        }
+      );
   }
   onSubmit() {
     var saveP = false;
@@ -544,6 +573,39 @@ export class ValidasiFormObjektifComponent implements OnInit {
         );
     }
 
+    this.keteranganPolres[0].diubah_oleh = JSON.parse(
+      localStorage.getItem("currentUser")
+    ).kode;
+    this.keteranganPolres[0].waktu_ubah = new Date();
+
+    this.httpClient
+      .put(
+        this._global.baseAPIUrl + "/Itk_trn_penilaian_satfungs",
+        this.keteranganPolres[0],
+        httpOptions
+      )
+      .subscribe(
+        data => {
+          // console.log("PUT Request is successful ", data);
+          // this.showToast("success", "Data Tersimpan", id);
+          this.ngOnInit();
+          setTimeout(() => {
+            this.blockUI.stop();
+          }, 2500);
+        },
+        error => {
+          setTimeout(() => {
+            this.blockUI.stop();
+          }, 2500);
+          // console.log("Error", error);
+          this.showToast(
+            "warning",
+            "Input / koneksi bermasalah",
+            "e"
+            // error.error.error.message
+          );
+        }
+      );
     // } else if (jenis == "D") {
     //   // console.log(dataSubmit[i].jenis);
     //   // console.log(dataSubmit[i].id);
