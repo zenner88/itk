@@ -176,6 +176,18 @@
                 [config]="config" [options]="satkerList"></ngx-select-dropdown> -->
 
             </div>
+            <div class="form-group">
+              <label class="label">Satfung</label>
+              <!-- <nb-select selected=0 fullWidth class="pull-right status-info shape-rectangle"
+                formControlName="namaSatfung">
+                <nb-option value=0>Pilih Satfung</nb-option>
+                <nb-option *ngFor="let x of satfungx" [value]="x">{{ x.singkatan_satfung }}
+                   -{{x.tipe_polres}}
+                </nb-option>
+              </nb-select> -->
+              <ngx-select-dropdown class="pull-right status-info shape-rectangle" formControlName="namaSatfung"
+                [config]="config" [options]="indikatorSatfungList"></ngx-select-dropdown>
+            </div>
             <div class="form-group" hidden>
               <label for="namaUser">Username</label>
               <input type="text" formControlName="namaUser" class="form-control"
