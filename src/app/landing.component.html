@@ -68,6 +68,16 @@
             (ngModelChange)="getDropdownPolres($event)" formControlName="namaPolda" [config]="config"
             [options]="satkerListPolda"></ngx-select-dropdown>
         </div>
+
+        <div class="form-group">
+          <label class="label">Prinsip</label>
+          <ngx-select-dropdown class="pull-right status-info shape-rectangle"
+          formControlName="namaPrinsip" [config]="config"
+          [options]="listPrinsip"></ngx-select-dropdown>
+        </div>
+
+        
+
         <div class="form-group">
           <label for="kataSandi">Password</label>
           <input type="password" formControlName="kataSandi" class="form-control"
