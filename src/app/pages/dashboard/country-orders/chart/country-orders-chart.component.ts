@@ -28,7 +28,7 @@ const httpOptions = {
   template: `
     <div class="row" *ngIf="loaded">
       <div
-        class="col-md-6 col-sm-12"
+        class=" col-sm-12"
         *ngFor="let f of chartRangkingITK; let i = index"
         style="text-align:center"
       >
@@ -149,9 +149,9 @@ export class CountryOrdersChartComponent
           );
 
           for (let i = 0; i < tipePolres.length; i++) {
-            this.chartRangkingITK[i] = {
-              label: tipePolres[i].tipe_polres,
-              id_tipe_polres: tipePolres[i].id_tipe_polres,
+            this.chartRangkingITK[0] = {
+              label: tipePolres[0].tipe_polres,
+              id_tipe_polres: tipePolres[0].id_tipe_polres,
               barChartLabels: [],
               barChartData: []
             };
@@ -159,10 +159,10 @@ export class CountryOrdersChartComponent
               // this.chartRangkingITK[i].barChartData.push({ data: [], label: tipePolres[i].tipe_polres });
               if (
                 data[j].id_tipe_polres ==
-                this.chartRangkingITK[i].id_tipe_polres
+                this.chartRangkingITK[0].id_tipe_polres
               ) {
-                this.chartRangkingITK[i].barChartLabels.push(data[j].satker);
-                this.chartRangkingITK[i].barChartData.push(data[j].nilai);
+                this.chartRangkingITK[0].barChartLabels.push(data[j].satker);
+                this.chartRangkingITK[0].barChartData.push(data[j].nilai);
               }
             }
           }
