@@ -120,7 +120,9 @@ export class SmartTableComponent {
     }
   ];
   periode: any;
+  cetax: any;
   ngOnInit(): void {
+    this.cetax=true;
     this.fileDownload = [];
 
     this.user = JSON.parse(localStorage.getItem("currentUser"));
@@ -568,7 +570,9 @@ export class SmartTableComponent {
     this.index += 1;
     this.toastrService.show(body, `${titleContent}`, config);
   }
-  public captureScreen() {
+  public captureScreen(event) {
+    this.cetax=event;
+    console.log(this.cetax)
     var data = document.getElementById("contentToConvert");
     html2canvas(data).then(canvas => {
       // Few necessary setting options
@@ -713,6 +717,42 @@ export class SmartTableComponent {
         title: "file Persetujuan",
         type: "string",
         width: "10%"
+      }
+    }
+  };
+
+  satfungss = {
+    noDataMessage: "Tidak ada Details",
+    actions: false,
+    hideSubHeader: true,
+    pager: {
+      display: false
+    },
+    columns: {
+      no: {
+        title: "No",
+        type: "string",
+        width: "3%"
+      },
+      singkatan_satfung: {
+        title: "Satuan Fungsi",
+        type: "string",
+        width: "20%"
+      },
+      satu: {
+        title: "Data Obyektif (%)",
+        type: "string",
+        width: "20%"
+      },
+      lampiran: {
+        title: "Lampiran (%)",
+        type: "string",
+        width: "20%"
+      },
+      dua: {
+        title: "Validasi Kasatfung",
+        type: "string",
+        width: "20%"
       }
     }
   };

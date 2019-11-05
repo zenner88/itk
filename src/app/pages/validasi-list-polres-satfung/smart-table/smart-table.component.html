@@ -100,7 +100,7 @@
     Validasi Kasatfung
   </nb-card-header>
   <nb-card-body>
-    <div id="contentToConvert">
+    <div>
       <nb-card>
         <nb-card-header>
           KETERANGAN POLRES
@@ -198,7 +198,7 @@
     </div>
     <div class="row card-footer">
       <div class="col-6 text-left">
-        <input class="btn btn-info mr-1 text-center" type="button" value="Cetak" (click)="captureScreen()" />
+        <input class="btn btn-info mr-1 text-center" type="button" value="Cetak" (click)="captureScreen(false)" />
       </div>
       <div class="col-6 text-right">
         <button class="btn btn-primary mr-1 text-center" (click)="simpan()" *ngIf="user.kelompok == 70">Simpan</button>
@@ -206,3 +206,18 @@
     </div>
   </nb-card-body>
 </nb-card>
+
+<div id="contentToConvert">
+<nb-card style="margin: 10vh;"> 
+  <br>
+  <br>
+  <div align="left">NAMA POLRES : <B>{{namaSatker}}</B></div>
+  <br>
+
+  <ng2-smart-table [settings]="satfungss" [source]="source" (deleteConfirm)="onDeleteConfirm($event)"
+    (editConfirm)="onSaveConfirm($event)" (createConfirm)="onCreateConfirm($event)"
+    (custom)="onCustomAction($event)">
+  </ng2-smart-table>
+  <hr>
+</nb-card>  
+</div>
