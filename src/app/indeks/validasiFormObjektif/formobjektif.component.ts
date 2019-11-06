@@ -266,7 +266,10 @@ export class ValidasiFormObjektifComponent implements OnInit {
   }
   satfungKlik(x) {
     this.blockUI.start();
-
+    this.dynamicForm = this.formBuilder.group({
+      numberOfTickets: ["", Validators.required],
+      tickets: new FormArray([])
+    });
     this.httpClient
       .get(
         this._global.baseAPIUrl +
