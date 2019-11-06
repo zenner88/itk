@@ -209,11 +209,11 @@ export class AuthService {
               ];
             } else if (user.kelompok == 70) {
               user.menu = [
-                {
-                  title: "Dashboard",
-                  icon: "home-outline",
-                  link: "/pages/dashboard"
-                },
+                // {
+                //   title: "Dashboard",
+                //   icon: "home-outline",
+                //   link: "/pages/dashboard"
+                // },
                 {
                   title: "Form Pengesahan",
                   icon: "folder-add-outline",
@@ -251,11 +251,11 @@ export class AuthService {
                   link: "/pages/dashboard"
                 },
                 {
-                  title: "Validasi",
+                  title: "Monitoring",
                   icon: "folder-add-outline",
                   children: [
                     {
-                      title: "Validasi Pokja",
+                      title: "Monitoring Pokja",
                       link: "/pokja/validasi-pokja/smart-table",
                       icon: "folder-outline"
                     }

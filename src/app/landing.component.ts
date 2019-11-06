@@ -433,6 +433,13 @@ export class LandingComponent implements OnInit, AfterViewInit {
             window.alert("Berhasil");
             this.router.navigate(["pages"]);
             this.blockUI.start();
+            localStorage.setItem(
+              "indexObjektif",
+              JSON.stringify({
+                prinsip_id: this.fo.namaPrinsip.value,
+                
+              })
+            );
           } else {
             window.alert(
               "Maaf Anda Tidak diperkenankan Untuk Mengakses Halaman Ini, Login dimenu Polres!"
@@ -552,7 +559,7 @@ export class LandingComponent implements OnInit, AfterViewInit {
           } else if (data.kelompok == 70) {
             this.blockUI.start();
             localStorage.setItem("kodeSatker", this.fPol.namaPolres.value.kode);
-            this.router.navigate(["pages/dashboard"]);
+            this.router.navigate(["/pages/validasi-list-polres-satfung/smart-table"]);
           }
           this.loading = false;
           this.dialogActive.close();
