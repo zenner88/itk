@@ -104,7 +104,11 @@ export class SmartTableComponent {
       .subscribe(
         indikator => {
           const data = JSON.stringify(indikator);
-          this.source.load(JSON.parse(data));
+          const datas = JSON.parse(JSON.stringify(indikator));
+          for (let i = 0; i < datas.length; i++) {
+            datas[i].progressName=datas[i].progress;
+          }
+          this.source.load(datas);
         },
         error => {
           console.log("Error", error);
@@ -226,7 +230,7 @@ export class SmartTableComponent {
           type: "integer",
           filter: false
         },
-        progress: {
+        progressName: {
           title: "Progress",
           type: "integer",
           filter: false
