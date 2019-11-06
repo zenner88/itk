@@ -128,8 +128,8 @@ export class StepperIntComponent implements OnInit {
     let params = JSON.stringify({
       where: {
         id_tipe_indikator: "4",
-        kode_satfung: this.formSatfung.value.namaSatfung,
-        kode_satker: event
+        kode_satker: this.formPolres.value.namaPolres,
+        kode_satfung: event
       }
     });
 
