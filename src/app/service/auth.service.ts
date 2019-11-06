@@ -255,7 +255,7 @@ export class AuthService {
                   icon: "folder-add-outline",
                   children: [
                     {
-                      title: "Validasi Pokja",
+                      title: "Monitoring Pokja",
                       link: "/pokja/validasi-pokja/smart-table",
                       icon: "folder-outline"
                     }
