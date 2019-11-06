@@ -45,13 +45,14 @@ export class SmartTableComponent {
     this.bench = this.loadTableSettings();
     let params = JSON.stringify({
       where: {
-        id_prinsip: localStorage.getItem("prinsip_id")
+        id_prinsip: localStorage.getItem("prinsip_id"),
+        // kode_satker: localStorage.getItem("kodeSatker")
       }
     });
     this.httpClient
       .get(
         this._global.baseAPIUrl +
-          "/View_penilaian_satfung_prinsips?filter=" +
+          "/View_penilaian_indikators?filter=" +
           params,
         httpOptions
       )
