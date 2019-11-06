@@ -36,24 +36,69 @@ export class SmartTableComponent {
   public indikatorSatfungList: any[] = [];
   bench: any;
   periodex: any;
-
+  public satkerList: any[] = [];
+  satkerx: any;
+  namaPrinsip: any;
   constructor(
     private httpClient: HttpClient,
     private _global: AppGlobals,
     private toastrService: NbToastrService
   ) {
     this.bench = this.loadTableSettings();
+    this.namaPrinsip = localStorage.getItem("namaPrinsip");
+    this.getDropdownPolres(localStorage.getItem("kodeSatker"));
+    this.httpClient
+      .get(this._global.baseAPIUrl + "/Itk_mst_periodes/", httpOptions)
+      .subscribe(
+        data => {
+          if (data != undefined || data != null) {
+            this.periodex = data;
+            const datas = JSON.stringify(data);
+            const datax = JSON.parse(datas);
+            console.log(datas);
+            console.log(datax);
+            datax.forEach(xx => {
+              this.periodeList.push({ value: xx.kode, title: xx.periode });
+            });
+          }
+          localStorage.setItem(
+            "gridServicecList",
+            JSON.stringify(this.periodeList)
+          );
+          this.bench = this.loadTableSettings();
+        },
+        error => {
+          console.log(error);
+        }
+      );
+  }
+  index = 1;
+  private showToast(type: NbComponentStatus, title: string, body: string) {
+    const config = {
+      status: type,
+      destroyByClick: true,
+      duration: 4000,
+      hasIcon: true,
+      position: NbGlobalPhysicalPosition.TOP_RIGHT,
+      preventDuplicates: false
+    };
+    const titleContent = title ? `${title}` : "";
+
+    this.index += 1;
+    this.toastrService.show(body, `${titleContent}`, config);
+  }
+
+  getPrinsipBySatkerAndId(satker) {
+    console.log(satker);
     let params = JSON.stringify({
       where: {
         id_prinsip: localStorage.getItem("prinsip_id"),
-        // kode_satker: localStorage.getItem("kodeSatker")
+        kode_satker: satker.kode
       }
     });
     this.httpClient
       .get(
-        this._global.baseAPIUrl +
-          "/View_penilaian_indikators?filter=" +
-          params,
+        this._global.baseAPIUrl + "/View_penilaian_indikators?filter=" + params,
         httpOptions
       )
       .subscribe(
@@ -95,47 +140,37 @@ export class SmartTableComponent {
           console.log(error);
         }
       );
+  }
 
+  getDropdownPolres(idPolda) {
     this.httpClient
-      .get(this._global.baseAPIUrl + "/Itk_mst_periodes/", httpOptions)
+      .get(
+        this._global.baseAPIUrl +
+          "/View_satkers/getDataByKiIts?kodeInduk=" +
+          idPolda +
+          "&idTipeSatker=R"
+      )
       .subscribe(
         data => {
           if (data != undefined || data != null) {
-            this.periodex = data;
+            this.satkerx = data;
             const datas = JSON.stringify(data);
             const datax = JSON.parse(datas);
-            console.log(datas);
-            console.log(datax);
             datax.forEach(xx => {
-              this.periodeList.push({ value: xx.kode, title: xx.periode });
+              this.satkerList.push({
+                value: xx.kode,
+                title: xx.satker,
+                kode: xx.kode
+              });
             });
           }
-          localStorage.setItem(
-            "gridServicecList",
-            JSON.stringify(this.periodeList)
-          );
-          this.bench = this.loadTableSettings();
         },
         error => {
           console.log(error);
         }
       );
   }
-  index = 1;
-  private showToast(type: NbComponentStatus, title: string, body: string) {
-    const config = {
-      status: type,
-      destroyByClick: true,
-      duration: 4000,
-      hasIcon: true,
-      position: NbGlobalPhysicalPosition.TOP_RIGHT,
-      preventDuplicates: false
-    };
-    const titleContent = title ? `${title}` : "";
 
-    this.index += 1;
-    this.toastrService.show(body, `${titleContent}`, config);
-  }
   loadTableSettings() {
     return {
       add: {
@@ -171,28 +206,28 @@ export class SmartTableComponent {
           type: "integer",
           filter: false
         },
-        nilai_max: {
+        kode_satfung: {
           title: "Kode Satfung",
           type: "integer",
           filter: false
         },
-        normatif_min: {
+        kode_indikator_satfung: {
           title: "Satfung + Indikator",
           type: "integer",
           filter: false
         },
-        normatif_max: {
+        indikator: {
           title: "Indikator",
           type: "integer",
           filter: false
         },
-        batas_atas: {
-          title: "Validasi",
+        nilai: {
+          title: "Nilai",
           type: "integer",
           filter: false
         },
-        batas_bawah: {
-          title: "Detil",
+        progress: {
+          title: "Progress",
           type: "integer",
           filter: false
         }
