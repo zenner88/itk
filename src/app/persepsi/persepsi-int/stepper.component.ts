@@ -34,7 +34,7 @@ export class StepperIntComponent implements OnInit {
   fourthForm: FormGroup;
   fifthForm: FormGroup;
   listPertanyaan: any[];
-
+  indiSatfung: any;
   public satkerList: any[] = [];
   satkerx: any;
   public indikatorSatfungList: any[] = [];
@@ -132,15 +132,21 @@ export class StepperIntComponent implements OnInit {
         kode_satfung: event
       }
     });
-
+    let parims = JSON.stringify({
+      where: {     
+        kode_indikator_satfung: 'UUPPR15'
+      }
+    });
     this.httpClient
       .get(
-        this._global.baseAPIUrl + "/Itk_mst_indikator_satfung_internals",
+        this._global.baseAPIUrl + "/Itk_mst_indikator_satfung_internals?filter=" + parims,
         httpOptions
       )
       .subscribe(
         dataOption => {
           this.getPertanyaan(dataOption, params);
+      console.log("dataOption");
+      console.log(parims);
         },
         error => {
           console.log(error);
@@ -166,6 +172,9 @@ export class StepperIntComponent implements OnInit {
               value: null
             };
           }
+          console.log("data");
+       console.log(data[0].kode_indikator_satfung);
+       this.indiSatfung = data[0].kode_indikator_satfung;
         },
         error => {
           console.log(error);
