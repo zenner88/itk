@@ -11,8 +11,6 @@ import {
 } from "@nebular/theme";
 
 import { Router } from "@angular/router";
-import * as jspdf from "jspdf";
-import html2canvas from "html2canvas";
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -48,19 +46,21 @@ export class SmartTableComponent {
   satkers: any;
   satkerx: any;
   polresx: any;
-
+  periode = JSON.parse(localStorage.getItem("currentUser")).kode;
   ngOnInit(): void {
     this.satkers = this.loadTableSettings();
     this.httpClient
       .get(
         this._global.baseAPIUrl +
-          "/View_satkers/getDataByIdTipeSatker?idTipeSatker=R",
-        httpOptions
+          "/Pc_get_monitoring_by_kode_periode_and_kode_satker_induk/pcGetmonitoringPeriodeSatkerInduk?periode="+this.periode+"&kodeSatkerInduk=&access_token=" +
+          JSON.parse(localStorage.getItem("currentUser")).token
       )
       .subscribe(
         indikator => {
           const data = JSON.stringify(indikator);
-          this.source.load(JSON.parse(data));
+          // const data = indikator;
+          const dada = JSON.parse(data).result[0];
+          this.source.load(dada);
         },
         error => {
           console.log("Error", error);
@@ -68,17 +68,15 @@ export class SmartTableComponent {
         }
       );
     this.httpClient
-      .get(this._global.baseAPIUrl + "/Itk_ref_tipe_satkers/", httpOptions)
+      .get(this._global.baseAPIUrl + "/View_satkers/getDataByIdTipeSatker?idTipeSatker=D", httpOptions)
       .subscribe(
         data => {
           if (data != undefined || data != null) {
             this.satkerx = data;
             const datas = JSON.stringify(data);
             const datax = JSON.parse(datas);
-            console.log(datas);
-            console.log(datax);
             datax.forEach(xx => {
-              this.satkerList.push({ value: xx.id, title: xx.tipe });
+              this.satkerList.push({ value: xx.kode, title: xx.satker });
               this.satkerName = xx.tipe;
             });
           }
@@ -100,8 +98,6 @@ export class SmartTableComponent {
             this.polresx = data;
             const datas = JSON.stringify(data);
             const datax = JSON.parse(datas);
-            console.log(datas);
-            console.log(datax);
             datax.forEach(xx => {
               this.polresList.push({ value: xx.id, title: xx.tipe });
               this.polresName = xx.tipe;
@@ -118,125 +114,28 @@ export class SmartTableComponent {
         }
       );
   }
-  onCreateConfirm(event): void {
-    console.log(event.newData);
-    this.kode = event.newData.kode;
-    this.satker = event.newData.satker;
-    this.kode_induk = event.newData.kode_induk;
-    this.id_tipe_polres = event.newData.id_tipe_polres;
-    if (this.kode == "") {
-      this.showToast("warning", "Kolom ID masih Kosong", "Harus di isi");
-    } else if (this.satker == "") {
-      this.showToast("warning", "Kolom JENIS masih Kosong", "Harus di isi");
-    } else if (this.kode_induk == "") {
-      this.showToast(
-        "warning",
-        "Kolom kode_induk masih Kosong",
-        "Harus di isi"
-      );
-    } else if (this.id_tipe_polres == "") {
-      this.showToast(
-        "warning",
-        "Kolom id_tipe_polres masih Kosong",
-        "Harus di isi"
-      );
-    } else {
-      this.httpClient
-        .post(
-          this._global.baseAPIUrl + "/Itk_mst_satkers/",
-          event.newData,
-          httpOptions
-        )
-        .subscribe(
-          data => {
-            console.log("POST Request is successful ", data);
-            this.showToast("success", "Data Tersimpan", event.newData.jenis);
-            event.confirm.resolve();
-          },
-          error => {
-            console.log("Error", error);
-            this.showToast(
-              "warning",
-              "Input / koneksi bermasalah",
-              error.error.error.message
-            );
-          }
-        );
-    }
-  }
-  onSaveConfirm(event): void {
-    console.log(event.newData);
-    console.log(event);
-    this.kode = event.newData.kode;
-    this.satker = event.newData.satker;
-    this.kode_induk = event.newData.kode_induk;
-    this.id_tipe_polres = event.newData.id_tipe_polres;
-    if (this.kode == "") {
-      this.showToast("warning", "Kolom ID masih Kosong", "Harus di isi");
-    } else if (this.satker == "") {
-      this.showToast("warning", "Kolom JENIS masih Kosong", "Harus di isi");
-    } else if (this.kode_induk == "") {
-      this.showToast(
-        "warning",
-        "Kolom kode_induk masih Kosong",
-        "Harus di isi"
-      );
-    } else if (this.id_tipe_polres == "") {
-      this.showToast(
-        "warning",
-        "Kolom id_tipe_polres masih Kosong",
-        "Harus di isi"
-      );
-    } else {
-      this.httpClient
-        .put(
-          this._global.baseAPIUrl + "/Itk_mst_satkers/" + event.data.kode,
-          event.newData,
-          httpOptions
-        )
-        .subscribe(
-          data => {
-            console.log("PUT Request is successful ", data);
-            this.showToast("success", "Data Ter update", event.newData.kode);
-            event.confirm.resolve();
-          },
-          error => {
-            console.log("Error", error);
-            this.showToast(
-              "warning",
-              "Input / koneksi bermasalah",
-              error.error.error.message
-            );
-          }
-        );
-    }
-  }
-  onDeleteConfirm(event): void {
-    if (window.confirm("Are you sure you want to delete?")) {
-      this.httpClient
-        .delete(
-          this._global.baseAPIUrl + "/Itk_mst_satkers/" + event.data.kode,
-          httpOptions
-        )
-        .subscribe(data => {
-          event.confirm.resolve();
-          console.log(event.data.kode);
-          this.showToast(
-            "danger",
-            "Data terhapus",
-            event.data.jenis + "(" + event.data.id + ")"
-          );
-        });
-    } else {
-      event.confirm.reject();
-    }
-  }
-
-  onCustomAction(event) {
-    console.log(event);
-    localStorage.setItem("kodeSatker", event.data.kode);
-    // alert(`Custom event '${event.action}' fired on row №: ${event.data.id}`);
-    this.route.navigate(["/pages/list-polres-satfung/smart-table/"]);
+  
+  filterKlikSatker(data){
+    console.log(data);
+    this.satkers = this.loadTableSettings();
+    this.httpClient
+    .get(
+      this._global.baseAPIUrl +
+        "/Pc_get_monitoring_by_kode_periode_and_kode_satker_induk/pcGetmonitoringPeriodeSatkerInduk?periode="+this.periode+"&kodeSatkerInduk="+data+"&access_token=" +
+        JSON.parse(localStorage.getItem("currentUser")).token
+    )
+    .subscribe(
+      indikator => {
+        const data = JSON.stringify(indikator);
+        // const data = indikator;
+        const dada = JSON.parse(data).result[0];
+        this.source.load(dada);
+      },
+      error => {
+        console.log("Error", error);
+        this.showToast("warning", "Koneksi bermasalah", error.message);
+      }
+    );
   }
   index = 1;
   private showToast(type: NbComponentStatus, title: string, body: string) {
@@ -254,86 +153,83 @@ export class SmartTableComponent {
     this.toastrService.show(body, `${titleContent}`, config);
   }
 
-  public captureScreen() {
-    var data = document.getElementById("contentToConvert");
-    html2canvas(data).then(canvas => {
-      // Few necessary setting options
-      var imgWidth = 208;
-      var pageHeight = 295;
-      var imgHeight = (canvas.height * imgWidth) / canvas.width;
-      var heightLeft = imgHeight;
-
-      const contentDataURL = canvas.toDataURL("image/png");
-      let pdf = new jspdf("p", "mm", "a4"); // A4 size page of PDF
-      var position = 0;
-      pdf.addImage(contentDataURL, "PNG", 0, position, imgWidth, imgHeight);
-      pdf.save("MYPdf.pdf"); // Generated PDF
-    });
-  }
-
   loadTableSettings() {
     return {
-      add: {
-        addButtonContent: '<i class="nb-plus"></i>',
-        createButtonContent: '<i class="nb-checkmark"></i>',
-        cancelButtonContent: '<i class="nb-close"></i>',
-        confirmCreate: true
-      },
-      edit: {
-        editButtonContent: '<i class="nb-edit"></i>',
-        saveButtonContent: '<i class="nb-checkmark"></i>',
-        cancelButtonContent: '<i class="nb-close"></i>',
-        confirmSave: true
-      },
-      delete: {
-        deleteButtonContent: '<i class="nb-trash"></i>',
-        confirmDelete: true
-      },
-
-      // hideSubHeader: true,
+      hideSubHeader: true,
       columns: {
-        // kode: {
-        //   title: 'Kode',
-        //   type: 'string',
-        //   editable: false,
+        // kode_satker: {
+        //   title: "Kode",
+        //   type: "string",
+        //   // width: "25%"
         // },
         satker: {
-          title: "Nama polres",
+          title: "Satker",
           type: "string",
-          width: "25%"
+          // width: "25%"
         },
-        satker_induk: {
-          title: "Polda",
+        jml_indikator: {
+          title: "Jumlah Indikator",
           type: "string",
-          width: "25%"
+          // width: "25%"
         },
-        // tipe_polres: {
-        //   title: "Tipe Polres",
-        //   type: "string",
-        //   width: "13%"
-        // },
-        satu: {
-          title: "Data Objektif (%)",
+        belum_diisi: {
+          title: "Belum diisi",
           type: "string",
-          width: "18%"
+          // width: "25%"
         },
-        dua: {
-          title: "Lampiran (%)",
+        sudah_diisi: {
+          title: "Sudah diisi",
           type: "string",
-          width: "15%"
-        }
+          // width: "25%"
+        },
+        sudah_diisi_persen: {
+          title: "%",
+          type: "string",
+          // width: "25%"
+        },
+        belum_valid: {
+          title: "Belum Valid",
+          type: "string",
+          // width: "25%"
+        },
+        sudah_valid: {
+          title: "Sudah Valid",
+          type: "string",
+          // width: "25%"
+        },
+        sudah_valid_persen: {
+          title: "%",
+          type: "string",
+          // width: "25%"
+        },
+        belum_validasi: {
+          title: "Belum Validasi",
+          type: "string",
+          // width: "25%"
+        },
+        sudah_validasi: {
+          title: "Sudah Validasi",
+          type: "string",
+          // width: "25%"
+        },
+        sudah_divalidasi_persen: {
+          title: "%",
+          type: "string",
+          // width: "25%"
+        },
+
       },
       actions: {
         add: false,
         edit: false,
         delete: false,
-        custom: [
-          {
-            name: "ourCustomAction",
-            title: '<i class="nb-compose"></i>'
-          }
-        ],
-        position: "right"
+      //   custom: [
+      //     {
+      //       name: "ourCustomAction",
+      //       title: '<i class="nb-compose"></i>'
+      //     }
+      //   ],
+      //   position: "right"
       }
     };
   }
