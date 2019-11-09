@@ -186,6 +186,17 @@ export class AuthService {
                     //   icon: "folder-outline"
                     // }
                   ]
+                },
+                {
+                  title: 'Report',
+                  icon: 'folder-add-outline',
+                  children: [
+                    {
+                      title: 'Monitoring Polda',
+                      link: '/report/monitoring-per-polda/smart-table',
+                      icon: 'folder-outline',
+                    },
+                  ]
                 }
               ];
             } else if (user.kelompok == 80) {

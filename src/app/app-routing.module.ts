@@ -10,7 +10,8 @@ const routes: Routes = [
   { path: "indeks", loadChildren: "app/indeks/indeks.module#IndeksModule" },
   { path: "polres", loadChildren: "app/polres/polres.module#PolresModule" },
   { path: "persepsi", loadChildren: "app/persepsi/persepsi.module#PersepsiModule" },
-  { path: "pokja", loadChildren: "app/pokja/pokja.module#PokjaModule" }
+  { path: "pokja", loadChildren: "app/pokja/pokja.module#PokjaModule" },
+  { path: "report", loadChildren: "app/report/report.module#ReportModule" }
 
   // { path: 'login', component: LoginComponent },
   // {

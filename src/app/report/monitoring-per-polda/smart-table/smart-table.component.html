@@ -1,0 +1,11 @@
+<nb-card status="primary" id="contentToConvert">
+  <nb-card-header>
+    Monitoring Polda
+  </nb-card-header>
+
+  <nb-card-body>
+    <ng2-smart-table [settings]="satkers" [source]="source" (deleteConfirm)="onDeleteConfirm($event)" (editConfirm)="onSaveConfirm($event)"
+    (createConfirm)="onCreateConfirm($event)" (custom)="onCustomAction($event)">
+    </ng2-smart-table>
+  </nb-card-body>
+</nb-card>
