@@ -179,7 +179,8 @@
                   <div align="left">
                     <button class="btn btn-primary mr-1 text-center" (click)="open(dialogUpload)">Upload</button>
                     <button class="btn btn-primary mr-1 text-center"
-                      (click)="openWindow(contentTemplate3,fileDownload[fileDownload.length - 1])" *ngIf="fileDownload.length > 0">Lihat
+                      (click)="openWindow(contentTemplate3,fileDownload[fileDownload.length - 1])"
+                      *ngIf="fileDownload.length > 0">Lihat
                       Pengesahan</button>
                   </div>
                 </div>
@@ -198,7 +199,7 @@
     </div>
     <div class="row card-footer">
       <div class="col-6 text-left">
-        <input class="btn btn-info mr-1 text-center" type="button" value="Cetak" (click)="captureScreen(false)" />
+        <input class="btn btn-info mr-1 text-center" type="button" value="Cetak" (click)="cetak()" />
       </div>
       <div class="col-6 text-right">
         <button class="btn btn-primary mr-1 text-center" (click)="simpan()" *ngIf="user.kelompok == 70">Simpan</button>
@@ -208,16 +209,15 @@
 </nb-card>
 
 <div id="contentToConvert">
-<nb-card style="margin: 10vh;"> 
-  <br>
-  <br>
-  <div align="left">NAMA POLRES : <B>{{namaSatker}}</B></div>
-  <br>
+  <nb-card style="margin: 10vh;">
+    <br>
+    <br>
+    <div align="left">NAMA POLRES : <B>{{namaSatker}}</B></div>
+    <br>
 
-  <ng2-smart-table [settings]="satfungss" [source]="source" (deleteConfirm)="onDeleteConfirm($event)"
-    (editConfirm)="onSaveConfirm($event)" (createConfirm)="onCreateConfirm($event)"
-    (custom)="onCustomAction($event)">
-  </ng2-smart-table>
-  <hr>
-</nb-card>  
+    <ng2-smart-table [settings]="satfungss" [source]="source" (deleteConfirm)="onDeleteConfirm($event)"
+      (editConfirm)="onSaveConfirm($event)" (createConfirm)="onCreateConfirm($event)" (custom)="onCustomAction($event)">
+    </ng2-smart-table>
+    <hr>
+  </nb-card>
 </div>

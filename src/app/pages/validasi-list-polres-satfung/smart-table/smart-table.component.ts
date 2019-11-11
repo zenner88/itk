@@ -941,4 +941,17 @@ export class SmartTableComponent {
       );
     window.alert(JSON.stringify(data));
   }
+
+  cetak(){
+    this.httpClient
+      .post(
+        "/api",
+        {data:'data'},
+        {observe: 'response', responseType: 'arraybuffer'}
+      )
+      .subscribe(val => {
+         var fileURL = URL.createObjectURL(val.body);
+         window.open(fileURL);
+      });
+  }
 }
