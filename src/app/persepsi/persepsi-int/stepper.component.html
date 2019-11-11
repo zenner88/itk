@@ -1,126 +1,189 @@
 <block-ui>
-</block-ui>
-<nb-card class="col-md-12 col-lg-12 col-xxxl-12" status="info"
-  style="margin-top: 15vh;margin-left: auto;margin-right: auto;width: 80vw;">
-  <nb-card-header>
-    <div class="text-center">FORM PERSEPSI INTERNAL POLRES</div>
-  </nb-card-header>
-  <nb-card-body>
-    <nb-stepper orientation="horizontal">
-      <nb-step [label]="labelOne">
-        <ng-template #labelOne>Satfung</ng-template>
-        <hr>
-        <div class="row">
-          <div class="col-md-4 col-sm-1">
+  </block-ui>
+  <nb-card class="col-md-12 col-lg-12 col-xxxl-12" status="success"
+    style="margin-top: 15vh;margin-left: auto;margin-right: auto;width: 80vw;">
+    <nb-card-header>
+      <div class="text-center">FORM PERSEPSI INTERNAL POLRES</div>
+    </nb-card-header>
+    <nb-card-body>
+      <nb-stepper orientation="horizontal">
+  
+        <nb-step [label]="labelOne">
+          <ng-template #labelOne>POLRES</ng-template>
+          <hr>
+          <div class="row">
+            <div class="col-md-4 col-sm-1">
+            </div>
+            <div class="col-md-4 col-sm-10 text-center">
+              <form [formGroup]="formPolres">
+                <div class="form-group">
+                  <h3>Pilih POLRES</h3>
+                  <nb-select placeholder="Pilih Polres" filled status="info" fullWidth
+                    class="pull-right status-info shape-rectangle" formControlName="namaPolres"
+                    >
+                    <nb-option *ngFor="let x of satkerx" value="{{x.kode}}">{{ x.satker }}</nb-option>
+                  </nb-select>
+                </div>
+              </form>
+            </div>
+            <div class="col-md-4 col-sm-1">
+            </div>
           </div>
-          <div class="col-md-4 col-sm-10 text-center">
-            <form [formGroup]="formSatfung">
-              <div class="form-group">
-                <h3>Pilih Satfung</h3>
-                <nb-select placeholder="Pilih Satfung" filled status="info" fullWidth
-                  class="pull-right status-info shape-rectangle" formControlName="namaSatfung">
-                  <nb-option *ngFor="let x of satfungx" value="{{x.kode}}">{{ x.singkatan_satfung }}</nb-option>
-                </nb-select>
-              </div>
-            </form>
+          <hr>
+          <button nbButton nbStepperPrevious>prev</button>
+          <button nbButton nbStepperNext [disabled]="formPolres.value.namaPolres == ''">next</button>
+        </nb-step>
+  
+        <nb-step [label]="labelTwo">
+          <ng-template #labelTwo>Usia Responden</ng-template>
+          <hr>
+          <div class="row">
+            <div class="col-md-4 col-sm-1">
+            </div>
+            <div class="col-md-4 col-sm-10 text-center">
+              <label>Usia Responden : </label>
+              <input type="number" nbInput fullWidth status="primary">
+              <!-- <form [formGroup]="formPolres">
+                <div class="form-group">
+                  <h3>Pilih POLRES</h3>
+                  <nb-select placeholder="Pilih Polres" filled status="info" fullWidth
+                    class="pull-right status-info shape-rectangle" formControlName="namaPolres"
+                    >
+                    <nb-option *ngFor="let x of satkerx" value="{{x.kode}}">{{ x.satker }}</nb-option>
+                  </nb-select>
+                </div>
+              </form> -->
+            </div>
+            <div class="col-md-4 col-sm-1">
+            </div>
           </div>
-          <div class="col-md-4 col-sm-1">
+          <hr>
+          <button nbButton nbStepperPrevious>prev</button>
+          <button nbButton nbStepperNext [disabled]="formPolres.value.namaPolres == ''">next</button>
+        </nb-step>
+  
+        <nb-step [label]="labelThree">
+          <ng-template #labelThree>Jenis Kelamin</ng-template>
+          <hr>
+          <div class="row">
+            <div class="col-md-4 col-sm-1">
+            </div>
+            <div class="col-md-4 col-sm-10 text-center">
+              <label>Jenis Kelamin : </label>
+              <nb-radio-group status="primary" class="text-center">
+                <nb-radio value="L">Laki-laki</nb-radio>
+                <nb-radio value="P">Perempuan</nb-radio>
+              </nb-radio-group>
+              <!-- <form [formGroup]="formPolres">
+                <div class="form-group">
+                  <h3>Pilih POLRES</h3>
+                  <nb-select placeholder="Pilih Polres" filled status="info" fullWidth
+                    class="pull-right status-info shape-rectangle" formControlName="namaPolres"
+                    >
+                    <nb-option *ngFor="let x of satkerx" value="{{x.kode}}">{{ x.satker }}</nb-option>
+                  </nb-select>
+                </div>
+              </form> -->
+            </div>
+            <div class="col-md-4 col-sm-1">
+            </div>
           </div>
-        </div>
-        <hr>
-        <button nbButton disabled nbStepperNext>prev</button>
-        <button nbButton nbStepperNext [disabled]="formSatfung.value.namaSatfung == ''">next</button>
-      </nb-step>
-      <nb-step [label]="labelTwo">
-        <ng-template #labelTwo>POLRES</ng-template>
-        <hr>
-        <div class="row">
-          <div class="col-md-4 col-sm-1">
+          <hr>
+          <button nbButton nbStepperPrevious>prev</button>
+          <button nbButton nbStepperNext [disabled]="formPolres.value.namaPolres == ''">next</button>
+        </nb-step>
+  
+        <nb-step [label]="labelFour">
+          <ng-template #labelFour>Satfung</ng-template>
+          <hr>
+          <div class="row">
+            <div class="col-md-4 col-sm-1">
+            </div>
+            <div class="col-md-4 col-sm-10 text-center">
+              <form [formGroup]="formSatfung">
+                <div class="form-group">
+                  <h3>Pilih Satfung</h3>
+                  <nb-select placeholder="Pilih Satfung" filled status="info" fullWidth
+                    class="pull-right status-info shape-rectangle" formControlName="namaSatfung"
+                    (ngModelChange)="getPersepsi($event)">
+                    <nb-option *ngFor="let x of satfungx" value="{{x.kode}}">{{ x.singkatan_satfung }}</nb-option>
+                  </nb-select>
+                </div>
+              </form>
+            </div>
+            <div class="col-md-4 col-sm-1">
+            </div>
           </div>
-          <div class="col-md-4 col-sm-10 text-center">
-            <form [formGroup]="formPolres">
-              <div class="form-group">
-                <h3>Pilih POLRES</h3>
-                <nb-select placeholder="Pilih Polres" filled status="info" fullWidth
-                  class="pull-right status-info shape-rectangle" formControlName="namaPolres"
-                  (ngModelChange)="getPersepsi($event)">
-                  <nb-option *ngFor="let x of satkerx" value="{{x.kode}}">{{ x.satker }}</nb-option>
-                </nb-select>
-              </div>
-            </form>
+          <hr>
+          <button nbButton nbStepperPrevious>prev</button>
+          <button nbButton nbStepperNext [disabled]="formSatfung.value.namaSatfung == ''">next</button>
+        </nb-step>
+  
+        <nb-step [label]="labelFive">
+          <ng-template #labelFive>Cara Pengisian</ng-template>
+          <hr>
+          <div class="row">
+            <div class="col-md-3 col-sm-1">
+            </div>
+            <div class="col-md-6 col-sm-10 text-center">
+              <h5>CARA PENGISIAN</h5>
+              <p class="text-left">
+                Selamat pagi/siang Bapak/Ibu kami dari Tim Indeks Tata Kelola Kepolisian Negara Republik Indonesia. Dalam
+                rangka penelitian tersebut kami mohon agar Bapak/ibu berkenan mengisi kuesioner Tata Kelola Polres
+                berdasarkan PENGALAMAN, PENGETAHUAN dan INTERAKSI dengan Satfung lain di Polres.
+                <br>
+                <br>
+                Mohon berikan penilaian dengan JUJUR, TERBUKA dan SESUAI DENGAN KONDISI RIIL. Identitas Bapak/Ibu akan
+                dirahasiakan dan data yang dikumpulkan akan dipergunakan hanya demi kepentingan penelitian.
+              </p>
+            </div>
+            <div class="col-md-3 col-sm-1">
+            </div>
           </div>
-          <div class="col-md-4 col-sm-1">
+          <hr>
+          <button nbButton nbStepperPrevious>prev</button>
+          <button nbButton nbStepperNext>next</button>
+        </nb-step>
+  
+  
+  
+        <nb-step [label]="labelSix" *ngFor="let kuesioner of listPertanyaan; let i = index">
+          <ng-template #labelSix></ng-template>
+          <hr>
+          <div class="row">
+            <div class="col-12">
+              <h5>{{kuesioner.dataPertanyaan.singkatan_satfung}}</h5>
+              <hr>
+              <table style="width: 100%;">
+                <tr>
+                  <td>&nbsp;</td>
+                  <td *ngFor="let option of kuesioner.dataOption; let in = index"><small>{{option.pilihan}}</small></td>
+                </tr>
+                <tr style="background-color: blueviolet;">
+                  <td width="40%" class="text-left" style="background-color:whitesmoke;">
+                    <b>{{kuesioner.dataPertanyaan.indikator}}</b>
+                  </td>
+                  <td width="10%" *ngFor="let option of kuesioner.dataOption; let in = index">
+                    <div class="text-center">
+                      <nb-radio-group name="{{kuesioner.dataPertanyaan.id}}" [(ngModel)]="kuesioner.value">
+                        <nb-radio name="{{kuesioner.dataPertanyaan.id}}" value="{{option.nilai}}"
+                          style="display: inline; margin-left: 2rem;"></nb-radio>
+                      </nb-radio-group>
+                    </div>
+                  </td>
+                  <!-- </nb-radio-group> -->
+                </tr>
+              </table>
+            </div>
           </div>
-        </div>
-        <hr>
-        <button nbButton nbStepperPrevious>prev</button>
-        <button nbButton nbStepperNext [disabled]="formPolres.value.namaPolres == ''">next</button>
-      </nb-step>
-      <nb-step label="Cara Pengisian">
-        <ng-template #labelThree></ng-template>
-        <hr>
-        <div class="row">
-          <div class="col-md-3 col-sm-1">
-          </div>
-          <div class="col-md-6 col-sm-10 text-center">
-            <h5>CARA PENGISIAN</h5>
-            <p class="text-left">
-              Selamat pagi/siang Bapak/Ibu kami dari Tim Indeks Tata Kelola Kepolisian Negara Republik Indonesia. Dalam
-              rangka penelitian tersebut kami mohon agar Bapak/ibu berkenan mengisi kuesioner Tata Kelola Polres
-              berdasarkan PENGALAMAN, PENGETAHUAN dan INTERAKSI dengan Satfung lain di Polres.
-              <br>
-              <br>
-              Mohon berikan penilaian dengan JUJUR, TERBUKA dan SESUAI DENGAN KONDISI RIIL. Identitas Bapak/Ibu akan
-              dirahasiakan dan data yang dikumpulkan akan dipergunakan hanya demi kepentingan penelitian.
-            </p>
-          </div>
-          <div class="col-md-3 col-sm-1">
-          </div>
-        </div>
-        <hr>
-        <button nbButton nbStepperPrevious>prev</button>
-        <button nbButton nbStepperNext>next</button>
-      </nb-step>
-
-
-
-      <nb-step [label]="labelFour" *ngFor="let kuesioner of listPertanyaan; let i = index">
-        <ng-template #labelFour></ng-template>
-        <hr>
-        <div class="row">
-          <div class="col-12">
-            <h5>{{kuesioner.dataPertanyaan.singkatan_satfung}}</h5>
-            <hr>
-            <table style="width: 100%;">
-              <tr>
-                <td>&nbsp;</td>
-                <td *ngFor="let option of kuesioner.dataOption; let in = index"><small>{{option.pilihan}}</small></td>
-              </tr>
-              <tr style="background-color: aliceblue;">
-                <td width="40%" class="text-left" style="background-color:whitesmoke;">
-                  <b>{{kuesioner.dataPertanyaan.indikator}}</b>
-                </td>
-                <td width="10%" *ngFor="let option of kuesioner.dataOption; let in = index">
-                  <div class="text-center">
-                    <nb-radio-group name="{{kuesioner.dataPertanyaan.id}}" [(ngModel)]="kuesioner.value">
-                      <nb-radio name="{{kuesioner.dataPertanyaan.id}}" value="{{option.nilai}}"
-                        style="display: inline; margin-left: 2rem;"></nb-radio>
-                    </nb-radio-group>
-                  </div>
-                </td>
-                <!-- </nb-radio-group> -->
-              </tr>
-            </table>
-          </div>
-        </div>
-        <hr>
-        <button nbButton nbStepperPrevious>prev</button>
-        <button nbButton nbStepperNext *ngIf="i != listPertanyaan.length-1"
-          [disabled]="kuesioner.value == null">next</button>
-        <button nbButton *ngIf="i == listPertanyaan.length-1" [disabled]="kuesioner.value == null"
-          (click)="onSubmit()">Submit</button>
-      </nb-step>
-
-    </nb-stepper>
-  </nb-card-body>
-</nb-card>
+          <hr>
+          <button nbButton nbStepperPrevious>prev</button>
+          <button nbButton nbStepperNext *ngIf="i != listPertanyaan.length-1"
+            [disabled]="kuesioner.value == null">next</button>
+          <button nbButton *ngIf="i == listPertanyaan.length-1" [disabled]="kuesioner.value == null"
+            (click)="onSubmit()">Submit</button>
+        </nb-step>
+  
+      </nb-stepper>
+    </nb-card-body>
+  </nb-card>

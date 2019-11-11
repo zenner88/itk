@@ -208,12 +208,12 @@
   </nb-card-body>
 </nb-card>
 
-<div id="contentToConvert">
-  <nb-card style="margin: 10vh;">
-    <br>
-    <br>
-    <div align="left">NAMA POLRES : <B>{{namaSatker}}</B></div>
-    <br>
+<div id="contentToConvert" hidden>
+<nb-card style="margin: 10vh;"> 
+  <br>
+  <br>
+  <div align="left">NAMA POLRES : <B>{{namaSatker}}</B></div>
+  <br>
 
     <ng2-smart-table [settings]="satfungss" [source]="source" (deleteConfirm)="onDeleteConfirm($event)"
       (editConfirm)="onSaveConfirm($event)" (createConfirm)="onCreateConfirm($event)" (custom)="onCustomAction($event)">

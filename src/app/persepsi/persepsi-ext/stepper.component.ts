@@ -128,8 +128,8 @@ export class StepperExtComponent implements OnInit {
     let params = JSON.stringify({
       where: {
         id_tipe_indikator: "3",
-        kode_satfung: this.formSatfung.value.namaSatfung,
-        kode_satker: event
+        kode_satker: this.formPolres.value.namaPolres,
+        kode_satfung: event
       }
     });
 
@@ -147,7 +147,30 @@ export class StepperExtComponent implements OnInit {
         }
       );
   }
+  // getPersepsi(event) {
+  //   console.log(event);
+  //   let params = JSON.stringify({
+  //     where: {
+  //       id_tipe_indikator: "3",
+  //       kode_satfung: this.formSatfung.value.namaSatfung,
+  //       kode_satker: event
+  //     }
+  //   });
 
+  //   this.httpClient
+  //     .get(
+  //       this._global.baseAPIUrl + "/Itk_mst_indikator_satfung_eksternals",
+  //       httpOptions
+  //     )
+  //     .subscribe(
+  //       dataOption => {
+  //         this.getPertanyaan(dataOption, params);
+  //       },
+  //       error => {
+  //         console.log(error);
+  //       }
+  //     );
+  // }
   getPertanyaan(dataOption, params) {
     this.httpClient
       .get(

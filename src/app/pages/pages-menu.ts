@@ -195,8 +195,18 @@ export const MENU_ITEMS: NbMenuItem[] = [
       //   icon: 'folder-outline',
       // },
     ]
+  },
+  {
+    title: 'Report',
+    icon: 'folder-add-outline',
+    children: [
+      {
+        title: 'Monitoring Polda',
+        link: '/report/monitoring-per-polda',
+        icon: 'folder-outline',
+      },
+    ]
   }
-  
   
   // {
   //   title: 'Public Home',

@@ -186,6 +186,17 @@ export class AuthService {
                     //   icon: "folder-outline"
                     // }
                   ]
+                },
+                {
+                  title: 'Report',
+                  icon: 'folder-add-outline',
+                  children: [
+                    {
+                      title: 'Monitoring Polda',
+                      link: '/report/monitoring-per-polda/smart-table',
+                      icon: 'folder-outline',
+                    },
+                  ]
                 }
               ];
             } else if (user.kelompok == 80) {
@@ -209,11 +220,11 @@ export class AuthService {
               ];
             } else if (user.kelompok == 70) {
               user.menu = [
-                {
-                  title: "Dashboard",
-                  icon: "home-outline",
-                  link: "/pages/dashboard"
-                },
+                // {
+                //   title: "Dashboard",
+                //   icon: "home-outline",
+                //   link: "/pages/dashboard"
+                // },
                 {
                   title: "Form Pengesahan",
                   icon: "folder-add-outline",
@@ -251,7 +262,7 @@ export class AuthService {
                   link: "/pages/dashboard"
                 },
                 {
-                  title: "Validasi",
+                  title: "Monitoring",
                   icon: "folder-add-outline",
                   children: [
                     {

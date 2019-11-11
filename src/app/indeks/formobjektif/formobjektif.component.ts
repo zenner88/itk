@@ -489,7 +489,7 @@ export class FormObjektifComponent implements OnInit {
           data => {
             // console.log("PUT Request is successful ", data);
             // this.showToast("success", "Data Tersimpan", id);
-            this.ngOnInit();
+            // this.ngOnInit();
             setTimeout(() => {
               this.blockUI.stop();
             }, 2500);
