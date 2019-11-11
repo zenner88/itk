@@ -148,7 +148,7 @@ export class LandingComponent implements OnInit, AfterViewInit {
           datax.forEach(xx => {
             this.indikatorSatfungList.push({
               value: xx.kode,
-              title: xx.singkatan_satfung,
+              title: xx.tipe_polres_satfung,
               singkatan_satfung: xx.singkatan_satfung,
               kode: xx.kode,
               tipe_polres: xx.tipe_polres,
