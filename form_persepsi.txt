@@ -1,0 +1,10 @@
+iv_penilaian_indikator pertanyaan, 
+View_penilaian_indikators
+{"where":{"id_tipe_indikator":"3"}}
+3 Eksternal, 4 Internal
+
+opsijawaban itk_mst_indikator_satfung_eksterna/internal, radio button
+
+submit itk_trn_eksternal/internal, id_penilaian_indikator, nilai opsi
+
+pokja 60

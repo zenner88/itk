@@ -1,0 +1,6 @@
+{
+    "/api": {
+      "target": "http://localhost/exam/index.php",
+      "secure": false
+    }
+  }
