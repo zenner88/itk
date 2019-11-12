@@ -5,6 +5,7 @@ import { NbAuthService } from '@nebular/auth';
 export class AppGlobals {
     readonly baseAppUrl: string = 'http://itkpolri.ptcmk.co.id/';
     readonly baseAPIUrl: string = 'https://itkpolri.ptcmk.co.id/api';
+    readonly reportAPIUrl: string = 'https://itkpolri.ptcmk.co.id/admin/report';
     // readonly baseAppUrl: string = '';
     // readonly baseAPIUrl: string = 'http://localhost:3000/api'
     // readonly baseAppUrl: string = 'http://192.168.1./';

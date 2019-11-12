@@ -948,7 +948,7 @@ export class SmartTableComponent {
   cetak() {
     this.httpClient
       .post(
-        "/api",
+        this._global.reportAPIUrl + "/api",
         { data: this.listDataReport },
         { observe: "response", responseType: "blob" }
       )
