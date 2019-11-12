@@ -137,7 +137,15 @@ export class LandingComponent implements OnInit, AfterViewInit {
   ) {}
 
   ngOnInit() {
-    this.httpClient.get(this._global.baseAPIUrl + "/View_satfungs/").subscribe(
+    let params = JSON.stringify({
+      where:{
+        or:[
+          {id_tipe_polres:"P"},
+          {id_tipe_polres:"U"}
+      ]}
+    });
+    
+    this.httpClient.get(this._global.baseAPIUrl + "/View_satfungs?filter="+params).subscribe(
       data => {
         if (data != undefined || data != null) {
           this.satfungx = data;
