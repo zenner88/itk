@@ -121,9 +121,11 @@ export class SmartTableComponent {
   ];
   periode: any;
   cetax: any;
+  listDataReport: any[];
   ngOnInit(): void {
-    this.cetax=true;
+    this.cetax = true;
     this.fileDownload = [];
+    this.listDataReport = [];
 
     this.user = JSON.parse(localStorage.getItem("currentUser"));
     this.kodeSatker = localStorage.getItem("kodeSatker");
@@ -155,6 +157,7 @@ export class SmartTableComponent {
             datas[i].no = i + 1;
           }
           this.namaSatker = indikator[0].satker;
+          this.listDataReport = datas;
           this.source.load(datas);
         },
         error => {
@@ -571,8 +574,8 @@ export class SmartTableComponent {
     this.toastrService.show(body, `${titleContent}`, config);
   }
   public captureScreen(event) {
-    this.cetax=event;
-    console.log(this.cetax)
+    this.cetax = event;
+    console.log(this.cetax);
     var data = document.getElementById("contentToConvert");
     html2canvas(data).then(canvas => {
       // Few necessary setting options
@@ -942,16 +945,16 @@ export class SmartTableComponent {
     window.alert(JSON.stringify(data));
   }
 
-  cetak(){
+  cetak() {
     this.httpClient
       .post(
         "/api",
-        {data:'data'},
-        {observe: 'response', responseType: 'arraybuffer'}
+        { data: this.listDataReport },
+        { observe: "response", responseType: "blob" }
       )
       .subscribe(val => {
-         var fileURL = URL.createObjectURL(val.body);
-         window.open(fileURL);
+        var fileURL = URL.createObjectURL(val.body);
+        window.open(fileURL);
       });
   }
 }

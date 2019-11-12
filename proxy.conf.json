@@ -1,6 +1,6 @@
 {
     "/api": {
-      "target": "http://localhost/exam/index.php",
+      "target": "http://localhost/itk/report/index.php",
       "secure": false
     }
   }

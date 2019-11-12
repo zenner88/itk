@@ -132,29 +132,11 @@ export class StepperIntComponent implements OnInit {
         kode_satfung: event
       }
     });
-    let parims = JSON.stringify({
-      where: {     
-        kode_indikator_satfung: 'UUPPR15'
-      }
-    });
-    this.httpClient
-      .get(
-        this._global.baseAPIUrl + "/Itk_mst_indikator_satfung_internals?filter=" + parims,
-        httpOptions
-      )
-      .subscribe(
-        dataOption => {
-          this.getPertanyaan(dataOption, params);
-      console.log("dataOption");
-      console.log(parims);
-        },
-        error => {
-          console.log(error);
-        }
-      );
+    
+    this.getPertanyaan(params);
   }
 
-  getPertanyaan(dataOption, params) {
+  getPertanyaan(params) {
     this.httpClient
       .get(
         this._global.baseAPIUrl + "/View_penilaian_indikators?filter=" + params,
@@ -164,17 +146,42 @@ export class StepperIntComponent implements OnInit {
         data => {
           const datas = JSON.stringify(data);
           const datax = JSON.parse(datas);
-          this.listPertanyaan = [];
-          for (let i = 0; i < datax.length; i++) {
-            this.listPertanyaan[i] = {
-              dataPertanyaan: datax[i],
-              dataOption: dataOption,
-              value: null
-            };
+          
+          let kode_indikator_satfung='';
+
+          if (datax.length > 0) {
+            kode_indikator_satfung=datax[0].kode_indikator_satfung
           }
-          console.log("data");
-       console.log(data[0].kode_indikator_satfung);
-       this.indiSatfung = data[0].kode_indikator_satfung;
+
+          let parims = JSON.stringify({
+            where: {
+              kode_indikator_satfung: kode_indikator_satfung
+            }
+          });
+          this.httpClient
+            .get(
+              this._global.baseAPIUrl +
+                "/Itk_mst_indikator_satfung_internals?filter=" +
+                parims,
+              httpOptions
+            )
+            .subscribe(
+              dataOption => {
+
+                this.listPertanyaan = [];
+                for (let i = 0; i < datax.length; i++) {
+                  this.listPertanyaan[i] = {
+                    dataPertanyaan: datax[i],
+                    dataOption: dataOption,
+                    value: null
+                  };
+                }
+                this.indiSatfung = data[0].kode_indikator_satfung;
+              },
+              error => {
+                console.log(error);
+              }
+            );
         },
         error => {
           console.log(error);
