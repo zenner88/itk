@@ -250,7 +250,8 @@
                           *ngFor="let opt of x.value.radio">{{opt.pilihan}}</nb-radio>
                       </nb-radio-group>
                       <span *ngIf="x.value.radio.length ==0">
-                        {{x.value.pilihan_jawaban}}
+                        <!-- {{x.value.pilihan_jawaban}} -->
+                        <div [innerHTML]="x.value.pilihan_jawaban"></div>
                       </span>
                     </div>
                     <div class="form-group col-2">

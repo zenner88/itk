@@ -220,7 +220,8 @@
                     {{index_indikator+1}}
                   </td>
                   <td class="" width="30%">
-                    <B>{{x.value.indikator}}</B>
+                    <!-- <B>{{x.value.indikator}}</B> -->
+                    <B><div [innerHTML]="x.value.indikator"></div></B>
                   </td>
                   <!-- TIPE INDIKATOR = 0 -->
                   <td *ngIf="x.value.id_tipe_indikator == 0" class="" width="25%">
@@ -262,7 +263,8 @@
                         *ngFor="let opt of x.value.radio">{{opt.pilihan}}</nb-radio>
                     </nb-radio-group>
                     <span *ngIf="x.value.radio.length ==0">
-                      {{x.value.pilihan_jawaban}}
+                      <!-- {{x.value.pilihan_jawaban}} -->
+                      <div [innerHTML]="x.value.pilihan_jawaban"></div>
                     </span>
                   </td>
                   <td *ngIf="x.value.id_tipe_indikator == 1" class="" width="5%">
@@ -296,7 +298,8 @@
                     <table border="0" cellpadding="4">
                       <tr width="100%" *ngFor="let z of x.value.details ; let index_detail = index">
                         <td width="40%">
-                          {{z.indikator}}
+                          <div [innerHTML]="z.indikator"></div>
+                          <!-- {{z.indikator}} -->
                         </td>
                         <td width="9%">
                           <input type="text" [(ngModel)]="t.value[index_indikator].details[index_detail].nilai"
