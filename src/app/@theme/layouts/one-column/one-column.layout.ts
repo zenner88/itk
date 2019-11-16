@@ -8,7 +8,7 @@ import { isBoolean } from "util";
   template: `
     <nb-layout windowMode>
       <nb-layout-header fixed *ngIf="isLogin">
-        <ngx-header></ngx-header>
+        <ngx-header [username]="username"></ngx-header>
       </nb-layout-header>
 
       <nb-sidebar tag="menu-sidebar" responsive *ngIf="isLogin && isMenu">
@@ -30,11 +30,14 @@ export class OneColumnLayoutComponent implements OnInit {
   @Input() isLogin = false;
   @Input() isMenu = false;
 
+  username: any;
+
   constructor(private messageEvent: MessageEvent) {}
 
   ngOnInit() {
     this.isLogin = false;
     this.isMenu = false;
+    this.username = localStorage.getItem("namaUser");
     var user = JSON.parse(localStorage.getItem("currentUser"));
     if (!user) {
       this.isLogin = false;
@@ -46,14 +49,18 @@ export class OneColumnLayoutComponent implements OnInit {
     }
 
     this.messageEvent.on().subscribe(message => {
+      this.username=null;
+      this.username=message.username;
       this.isLogin = message.login;
       this.isMenu = message.menu;
       console.log(message);
     });
   }
 
+
   cekLogin(status) {
     var user = JSON.parse(localStorage.getItem("currentUser"));
+    this.username = localStorage.getItem("namaUser");
     if (!user) {
       this.isLogin = false;
     } else {

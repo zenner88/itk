@@ -59,13 +59,15 @@ export class AppComponent implements OnInit {
     }
 
     var user = JSON.parse(localStorage.getItem("currentUser"));
+    var username = localStorage.getItem("namaUser");
+
     if (!user) {
       this.isLogin = false;
     } else {
       this.isLogin = true;
     }
 
-    this.messageEvent.fire({ login: this.isLogin, menu: this.isMenu });
+    this.messageEvent.fire({ login: this.isLogin, menu: this.isMenu, username:username });
   }
 
   userIslogin(status) {

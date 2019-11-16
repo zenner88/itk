@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from "@angular/core";
+import { Component, OnDestroy, OnInit,Input } from "@angular/core";
 import {
   NbMediaBreakpointsService,
   NbMenuService,
@@ -20,6 +20,9 @@ import { AppComponent } from "../../../app.component";
   providers: [AppComponent]
 })
 export class HeaderComponent implements OnInit, OnDestroy {
+
+  @Input() username;
+
   private destroy$: Subject<void> = new Subject<void>();
   userPictureOnly: boolean = false;
   user: any;
