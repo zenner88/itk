@@ -46,177 +46,178 @@ export class AuthService {
                   title: "Dashboard",
                   icon: "home-outline",
                   children: [
-                    {
-                      title: "Dashboard",
-                      link: "/pages/dashboard"
-                    },
+                    // {
+                    //   title: "Dashboard",
+                    //   link: "/pages/dashboard"
+                    // },
                     {
                       title: "Executive Dashboard",
                       link: "/pages/dashboard-eks"
                     }
                   ]
-                },
-                {
-                  title: "FEATURES",
-                  group: true
-                },
-                {
-                  title: "Master",
-                  icon: "browser-outline",
-                  children: [
-                    {
-                      title: "Master Indikator",
-                      link: "/pages/master-indikator/smart-table"
-                    },
-                    {
-                      title: "Master Indikator Satfung",
-                      link: "/pages/master-i-s/smart-table"
-                    },
-                    {
-                      title: "Master Periode",
-                      link: "/pages/master-periode/smart-table"
-                    },
-                    {
-                      title: "Master Satfung",
-                      link: "/pages/master-satfung/smart-table"
-                    },
-                    {
-                      title: "Master Satker",
-                      link: "/pages/master-satker/smart-table"
-                    }
-                  ]
-                },
-                {
-                  title: "Informasi",
-                  icon: "browser-outline",
-                  children: [
-                    {
-                      title: "Informasi Penilaian",
-                      link: "/pages/trn-penilaian/smart-table"
-                    },
-                    {
-                      title: "Informasi Benchmarking",
-                      link: "/pages/trn-benchmarking/smart-table"
-                    },
-                    {
-                      title: "Informasi Penilaian Indikator",
-                      link: "/pages/trn-penilaian-indikator/smart-table"
-                    },
-                    {
-                      title: "Informasi Penilaian Satfung",
-                      link: "/pages/trn-penilaian-satfung/smart-table"
-                    }
-                  ]
-                },
-                {
-                  title: "System",
-                  icon: "lock-outline",
-                  children: [
-                    {
-                      title: "System Akses",
-                      link: "/pages/sys-akses/smart-table"
-                    },
-                    {
-                      title: "System Kelompok",
-                      link: "/pages/sys-kelompok/smart-table"
-                    },
-                    {
-                      title: "System Kelompok Pengguna",
-                      link: "/pages/sys-kelompok-pengguna/smart-table"
-                    },
-                    {
-                      title: "System Menu",
-                      link: "/pages/sys-menu/smart-table"
-                    },
-                    {
-                      title: "System Pengguna",
-                      link: "/pages/sys-pengguna/smart-table"
-                    }
-                  ]
-                },
-                {
-                  title: "Transaksi",
-                  icon: "folder-add-outline",
-                  children: [
-                    {
-                      title: "Form Objektif",
-                      link: "/indeks/formObjektif",
-                      icon: "folder-outline"
-                    },
-                    {
-                      title: "Form Persepsi Int Polres",
-                      link: "/indeks/formPIP",
-                      icon: "folder-outline"
-                    },
-                    {
-                      title: "Form Persepsi Ekst Polres",
-                      link: "/indeks/formPIP",
-                      icon: "folder-outline"
-                    },
-                    {
-                      title: "List Polres",
-                      link: "/pages/list-polres/smart-table",
-                      icon: "folder-outline"
-                    },
-                    {
-                      title: "List Satfung",
-                      link: "/pages/list-satfung/smart-table",
-                      icon: "folder-outline"
-                    }
-                  ]
-                },
-                {
-                  title: "Validasi",
-                  icon: "folder-add-outline",
-                  children: [
-                    {
-                      title: "Kasatfung",
-                      link: "/indeks/validasiFormObjektif",
-                      icon: "folder-outline"
-                    },
-                    {
-                      title: "Kapolres",
-                      link: "/pages/validasi-list-polres/smart-table",
-                      icon: "folder-outline"
-                    }
-                    // ,
-                    // {
-                    //   title: "Pokja ITK",
-                    //   link: "/indeks/validasiFormObjektif",
-                    //   icon: "folder-outline"
-                    // }
-                  ]
-                },
-                {
-                  title: 'Report',
-                  icon: 'folder-add-outline',
-                  children: [
-                    {
-                      title: 'Monitoring Polda',
-                      link: '/report/monitoring-per-polda/smart-table',
-                      icon: 'folder-outline',
-                    },
-                  ]
                 }
+                // ,
+                // {
+                //   title: "FEATURES",
+                //   group: true
+                // },
+                // {
+                //   title: "Master",
+                //   icon: "browser-outline",
+                //   children: [
+                //     {
+                //       title: "Master Indikator",
+                //       link: "/pages/master-indikator/smart-table"
+                //     },
+                //     {
+                //       title: "Master Indikator Satfung",
+                //       link: "/pages/master-i-s/smart-table"
+                //     },
+                //     {
+                //       title: "Master Periode",
+                //       link: "/pages/master-periode/smart-table"
+                //     },
+                //     {
+                //       title: "Master Satfung",
+                //       link: "/pages/master-satfung/smart-table"
+                //     },
+                //     {
+                //       title: "Master Satker",
+                //       link: "/pages/master-satker/smart-table"
+                //     }
+                //   ]
+                // },
+                // {
+                //   title: "Informasi",
+                //   icon: "browser-outline",
+                //   children: [
+                //     {
+                //       title: "Informasi Penilaian",
+                //       link: "/pages/trn-penilaian/smart-table"
+                //     },
+                //     {
+                //       title: "Informasi Benchmarking",
+                //       link: "/pages/trn-benchmarking/smart-table"
+                //     },
+                //     {
+                //       title: "Informasi Penilaian Indikator",
+                //       link: "/pages/trn-penilaian-indikator/smart-table"
+                //     },
+                //     {
+                //       title: "Informasi Penilaian Satfung",
+                //       link: "/pages/trn-penilaian-satfung/smart-table"
+                //     }
+                //   ]
+                // },
+                // {
+                //   title: "System",
+                //   icon: "lock-outline",
+                //   children: [
+                //     {
+                //       title: "System Akses",
+                //       link: "/pages/sys-akses/smart-table"
+                //     },
+                //     {
+                //       title: "System Kelompok",
+                //       link: "/pages/sys-kelompok/smart-table"
+                //     },
+                //     {
+                //       title: "System Kelompok Pengguna",
+                //       link: "/pages/sys-kelompok-pengguna/smart-table"
+                //     },
+                //     {
+                //       title: "System Menu",
+                //       link: "/pages/sys-menu/smart-table"
+                //     },
+                //     {
+                //       title: "System Pengguna",
+                //       link: "/pages/sys-pengguna/smart-table"
+                //     }
+                //   ]
+                // },
+                // {
+                //   title: "Transaksi",
+                //   icon: "folder-add-outline",
+                //   children: [
+                //     {
+                //       title: "Form Objektif",
+                //       link: "/indeks/formObjektif",
+                //       icon: "folder-outline"
+                //     },
+                //     {
+                //       title: "Form Persepsi Int Polres",
+                //       link: "/indeks/formPIP",
+                //       icon: "folder-outline"
+                //     },
+                //     {
+                //       title: "Form Persepsi Ekst Polres",
+                //       link: "/indeks/formPIP",
+                //       icon: "folder-outline"
+                //     },
+                //     {
+                //       title: "List Polres",
+                //       link: "/pages/list-polres/smart-table",
+                //       icon: "folder-outline"
+                //     },
+                //     {
+                //       title: "List Satfung",
+                //       link: "/pages/list-satfung/smart-table",
+                //       icon: "folder-outline"
+                //     }
+                //   ]
+                // },
+                // {
+                //   title: "Validasi",
+                //   icon: "folder-add-outline",
+                //   children: [
+                //     {
+                //       title: "Kasatfung",
+                //       link: "/indeks/validasiFormObjektif",
+                //       icon: "folder-outline"
+                //     },
+                //     {
+                //       title: "Kapolres",
+                //       link: "/pages/validasi-list-polres/smart-table",
+                //       icon: "folder-outline"
+                //     }
+                //     // ,
+                //     // {
+                //     //   title: "Pokja ITK",
+                //     //   link: "/indeks/validasiFormObjektif",
+                //     //   icon: "folder-outline"
+                //     // }
+                //   ]
+                // },
+                // {
+                //   title: 'Report',
+                //   icon: 'folder-add-outline',
+                //   children: [
+                //     {
+                //       title: 'Monitoring Polda',
+                //       link: '/report/monitoring-per-polda/smart-table',
+                //       icon: 'folder-outline',
+                //     },
+                //   ]
+                // }
               ];
             } else if (user.kelompok == 80) {
               user.menu = [
-                {
-                  title: "Dashboard",
-                  icon: "home-outline",
-                  link: "/pages/dashboard"
-                },
-                {
-                  title: "Validasi",
-                  icon: "folder-add-outline",
-                  children: [
-                    {
-                      title: "List Polres Satfung",
-                      link: "/pages/validasi-list-polres-satfung/smart-table",
-                      icon: "folder-outline"
-                    }
-                  ]
-                }
+                // {
+                //   title: "Dashboard",
+                //   icon: "home-outline",
+                //   link: "/pages/dashboard"
+                // },
+                // {
+                //   title: "Validasi",
+                //   icon: "folder-add-outline",
+                //   children: [
+                //     {
+                //       title: "List Polres Satfung",
+                //       link: "/pages/validasi-list-polres-satfung/smart-table",
+                //       icon: "folder-outline"
+                //     }
+                //   ]
+                // }
               ];
             } else if (user.kelompok == 70) {
               user.menu = [

@@ -644,12 +644,22 @@ export class SmartTableComponent {
         lampiran: {
           title: "Lampiran (%)",
           type: "string",
-          width: "20%"
+          width: "15%"
         },
         dua: {
           title: "Validasi Kasatfung",
           type: "string",
-          width: "20%"
+          width: "15%"
+        },
+        tiga: {
+          title: "Jumlah Persepsi Internal",
+          type: "string",
+          width: "15%"
+        },
+        empat: {
+          title: "Jumlah Persepsi Eksternal",
+          type: "string",
+          width: "15%"
         }
       }
     };

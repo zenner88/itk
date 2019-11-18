@@ -101,6 +101,7 @@ export class ValidasiFormObjektifComponent implements OnInit {
   public satfungList: any[] = [];
   periode: any;
   listDataOptions: any;
+  fileViewPdf: any;
   keteranganPolres: any[] = [
     {
       kasatfung: "",
@@ -215,7 +216,7 @@ export class ValidasiFormObjektifComponent implements OnInit {
             this.nama_satker = this.headers.satker;
             this.nama_tipe_polres = this.headers.tipe_polres;
             this.nama_satfung = this.headers.singkatan_satfung;
-            this.lastUpdate=this.headers.waktu_ubah;
+            this.lastUpdate = this.headers.waktu_ubah;
             this.getOption();
           }
         },
@@ -639,14 +640,6 @@ export class ValidasiFormObjektifComponent implements OnInit {
     // alert('SUCCESS!! :-)\n\n' + JSON.stringify(this.dynamicForm.value));
   }
 
-  openWindow(contentTemplate, data) {
-    this.windowService.open(contentTemplate, {
-      title: "Window content from template",
-      context: {
-        text: "some text to pass into template"
-      }
-    });
-  }
   // UPLOAD
   postMethod(files: UploadFile, index) {
     this.fileToUpload = files;
@@ -834,11 +827,33 @@ export class ValidasiFormObjektifComponent implements OnInit {
     this.uploadInput.emit({ type: "removeAll" });
   }
 
+  openWindow(contentTemplate, data) {
+    var isPdf = data.indexOf(".pdf");
+    if (isPdf != -1) {
+      this.fileViewPdf =
+        this._global.baseAPIUrl +
+        "/ContainerPenilaianIndi/upload_document_indikator/download/" +
+        data +
+        "?access_token=" +
+        JSON.parse(localStorage.getItem("currentUser")).token;
+      this.windowService.open(contentTemplate, {
+        title: "Contoh Dokumen.",
+        context: {
+          text: "some text to pass into template"
+        }
+      });
+    } else {
+      this.downloadFile(data);
+    }
+  }
+
   downloadFile(fileDownload) {
     window.open(
       this._global.baseAPIUrl +
         "/ContainerPenilaianIndi/upload_document_indikator/download/" +
-        fileDownload
+        fileDownload +
+        "?access_token=" +
+        JSON.parse(localStorage.getItem("currentUser")).token
     );
   }
 

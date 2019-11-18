@@ -229,7 +229,7 @@
                   </td>
                   <td *ngIf="x.value.id_tipe_indikator == 0" class="" width="5%">
                     <input type="text" [(ngModel)]="t.value[index_indikator].nilai" class="form-control" fullWidth
-                      fieldSize="small" />
+                      fieldSize="small" [disabled]="t.value[index_indikator].id_progress >= 3"/>
                   </td>
                   <td *ngIf="x.value.id_tipe_indikator == 0" class="text-left" width="7%">
                     <div [innerHTML]="x.value.satuan"></div>
@@ -260,7 +260,7 @@
                     <nb-radio-group name="{{x.value.kode_indikator_satfung}}" [(ngModel)]="x.value.nilai"
                       *ngIf="x.value.radio.length > 0">
                       <nb-radio name="{{opt.kode_indikator_satfung}}" value="{{opt.nilai}}"
-                        *ngFor="let opt of x.value.radio">{{opt.pilihan}}</nb-radio>
+                        *ngFor="let opt of x.value.radio" [disabled]="t.value[index_indikator].id_progress >= 3">{{opt.pilihan}}</nb-radio>
                     </nb-radio-group>
                     <span *ngIf="x.value.radio.length ==0">
                       <!-- {{x.value.pilihan_jawaban}} -->
@@ -269,7 +269,7 @@
                   </td>
                   <td *ngIf="x.value.id_tipe_indikator == 1" class="" width="5%">
                     <input type="text" [(ngModel)]="t.value[index_indikator].nilai" class="form-control" fullWidth
-                      fieldSize="small" *ngIf="x.value.radio.length ==0" />
+                      fieldSize="small" *ngIf="x.value.radio.length ==0" [disabled]="t.value[index_indikator].id_progress >= 3"/>
                   </td>
                   <td *ngIf="x.value.id_tipe_indikator == 1" class="text-left" width="7%">
                   </td>
@@ -303,7 +303,7 @@
                         </td>
                         <td width="9%">
                           <input type="text" [(ngModel)]="t.value[index_indikator].details[index_detail].nilai"
-                            class="form-control" fullWidth fieldSize="small" />
+                            class="form-control" fullWidth fieldSize="small" [disabled]="t.value[index_indikator].details[index_detail].id_progress >= 3"/>
                         </td>
                         <td width="10%">
                           {{z.satuan}}
@@ -324,6 +324,14 @@
                         <td width="5%">
                           <nb-icon icon="info-outline" status="info" (click)="openWindowInfo(contentTemplate)"
                             [options]="{ animation: { type: 'pulse' } }"></nb-icon>
+                        </td>
+                        <td width="5%">
+                          <nb-icon *ngIf="z.catatan != null" icon="alert-circle-outline" status="danger"
+                            nbTooltip="{{z.catatan}}" nbTooltipStatus="danger"></nb-icon>
+                        </td>
+                        <td width="5%">
+                          <nb-icon *ngIf="z.catatan != null" icon="alert-circle-outline" status="danger"
+                            nbTooltip="{{z.catatan}}" nbTooltipStatus="danger"></nb-icon>
                         </td>
                         <td width="5%">
                           <nb-icon *ngIf="z.catatan != null" icon="alert-circle-outline" status="danger"
