@@ -17,6 +17,12 @@ const routes: Routes = [{
       loadChildren: () =>
         import("./monitoring-per-polda/tables.module").then(m => m.TablesModule)
     },
+    {
+      path: "monitoring-per-polda-induk",
+      canActivate: [AuthGuard],
+      loadChildren: () =>
+        import("./monitoring-per-polda-induk/tables.module").then(m => m.TablesModule)
+    },
     // {
     //   path: 'home',
     //   component: HomeComponent,

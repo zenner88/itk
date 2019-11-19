@@ -46,13 +46,13 @@ export class SmartTableComponent {
   satkers: any;
   satkerx: any;
   polresx: any;
-  periode = JSON.parse(localStorage.getItem("idPeriode"));
+  periode = JSON.parse(localStorage.getItem("currentUser")).kode;
   ngOnInit(): void {
     this.satkers = this.loadTableSettings();
     this.httpClient
       .get(
         this._global.baseAPIUrl +
-          "/Pc_get_monitoring_by_kode_periode_and_kode_satker_induk/pcGetmonitoringPeriodeSatkerInduk?periode="+this.periode+"&kodeSatkerInduk="+JSON.parse(localStorage.getItem("currentUser")).satker+"&access_token=" +
+          "/pc_get_monitoring_by_kode_periode/pcGetmonitoringPerode?periode="+this.periode+"&access_token=" +
           JSON.parse(localStorage.getItem("currentUser")).token
       )
       .subscribe(

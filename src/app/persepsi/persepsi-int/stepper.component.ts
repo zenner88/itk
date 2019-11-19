@@ -136,7 +136,7 @@ export class StepperIntComponent implements OnInit {
   getPertanyaan(params) {
     this.httpClient
       .get(
-        this._global.baseAPIUrl + "/View_indikator_satfungs/getDataAndOption?filter=" + params,
+        this._global.baseAPIUrl + "/View_penilaian_indikators?filter=" + params,
         httpOptions
       )
       .subscribe(
