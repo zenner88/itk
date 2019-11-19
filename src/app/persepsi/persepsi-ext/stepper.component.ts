@@ -174,7 +174,7 @@ export class StepperExtComponent implements OnInit {
   getPertanyaan(dataOption, params) {
     this.httpClient
       .get(
-        this._global.baseAPIUrl + "/View_penilaian_indikators?filter=" + params,
+        this._global.baseAPIUrl + "/View_indikators?filter=" + params,
         httpOptions
       )
       .subscribe(

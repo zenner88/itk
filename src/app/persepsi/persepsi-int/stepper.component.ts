@@ -126,62 +126,31 @@ export class StepperIntComponent implements OnInit {
   getPersepsi(event) {
     console.log(event);
     let params = JSON.stringify({
-      where: {
         id_tipe_indikator: "4",
-        kode_satker: this.formPolres.value.namaPolres,
         kode_satfung: event
-      }
     });
-    
+
     this.getPertanyaan(params);
   }
 
   getPertanyaan(params) {
     this.httpClient
       .get(
-        this._global.baseAPIUrl + "/View_penilaian_indikators?filter=" + params,
+        this._global.baseAPIUrl + "/View_indikator_satfungs/getDataAndOption?filter=" + params,
         httpOptions
       )
       .subscribe(
         data => {
           const datas = JSON.stringify(data);
           const datax = JSON.parse(datas);
-          
-          let kode_indikator_satfung='';
 
-          if (datax.length > 0) {
-            kode_indikator_satfung=datax[0].kode_indikator_satfung
+          this.listPertanyaan = [];
+          for (let i = 0; i < datax.length; i++) {
+            this.listPertanyaan[i] = {
+              dataPertanyaan: datax[i],
+              value: null
+            };
           }
-
-          let parims = JSON.stringify({
-            where: {
-              kode_indikator_satfung: kode_indikator_satfung
-            }
-          });
-          this.httpClient
-            .get(
-              this._global.baseAPIUrl +
-                "/Itk_mst_indikator_satfung_internals?filter=" +
-                parims,
-              httpOptions
-            )
-            .subscribe(
-              dataOption => {
-
-                this.listPertanyaan = [];
-                for (let i = 0; i < datax.length; i++) {
-                  this.listPertanyaan[i] = {
-                    dataPertanyaan: datax[i],
-                    dataOption: dataOption,
-                    value: null
-                  };
-                }
-                this.indiSatfung = data[0].kode_indikator_satfung;
-              },
-              error => {
-                console.log(error);
-              }
-            );
         },
         error => {
           console.log(error);
