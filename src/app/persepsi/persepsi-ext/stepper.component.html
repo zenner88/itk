@@ -20,7 +20,7 @@
                 <h3>Pilih POLRES</h3>
                 <nb-select placeholder="Pilih Polres" filled status="info" fullWidth
                   class="pull-right status-info shape-rectangle" formControlName="namaPolres"
-                  >
+                  (ngModelChange)="getPersepsi($event)">
                   <nb-option *ngFor="let x of satkerx" value="{{x.kode}}">{{ x.satker }}</nb-option>
                 </nb-select>
               </div>
@@ -94,13 +94,13 @@
       </nb-step>
 
       <nb-step [label]="labelFour">
-        <ng-template #labelFour>Satfung</ng-template>
+        <ng-template #labelFour>XX</ng-template>
         <hr>
         <div class="row">
           <div class="col-md-4 col-sm-1">
           </div>
           <div class="col-md-4 col-sm-10 text-center">
-            <form [formGroup]="formSatfung">
+            <!-- <form [formGroup]="formSatfung">
               <div class="form-group">
                 <h3>Pilih Satfung</h3>
                 <nb-select placeholder="Pilih Satfung" filled status="info" fullWidth
@@ -109,7 +109,7 @@
                   <nb-option *ngFor="let x of satfungx" value="{{x.kode}}">{{ x.singkatan_satfung }}</nb-option>
                 </nb-select>
               </div>
-            </form>
+            </form> -->
           </div>
           <div class="col-md-4 col-sm-1">
           </div>

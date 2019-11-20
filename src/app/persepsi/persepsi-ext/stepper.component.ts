@@ -127,7 +127,7 @@ export class StepperExtComponent implements OnInit {
     console.log(event);
     let params = JSON.stringify({
         id_tipe_indikator: "3",
-        kode_satfung: event,
+        kode_satfung: "PUP",
         kode_satker: this.formPolres.value.namaPolres
     });
 
@@ -137,7 +137,7 @@ export class StepperExtComponent implements OnInit {
   getPertanyaan(params) {
     this.httpClient
       .get(
-        this._global.baseAPIUrl + "/View_indikator_satfungs/getDataAndOptionPersepsiEksternal?filter=" + params,
+        this._global.baseAPIUrl + "/View_penilaian_indikators/getPersepsiEksternalAndOpsi?filter=" + params,
         httpOptions
       )
       .subscribe(
