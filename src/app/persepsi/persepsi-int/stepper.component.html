@@ -165,8 +165,8 @@
                   </td>
                   <td width="10%" *ngFor="let option of kuesioner.dataPertanyaan.option; let in = index">
                     <div class="text-center">
-                      <nb-radio-group name="{{kuesioner.dataPertanyaan.kode}}" [(ngModel)]="kuesioner.value">
-                        <nb-radio name="{{kuesioner.dataPertanyaan.kode}}" value="{{option.nilai}}"
+                      <nb-radio-group name="{{kuesioner.dataPertanyaan.id}}" [(ngModel)]="kuesioner.value">
+                        <nb-radio name="{{kuesioner.dataPertanyaan.id}}" value="{{option.nilai}}"
                           style="display: inline; margin-left: 2rem;"></nb-radio>
                       </nb-radio-group>
                     </div>

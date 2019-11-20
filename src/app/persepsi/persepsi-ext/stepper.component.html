@@ -157,13 +157,13 @@
             <table style="width: 100%;">
               <tr>
                 <td>&nbsp;</td>
-                <td *ngFor="let option of kuesioner.dataOption; let in = index"><small>{{option.pilihan}}</small></td>
+                <td *ngFor="let option of kuesioner.dataPertanyaan.option; let in = index"><small>{{option.pilihan}}</small></td>
               </tr>
               <tr style="background-color: blueviolet;">
                 <td width="40%" class="text-left" style="background-color:whitesmoke;">
                   <b>{{kuesioner.dataPertanyaan.indikator}}</b>
                 </td>
-                <td width="10%" *ngFor="let option of kuesioner.dataOption; let in = index">
+                <td width="10%" *ngFor="let option of kuesioner.dataPertanyaan.option; let in = index">
                   <div class="text-center">
                     <nb-radio-group name="{{kuesioner.dataPertanyaan.id}}" [(ngModel)]="kuesioner.value">
                       <nb-radio name="{{kuesioner.dataPertanyaan.id}}" value="{{option.nilai}}"

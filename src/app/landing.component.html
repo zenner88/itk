@@ -71,12 +71,11 @@
 
         <div class="form-group">
           <label class="label">Prinsip</label>
-          <ngx-select-dropdown class="pull-right status-info shape-rectangle"
-          formControlName="namaPrinsip" [config]="config"
-          [options]="listPrinsip"></ngx-select-dropdown>
+          <ngx-select-dropdown class="pull-right status-info shape-rectangle" formControlName="namaPrinsip"
+            [config]="config" [options]="listPrinsip"></ngx-select-dropdown>
         </div>
 
-        
+
 
         <div class="form-group">
           <label for="kataSandi">Password</label>
@@ -188,15 +187,17 @@
             </div>
             <div class="form-group">
               <label class="label">Satfung</label>
-              <!-- <nb-select selected=0 fullWidth class="pull-right status-info shape-rectangle"
+              <nb-radio-group name="kategori" formControlName="kategori" (valueChange)="changeKategori($event)">
+                <nb-radio name="kategori" value="P" style="display: inline; margin-left: 2rem;">Perairan
+                </nb-radio>
+                <nb-radio name="kategori" value="U" style="display: inline; margin-left: 2rem;">Umum</nb-radio>
+              </nb-radio-group>
+              <nb-select selected=0 fullWidth class="pull-right status-info shape-rectangle"
                 formControlName="namaSatfung">
                 <nb-option value=0>Pilih Satfung</nb-option>
-                <nb-option *ngFor="let x of satfungx" [value]="x">{{ x.singkatan_satfung }}
-                   -{{x.tipe_polres}}
-                </nb-option>
-              </nb-select> -->
-              <ngx-select-dropdown class="pull-right status-info shape-rectangle" formControlName="namaSatfung"
-                [config]="config" [options]="indikatorSatfungList"></ngx-select-dropdown>
+                <nb-option *ngFor="let x of satfungx" [value]="x">{{ x.tipe_polres_satfung }}</nb-option>
+              </nb-select>
+              <!-- <ngx-select-dropdown class="pull-right status-info shape-rectangle" formControlName="namaSatfung" [options]="indikatorSatfungList"></ngx-select-dropdown> -->
             </div>
             <div class="form-group" hidden>
               <label for="namaUser">Username</label>
@@ -256,8 +257,18 @@
                    -{{x.tipe_polres}}
                 </nb-option>
               </nb-select> -->
-              <ngx-select-dropdown class="pull-right status-info shape-rectangle" formControlName="namaSatfung"
-                [config]="config" [options]="indikatorSatfungList"></ngx-select-dropdown>
+              <nb-radio-group name="kategori" formControlName="kategori" (valueChange)="changeKategori($event)">
+                <nb-radio name="kategori" value="P" style="display: inline; margin-left: 2rem;">Perairan
+                </nb-radio>
+                <nb-radio name="kategori" value="U" style="display: inline; margin-left: 2rem;">Umum</nb-radio>
+              </nb-radio-group>
+              <nb-select selected=0 fullWidth class="pull-right status-info shape-rectangle"
+                formControlName="namaSatfung">
+                <nb-option value=0>Pilih Satfung</nb-option>
+                <nb-option *ngFor="let x of satfungx" [value]="x">{{ x.tipe_polres_satfung }}</nb-option>
+              </nb-select>
+              <!-- <ngx-select-dropdown class="pull-right status-info shape-rectangle" formControlName="namaSatfung"
+                [config]="config" [options]="indikatorSatfungList"></ngx-select-dropdown> -->
             </div>
             <div class="form-group" hidden>
               <label for="namaUser">Username</label>

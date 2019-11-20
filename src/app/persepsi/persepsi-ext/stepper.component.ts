@@ -126,66 +126,29 @@ export class StepperExtComponent implements OnInit {
   getPersepsi(event) {
     console.log(event);
     let params = JSON.stringify({
-      where: {
         id_tipe_indikator: "3",
-        kode_satker: this.formPolres.value.namaPolres,
-        kode_satfung: event
-      }
+        kode_satfung: event,
+        kode_satker: this.formPolres.value.namaPolres
     });
 
-    this.httpClient
-      .get(
-        this._global.baseAPIUrl + "/Itk_mst_indikator_satfung_eksternals",
-        httpOptions
-      )
-      .subscribe(
-        dataOption => {
-          this.getPertanyaan(dataOption, params);
-        },
-        error => {
-          console.log(error);
-        }
-      );
+    this.getPertanyaan(params);
   }
-  // getPersepsi(event) {
-  //   console.log(event);
-  //   let params = JSON.stringify({
-  //     where: {
-  //       id_tipe_indikator: "3",
-  //       kode_satfung: this.formSatfung.value.namaSatfung,
-  //       kode_satker: event
-  //     }
-  //   });
 
-  //   this.httpClient
-  //     .get(
-  //       this._global.baseAPIUrl + "/Itk_mst_indikator_satfung_eksternals",
-  //       httpOptions
-  //     )
-  //     .subscribe(
-  //       dataOption => {
-  //         this.getPertanyaan(dataOption, params);
-  //       },
-  //       error => {
-  //         console.log(error);
-  //       }
-  //     );
-  // }
-  getPertanyaan(dataOption, params) {
+  getPertanyaan(params) {
     this.httpClient
       .get(
-        this._global.baseAPIUrl + "/View_indikators?filter=" + params,
+        this._global.baseAPIUrl + "/View_indikator_satfungs/getDataAndOptionPersepsiEksternal?filter=" + params,
         httpOptions
       )
       .subscribe(
         data => {
           const datas = JSON.stringify(data);
           const datax = JSON.parse(datas);
+
           this.listPertanyaan = [];
           for (let i = 0; i < datax.length; i++) {
             this.listPertanyaan[i] = {
               dataPertanyaan: datax[i],
-              dataOption: dataOption,
               value: null
             };
           }

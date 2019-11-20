@@ -137,41 +137,9 @@ export class LandingComponent implements OnInit, AfterViewInit {
   ) {}
 
   ngOnInit() {
-    let params = JSON.stringify({
-      where:{
-        or:[
-          {id_tipe_polres:"P"},
-          {id_tipe_polres:"U"}
-      ]}
-    });
-    
-    this.httpClient.get(this._global.baseAPIUrl + "/View_satfungs?filter="+params).subscribe(
-      data => {
-        if (data != undefined || data != null) {
-          this.satfungx = data;
-          const datas = JSON.stringify(data);
-          const datax = JSON.parse(datas);
-          console.log(datas);
-          console.log(datax);
-          datax.forEach(xx => {
-            this.indikatorSatfungList.push({
-              value: xx.kode,
-              title: xx.tipe_polres_satfung,
-              singkatan_satfung: xx.singkatan_satfung,
-              kode: xx.kode,
-              tipe_polres: xx.tipe_polres,
-              id_satfung: xx.id_satfung
-            });
-          });
-        }
-      },
-      error => {
-        console.log(error);
-      }
-    );
     this.getDropdownPolda();
     this.getDropdownPrinsip();
-
+    this.getSatfung(null);
     this.loginForm = this.formBuilder.group({
       namaUser: ["", Validators.required],
       kataSandi: ["", Validators.required]
@@ -188,7 +156,9 @@ export class LandingComponent implements OnInit, AfterViewInit {
       namaPolda: ["", Validators.required],
       kataSandi: ["", Validators.required],
       namaPolres: ["", Validators.required],
-      namaSatfung: ["", Validators.required]
+      namaSatfung: ["", Validators.required],
+      kategori: [""]
+
     });
 
     this.loginFormPolres = this.formBuilder.group({
@@ -203,13 +173,56 @@ export class LandingComponent implements OnInit, AfterViewInit {
       namaPolda: ["", Validators.required],
       kataSandi: ["", Validators.required],
       namaPolres: ["", Validators.required],
-      namaSatfung: ["", Validators.required]
+      namaSatfung: ["", Validators.required],
+      kategori: [""]
     });
 
     this.appComp.setMenu([]);
   }
 
+  getSatfung(filter) {
+    this.indikatorSatfungList=[];
+    let params = JSON.stringify({
+      where: {
+        or: [{ id_tipe_polres: "P" }, { id_tipe_polres: "U" }]
+      }
+    });
+    if (filter) {
+      params = JSON.stringify({
+        where: { id_tipe_polres: filter }
+      });
+    }
+
+    this.httpClient
+      .get(this._global.baseAPIUrl + "/View_satfungs?filter=" + params)
+      .subscribe(
+        data => {
+          if (data != undefined || data != null) {
+            this.satfungx = data;
+            const datas = JSON.stringify(data);
+            const datax = JSON.parse(datas);
+            console.log(datas);
+            console.log(datax);
+            datax.forEach(xx => {
+              this.indikatorSatfungList.push({
+                value: xx.kode,
+                title: xx.tipe_polres_satfung,
+                singkatan_satfung: xx.singkatan_satfung,
+                kode: xx.kode,
+                tipe_polres: xx.tipe_polres,
+                id_satfung: xx.id_satfung
+              });
+            });
+          }
+        },
+        error => {
+          console.log(error);
+        }
+      );
+  }
+
   changeDataTab(id) {
+    this.getSatfung(null);
     this.idKelompok = id;
     this.satkerx = null;
     this.satkerPolda = null;
@@ -438,7 +451,7 @@ export class LandingComponent implements OnInit, AfterViewInit {
           localStorage.setItem("kodeSatker", this.fok.namaPolda.value.kode);
           this.appComp.setMenu(data.menu);
           console.log(data);
-          
+
           if (data.kelompok == 60) {
             window.alert("Berhasil");
             this.router.navigate(["pages"]);
@@ -446,8 +459,7 @@ export class LandingComponent implements OnInit, AfterViewInit {
             localStorage.setItem(
               "indexObjektif",
               JSON.stringify({
-                prinsip_id: this.fo.namaPrinsip.value,
-                
+                prinsip_id: this.fo.namaPrinsip.value
               })
             );
           } else {
@@ -569,7 +581,9 @@ export class LandingComponent implements OnInit, AfterViewInit {
           } else if (data.kelompok == 70) {
             this.blockUI.start();
             localStorage.setItem("kodeSatker", this.fPol.namaPolres.value.kode);
-            this.router.navigate(["/pages/validasi-list-polres-satfung/smart-table"]);
+            this.router.navigate([
+              "/pages/validasi-list-polres-satfung/smart-table"
+            ]);
           }
           this.loading = false;
           this.dialogActive.close();
@@ -639,13 +653,16 @@ export class LandingComponent implements OnInit, AfterViewInit {
   }
 
   open(dialog) {
+    this.getSatfung(null);
     this.dialogActive = this.dialogService.open(dialog);
   }
   openPolres(dialogPolres) {
+    this.getSatfung(null);
     this.dialogActive = this.dialogService.open(dialogPolres);
   }
   openOperator(dialogOperator) {
     // this.getDropdownPolda();
+    this.getSatfung(null);
     this.dialogActive = this.dialogService.open(dialogOperator);
     this.idKelompok = 70;
   }
@@ -656,5 +673,9 @@ export class LandingComponent implements OnInit, AfterViewInit {
 
   directToPersepsiEksternal() {
     this.router.navigate(["persepsi/eksternal"]);
+  }
+
+  changeKategori(e) {
+    this.getSatfung(e);
   }
 }
