@@ -34,11 +34,90 @@ export class StepperExtComponent implements OnInit {
   fourthForm: FormGroup;
   fifthForm: FormGroup;
   listPertanyaan: any[];
+  listPekerjaan: any[]=[
+    {
+      id:1,
+      nilai:"Tokoh Agama"
+    },
+    {
+      id:2,
+      nilai:"Tokoh Masyarakat"
+    },
+    {
+      id:3,
+      nilai:"DPRD Kabupaten/ Kota"
+    },
+    {
+      id:4,
+      nilai:"Kejaksaan Negeri"
+    },
+    {
+      id:5,
+      nilai:"Akademisi"
+    },
+    {
+      id:6,
+      nilai:"Media Massa"
+    },
+    {
+      id:7,
+      nilai:"Organisasi Masyarakat"
+    },
+    {
+      id:8,
+      nilai:"FKUB"
+    },
+    {
+      id:9,
+      nilai:"Pemerintah Daerah"
+    },
+    {
+      id:10,
+      nilai:"Kesbangpol"
+    },
+    {
+      id:11,
+      nilai:"Badan Pertanahan Nasional/ Daerah"
+    },
+    {
+      id:12,
+      nilai:"Dinas Sosial"
+    },
+    {
+      id:13,
+      nilai:"Badan Intelijen Daerah (BINDA)"
+    },
+    {
+      id:14,
+      nilai:"Pasi Intel Kodim dan Babinsa TNI AD"
+    },
+    {
+      id:15,
+      nilai:"Asosiasi Pengusaha Perkebunan/ Tambang/ Konstruksi"
+    },
+    {
+      id:16,
+      nilai:"Asosiasi Buruh"
+    },
+    {
+      id:17,
+      nilai:"Organisasi Kepemudaan"
+    },
+    {
+      id:18,
+      nilai:"LSM"
+    },
+    {
+      id:19,
+      nilai:"Lainnya."
+    },
+  ];
 
   public satkerList: any[] = [];
   satkerx: any;
   public indikatorSatfungList: any[] = [];
   satfungx: any;
+  pekerjaan: any;
   index: any;
   constructor(
     private _global: AppGlobals,
@@ -49,7 +128,7 @@ export class StepperExtComponent implements OnInit {
 
   ngOnInit() {
     this.listPertanyaan = [];
-
+    this.pekerjaan = this.listPekerjaan;
     this.httpClient
       .get(
         this._global.baseAPIUrl +

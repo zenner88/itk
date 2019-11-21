@@ -94,22 +94,22 @@
       </nb-step>
 
       <nb-step [label]="labelFour">
-        <ng-template #labelFour>XX</ng-template>
+        <ng-template #labelFour>Profesi</ng-template>
         <hr>
         <div class="row">
           <div class="col-md-4 col-sm-1">
           </div>
           <div class="col-md-4 col-sm-10 text-center">
-            <!-- <form [formGroup]="formSatfung">
+            <form [formGroup]="formSatfung">
               <div class="form-group">
-                <h3>Pilih Satfung</h3>
-                <nb-select placeholder="Pilih Satfung" filled status="info" fullWidth
+                <h3>Profesi / Pekerjaan Responden</h3>
+                <nb-select placeholder="Pilih Profesi/Pekerjaan" filled status="info" fullWidth
                   class="pull-right status-info shape-rectangle" formControlName="namaSatfung"
-                  (ngModelChange)="getPersepsi($event)">
-                  <nb-option *ngFor="let x of satfungx" value="{{x.kode}}">{{ x.singkatan_satfung }}</nb-option>
+                  >
+                  <nb-option *ngFor="let x of pekerjaan" value="{{x.id}}">{{ x.nilai }}</nb-option>
                 </nb-select>
               </div>
-            </form> -->
+            </form>
           </div>
           <div class="col-md-4 col-sm-1">
           </div>
