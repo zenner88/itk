@@ -445,7 +445,8 @@ export class LandingComponent implements OnInit, AfterViewInit {
       .pipe(first())
       .subscribe(
         data => {
-          localStorage.setItem("namaUser", this.fok.namaPolda.value.satker);
+          localStorage.setItem("namaUser", this.fok.namaPolda.value.title);
+          localStorage.setItem("namaInduk", this.fok.namaPolda.value.title);
           localStorage.setItem("prinsip_id", this.fok.namaPrinsip.value.kode);
           localStorage.setItem("namaPrinsip", this.fok.namaPrinsip.value.title);
           localStorage.setItem("kodeSatker", this.fok.namaPolda.value.kode);

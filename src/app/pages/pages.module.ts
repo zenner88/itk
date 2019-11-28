@@ -4,6 +4,7 @@ import { ThemeModule } from "../@theme/theme.module";
 import { PagesComponent } from "./pages.component";
 import { DashboardModule } from "./dashboard/dashboard.module";
 import { DashboardEksModule } from "./dashboard-eks/dashboard-eks.module";
+import { DashboardPolresModule } from "./dashboard-polres/dashboard-polres.module";
 import { PagesRoutingModule } from "./pages-routing.module";
 import { MiscellaneousModule } from "./miscellaneous/miscellaneous.module";
 import { PublicModule } from "../public/public.module";
@@ -56,7 +57,8 @@ import {
     NgxUploaderModule,
     FormsModule,
     ReactiveFormsModule,
-    DashboardEksModule
+    DashboardEksModule,
+    DashboardPolresModule
   ],
   declarations: [PagesComponent, FormObjektifComponent]
 })

@@ -4,6 +4,7 @@ import { NgModule } from "@angular/core";
 import { PagesComponent } from "./pages.component";
 import { DashboardComponent } from "./dashboard/dashboard.component";
 import { DashboardEksComponent } from "./dashboard-eks/dashboard-eks.component";
+import { DashboardPolresComponent } from "./dashboard-polres/dashboard-polres.component";
 import { FormObjektifComponent } from "./formobjektif/formobjektif.component";
 import { NotFoundComponent } from "./miscellaneous/not-found/not-found.component";
 import { AuthGuard, LoginGuard } from "../guard";
@@ -22,6 +23,11 @@ const routes: Routes = [
         path: "dashboard-eks",
         canActivate: [AuthGuard],
         component: DashboardEksComponent
+      },
+      {
+        path: "dashboard-polres",
+        canActivate: [AuthGuard],
+        component: DashboardPolresComponent
       },
       // MASTER
       {

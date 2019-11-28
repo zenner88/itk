@@ -8,3 +8,15 @@ opsijawaban itk_mst_indikator_satfung_eksterna/internal, radio button
 submit itk_trn_eksternal/internal, id_penilaian_indikator, nilai opsi
 
 pokja 60
+
+1. Indeks umum  = http://localhost:3000/api/View_penilaians/getNilai?access_token=
+2. Indeks umum perpolda = http://itkpolri.ptcmk.co.id/api/View_penilaians/getDataItkPokjaPolda?satkerInduk=string&access_token=
+3. Indeks umum perpolres = http://itkpolri.ptcmk.co.id/api/View_penilaian_satfungs (tinggal disorting berdasarkan polresnya)
+4. 11 Subindeks perpolda  (ga ngerti yang di maksud sub indeks)
+5. 11 Subindeks perpolres (ga ngerti yang di maksud sub indeks)
+6. Rangking polres keseluruhan (blm ada di DB/ belum tau harus di sorting diview mana)
+7. Rangking polres di dalam tiap tiap  polda (blm ada di DB  belum tau harus di sorting diview mana)
+8. Top ten rangking polres = http://localhost:3000/api/View_penilaians/getNilaiTopTen?access_token=
+9. Bottom ten rangking polres = http://localhost:3000/api/View_penilaians/getNilaiBtmTen?access_token=
+
+http://itkpolri.ptcmk.co.id/api/View_penilaian_indikators/getDataItkIndikator?kodeIndikator=&access_token= (Monitoring Admin Per Indikator berdasarkan kode_indikator)
