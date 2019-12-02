@@ -101,7 +101,7 @@ export class FormObjektifComponent implements OnInit {
   listOption: any[];
   keteranganUpload: any[];
   listDataOptions: any;
-  lastUpdate:any;
+  lastUpdate: any;
   keteranganPolres: any[] = [
     {
       kasatfung: "",
@@ -178,7 +178,7 @@ export class FormObjektifComponent implements OnInit {
             this.nama_satker = this.headers.satker;
             this.nama_tipe_polres = this.headers.tipe_polres;
             this.nama_satfung = this.headers.singkatan_satfung;
-            this.lastUpdate=this.headers.waktu_ubah;
+            this.lastUpdate = this.headers.waktu_ubah;
             this.getOption();
           }
           this.blockUI.stop();
@@ -246,8 +246,11 @@ export class FormObjektifComponent implements OnInit {
       roots = [],
       i;
     for (i = 0; i < list.length; i += 1) {
-      map[list[i].kode_indikator_induk] = i; // inisialisasi
-      list[i].children = [];
+      if (list[i].jenis == "P") {
+        map[list[i].kode_indikator_induk] = i; // inisialisasi
+        list[i].children = [];
+      }
+
       // inisialisasi Children
     }
     for (i = 0; i < list.length; i += 1) {
@@ -392,24 +395,27 @@ export class FormObjektifComponent implements OnInit {
     var dataSubmitD = [];
 
     for (let i = 0; i < jml; i++) {
-      if (this.t.value[i].nilai == null) {
-        this.t.value[i].nilai = 0;
+      if (this.t.value[i].id_tipe_indikator != 2) {
+        if (this.t.value[i].nilai == null) {
+          this.t.value[i].nilai = null;
+        }
+        if (!this.t.value[i].nilai && !this.t.value[i].arsip_link) {
+          this.t.value[i].id_progress = 0;
+        } else if (this.t.value[i].nilai && !this.t.value[i].arsip_link) {
+          this.t.value[i].id_progress = 1;
+        } else if (!this.t.value[i].nilai && this.t.value[i].arsip_link) {
+          this.t.value[i].id_progress = 1;
+        } else if (this.t.value[i].nilai && this.t.value[i].arsip_link) {
+          this.t.value[i].id_progress = 2;
+        }
+        this.t.value[i].data = this.t.value[i];
+        dataSubmit.push(this.t.value[i]);
+        dataSubmitP.push(this.t.value[i]);
       }
-      if (!this.t.value[i].nilai && !this.t.value[i].arsip_link) {
-        this.t.value[i].id_progress = 0;
-      } else if (this.t.value[i].nilai && !this.t.value[i].arsip_link) {
-        this.t.value[i].id_progress = 1;
-      } else if (!this.t.value[i].nilai && this.t.value[i].arsip_link) {
-        this.t.value[i].id_progress = 1;
-      } else if (this.t.value[i].nilai && this.t.value[i].arsip_link) {
-        this.t.value[i].id_progress = 2;
-      }
-      this.t.value[i].data = this.t.value[i];
-      dataSubmit.push(this.t.value[i]);
-      dataSubmitP.push(this.t.value[i]);
+
       for (let j = 0; j < this.t.value[i].details.length; j++) {
         if (this.t.value[i].details[j].nilai == null) {
-          this.t.value[i].details[j].nilai = 0;
+          this.t.value[i].details[j].nilai = null;
         }
         if (
           !this.t.value[i].details[j].nilai &&
@@ -453,7 +459,10 @@ export class FormObjektifComponent implements OnInit {
     var dataP = [];
     for (let i = 0; i < dataSubmitP.length; i++) {
       dataP.push({
-        id: dataSubmitP[i].id,
+        pk: {
+          id: dataSubmitP[i].id,
+          jenis: dataSubmitP[i].jenis
+        },
         data: {
           nilai: parseInt(dataSubmitP[i].nilai),
           arsip_link: dataSubmitP[i].arsip_link,
@@ -467,7 +476,10 @@ export class FormObjektifComponent implements OnInit {
     var dataD = [];
     for (let i = 0; i < dataSubmitD.length; i++) {
       dataD.push({
-        id: dataSubmitD[i].id,
+        pk: {
+          id: dataSubmitD[i].id,
+          jenis: dataSubmitD[i].jenis
+        },
         data: {
           nilai: parseInt(dataSubmitD[i].nilai),
           arsip_link: dataSubmitD[i].arsip_link,
@@ -481,7 +493,7 @@ export class FormObjektifComponent implements OnInit {
       this.httpClient
         .put(
           this._global.baseAPIUrl +
-            "/Itk_trn_penilaian_indikators/updateDataMasal",
+            "/Itk_tmp_penilaian_indikators/updateDataMasal",
           dataP,
           httpOptions
         )
@@ -513,7 +525,7 @@ export class FormObjektifComponent implements OnInit {
       this.httpClient
         .put(
           this._global.baseAPIUrl +
-            "/Itk_trn_penilaian_details/updateDataMasal",
+            "/Itk_tmp_penilaian_indikators/updateDataMasal",
           dataD,
           httpOptions
         )
@@ -624,12 +636,12 @@ export class FormObjektifComponent implements OnInit {
   }
 
   openWindowInfo(contentTemplate) {
-      this.windowService.open(contentTemplate, {
-        title: "Contoh Dokumen.",
-        context: {
-          text: "some text to pass into template"
-        }
-      });
+    this.windowService.open(contentTemplate, {
+      title: "Contoh Dokumen.",
+      context: {
+        text: "some text to pass into template"
+      }
+    });
   }
   // UPLOAD
   postMethod(files: UploadFile, index) {

@@ -341,6 +341,53 @@
                     </table>
                   </td>
 
+                  <td width="67%" *ngIf="x.value.id_tipe_indikator == 5">
+                    <table border="0" cellpadding="4">
+                      <tr width="100%" *ngFor="let z of x.value.details ; let index_detail = index">
+                        <td width="40%">
+                          <div [innerHTML]="z.indikator"></div>
+                          <!-- {{z.indikator}} -->
+                        </td>
+                        <td width="9%">
+                          <input type="checkbox" [(ngModel)]="t.value[index_indikator].details[index_detail].nilai"
+                            class="form-control" fullWidth fieldSize="small" [disabled]="t.value[index_indikator].details[index_detail].id_progress >= 3"/>
+                        </td>
+                        <td width="10%">
+                          {{z.satuan}}
+                        </td>
+                        <td width="9%">
+                          <button class="btn btn-primary mr-1 text-center"
+                            (click)="open(dialogUpload,index_indikator,index_detail)">Upload</button>
+                        </td>
+                        <td width="11%">
+                          <a (click)="open(dialogUpload,index_indikator,index_detail)">
+                            <span style="font-weight: bold;">{{z.jml_arsif}}</span>
+                            <span *ngIf="z.jml_arsif"> File</span>
+                          </a>
+                        </td>
+                        <td width="11%">
+                          <B>{{z.progress}}</B>
+                        </td>
+                        <td width="5%">
+                          <nb-icon icon="info-outline" status="info" (click)="openWindowInfo(contentTemplate)"
+                            [options]="{ animation: { type: 'pulse' } }"></nb-icon>
+                        </td>
+                        <td width="5%">
+                          <nb-icon *ngIf="z.catatan != null" icon="alert-circle-outline" status="danger"
+                            nbTooltip="{{z.catatan}}" nbTooltipStatus="danger"></nb-icon>
+                        </td>
+                        <td width="5%">
+                          <nb-icon *ngIf="z.catatan != null" icon="alert-circle-outline" status="danger"
+                            nbTooltip="{{z.catatan}}" nbTooltipStatus="danger"></nb-icon>
+                        </td>
+                        <td width="5%">
+                          <nb-icon *ngIf="z.catatan != null" icon="alert-circle-outline" status="danger"
+                            nbTooltip="{{z.catatan}}" nbTooltipStatus="danger"></nb-icon>
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+
                   <!-- enddd -->
                 </tr>
                 <hr>

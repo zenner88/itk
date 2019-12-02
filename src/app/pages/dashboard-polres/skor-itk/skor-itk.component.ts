@@ -1,4 +1,4 @@
-import { Component, OnDestroy } from "@angular/core";
+import { Component, OnDestroy, Input } from "@angular/core";
 import {
   NbMediaBreakpoint,
   NbMediaBreakpointsService,
@@ -8,25 +8,24 @@ import { takeWhile } from "rxjs/operators";
 import { CountryOrderData } from "../../../@core/data/country-order";
 
 @Component({
-  selector: "ngx-bottom-ten-indikator",
-  styleUrls: ["./bottom-ten-indikator.component.scss"],
+  selector: "ngx-skor-itk",
+  styleUrls: ["./skor-itk.component.scss"],
   template: `
-    <nb-card>
-      <nb-card-header>SKOR ITK</nb-card-header>
-      <nb-card-body>
-        <ngx-bottom-ten-indikator-chart
-          [countryName]="countryName"
-          [data]="countryData"
-          [labels]="countriesCategories"
-          maxValue="30"
-        >
-        </ngx-bottom-ten-indikator-chart>
-      </nb-card-body>
-    </nb-card>
+    <h5>Skor ITK</h5>
+    <ngx-skor-itk-chart
+      [countryName]="countryName"
+      [data]="countryData"
+      [labels]="countriesCategories"
+      maxValue="30"
+    >
+    </ngx-skor-itk-chart>
   `
 })
-export class BottomTenIndikatorComponent implements OnDestroy {
+export class SkorITKComponent implements OnDestroy {
   private alive = true;
+  @Input() param(data) {
+    console.log(data);
+  }
 
   countryName = "";
   countryData: number[] = [];

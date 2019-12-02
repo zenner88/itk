@@ -8,24 +8,24 @@ import { takeWhile } from "rxjs/operators";
 import { CountryOrderData } from "../../../@core/data/country-order";
 
 @Component({
-  selector: "ngx-bottom-ten-indikator",
-  styleUrls: ["./bottom-ten-indikator.component.scss"],
+  selector: "ngx-kinerja-tata-kelola-itk",
+  styleUrls: ["./kinerja-tata-kelola-itk.component.scss"],
   template: `
     <nb-card>
-      <nb-card-header>SKOR ITK</nb-card-header>
+      <nb-card-header>Kinerja Tata Kelola Polres</nb-card-header>
       <nb-card-body>
-        <ngx-bottom-ten-indikator-chart
+        <ngx-kinerja-tata-kelola-itk-chart
           [countryName]="countryName"
           [data]="countryData"
           [labels]="countriesCategories"
           maxValue="30"
         >
-        </ngx-bottom-ten-indikator-chart>
+        </ngx-kinerja-tata-kelola-itk-chart>
       </nb-card-body>
     </nb-card>
   `
 })
-export class BottomTenIndikatorComponent implements OnDestroy {
+export class KinerjaTataKelolaItkComponent implements OnDestroy {
   private alive = true;
 
   countryName = "";

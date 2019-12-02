@@ -10,7 +10,7 @@ import {
 import { NbThemeService } from "@nebular/theme";
 import { takeWhile } from "rxjs/operators";
 import { LayoutService } from "../../../../@core/utils/layout.service";
-import { ChartOptions, ChartType, ChartDataSets } from "chart.js";
+import { ChartOptions, ChartType, ChartDataSets, Chart } from "chart.js";
 import { Label } from "ng2-charts";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { AppGlobals } from "../../../../app.global";
@@ -23,12 +23,13 @@ const httpOptions = {
 };
 
 @Component({
-  selector: "ngx-bottom-ten-indikator-chart",
-  styleUrls: ["./bottom-ten-indikator-chart.component.scss"],
+  selector: "ngx-skor-itk-chart",
+  styleUrls: ["./skor-itk-chart.component.scss"],
   template: `
     <div class="row" *ngIf="loaded">
       <div class="col-md-12 col-sm-12" style="text-align:center">
         <canvas
+          id="skor-itk"
           height="60vh"
           width="80vw"
           baseChart
@@ -45,10 +46,14 @@ const httpOptions = {
   `,
   providers: [AppGlobals]
 })
-export class BottomTenIndikatorChartComponent
+export class SkorITKChartComponent
   implements AfterViewInit, OnDestroy, OnChanges, OnInit {
   public barChartOptions: ChartOptions = {
     responsive: true,
+    legend: {
+      display: false
+    },
+    cutoutPercentage: 80
   };
   public barChartLabels: Label[] = [
     "2006",
@@ -66,8 +71,10 @@ export class BottomTenIndikatorChartComponent
   public barChartData = {
     datasets: [
       {
-        data: [86.2, 13.8],
-        backgroundColor: ["#336699", "#878889"]
+        data: [50, 50],
+        backgroundColor: ["#336699", "#AAAAAA"],
+        hoverBackgroundColor: ["#336699", "#AAAAAA"],
+        hoverBorderColor: ["#336699", "#ffffff"]
       }
     ],
     labels: ["Skor ITK", "#"]
@@ -85,6 +92,8 @@ export class BottomTenIndikatorChartComponent
 
   chartRangkingITK: any[];
   loaded = false;
+  kodeSatker: any = localStorage.getItem("kodeSatker");
+  skorItk: any = 0;
   constructor(
     private theme: NbThemeService,
     private layoutService: LayoutService,
@@ -136,51 +145,23 @@ export class BottomTenIndikatorChartComponent
   }
 
   ngAfterViewInit() {
-    this.chartRangkingITK = [];
+
+    let params = JSON.stringify({ where: { kode_satker: this.kodeSatker } });
     this.httpClient
-      .get(this._global.baseAPIUrl + "/View_penilaians", httpOptions)
+      .get(
+        this._global.baseAPIUrl + "/View_penilaian_alls?filter=" + params,
+        httpOptions
+      )
       .subscribe(
         datas => {
           let data = JSON.parse(JSON.stringify(datas));
-
-          function compare(a, b) {
-            if (a.nilai < b.nilai) {
-              return -1;
-            }
-            if (a.nilai > b.nilai) {
-              return 1;
-            }
-            return 0;
-          }
-
-          data.sort(compare);
-          console.log(data);
-          let tipePolres = this.removeDuplicates(
-            JSON.parse(JSON.stringify(datas))
-          );
-
-          var lengthData = data.length == 10 ? data.length : 10;
-
-          for (let i = 0; i < tipePolres.length; i++) {
-            this.chartRangkingITK[i] = {
-              label: tipePolres[i].tipe_polres,
-              id_tipe_polres: tipePolres[i].id_tipe_polres,
-              barChartLabels: [],
-              barChartData: []
-            };
-            for (let j = 0; j < lengthData; j++) {
-              // this.chartRangkingITK[i].barChartData.push({ data: [], label: tipePolres[i].tipe_polres });
-              this.chartRangkingITK[i].barChartLabels.push(data[j].satker);
-              this.chartRangkingITK[i].barChartData.push(data[j].nilai);
-            }
-          }
+          this.skorItk = data[0].nilai;
+          this.barChartData.datasets[0].data = [
+            this.skorItk*10,
+            100 - (this.skorItk*10)
+          ];
+          this.labelPercent(this.barChartData.datasets[0].data[0]);
           this.loaded = true;
-
-          console.log(this.chartRangkingITK[0].barChartLabels);
-          console.log(this.barChartLabels);
-          console.log(this.chartRangkingITK[0].barChartData[0]);
-          console.log(this.barChartData);
-          // console.log(data);
         },
         error => {
           console.log("Error", error);
@@ -314,5 +295,30 @@ export class BottomTenIndikatorChartComponent
 
   ngOnDestroy() {
     this.alive = false;
+  }
+
+  labelPercent(val) {
+    Chart.pluginService.register({
+      beforeDraw: function(chart) {
+        var width = chart.width,
+          height = chart.height,
+          canvas = chart.canvas,
+          ctx = chart.ctx;
+
+        if (canvas.id == "skor-itk") {
+          ctx.restore();
+          var fontSize = (height / 114).toFixed(2);
+          ctx.font = fontSize + "em sans-serif";
+          ctx.textBaseline = "middle";
+
+          var text = val + "%",
+            textX = Math.round((width - ctx.measureText(text).width) / 2),
+            textY = height / 2;
+
+          ctx.fillText(text, textX, textY);
+          ctx.save();
+        }
+      }
+    });
   }
 }

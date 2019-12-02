@@ -221,11 +221,11 @@ export class AuthService {
               ];
             } else if (user.kelompok == 70) {
               user.menu = [
-                // {
-                //   title: "Dashboard",
-                //   icon: "home-outline",
-                //   link: "/pages/dashboard"
-                // },
+                {
+                  title: "Dashboard",
+                  icon: "home-outline",
+                  link: "/pages/dashboard-polres"
+                },
                 {
                   title: "Form Pengesahan",
                   icon: "folder-add-outline",

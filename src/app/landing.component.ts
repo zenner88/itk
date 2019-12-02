@@ -583,7 +583,7 @@ export class LandingComponent implements OnInit, AfterViewInit {
             this.blockUI.start();
             localStorage.setItem("kodeSatker", this.fPol.namaPolres.value.kode);
             this.router.navigate([
-              "/pages/validasi-list-polres-satfung/smart-table"
+              "/pages/dashboard-polres"
             ]);
           }
           this.loading = false;

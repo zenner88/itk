@@ -8,24 +8,20 @@ import { takeWhile } from "rxjs/operators";
 import { CountryOrderData } from "../../../@core/data/country-order";
 
 @Component({
-  selector: "ngx-bottom-ten-indikator",
-  styleUrls: ["./bottom-ten-indikator.component.scss"],
+  selector: "ngx-sim-skck",
+  styleUrls: ["./sim-skck.component.scss"],
   template: `
-    <nb-card>
-      <nb-card-header>SKOR ITK</nb-card-header>
-      <nb-card-body>
-        <ngx-bottom-ten-indikator-chart
-          [countryName]="countryName"
-          [data]="countryData"
-          [labels]="countriesCategories"
-          maxValue="30"
-        >
-        </ngx-bottom-ten-indikator-chart>
-      </nb-card-body>
-    </nb-card>
+    <h5>Skor Yanlik SIM dan SKCK</h5>
+    <ngx-sim-skck-chart
+      [countryName]="countryName"
+      [data]="countryData"
+      [labels]="countriesCategories"
+      maxValue="30"
+    >
+    </ngx-sim-skck-chart>
   `
 })
-export class BottomTenIndikatorComponent implements OnDestroy {
+export class SimSkckComponent implements OnDestroy {
   private alive = true;
 
   countryName = "";

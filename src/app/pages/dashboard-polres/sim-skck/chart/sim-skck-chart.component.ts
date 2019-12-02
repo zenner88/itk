@@ -10,7 +10,7 @@ import {
 import { NbThemeService } from "@nebular/theme";
 import { takeWhile } from "rxjs/operators";
 import { LayoutService } from "../../../../@core/utils/layout.service";
-import { ChartOptions, ChartType, ChartDataSets } from "chart.js";
+import { ChartOptions, ChartType, ChartDataSets, Chart } from "chart.js";
 import { Label } from "ng2-charts";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { AppGlobals } from "../../../../app.global";
@@ -23,8 +23,8 @@ const httpOptions = {
 };
 
 @Component({
-  selector: "ngx-bottom-ten-indikator-chart",
-  styleUrls: ["./bottom-ten-indikator-chart.component.scss"],
+  selector: "ngx-sim-skck-chart",
+  styleUrls: ["./sim-skck-chart.component.scss"],
   template: `
     <div class="row" *ngIf="loaded">
       <div class="col-md-12 col-sm-12" style="text-align:center">
@@ -45,10 +45,13 @@ const httpOptions = {
   `,
   providers: [AppGlobals]
 })
-export class BottomTenIndikatorChartComponent
+export class SimSkckChartComponent
   implements AfterViewInit, OnDestroy, OnChanges, OnInit {
   public barChartOptions: ChartOptions = {
     responsive: true,
+    legend: {
+      display: true
+    }
   };
   public barChartLabels: Label[] = [
     "2006",
@@ -65,12 +68,28 @@ export class BottomTenIndikatorChartComponent
 
   public barChartData = {
     datasets: [
+      /* Outer doughnut data starts*/
       {
-        data: [86.2, 13.8],
-        backgroundColor: ["#336699", "#878889"]
+        data: [80, 20],
+        backgroundColor: [
+          "#802900", // red
+          "#AAAAAA" // green
+        ],
+        label: "SIM"
+      },
+      /* Outer doughnut data ends*/
+      /* Inner doughnut data starts*/
+      {
+        data: [30, 70],
+        backgroundColor: [
+          "#cc6600", // red
+          "#AAAAAA" // green
+        ],
+        label: "SKCK"
       }
+      /* Inner doughnut data ends*/
     ],
-    labels: ["Skor ITK", "#"]
+    labels: ["SIM", "SKCK"]
   };
 
   @Input() countryName: string;
@@ -136,6 +155,7 @@ export class BottomTenIndikatorChartComponent
   }
 
   ngAfterViewInit() {
+    // this.labelPercent(this.barChartData.datasets[0].data[0]);
     this.chartRangkingITK = [];
     this.httpClient
       .get(this._global.baseAPIUrl + "/View_penilaians", httpOptions)
@@ -154,7 +174,6 @@ export class BottomTenIndikatorChartComponent
           }
 
           data.sort(compare);
-          console.log(data);
           let tipePolres = this.removeDuplicates(
             JSON.parse(JSON.stringify(datas))
           );
@@ -175,12 +194,6 @@ export class BottomTenIndikatorChartComponent
             }
           }
           this.loaded = true;
-
-          console.log(this.chartRangkingITK[0].barChartLabels);
-          console.log(this.barChartLabels);
-          console.log(this.chartRangkingITK[0].barChartData[0]);
-          console.log(this.barChartData);
-          // console.log(data);
         },
         error => {
           console.log("Error", error);
@@ -314,5 +327,27 @@ export class BottomTenIndikatorChartComponent
 
   ngOnDestroy() {
     this.alive = false;
+  }
+
+  labelPercent(val) {
+    Chart.pluginService.register({
+      beforeDraw: function(chart) {
+        var width = chart.width,
+          height = chart.height,
+          ctx = chart.ctx;
+
+        ctx.restore();
+        var fontSize = (height / 114).toFixed(2);
+        ctx.font = fontSize + "em sans-serif";
+        ctx.textBaseline = "middle";
+
+        var text = val + "%",
+          textX = Math.round((width - ctx.measureText(text).width) / 2),
+          textY = height / 2;
+
+        ctx.fillText(text, textX, textY);
+        ctx.save();
+      }
+    });
   }
 }

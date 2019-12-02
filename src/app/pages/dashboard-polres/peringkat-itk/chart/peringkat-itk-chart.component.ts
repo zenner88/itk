@@ -10,7 +10,7 @@ import {
 import { NbThemeService } from "@nebular/theme";
 import { takeWhile } from "rxjs/operators";
 import { LayoutService } from "../../../../@core/utils/layout.service";
-import { ChartOptions, ChartType, ChartDataSets } from "chart.js";
+import { ChartOptions, ChartType, ChartDataSets, Chart } from "chart.js";
 import { Label } from "ng2-charts";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { AppGlobals } from "../../../../app.global";
@@ -23,32 +23,42 @@ const httpOptions = {
 };
 
 @Component({
-  selector: "ngx-bottom-ten-indikator-chart",
-  styleUrls: ["./bottom-ten-indikator-chart.component.scss"],
+  selector: "ngx-peringkat-itk-chart",
+  styleUrls: ["./peringkat-itk-chart.component.scss"],
   template: `
     <div class="row" *ngIf="loaded">
       <div class="col-md-12 col-sm-12" style="text-align:center">
-        <canvas
-          height="60vh"
-          width="80vw"
-          baseChart
-          [datasets]="barChartData.datasets"
-          [labels]="barChartData.labels"
-          [options]="barChartOptions"
-          [plugins]="barChartPlugins"
-          [legend]="barChartLegend"
-          [chartType]="barChartType"
+        <nb-progress-bar
+          [value]="50"
+          style="height: 100px;
+        display: inline-block;
+        width: 30%;
+        -webkit-transform: rotate(-90deg);
+        transform: rotate(-90deg);padding-top: 10%;"
+          status="danger"
         >
-        </canvas>
+          <span
+            style="
+          -webkit-transform: rotate(90deg);
+          transform: rotate(90deg);"
+            status="danger"
+          >
+            {{ peringkatItk }}
+          </span>
+        </nb-progress-bar>
       </div>
     </div>
   `,
   providers: [AppGlobals]
 })
-export class BottomTenIndikatorChartComponent
-  implements AfterViewInit, OnDestroy, OnChanges, OnInit {
+export class PeringkatITKChartComponent
+  implements AfterViewInit, OnDestroy, OnInit {
   public barChartOptions: ChartOptions = {
     responsive: true,
+    legend: {
+      display: false
+    },
+    cutoutPercentage: 80
   };
   public barChartLabels: Label[] = [
     "2006",
@@ -67,7 +77,9 @@ export class BottomTenIndikatorChartComponent
     datasets: [
       {
         data: [86.2, 13.8],
-        backgroundColor: ["#336699", "#878889"]
+        backgroundColor: ["#336699", "#AAAAAA"],
+        hoverBackgroundColor: ["#336699", "#AAAAAA"],
+        hoverBorderColor: ["#336699", "#ffffff"]
       }
     ],
     labels: ["Skor ITK", "#"]
@@ -85,6 +97,9 @@ export class BottomTenIndikatorChartComponent
 
   chartRangkingITK: any[];
   loaded = false;
+  peringkatItk: any = 12;
+  kodeSatker: any = localStorage.getItem("kodeSatker");
+
   constructor(
     private theme: NbThemeService,
     private layoutService: LayoutService,
@@ -99,88 +114,18 @@ export class BottomTenIndikatorChartComponent
 
   ngOnInit() {}
 
-  removeDuplicates(arr) {
-    let unique_array = [];
-    for (let i = 0; i < arr.length; i++) {
-      if (arr[i] != undefined) {
-        if (
-          unique_array
-            .map(function(e) {
-              return e.id_tipe_polres;
-            })
-            .indexOf(arr[i].id_tipe_polres) == -1
-        ) {
-          unique_array.push(arr[i]);
-        }
-      }
-    }
-    return unique_array;
-  }
-
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes.data && !changes.data.isFirstChange()) {
-      this.echartsInstance.setOption({
-        series: [
-          {
-            data: this.data.map(v => this.maxValue)
-          },
-          {
-            data: this.data
-          },
-          {
-            data: this.data
-          }
-        ]
-      });
-    }
-  }
-
   ngAfterViewInit() {
-    this.chartRangkingITK = [];
+    let params = JSON.stringify({ where: { kode_satker: this.kodeSatker } });
     this.httpClient
-      .get(this._global.baseAPIUrl + "/View_penilaians", httpOptions)
+      .get(
+        this._global.baseAPIUrl + "/View_penilaian_alls?filter=" + params,
+        httpOptions
+      )
       .subscribe(
         datas => {
           let data = JSON.parse(JSON.stringify(datas));
-
-          function compare(a, b) {
-            if (a.nilai < b.nilai) {
-              return -1;
-            }
-            if (a.nilai > b.nilai) {
-              return 1;
-            }
-            return 0;
-          }
-
-          data.sort(compare);
-          console.log(data);
-          let tipePolres = this.removeDuplicates(
-            JSON.parse(JSON.stringify(datas))
-          );
-
-          var lengthData = data.length == 10 ? data.length : 10;
-
-          for (let i = 0; i < tipePolres.length; i++) {
-            this.chartRangkingITK[i] = {
-              label: tipePolres[i].tipe_polres,
-              id_tipe_polres: tipePolres[i].id_tipe_polres,
-              barChartLabels: [],
-              barChartData: []
-            };
-            for (let j = 0; j < lengthData; j++) {
-              // this.chartRangkingITK[i].barChartData.push({ data: [], label: tipePolres[i].tipe_polres });
-              this.chartRangkingITK[i].barChartLabels.push(data[j].satker);
-              this.chartRangkingITK[i].barChartData.push(data[j].nilai);
-            }
-          }
+          this.peringkatItk = data[0].peringkat;
           this.loaded = true;
-
-          console.log(this.chartRangkingITK[0].barChartLabels);
-          console.log(this.barChartLabels);
-          console.log(this.chartRangkingITK[0].barChartData[0]);
-          console.log(this.barChartData);
-          // console.log(data);
         },
         error => {
           console.log("Error", error);
@@ -314,5 +259,31 @@ export class BottomTenIndikatorChartComponent
 
   ngOnDestroy() {
     this.alive = false;
+  }
+
+  labelPercent(val) {
+    Chart.pluginService.register({
+      beforeDraw: function(chart) {
+        console.log(chart);
+        var width = chart.width,
+          height = chart.height,
+          canvas = chart.canvas,
+          ctx = chart.ctx;
+
+        if (canvas.id == "peringkat-itk") {
+          ctx.restore();
+          var fontSize = (height / 114).toFixed(2);
+          ctx.font = fontSize + "em sans-serif";
+          ctx.textBaseline = "middle";
+
+          var text = val + "%",
+            textX = Math.round((width - ctx.measureText(text).width) / 2),
+            textY = height / 2;
+
+          ctx.fillText(text, textX, textY);
+          ctx.save();
+        }
+      }
+    });
   }
 }

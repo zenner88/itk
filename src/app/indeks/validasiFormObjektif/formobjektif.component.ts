@@ -406,7 +406,7 @@ export class ValidasiFormObjektifComponent implements OnInit {
 
     for (let i = 0; i < jml; i++) {
       if (this.t.value[i].nilai == null) {
-        this.t.value[i].nilai = 0;
+        this.t.value[i].nilai = null;
       }
 
       if (this.t.value[i].id_progress_temp == true) {
@@ -431,7 +431,7 @@ export class ValidasiFormObjektifComponent implements OnInit {
       dataSubmitP.push(this.t.value[i]);
       for (let j = 0; j < this.t.value[i].details.length; j++) {
         if (this.t.value[i].details[j].nilai == null) {
-          this.t.value[i].details[j].nilai = 0;
+          this.t.value[i].details[j].nilai = null;
         }
         if (this.t.value[i].details[j].id_progress_temp == true) {
           this.t.value[i].details[j].id_progress = 3;
