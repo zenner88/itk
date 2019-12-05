@@ -201,7 +201,7 @@ export class SmartTableComponent {
           filter: false
         },
         prinsip: {
-          title: "POKJA ITK (Prinsip)",
+          title: "Prinsip",
           type: "integer",
           filter: false
         },

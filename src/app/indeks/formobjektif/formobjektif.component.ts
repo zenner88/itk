@@ -395,7 +395,10 @@ export class FormObjektifComponent implements OnInit {
     var dataSubmitD = [];
 
     for (let i = 0; i < jml; i++) {
-      if (this.t.value[i].id_tipe_indikator != 2) {
+      if (
+        this.t.value[i].id_tipe_indikator != 2 &&
+        this.t.value[i].id_tipe_indikator != 5
+      ) {
         if (this.t.value[i].nilai == null) {
           this.t.value[i].nilai = null;
         }
@@ -414,6 +417,15 @@ export class FormObjektifComponent implements OnInit {
       }
 
       for (let j = 0; j < this.t.value[i].details.length; j++) {
+        if (this.t.value[i].details[j].kode_indikator_induk == "PT02") {
+          console.log(5);
+        }
+        if (this.t.value[i].details[j].nilai == true) {
+          this.t.value[i].details[j].nilai = 1;
+        }
+        if (this.t.value[i].details[j].nilai == false) {
+          this.t.value[i].details[j].nilai = 0;
+        }
         if (this.t.value[i].details[j].nilai == null) {
           this.t.value[i].details[j].nilai = null;
         }
@@ -473,21 +485,74 @@ export class FormObjektifComponent implements OnInit {
       });
     }
 
-    var dataD = [];
     for (let i = 0; i < dataSubmitD.length; i++) {
-      dataD.push({
-        pk: {
+      var paramsCek = JSON.stringify({
+        where: {
           id: dataSubmitD[i].id,
           jenis: dataSubmitD[i].jenis
-        },
-        data: {
-          nilai: parseInt(dataSubmitD[i].nilai),
-          arsip_link: dataSubmitD[i].arsip_link,
-          id_progress: dataSubmitD[i].id_progress,
-          diubah_oleh: dataSubmitD[i].diubah_oleh,
-          waktu_ubah: dataSubmitD[i].waktu_ubah
         }
       });
+      this.httpClient
+        .get(
+          this._global.baseAPIUrl +
+            "/Itk_tmp_penilaian_indikators?filter=" +
+            paramsCek,
+          httpOptions
+        )
+        .subscribe(
+          data => {
+            let datas = JSON.parse(JSON.stringify(data));
+            var dataD = [];
+            if (datas.length > 0) {
+              dataD.push({
+                pk: {
+                  id: dataSubmitD[i].id,
+                  jenis: dataSubmitD[i].jenis
+                },
+                data: {
+                  nilai: parseInt(dataSubmitD[i].nilai),
+                  arsip_link: dataSubmitD[i].arsip_link,
+                  id_progress: dataSubmitD[i].id_progress,
+                  diubah_oleh: dataSubmitD[i].diubah_oleh,
+                  waktu_ubah: dataSubmitD[i].waktu_ubah
+                }
+              });
+
+              if (dataD.length > 0) {
+                this.httpClient
+                  .put(
+                    this._global.baseAPIUrl +
+                      "/Itk_tmp_penilaian_indikators/updateDataMasal",
+                    dataD,
+                    httpOptions
+                  )
+                  .subscribe(
+                    data => {
+                      // console.log("PUT Request is successful ", data);
+                      this.showToast("success", "Data Tersimpan", null);
+                      setTimeout(() => {
+                        this.blockUI.stop();
+                      }, 2500);
+                    },
+                    error => {
+                      setTimeout(() => {
+                        this.blockUI.stop();
+                      }, 2500);
+                      // console.log("Error", error);
+                      this.showToast(
+                        "warning",
+                        "Input / koneksi bermasalah",
+                        null
+                        // error.error.error.message
+                      );
+                    }
+                  );
+              }
+            }
+            console.log(dataSubmitD[i].id, data);
+          },
+          error => {}
+        );
     }
     if (dataP.length > 0) {
       this.httpClient
@@ -521,36 +586,7 @@ export class FormObjektifComponent implements OnInit {
         );
     }
 
-    if (dataD.length > 0) {
-      this.httpClient
-        .put(
-          this._global.baseAPIUrl +
-            "/Itk_tmp_penilaian_indikators/updateDataMasal",
-          dataD,
-          httpOptions
-        )
-        .subscribe(
-          data => {
-            // console.log("PUT Request is successful ", data);
-            this.showToast("success", "Data Tersimpan", null);
-            setTimeout(() => {
-              this.blockUI.stop();
-            }, 2500);
-          },
-          error => {
-            setTimeout(() => {
-              this.blockUI.stop();
-            }, 2500);
-            // console.log("Error", error);
-            this.showToast(
-              "warning",
-              "Input / koneksi bermasalah",
-              null
-              // error.error.error.message
-            );
-          }
-        );
-    }
+    
 
     this.keteranganPolres[0].diubah_oleh = JSON.parse(
       localStorage.getItem("currentUser")

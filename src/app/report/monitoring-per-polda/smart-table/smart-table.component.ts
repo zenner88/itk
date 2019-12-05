@@ -163,7 +163,7 @@ export class SmartTableComponent {
         //   // width: "25%"
         // },
         satker: {
-          title: "Satker",
+          title: "Polres",
           type: "string",
           // width: "25%"
         },

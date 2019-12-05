@@ -219,15 +219,20 @@
                     <div class="form-group col-4">
                       -
                     </div>
-                    <div class="form-group col-2">
+                    <div class="form-group col-2" style="display: flex;">
                       <input type="text" [(ngModel)]="t.value[index_indikator].nilai" class="form-control" fullWidth
-                        fieldSize="small" />
+                        fieldSize="small" disabled />
                       {{x.value.satuan}}
                     </div>
                     <div class="form-group col-1">
                       <a (click)="open(dialogUpload,index_indikator,null)">
-                        <span style="font-weight: bold;">{{x.value.jml_arsif}}</span>
-                        <span *ngIf="x.value.jml_arsif"> File</span>
+                        <span style="font-weight: bold;">
+                          {{x.value.jml_arsif}}
+                        </span>
+                        <span *ngIf="x.value.jml_arsif">
+                          <nb-icon icon="file-text-outline" status="primary"
+                            [options]="{ animation: { type: 'pulse' } }"></nb-icon>
+                        </span>
                       </a>
                     </div>
                     <div class="form-group col-2 text-left">
@@ -245,7 +250,7 @@
                   <div class="row">
                     <div class="form-group col-4">
                       <nb-radio-group name="{{x.value.kode_indikator_satfung}}" [(ngModel)]="x.value.nilai"
-                        *ngIf="x.value.radio.length > 0">
+                        *ngIf="x.value.radio.length > 0" disabled>
                         <nb-radio name="{{opt.kode_indikator_satfung}}" value="{{opt.nilai}}"
                           *ngFor="let opt of x.value.radio">{{opt.pilihan}}</nb-radio>
                       </nb-radio-group>
@@ -254,15 +259,18 @@
                         <div [innerHTML]="x.value.pilihan_jawaban"></div>
                       </span>
                     </div>
-                    <div class="form-group col-2">
+                    <div class="form-group col-2" style="display: flex;">
                       <input type="text" [(ngModel)]="t.value[index_indikator].nilai" class="form-control" fullWidth
-                        fieldSize="small" *ngIf="x.value.radio.length ==0" />
+                        fieldSize="small" *ngIf="x.value.radio.length ==0" disabled />
                       {{x.value.satuan}}
                     </div>
                     <div class="form-group col-1">
                       <a (click)="open(dialogUpload,index_indikator,null)">
                         <span style="font-weight: bold;">{{x.value.jml_arsif}}</span>
-                        <span *ngIf="x.value.jml_arsif"> File</span>
+                        <span *ngIf="x.value.jml_arsif">
+                          <nb-icon icon="file-text-outline" status="primary"
+                            [options]="{ animation: { type: 'pulse' } }"></nb-icon>
+                        </span>
                       </a>
                     </div>
                     <div class="form-group col-2 text-left">
@@ -281,15 +289,49 @@
                     <div class="form-group col-4">
                       <div [innerHTML]="z.indikator"></div>
                     </div>
-                    <div class="form-group col-2">
+                    <div class="form-group col-2" style="display: flex;">
                       <input type="text" [(ngModel)]="t.value[index_indikator].details[index_detail].nilai"
-                        class="form-control" fullWidth fieldSize="small" />
+                        class="form-control" fullWidth fieldSize="small" disabled />
                       {{z.satuan}}
                     </div>
                     <div class="form-group col-1">
                       <a (click)="open(dialogUpload,index_indikator,index_detail)">
                         <span style="font-weight: bold;">{{z.jml_arsif}}</span>
-                        <span *ngIf="z.jml_arsif"> File</span>
+                        <span *ngIf="z.jml_arsif">
+                          <nb-icon icon="file-text-outline" status="primary"
+                            [options]="{ animation: { type: 'pulse' } }"></nb-icon>
+                        </span>
+                      </a>
+                    </div>
+                    <div class="form-group col-2 text-left">
+                      <nb-checkbox [(ngModel)]="t.value[index_indikator].details[index_detail].id_progress_temp"
+                        status="success" [disabled]="t.value[index_indikator].details[index_detail].id_progress <= 1 ">
+                        Validasi</nb-checkbox>
+                    </div>
+                    <div class="form-group col-3 text-right">
+                      <textarea [(ngModel)]="t.value[index_indikator].details[index_detail].catatan"
+                        class="form-control" fullWidth fieldSize="small" placeholder="Catatan..."></textarea>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group col-8" *ngIf="x.value.id_tipe_indikator == 5">
+                  <div class="row" *ngFor="let z of x.value.details ; let index_detail = index">
+                    <div class="form-group col-4">
+                      <div [innerHTML]="z.indikator"></div>
+                    </div>
+                    <div class="form-group col-2" style="display: flex;">
+                      <input type="checkbox" [(ngModel)]="t.value[index_indikator].details[index_detail].nilai"
+                        class="form-control" fullWidth fieldSize="small" disabled />
+                      {{z.satuan}}
+                    </div>
+                    <div class="form-group col-1">
+                      <a (click)="open(dialogUpload,index_indikator,index_detail)">
+                        <span style="font-weight: bold;">{{z.jml_arsif}}</span>
+                        <span *ngIf="z.jml_arsif">
+                          <nb-icon icon="file-text-outline" status="primary"
+                            [options]="{ animation: { type: 'pulse' } }"></nb-icon>
+                        </span>
                       </a>
                     </div>
                     <div class="form-group col-2 text-left">

@@ -50,6 +50,12 @@ export class KinerjaTataKelolaItkChartComponent
     responsive: true,
     legend: {
       display: false
+    },
+    plugins: {
+      datalabels: {
+        anchor: 'end',
+        align: 'end',
+      }
     }
   };
   public barChartLabels: Label[] = [

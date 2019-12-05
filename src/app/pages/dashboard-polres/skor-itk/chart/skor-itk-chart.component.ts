@@ -146,28 +146,7 @@ export class SkorITKChartComponent
 
   ngAfterViewInit() {
 
-    let params = JSON.stringify({ where: { kode_satker: this.kodeSatker } });
-    this.httpClient
-      .get(
-        this._global.baseAPIUrl + "/View_penilaian_alls?filter=" + params,
-        httpOptions
-      )
-      .subscribe(
-        datas => {
-          let data = JSON.parse(JSON.stringify(datas));
-          this.skorItk = data[0].nilai;
-          this.barChartData.datasets[0].data = [
-            this.skorItk*10,
-            100 - (this.skorItk*10)
-          ];
-          this.labelPercent(this.barChartData.datasets[0].data[0]);
-          this.loaded = true;
-        },
-        error => {
-          console.log("Error", error);
-          // this.showToast("warning", "Koneksi bermasalah", error.message);
-        }
-      );
+    // this.getData(this.ko);
 
     this.theme
       .getJsTheme()
@@ -281,6 +260,31 @@ export class SkorITKChartComponent
           }
         );
       });
+  }
+
+  getData(satker){
+    let params = JSON.stringify({ where: { kode_satker: satker } });
+    this.httpClient
+      .get(
+        this._global.baseAPIUrl + "/View_penilaian_alls?filter=" + params,
+        httpOptions
+      )
+      .subscribe(
+        datas => {
+          let data = JSON.parse(JSON.stringify(datas));
+          this.skorItk = data[0].nilai;
+          this.barChartData.datasets[0].data = [
+            this.skorItk*10,
+            100 - (this.skorItk*10)
+          ];
+          this.labelPercent(this.barChartData.datasets[0].data[0]);
+          this.loaded = true;
+        },
+        error => {
+          console.log("Error", error);
+          // this.showToast("warning", "Koneksi bermasalah", error.message);
+        }
+      );
   }
 
   onChartInit(ec) {

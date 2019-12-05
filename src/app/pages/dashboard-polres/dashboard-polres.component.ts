@@ -4,7 +4,11 @@ import { setInterval } from "timers";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { AppGlobals } from "../../app.global";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-
+import { SkorITKChartComponent } from "./skor-itk/chart/skor-itk-chart.component";
+import { ChartOptions, ChartType, ChartDataSets, Chart } from "chart.js";
+import { Label, BaseChartDirective } from "ng2-charts";
+import { ChangeDetectorRef } from "@angular/core";
+import * as pluginDataLabels from "chartjs-plugin-datalabels";
 const httpOptions = {
   headers: new HttpHeaders({
     "Content-Type": "application/json",
@@ -17,29 +21,14 @@ const httpOptions = {
   selector: "ngx-dashboard-polres",
   styleUrls: ["./dashboard-polres.component.scss"],
   templateUrl: "./dashboard-polres.component.html",
-  providers: [AppGlobals]
+  providers: [AppGlobals, SkorITKChartComponent]
 })
 export class DashboardPolresComponent implements OnInit, OnDestroy {
-  single = [
-    {
-      name: "Germany",
-      value: 8940000
-    },
-    {
-      name: "USA",
-      value: 5000000
-    },
-    {
-      name: "France",
-      value: 7200000
-    }
-  ];
   colorScheme: any;
-  themeSubscription: any;
   satkerListPolda: any[];
   public satkerList: any[] = [];
   satkerx: any;
-  listPeriode:any;
+  listPeriode: any;
   satkerPolda: any;
   formSearch: FormGroup;
   config = {
@@ -54,31 +43,52 @@ export class DashboardPolresComponent implements OnInit, OnDestroy {
     // searchPlaceholder:'Search' // label thats displayed in search input,
     // searchOnKey: 'name' // key on which search should be performed this will be selective search. if undefined this will be extensive search on all keys
   };
-  namaPolres=localStorage.getItem('namaUser');
+  namaPolres = localStorage.getItem("namaUser");
 
+  public barChartDataSkorITK = {
+    datasets: [
+      {
+        data: [50, 50],
+        backgroundColor: ["#336699", "#AAAAAA"],
+        hoverBackgroundColor: ["#336699", "#AAAAAA"],
+        hoverBorderColor: ["#336699", "#ffffff"]
+      }
+    ],
+    labels: ["Skor ITK", "#"]
+  };
+
+  public chartSkorITKOptions: ChartOptions = {
+    responsive: true,
+    legend: {
+      position: "top"
+    },
+
+    plugins: {
+      datalabels: {
+        color: "#ffffff",
+        formatter: function(value) {
+          return value;
+        },
+        font: {
+          weight: "bold",
+          size: 16
+        }
+      }
+    }
+  };
+  public chartSkorITKType: ChartType = "doughnut";
+  public chartSkorITKLegend = false;
+  public chartSkorITKPlugins = [pluginDataLabels];
+  public chartSkorITKLabels: Label[] = [];
   constructor(
     private theme: NbThemeService,
     private httpClient: HttpClient,
     private _global: AppGlobals,
-    private formBuilder: FormBuilder
-
-  ) {
-    this.themeSubscription = this.theme.getJsTheme().subscribe(config => {
-      const colors: any = config.variables;
-      this.colorScheme = {
-        domain: [
-          colors.primaryLight,
-          colors.infoLight,
-          colors.successLight,
-          colors.warningLight,
-          colors.dangerLight
-        ]
-      };
-    });
-  }
+    private formBuilder: FormBuilder,
+    private skorItk: SkorITKChartComponent
+  ) {}
 
   ngOnInit() {
-
     this.formSearch = this.formBuilder.group({
       periode: [""],
       namaPolda: [""],
@@ -87,18 +97,12 @@ export class DashboardPolresComponent implements OnInit, OnDestroy {
 
     this.getDropdownPolda();
     this.getDropdownPeriode();
+    this.changePolres(localStorage.getItem("kodeSatker"));
   }
 
-  ngOnDestroy(): void {
-    this.themeSubscription.unsubscribe();
-  }
-
-  param(data) {
-    return data;
-  }
+  ngOnDestroy(): void {}
 
   getDropdownPolres(idPolda) {
-    this.param('tst');
     this.httpClient
       .get(
         this._global.baseAPIUrl +
@@ -161,10 +165,7 @@ export class DashboardPolresComponent implements OnInit, OnDestroy {
   getDropdownPeriode() {
     this.satkerListPolda = [];
     this.httpClient
-      .get(
-        this._global.baseAPIUrl +
-          "/Itk_mst_periodes"
-      )
+      .get(this._global.baseAPIUrl + "/Itk_mst_periodes")
       .subscribe(
         data => {
           if (data != undefined || data != null) {
@@ -175,7 +176,63 @@ export class DashboardPolresComponent implements OnInit, OnDestroy {
           console.log(error);
         }
       );
-    console.log("datas");
-    console.log(this.satkerPolda);
+  }
+
+  changePolres(data) {
+    let params = JSON.stringify({ where: { kode_satker: data } });
+    this.httpClient
+      .get(
+        this._global.baseAPIUrl + "/View_penilaian_alls?filter=" + params,
+        httpOptions
+      )
+      .subscribe(
+        datas => {
+          let data = JSON.parse(JSON.stringify(datas));
+          this.barChartDataSkorITK.datasets[0].data = [
+            data[0].nilai * 10,
+            100 - data[0].nilai * 10
+          ];
+
+          this.drawChartSkorITK(this.barChartDataSkorITK.datasets);
+        },
+        error => {
+          console.log("Error", error);
+        }
+      );
+  }
+
+  drawChartSkorITK(datasets) {
+    this.chartSkorITKLabels = [];
+    for (let i = 0; i < datasets[0].data.length; i++) {
+      this.chartSkorITKLabels.push(datasets[0].data[i]);
+    }
+    this.labelPercentSkorITK(this.barChartDataSkorITK.datasets[0].data[0]);
+  }
+
+  labelPercentSkorITK(val) {
+    Chart.pluginService.register({
+      beforeDraw: function(chart) {
+        var width = chart.width,
+          height = chart.height,
+          canvas = chart.canvas,
+          ctx = chart.ctx;
+
+        if (canvas.id == "skor-itk") {
+          ctx.restore();
+          ctx.clearRect(0, 0, width, height);
+          var fontSize = (height / 114).toFixed(2);
+          ctx.font = fontSize + "em sans-serif";
+          ctx.textBaseline = "middle";
+
+          var text = val + "%",
+            textX = Math.round((width - ctx.measureText(text).width) / 2),
+            textY = height / 2;
+
+          ctx.fillText(text, textX, textY);
+          ctx.save();
+        }
+      }
+    });
   }
 }
+ 

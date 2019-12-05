@@ -1,4 +1,10 @@
-import { Component, OnDestroy, Input } from "@angular/core";
+import {
+  Component,
+  OnDestroy,
+  Input,
+  EventEmitter,
+  Output
+} from "@angular/core";
 import {
   NbMediaBreakpoint,
   NbMediaBreakpointsService,
@@ -12,12 +18,7 @@ import { CountryOrderData } from "../../../@core/data/country-order";
   styleUrls: ["./skor-itk.component.scss"],
   template: `
     <h5>Skor ITK</h5>
-    <ngx-skor-itk-chart
-      [countryName]="countryName"
-      [data]="countryData"
-      [labels]="countriesCategories"
-      maxValue="30"
-    >
+    <ngx-skor-itk-chart>
     </ngx-skor-itk-chart>
   `
 })
@@ -32,6 +33,7 @@ export class SkorITKComponent implements OnDestroy {
   countriesCategories: string[];
   breakpoint: NbMediaBreakpoint = { name: "", width: 0 };
   breakpoints: any;
+  @Output() reset: EventEmitter<string> = new EventEmitter<string>();
 
   constructor(
     private themeService: NbThemeService,
@@ -66,5 +68,9 @@ export class SkorITKComponent implements OnDestroy {
 
   ngOnDestroy() {
     this.alive = false;
+  }
+
+  onReset(){
+    this.reset.emit("hello emit");
   }
 }

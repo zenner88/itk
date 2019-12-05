@@ -6,19 +6,20 @@
         <div class="form-group col-6">
         </div>
         <div class="form-group col-2">
-          <label class="label">Polda</label>
+          <!-- <label class="label">Polda</label>
           <nb-select selected=0 fullWidth class="pull-right status-info shape-rectangle" formControlName="namaPolda"
             (ngModelChange)="getDropdownPolres($event)">
             <nb-option value=0>Pilih Polda</nb-option>
             <nb-option *ngFor="let x of satkerPolda" [value]="x">{{ x.satker }}</nb-option>
-          </nb-select>
+          </nb-select> -->
         </div>
         <div class="form-group col-2">
-          <label class="label">Polres</label>
-          <nb-select selected=0 fullWidth class="pull-right status-info shape-rectangle" formControlName="namaPolres">
+          <!-- <label class="label">Polres</label>
+          <nb-select selected=0 fullWidth class="pull-right status-info shape-rectangle" formControlName="namaPolres"
+            (ngModelChange)="changePolres($event)">
             <nb-option value=0>Pilih Polres</nb-option>
             <nb-option *ngFor="let x of satkerx" [value]="x">{{ x.satker }}</nb-option>
-          </nb-select>
+          </nb-select> -->
         </div>
         <div class="form-group col-2">
           <label class="label">Tahun</label>
@@ -41,7 +42,11 @@
             <ngx-peringkat-itk></ngx-peringkat-itk>
           </div>
           <div class="col-3">
-            <ngx-skor-itk [param]="param('con')"></ngx-skor-itk>
+            <h5>Skor ITK</h5>
+            <canvas id="skor-itk" baseChart [datasets]="barChartDataSkorITK.datasets" [labels]="barChartDataSkorITK.labels"
+              [chartType]="chartSkorITKType" [options]="chartSkorITKOptions" [plugins]="chartSkorITKPlugins"
+              [legend]="chartSkorITKLegend">
+            </canvas>
           </div>
           <div class="col-3">
             <ngx-sim-skck></ngx-sim-skck>

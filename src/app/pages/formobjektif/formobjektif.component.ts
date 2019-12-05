@@ -269,8 +269,10 @@ export class FormObjektifComponent implements OnInit {
       roots = [],
       i;
     for (i = 0; i < list.length; i += 1) {
-      map[list[i].kode_indikator_induk] = i; // inisialisasi
-      list[i].children = [];
+      if (list[i].jenis == "P") {
+        map[list[i].kode_indikator_induk] = i; // inisialisasi
+        list[i].children = [];
+      }
       // inisialisasi Children
     }
     for (i = 0; i < list.length; i += 1) {

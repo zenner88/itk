@@ -250,8 +250,10 @@ export class ValidasiFormObjektifComponent implements OnInit {
       roots = [],
       i;
     for (i = 0; i < list.length; i += 1) {
-      map[list[i].kode_indikator_induk] = i; // inisialisasi
-      list[i].children = [];
+      if (list[i].jenis == "P") {
+        map[list[i].kode_indikator_induk] = i; // inisialisasi
+        list[i].children = [];
+      }
       // inisialisasi Children
     }
     for (i = 0; i < list.length; i += 1) {
@@ -405,7 +407,10 @@ export class ValidasiFormObjektifComponent implements OnInit {
     var dataSubmitD = [];
 
     for (let i = 0; i < jml; i++) {
-      if (this.t.value[i].nilai == null) {
+      if (
+        this.t.value[i].id_tipe_indikator != 2 &&
+        this.t.value[i].id_tipe_indikator != 5
+      ) {if (this.t.value[i].nilai == null) {
         this.t.value[i].nilai = null;
       }
 
@@ -429,6 +434,8 @@ export class ValidasiFormObjektifComponent implements OnInit {
       this.t.value[i].data = this.t.value[i];
       dataSubmit.push(this.t.value[i]);
       dataSubmitP.push(this.t.value[i]);
+    }
+
       for (let j = 0; j < this.t.value[i].details.length; j++) {
         if (this.t.value[i].details[j].nilai == null) {
           this.t.value[i].details[j].nilai = null;
@@ -479,7 +486,10 @@ export class ValidasiFormObjektifComponent implements OnInit {
     var dataP = [];
     for (let i = 0; i < dataSubmitP.length; i++) {
       dataP.push({
-        id: dataSubmitP[i].id,
+        pk: {
+          id: dataSubmitP[i].id,
+          jenis: dataSubmitP[i].jenis
+        },
         data: {
           nilai: dataSubmitP[i].nilai,
           arsip_link: dataSubmitP[i].arsip_link,
@@ -491,26 +501,82 @@ export class ValidasiFormObjektifComponent implements OnInit {
       });
     }
 
-    var dataD = [];
     for (let i = 0; i < dataSubmitD.length; i++) {
-      dataD.push({
-        id: dataSubmitD[i].id,
-        data: {
-          nilai: dataSubmitD[i].nilai,
-          arsip_link: dataSubmitD[i].arsip_link,
-          id_progress: dataSubmitD[i].id_progress,
-          catatan: dataSubmitD[i].catatan,
-          diubah_oleh: dataSubmitD[i].diubah_oleh,
-          waktu_ubah: dataSubmitD[i].waktu_ubah
+      var paramsCek = JSON.stringify({
+        where: {
+          id: dataSubmitD[i].id,
+          jenis: dataSubmitD[i].jenis
         }
       });
+      this.httpClient
+        .get(
+          this._global.baseAPIUrl +
+            "/Itk_tmp_penilaian_indikators?filter=" +
+            paramsCek,
+          httpOptions
+        )
+        .subscribe(
+          data => {
+            let datas = JSON.parse(JSON.stringify(data));
+            var dataD = [];
+            if (datas.length > 0) {
+              dataD.push({
+                pk: {
+                  id: dataSubmitD[i].id,
+                  jenis: dataSubmitD[i].jenis
+                },
+                data: {
+                  nilai: dataSubmitD[i].nilai,
+                  arsip_link: dataSubmitD[i].arsip_link,
+                  id_progress: dataSubmitD[i].id_progress,
+                  catatan: dataSubmitD[i].catatan,
+                  diubah_oleh: dataSubmitD[i].diubah_oleh,
+                  waktu_ubah: dataSubmitD[i].waktu_ubah
+                }
+              });
+
+              if (dataD.length > 0) {
+                this.httpClient
+                  .put(
+                    this._global.baseAPIUrl +
+                      "/Itk_tmp_penilaian_indikators/updateDataMasal",
+                    dataD,
+                    httpOptions
+                  )
+                  .subscribe(
+                    data => {
+                      // console.log("PUT Request is successful ", data);
+                      this.showToast("success", "Data Tersimpan", null);
+                      setTimeout(() => {
+                        this.blockUI.stop();
+                      }, 2500);
+                    },
+                    error => {
+                      setTimeout(() => {
+                        this.blockUI.stop();
+                      }, 2500);
+                      // console.log("Error", error);
+                      this.showToast(
+                        "warning",
+                        "Input / koneksi bermasalah",
+                        null
+                        // error.error.error.message
+                      );
+                    }
+                  );
+              }
+            }
+            console.log(dataSubmitD[i].id, data);
+          },
+          error => {}
+        );
     }
 
     if (dataP.length > 0) {
       this.httpClient
         .put(
           this._global.baseAPIUrl +
-            "/Itk_trn_penilaian_indikators/updateDataMasal",
+            "/Itk_tmp_penilaian_indikators/updateDataMasal",
           dataP,
           httpOptions
         )
@@ -541,42 +607,7 @@ export class ValidasiFormObjektifComponent implements OnInit {
         );
     }
 
-    if (dataD.length > 0) {
-      this.httpClient
-        .put(
-          this._global.baseAPIUrl +
-            "/Itk_trn_penilaian_details/updateDataMasal",
-          dataD,
-          httpOptions
-        )
-        .subscribe(
-          data => {
-            saveD = true;
-            // console.log("PUT Request is successful ", data);
-            // this.showToast("success", "Data Tersimpan", id);
-            if (saveP && saveD) {
-              setTimeout(() => {
-                this.blockUI.stop();
-              }, 2500);
-            }
-            // console.log("PUT Request is successful ", data);
-            this.showToast("success", "Data Tersimpan", null);
-          },
-          error => {
-            setTimeout(() => {
-              this.blockUI.stop();
-            }, 2500);
-            // console.log("Error", error);
-            this.showToast(
-              "warning",
-              "Input / koneksi bermasalah",
-              null
-              // error.error.error.message
-            );
-          }
-        );
-    }
-
+   
     this.keteranganPolres[0].diubah_oleh = JSON.parse(
       localStorage.getItem("currentUser")
     ).kode;
