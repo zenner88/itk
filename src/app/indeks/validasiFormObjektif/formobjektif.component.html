@@ -145,8 +145,8 @@
                     <div align="right">Nama KA{{nama_satfung}}</div>
                   </div>
                   <div class="col-sm-8">
-                    <div align="left"><input type="text" class="col-lg-4" nbInput fullWidth fieldSize="small"
-                        placeholder="" [(ngModel)]="keteranganPolres[0].kasatfung"></div>
+                    <!-- <div align="left"><input type="text" class="col-lg-4" nbInput fullWidth fieldSize="small"
+                        placeholder="" [(ngModel)]="keteranganPolres[0].kasatfung"></div> -->
                   </div>
                 </div>
                 <div class="row show-grid">
@@ -157,8 +157,8 @@
                     <div align="right">Notelp/HP KA{{nama_satfung}}</div>
                   </div>
                   <div class="col-sm-8">
-                    <div align="left"><input type="text" class="col-lg-4" nbInput fullWidth fieldSize="small"
-                        placeholder="" [(ngModel)]="keteranganPolres[0].hp_kasatfung"></div>
+                    <!-- <div align="left"><input type="text" class="col-lg-4" nbInput fullWidth fieldSize="small"
+                        placeholder="" [(ngModel)]="keteranganPolres[0].hp_kasatfung"></div> -->
                   </div>
                 </div>
                 <div class="row show-grid">
@@ -169,8 +169,8 @@
                     <div align="right">Nama Staff {{nama_satfung}}</div>
                   </div>
                   <div class="col-sm-8">
-                    <div align="left"><input type="text" class="col-lg-4" nbInput fullWidth fieldSize="small"
-                        placeholder="" [(ngModel)]="keteranganPolres[0].staff_satfung"></div>
+                    <!-- <div align="left"><input type="text" class="col-lg-4" nbInput fullWidth fieldSize="small"
+                        placeholder="" [(ngModel)]="keteranganPolres[0].staff_satfung"></div> -->
                   </div>
                 </div>
                 <div class="row show-grid">
@@ -181,8 +181,8 @@
                     <div align="right">Notelp/HP Staff {{nama_satfung}}</div>
                   </div>
                   <div class="col-sm-8">
-                    <div align="left"><input type="text" class="col-lg-4" nbInput fullWidth fieldSize="small"
-                        placeholder="" [(ngModel)]="keteranganPolres[0].hp_staff_satfung"></div>
+                    <!-- <div align="left"><input type="text" class="col-lg-4" nbInput fullWidth fieldSize="small"
+                        placeholder="" [(ngModel)]="keteranganPolres[0].hp_staff_satfung"></div> -->
                   </div>
                 </div>
                 <div class="row show-grid"></div>
@@ -204,128 +204,143 @@
             </div>
           </nb-card-header>
           <nb-card-body>
-            <!-- <form [formGroup]="dynamicForm"> -->
-            <div *ngFor="let ticket of t.controls; let x of ticket; let index_indikator = index"
-              class="list-group list-group-flush">
-              <div class="row">
-                <div class="form-group col-1 text-center">
+
+            <div>
+              <div *ngFor="let ticket of t.controls; let x of ticket; let index_indikator = index"
+                style="display: flex;">
+                <div style="width: 50px;min-width: 50px; text-align: center; padding: 5px;">
                   {{index_indikator+1}}
                 </div>
-                <div class="form-group col-3">
-                  <B>{{x.value.indikator}}</B>
+                <div style="width: 300px; min-width: 300px;padding: 5px;">
+                  <B>
+                    <div [innerHTML]="x.value.indikator"></div>
+                  </B>
                 </div>
-                <div class="form-group col-8" *ngIf="x.value.id_tipe_indikator == 0">
-                  <div class="row">
-                    <div class="form-group col-4">
-                      -
-                    </div>
-                    <div class="form-group col-2" style="display: flex;">
-                      <input type="text" [(ngModel)]="t.value[index_indikator].nilai" class="form-control" fullWidth
-                        fieldSize="small" disabled />
-                      {{x.value.satuan}}
-                    </div>
-                    <div class="form-group col-1">
-                      <a (click)="open(dialogUpload,index_indikator,null)">
-                        <span style="font-weight: bold;">
-                          {{x.value.jml_arsif}}
-                        </span>
-                        <span *ngIf="x.value.jml_arsif">
-                          <nb-icon icon="file-text-outline" status="primary"
-                            [options]="{ animation: { type: 'pulse' } }"></nb-icon>
-                        </span>
-                      </a>
-                    </div>
-                    <div class="form-group col-2 text-left">
-                      <nb-checkbox [(ngModel)]="t.value[index_indikator].id_progress_temp" status="success"
-                        [disabled]="t.value[index_indikator].id_progress <= 1 ">Validasi
-                      </nb-checkbox>
-                    </div>
-                    <div class="form-group col-3 text-right">
-                      <textarea [(ngModel)]="t.value[index_indikator].catatan" class="form-control" fullWidth
-                        fieldSize="small" placeholder="Catatan..."></textarea>
-                    </div>
+                <div style="width: -webkit-fill-available; padding-left: 20px;display: flex;"
+                  *ngIf="x.value.id_tipe_indikator == 0">
+                  <!-- TIPE INDIKATOR = 0 -->
+                  <div *ngIf="x.value.id_tipe_indikator == 0" style="width: 350px; min-width: 350px;padding: 5px;">
+                    -
                   </div>
-                </div>
-                <div class="form-group col-8" *ngIf="x.value.id_tipe_indikator == 1">
-                  <div class="row">
-                    <div class="form-group col-4">
-                      <nb-radio-group name="{{x.value.kode_indikator_satfung}}" [(ngModel)]="x.value.nilai"
-                        *ngIf="x.value.radio.length > 0" disabled>
-                        <nb-radio name="{{opt.kode_indikator_satfung}}" value="{{opt.nilai}}"
-                          *ngFor="let opt of x.value.radio">{{opt.pilihan}}</nb-radio>
-                      </nb-radio-group>
-                      <span *ngIf="x.value.radio.length ==0">
-                        <!-- {{x.value.pilihan_jawaban}} -->
-                        <div [innerHTML]="x.value.pilihan_jawaban"></div>
+
+                  <div *ngIf="x.value.id_tipe_indikator == 0" style="width: 150px; min-width: 150px;padding: 5px;">
+                    <input type="text" [(ngModel)]="t.value[index_indikator].nilai" class="form-control" fullWidth
+                      fieldSize="small" [disabled]="true" />
+                  </div>
+
+                  <div *ngIf="x.value.id_tipe_indikator == 0" style="width: 100px; min-width: 100px;padding: 5px;">
+                    <div [innerHTML]="x.value.satuan"></div>
+                  </div>
+
+                  <div *ngIf="x.value.id_tipe_indikator == 0"
+                    style="width: 70px; min-width: 70px;padding: 5px;display: flex;">
+                    <a (click)="open(dialogUpload,index_indikator,null)">
+                      <span style="font-weight: bold;">{{x.value.jml_arsif}}</span>
+                      <span *ngIf="x.value.jml_arsif">
+                        <nb-icon icon="file-text-outline" status="primary" [options]="{ animation: { type: 'pulse' } }">
+                        </nb-icon>
                       </span>
-                    </div>
-                    <div class="form-group col-2" style="display: flex;">
-                      <input type="text" [(ngModel)]="t.value[index_indikator].nilai" class="form-control" fullWidth
-                        fieldSize="small" *ngIf="x.value.radio.length ==0" disabled />
-                      {{x.value.satuan}}
-                    </div>
-                    <div class="form-group col-1">
-                      <a (click)="open(dialogUpload,index_indikator,null)">
-                        <span style="font-weight: bold;">{{x.value.jml_arsif}}</span>
-                        <span *ngIf="x.value.jml_arsif">
-                          <nb-icon icon="file-text-outline" status="primary"
-                            [options]="{ animation: { type: 'pulse' } }"></nb-icon>
-                        </span>
-                      </a>
-                    </div>
-                    <div class="form-group col-2 text-left">
-                      <nb-checkbox [(ngModel)]="t.value[index_indikator].id_progress_temp" status="success"
-                        [disabled]="t.value[index_indikator].id_progress <= 1 ">Validasi
-                      </nb-checkbox>
-                    </div>
-                    <div class="form-group col-3 text-right">
-                      <textarea [(ngModel)]="t.value[index_indikator].catatan" class="form-control" fullWidth
-                        fieldSize="small" placeholder="Catatan..."></textarea>
-                    </div>
+                    </a>
                   </div>
-                </div>
-                <div class="form-group col-8" *ngIf="x.value.id_tipe_indikator == 2">
-                  <div class="row" *ngFor="let z of x.value.details ; let index_detail = index">
-                    <div class="form-group col-4">
-                      <div [innerHTML]="z.indikator"></div>
-                    </div>
-                    <div class="form-group col-2" style="display: flex;">
-                      <input type="text" [(ngModel)]="t.value[index_indikator].details[index_detail].nilai"
-                        class="form-control" fullWidth fieldSize="small" disabled />
-                      {{z.satuan}}
-                    </div>
-                    <div class="form-group col-1">
-                      <a (click)="open(dialogUpload,index_indikator,index_detail)">
-                        <span style="font-weight: bold;">{{z.jml_arsif}}</span>
-                        <span *ngIf="z.jml_arsif">
-                          <nb-icon icon="file-text-outline" status="primary"
-                            [options]="{ animation: { type: 'pulse' } }"></nb-icon>
-                        </span>
-                      </a>
-                    </div>
-                    <div class="form-group col-2 text-left">
-                      <nb-checkbox [(ngModel)]="t.value[index_indikator].details[index_detail].id_progress_temp"
-                        status="success" [disabled]="t.value[index_indikator].details[index_detail].id_progress <= 1 ">
-                        Validasi</nb-checkbox>
-                    </div>
-                    <div class="form-group col-3 text-right">
-                      <textarea [(ngModel)]="t.value[index_indikator].details[index_detail].catatan"
-                        class="form-control" fullWidth fieldSize="small" placeholder="Catatan..."></textarea>
-                    </div>
+
+                  <div *ngIf="x.value.id_tipe_indikator == 0"
+                    style="width: 100px; min-width: 100px;padding: 5px;display: flex;">
+                    <nb-checkbox [(ngModel)]="t.value[index_indikator].id_progress_temp" status="success"
+                      [disabled]="t.value[index_indikator].id_progress <= 1 ">Validasi
+                    </nb-checkbox>
                   </div>
+
+                  <div *ngIf="x.value.id_tipe_indikator == 0"
+                    style="width: 200px; min-width: 200px;padding: 5px;display: flex;">
+                    <textarea [(ngModel)]="t.value[index_indikator].catatan" class="form-control" fullWidth
+                      fieldSize="small" placeholder="Catatan Untuk Operator..."></textarea>
+                  </div>
+
+                  <div *ngIf="x.value.id_tipe_indikator == 0"
+                    style="width: 200px; min-width: 200px;padding: 5px;display: flex;">
+                    <textarea [(ngModel)]="t.value[index_indikator].catatans" class="form-control" fullWidth
+                      fieldSize="small" placeholder="Catatan Untuk Kapolres..."></textarea>
+                  </div>
+
                 </div>
 
-                <div class="form-group col-8" *ngIf="x.value.id_tipe_indikator == 5">
-                  <div class="row" *ngFor="let z of x.value.details ; let index_detail = index">
-                    <div class="form-group col-4">
+                <div style="width: -webkit-fill-available; padding-left: 20px;display: flex;"
+                  *ngIf="x.value.id_tipe_indikator == 1">
+                  <!-- TIPE INDIKATOR = 1 -->
+                  <div *ngIf="x.value.id_tipe_indikator == 1" style="width: 350px; min-width: 350px;padding: 5px;">
+                    <nb-radio-group name="{{x.value.kode_indikator_satfung}}" [(ngModel)]="x.value.nilai"
+                      *ngIf="x.value.radio.length > 0">
+                      <nb-radio name="{{opt.kode_indikator_satfung}}" value="{{opt.nilai}}"
+                        *ngFor="let opt of x.value.radio" [disabled]="true">
+                        {{opt.pilihan}}</nb-radio>
+                    </nb-radio-group>
+                    <span *ngIf="x.value.radio.length ==0">
+                      <div [innerHTML]="x.value.pilihan_jawaban"></div>
+                    </span>
+                  </div>
+
+                  <div *ngIf="x.value.id_tipe_indikator == 1" style="width: 150px; min-width: 150px;padding: 5px;">
+                    <input type="text" [(ngModel)]="t.value[index_indikator].nilai" class="form-control" fullWidth
+                      fieldSize="small" *ngIf="x.value.radio.length ==0" [disabled]="true" />
+                  </div>
+
+                  <div *ngIf="x.value.id_tipe_indikator == 1" style="width: 100px; min-width: 100px;padding: 5px;">
+                    <div [innerHTML]="x.value.satuan"></div>
+                  </div>
+
+                  <div *ngIf="x.value.id_tipe_indikator == 1"
+                    style="width: 70px; min-width: 70px;padding: 5px;display: flex;">
+                    <a (click)="open(dialogUpload,index_indikator,null)">
+                      <span style="font-weight: bold;">{{x.value.jml_arsif}}</span>
+                      <span *ngIf="x.value.jml_arsif">
+                        <nb-icon icon="file-text-outline" status="primary" [options]="{ animation: { type: 'pulse' } }">
+                        </nb-icon>
+                      </span>
+                    </a>
+                  </div>
+
+                  <div *ngIf="x.value.id_tipe_indikator == 1"
+                    style="width: 100px; min-width: 100px;padding: 5px;display: flex;">
+                    <nb-checkbox [(ngModel)]="t.value[index_indikator].id_progress_temp" status="success"
+                      [disabled]="t.value[index_indikator].id_progress <= 1 ">Validasi
+                    </nb-checkbox>
+                  </div>
+                  <div *ngIf="x.value.id_tipe_indikator == 1"
+                    style="width: 200px; min-width: 200px;padding: 5px;display: flex;">
+                    <textarea [(ngModel)]="t.value[index_indikator].catatan" class="form-control" fullWidth
+                      fieldSize="small" placeholder="Catatan Untuk Operator..."></textarea>
+                  </div>
+
+                  <div *ngIf="x.value.id_tipe_indikator == 1"
+                    style="width: 200px; min-width: 200px;padding: 5px;display: flex;">
+                    <textarea [(ngModel)]="t.value[index_indikator].catatans" class="form-control" fullWidth
+                      fieldSize="small" placeholder="Catatan Untuk Kapolres..."></textarea>
+                  </div>
+
+
+                </div>
+
+                <!-- TIPE INDIKATOR = 2 -->
+                <div style="width: -webkit-fill-available; padding-left: 20px;" *ngIf="x.value.id_tipe_indikator == 2">
+                  <div style="width: -webkit-fill-available; display: flex; padding: 0;"
+                    *ngFor="let z of x.value.details ; let index_detail = index">
+
+                    <div *ngIf="x.value.id_tipe_indikator == 2" style="width: 350px; min-width: 350px;padding: 5px;">
                       <div [innerHTML]="z.indikator"></div>
                     </div>
-                    <div class="form-group col-2" style="display: flex;">
-                      <input type="checkbox" [(ngModel)]="t.value[index_indikator].details[index_detail].nilai"
-                        class="form-control" fullWidth fieldSize="small" disabled />
+
+                    <div *ngIf="x.value.id_tipe_indikator == 2" style="width: 150px; min-width: 150px;padding: 5px;">
+                      <input type="text" [(ngModel)]="t.value[index_indikator].details[index_detail].nilai"
+                        class="form-control" fullWidth fieldSize="small" [disabled]="true" />
+                    </div>
+
+                    <div *ngIf="x.value.id_tipe_indikator == 2" style="width: 100px; min-width: 100px;padding: 5px;">
                       {{z.satuan}}
                     </div>
-                    <div class="form-group col-1">
+
+
+                    <div *ngIf="x.value.id_tipe_indikator == 2"
+                      style="width: 70px; min-width: 70px;padding: 5px;display: flex;">
                       <a (click)="open(dialogUpload,index_indikator,index_detail)">
                         <span style="font-weight: bold;">{{z.jml_arsif}}</span>
                         <span *ngIf="z.jml_arsif">
@@ -334,20 +349,94 @@
                         </span>
                       </a>
                     </div>
-                    <div class="form-group col-2 text-left">
+
+                    <div *ngIf="x.value.id_tipe_indikator == 2"
+                      style="width: 100px; min-width: 100px;padding: 5px;display: flex;">
                       <nb-checkbox [(ngModel)]="t.value[index_indikator].details[index_detail].id_progress_temp"
                         status="success" [disabled]="t.value[index_indikator].details[index_detail].id_progress <= 1 ">
                         Validasi</nb-checkbox>
                     </div>
-                    <div class="form-group col-3 text-right">
+
+                    <div *ngIf="x.value.id_tipe_indikator == 2"
+                      style="width: 200px; min-width: 200px;padding: 5px;display: flex;">
                       <textarea [(ngModel)]="t.value[index_indikator].details[index_detail].catatan"
-                        class="form-control" fullWidth fieldSize="small" placeholder="Catatan..."></textarea>
+                        class="form-control" fullWidth fieldSize="small"
+                        placeholder="Catatan Untuk Operator..."></textarea>
                     </div>
+
+                    <div *ngIf="x.value.id_tipe_indikator == 2"
+                      style="width: 200px; min-width: 200px;padding: 5px;display: flex;">
+                      <textarea [(ngModel)]="t.value[index_indikator].details[index_detail].catatans"
+                        class="form-control" fullWidth fieldSize="small"
+                        placeholder="Catatan Untuk Kapolres..."></textarea>
+                    </div>
+
                   </div>
+
+                </div>
+
+                <!-- TIPE INDIKATOR = 5 -->
+                <div style="width: -webkit-fill-available; padding-left: 20px;" *ngIf="x.value.id_tipe_indikator == 5">
+                  <div style="width: -webkit-fill-available; display: flex; padding: 0;"
+                    *ngFor="let z of x.value.details ; let index_detail = index">
+
+                    <div *ngIf="x.value.id_tipe_indikator == 5" style="width: 350px; min-width: 350px;padding: 5px;">
+                      <div [innerHTML]="z.indikator"></div>
+
+                    </div>
+
+                    <div *ngIf="x.value.id_tipe_indikator == 5"
+                      style="width: 150px; min-width: 150px;padding: 5px;text-align: center;">
+                      <nb-checkbox [(ngModel)]="t.value[index_indikator].details[index_detail].nilai" status="success"
+                        [disabled]="true">
+                      </nb-checkbox>
+                    </div>
+
+                    <div *ngIf="x.value.id_tipe_indikator == 5" style="width: 100px; min-width: 100px;padding: 5px;">
+                      {{z.satuan}}
+                    </div>
+
+
+                    <div *ngIf="x.value.id_tipe_indikator == 5"
+                      style="width: 70px; min-width: 70px;padding: 5px;display: flex;">
+                      <a (click)="open(dialogUpload,index_indikator,index_detail)">
+                        <span style="font-weight: bold;">{{z.jml_arsif}}</span>
+                        <span *ngIf="z.jml_arsif">
+                          <nb-icon icon="file-text-outline" status="primary"
+                            [options]="{ animation: { type: 'pulse' } }"></nb-icon>
+                        </span>
+                      </a>
+                    </div>
+
+                    <div *ngIf="x.value.id_tipe_indikator == 5"
+                      style="width: 100px; min-width: 100px;padding: 5px;display: flex;">
+                      <nb-checkbox [(ngModel)]="t.value[index_indikator].details[index_detail].id_progress_temp"
+                        status="success" [disabled]="t.value[index_indikator].details[index_detail].id_progress <= 1 ">
+                        Validasi</nb-checkbox>
+                    </div>
+
+                    <div *ngIf="x.value.id_tipe_indikator == 5"
+                      style="width: 200px; min-width: 200px;padding: 5px;display: flex;">
+                      <textarea [(ngModel)]="t.value[index_indikator].details[index_detail].catatan"
+                        class="form-control" fullWidth fieldSize="small"
+                        placeholder="Catatan Untuk Operator..."></textarea>
+                    </div>
+
+                    <div *ngIf="x.value.id_tipe_indikator == 5"
+                      style="width: 200px; min-width: 200px;padding: 5px;display: flex;">
+                      <textarea [(ngModel)]="t.value[index_indikator].details[index_detail].catatans"
+                        class="form-control" fullWidth fieldSize="small"
+                        placeholder="Catatan Untuk Kapolres..."></textarea>
+                    </div>
+
+                  </div>
+
                 </div>
               </div>
             </div>
 
+            <!-- <form [formGroup]="dynamicForm"> -->
+            
             <div class="row card-footer">
               <div class="col-6 text-left">
                 <input class="btn btn-info mr-1 text-center" type="button" value="Cetak" (click)="captureScreen()" />

@@ -291,12 +291,21 @@ export class ValidasiFormObjektifComponent implements OnInit {
           console.log(datax);
           // this.objek = this.sources;
           datax.forEach(xx => {
+            if (xx.id_tipe_indikator == 5) {
+              if (xx.nilai == 1) {
+                xx.nilai=true;
+              }else{
+                xx.nilai=false;
+              }
+            }else{
+              xx.nilai=xx.nilai || xx.nilai == 0 ? xx.nilai.toString() : null;
+            }
             this.objek2.push({
               kode_indikator_induk: xx.kode_indikator_induk,
               indikator: xx.indikator,
               indikator_induk: xx.indikator_induk,
               satuan: xx.satuan,
-              nilai: xx.nilai ? xx.nilai.toString() : null,
+              nilai: xx.nilai,
               arsip_link: xx.arsip_link,
               progress: xx.progress,
               id: xx.id,

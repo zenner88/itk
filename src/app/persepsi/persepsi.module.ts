@@ -9,6 +9,8 @@ import { PersepsiComponent } from './persepsi.component';
 
 import { BlockUIModule } from "ng-block-ui";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { SelectDropDownModule } from 'ngx-select-dropdown';
+
 
 import {
   NbMenuModule,
@@ -46,7 +48,8 @@ import {
     MiscellaneousModule,
     BlockUIModule.forRoot(),
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    SelectDropDownModule
   ],
   declarations: [StepperIntComponent, StepperExtComponent, PersepsiComponent]
 })

@@ -34,83 +34,83 @@ export class StepperExtComponent implements OnInit {
   fourthForm: FormGroup;
   fifthForm: FormGroup;
   listPertanyaan: any[];
-  listPekerjaan: any[]=[
+  listPekerjaan: any[] = [
     {
-      id:1,
-      nilai:"Tokoh Agama"
+      id: 1,
+      nilai: "Tokoh Agama"
     },
     {
-      id:2,
-      nilai:"Tokoh Masyarakat"
+      id: 2,
+      nilai: "Tokoh Masyarakat"
     },
     {
-      id:3,
-      nilai:"DPRD Kabupaten/ Kota"
+      id: 3,
+      nilai: "DPRD Kabupaten/ Kota"
     },
     {
-      id:4,
-      nilai:"Kejaksaan Negeri"
+      id: 4,
+      nilai: "Kejaksaan Negeri"
     },
     {
-      id:5,
-      nilai:"Akademisi"
+      id: 5,
+      nilai: "Akademisi"
     },
     {
-      id:6,
-      nilai:"Media Massa"
+      id: 6,
+      nilai: "Media Massa"
     },
     {
-      id:7,
-      nilai:"Organisasi Masyarakat"
+      id: 7,
+      nilai: "Organisasi Masyarakat"
     },
     {
-      id:8,
-      nilai:"FKUB"
+      id: 8,
+      nilai: "FKUB"
     },
     {
-      id:9,
-      nilai:"Pemerintah Daerah"
+      id: 9,
+      nilai: "Pemerintah Daerah"
     },
     {
-      id:10,
-      nilai:"Kesbangpol"
+      id: 10,
+      nilai: "Kesbangpol"
     },
     {
-      id:11,
-      nilai:"Badan Pertanahan Nasional/ Daerah"
+      id: 11,
+      nilai: "Badan Pertanahan Nasional/ Daerah"
     },
     {
-      id:12,
-      nilai:"Dinas Sosial"
+      id: 12,
+      nilai: "Dinas Sosial"
     },
     {
-      id:13,
-      nilai:"Badan Intelijen Daerah (BINDA)"
+      id: 13,
+      nilai: "Badan Intelijen Daerah (BINDA)"
     },
     {
-      id:14,
-      nilai:"Pasi Intel Kodim dan Babinsa TNI AD"
+      id: 14,
+      nilai: "Pasi Intel Kodim dan Babinsa TNI AD"
     },
     {
-      id:15,
-      nilai:"Asosiasi Pengusaha Perkebunan/ Tambang/ Konstruksi"
+      id: 15,
+      nilai: "Asosiasi Pengusaha Perkebunan/ Tambang/ Konstruksi"
     },
     {
-      id:16,
-      nilai:"Asosiasi Buruh"
+      id: 16,
+      nilai: "Asosiasi Buruh"
     },
     {
-      id:17,
-      nilai:"Organisasi Kepemudaan"
+      id: 17,
+      nilai: "Organisasi Kepemudaan"
     },
     {
-      id:18,
-      nilai:"LSM"
+      id: 18,
+      nilai: "LSM"
     },
     {
-      id:19,
-      nilai:"Lainnya."
-    },
+      id: 19,
+      nilai: "Lainnya."
+    }
   ];
 
   public satkerList: any[] = [];
@@ -119,6 +119,8 @@ export class StepperExtComponent implements OnInit {
   satfungx: any;
   pekerjaan: any;
   index: any;
+  satkerListPolda: any[];
+  satkerPolda: any;
   constructor(
     private _global: AppGlobals,
     private toastrService: NbToastrService,
@@ -178,8 +180,69 @@ export class StepperExtComponent implements OnInit {
     });
 
     this.formPolres = this.fb.group({
-      namaPolres: ["", Validators.required]
+      namaPolres: ["", Validators.required],
+      namaPolda: ""
     });
+
+    this.getDropdownPolda();
+  }
+
+  getDropdownPolres(idPolda) {
+    this.httpClient
+      .get(
+        this._global.baseAPIUrl +
+          "/View_satkers/getDataByKiIts?kodeInduk=" +
+          idPolda.kode +
+          "&idTipeSatker=R"
+      )
+      .subscribe(
+        data => {
+          if (data != undefined || data != null) {
+            this.satkerx = data;
+            const datas = JSON.stringify(data);
+            const datax = JSON.parse(datas);
+            console.log(datas);
+            console.log(datax);
+            datax.forEach(xx => {
+              this.satkerList.push({ value: xx.kode, title: xx.satker });
+            });
+          }
+        },
+        error => {
+          console.log(error);
+        }
+      );
+  }
+
+  getDropdownPolda() {
+    this.satkerListPolda = [];
+    this.httpClient
+      .get(
+        this._global.baseAPIUrl +
+          "/View_satkers/getDataByIdTipeSatker?idTipeSatker=D"
+      )
+      .subscribe(
+        data => {
+          if (data != undefined || data != null) {
+            this.satkerPolda = data;
+            const datas = JSON.stringify(data);
+            const datax = JSON.parse(datas);
+
+            datax.forEach(xx => {
+              this.satkerListPolda.push({
+                value: xx.kode,
+                title: xx.satker,
+                kode: xx.kode
+              });
+            });
+          }
+        },
+        error => {
+          console.log(error);
+        }
+      );
+    console.log("datas");
+    console.log(this.satkerPolda);
   }
 
   onFirstSubmit() {
@@ -205,9 +268,9 @@ export class StepperExtComponent implements OnInit {
   getPersepsi(event) {
     console.log(event);
     let params = JSON.stringify({
-        id_tipe_indikator: "3",
-        kode_satfung: "PUP",
-        kode_satker: this.formPolres.value.namaPolres
+      id_tipe_indikator: "3",
+      kode_satfung: "PUP",
+      kode_satker: this.formPolres.value.namaPolres
     });
 
     this.getPertanyaan(params);
@@ -216,7 +279,9 @@ export class StepperExtComponent implements OnInit {
   getPertanyaan(params) {
     this.httpClient
       .get(
-        this._global.baseAPIUrl + "/View_penilaian_indikators/getPersepsiEksternalAndOpsi?filter=" + params,
+        this._global.baseAPIUrl +
+          "/View_penilaian_indikators/getPersepsiEksternalAndOpsi?filter=" +
+          params,
         httpOptions
       )
       .subscribe(

@@ -17,6 +17,16 @@
           <div class="col-md-4 col-sm-10 text-center">
             <form [formGroup]="formPolres">
               <div class="form-group">
+                <label class="label">Polda</label>
+                <nb-select placeholder="Filter By Polda" filled fullWidth class="pull-right status-info shape-rectangle"
+                  formControlName="namaPolda" (ngModelChange)="getDropdownPolres($event)" status="info">
+                  <nb-option *ngFor="let x of satkerPolda" [value]="x">{{ x.satker }}</nb-option>
+                </nb-select>
+                <!-- <ngx-select-dropdown class="pull-right status-info shape-rectangle"
+                    (ngModelChange)="getDropdownPolres($event)" formControlName="namaPolda" [config]="config"
+                    [options]="satkerListPolda"></ngx-select-dropdown> -->
+              </div>
+              <div class="form-group">
                 <h3>Pilih POLRES</h3>
                 <nb-select placeholder="Pilih Polres" filled status="info" fullWidth
                   class="pull-right status-info shape-rectangle" formControlName="namaPolres"

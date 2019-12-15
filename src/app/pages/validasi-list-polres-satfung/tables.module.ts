@@ -9,6 +9,9 @@ import { CommonModule } from '@angular/common';
 import { NgxUploaderModule } from 'ngx-uploader';
 import { PdfViewerModule } from 'ng2-pdf-viewer';
 import { FormsModule } from '@angular/forms';
+import { 
+  NbCheckboxModule
+  } from '@nebular/theme';
 @NgModule({
   imports: [
     NbCardModule,
@@ -22,12 +25,14 @@ import { FormsModule } from '@angular/forms';
     CommonModule,
     NgxUploaderModule,
     PdfViewerModule,
-    FormsModule
+    FormsModule,
+    NbCheckboxModule
 
   ],
   exports: [
     CommonModule,
     NgxUploaderModule,
+    NbCheckboxModule
   ],
   declarations: [
     ...routedComponents,

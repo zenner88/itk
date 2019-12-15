@@ -542,12 +542,12 @@ export class SmartTableComponent {
     localStorage.setItem(
       "indexObjektif",
       JSON.stringify({
-        penilaianId: event.data.penilaian_id,
-        kodeSatfung: event.data.kode_satfung,
-        idSatfung: event.data.id_satfung,
-        singkatan_satfung: event.data.singkatan_satfung,
-        tipe_polres: event.data.tipe_polres,
-        nama_satker: event.data.satker
+        penilaianId: event.penilaian_id,
+        kodeSatfung: event.kode_satfung,
+        idSatfung: event.id_satfung,
+        singkatan_satfung: event.singkatan_satfung,
+        tipe_polres: event.tipe_polres,
+        nama_satker: event.satker
       })
     );
     // alert(`Custom event '${event.action}' fired on row №: ${event.data.id}`);

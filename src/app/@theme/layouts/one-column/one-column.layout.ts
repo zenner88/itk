@@ -53,7 +53,6 @@ export class OneColumnLayoutComponent implements OnInit {
       this.username=message.username;
       this.isLogin = message.login;
       this.isMenu = message.menu;
-      console.log(message);
     });
   }
 

@@ -117,9 +117,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     if (title === "Log out") {
       this.authService.logout();
       this.layout.userIslogin({ login: false, menu: false });
-      console.log("Log out Clicked ");
     } else if (title === "Profile") {
-      console.log("Profile Clicked ");
     }
   }
 }

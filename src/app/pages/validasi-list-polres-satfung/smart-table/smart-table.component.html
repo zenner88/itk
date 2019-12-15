@@ -203,10 +203,70 @@
         </nb-card-body>
       </nb-card>
 
-      <ng2-smart-table [settings]="satfungs" [source]="source" (deleteConfirm)="onDeleteConfirm($event)"
+      <span style="font-size: 16px;font-weight: bold;">Data Obyektif</span>
+      <table border="1" style="border-collapse: collapse; width: 100%;">
+        <tr>
+          <td style="width: 50px; text-align: center;padding: 25px;">No</td>
+          <td style="width: 150px; text-align: center;">Satuan Fungsi</td>
+          <td style="width: auto; text-align: center;">Terisi (%)</td>
+          <td style="width: auto; text-align: center;">Upload Data Dukung (%)</td>
+          <td style="width: auto; text-align: center;">Validasi Kasatfung (%)</td>
+          <td style="width: auto; text-align: center;">Periksi Formulir</td>
+          <td style="width: auto; text-align: center;">Catatan Untuk Kasatfung</td>
+          <td style="width: auto; text-align: center;">Pengesahan</td>
+          <td style="width: auto; text-align: center;">Catatan Dari Pokja</td>
+        </tr>
+        <tr *ngFor="let data of listDataReport ; let i = index">
+          <td style="width: 50px; text-align: center;">{{i+1}}</td>
+          <td style="width: 150px; text-align: left;padding: 25px;">{{data.singkatan_satfung}}</td>
+          <td style="width: auto; text-align: center;"></td>
+          <td style="width: auto; text-align: center;"></td>
+          <td style="width: auto; text-align: center;"></td>
+          <td style="width: auto; text-align: center;">
+            <a (click)="onCustomAction(data)">
+              <nb-icon icon="edit-2-outline" status="primary" [options]="{ animation: { type: 'pulse' } }"></nb-icon>
+              <!-- <i class="nb-compose"></i> -->
+            </a>
+          </td>
+          <td style="width: auto; text-align: center;"></td>
+          <td style="width: auto; text-align: center;">
+            <nb-checkbox [(ngModel)]="data.pengesahan" status="success"></nb-checkbox>
+          </td>
+          <td style="width: auto; text-align: center;"></td>
+        </tr>
+      </table>
+      <br>
+      <span style="font-size: 16px;font-weight: bold;">Data Persepsi</span>
+      <table border="1" style="border-collapse: collapse; width: 100%;">
+        <tr>
+          <td style="width: 50px; text-align: center;padding: 25px;">No</td>
+          <td style="width: 150px; text-align: center;">Jenis</td>
+          <td style="width: auto; text-align: center;">Kuota Responden</td>
+          <td style="width: auto; text-align: center;">Jumlah Responden</td>
+          <td style="width: auto; text-align: center;">Prosentase</td>
+        </tr>
+        <tr>
+          <td style="width: 50px; text-align: center;padding: 25px;">1</td>
+          <td style="width: 150px; text-align: center;">Kuisioner Internal</td>
+          <td style="width: auto; text-align: center;"></td>
+          <td style="width: auto; text-align: center;"></td>
+          <td style="width: auto; text-align: center;"></td>
+        </tr>
+        <tr>
+          <td style="width: 50px; text-align: center;padding: 25px;">2</td>
+          <td style="width: 150px; text-align: center;">Kuisioner Internal</td>
+          <td style="width: auto; text-align: center;"></td>
+          <td style="width: auto; text-align: center;"></td>
+          <td style="width: auto; text-align: center;"></td>
+        </tr>
+
+      </table>
+
+
+      <!-- <ng2-smart-table [settings]="satfungs" [source]="source" (deleteConfirm)="onDeleteConfirm($event)"
         (editConfirm)="onSaveConfirm($event)" (createConfirm)="onCreateConfirm($event)"
         (custom)="onCustomAction($event)">
-      </ng2-smart-table>
+      </ng2-smart-table> -->
       <hr>
     </div>
     <div class="row card-footer">
@@ -221,11 +281,11 @@
 </nb-card>
 
 <div id="contentToConvert" hidden>
-<nb-card style="margin: 10vh;"> 
-  <br>
-  <br>
-  <div align="left">NAMA POLRES : <B>{{namaSatker}}</B></div>
-  <br>
+  <nb-card style="margin: 10vh;">
+    <br>
+    <br>
+    <div align="left">NAMA POLRES : <B>{{namaSatker}}</B></div>
+    <br>
 
     <ng2-smart-table [settings]="satfungss" [source]="source" (deleteConfirm)="onDeleteConfirm($event)"
       (editConfirm)="onSaveConfirm($event)" (createConfirm)="onCreateConfirm($event)" (custom)="onCustomAction($event)">

@@ -123,8 +123,6 @@ export class FormObjektifComponent implements OnInit {
             this.satfungx = data;
             const datas = JSON.stringify(data);
             const datax = JSON.parse(datas);
-            // console.log(datas);
-            // console.log(datax);
             datax.forEach(xx => {
               this.satfungList.push({
                 value: xx.kode,
@@ -133,9 +131,7 @@ export class FormObjektifComponent implements OnInit {
             });
           }
         },
-        error => {
-          console.log(error);
-        }
+        error => {}
       );
 
     this.kodeSatker = localStorage.getItem("kodeSatker");
@@ -174,7 +170,6 @@ export class FormObjektifComponent implements OnInit {
         data => {
           if (data != undefined || data != null) {
             this.headers = data;
-            console.log(this.headers);
             this.nama_satker = this.headers.satker;
             this.nama_tipe_polres = this.headers.tipe_polres;
             this.nama_satfung = this.headers.singkatan_satfung;
@@ -282,14 +277,22 @@ export class FormObjektifComponent implements OnInit {
           this.objek2 = [];
           const data = JSON.stringify(indikator);
           var datax = JSON.parse(data);
-          console.log(datax);
           // this.objek = this.sources;
           datax.forEach(xx => {
+            if (xx.id_tipe_indikator == 5) {
+              if (xx.nilai == 1) {
+                xx.nilai = true;
+              } else {
+                xx.nilai = false;
+              }
+            } else {
+              xx.nilai = xx.nilai || xx.nilai == 0 ? xx.nilai.toString() : null;
+            }
             this.objek2.push({
               kode_indikator_induk: xx.kode_indikator_induk,
               indikator: xx.indikator,
               indikator_induk: xx.indikator_induk,
-              nilai: xx.nilai ? xx.nilai.toString() : null,
+              nilai: xx.nilai,
               satuan: xx.satuan,
               arsip_link: xx.arsip_link,
               progress: xx.progress,
@@ -348,13 +351,11 @@ export class FormObjektifComponent implements OnInit {
           setTimeout(() => {
             this.blockUI.stop();
           }, 2500);
-          console.log(datas);
         },
         error => {
           setTimeout(() => {
             this.blockUI.stop();
           }, 2500);
-          console.log("Error", error);
           this.showToast("warning", "Koneksi bermasalah", error.message);
         }
       );
@@ -384,11 +385,8 @@ export class FormObjektifComponent implements OnInit {
 
   onSubmit() {
     this.blockUI.start();
-    console.log("WORK!");
-    console.log(this.t.value);
     // save
     let jml = this.t.value.length;
-    console.log(this.t.value.length);
 
     var dataSubmit = [];
     var dataSubmitP = [];
@@ -417,8 +415,7 @@ export class FormObjektifComponent implements OnInit {
       }
 
       for (let j = 0; j < this.t.value[i].details.length; j++) {
-        if (this.t.value[i].details[j].kode_indikator_induk == "PT02") {
-          console.log(5);
+        if (this.t.value[i].details[j].id == "371062") {
         }
         if (this.t.value[i].details[j].nilai == true) {
           this.t.value[i].details[j].nilai = 1;
@@ -428,6 +425,9 @@ export class FormObjektifComponent implements OnInit {
         }
         if (this.t.value[i].details[j].nilai == null) {
           this.t.value[i].details[j].nilai = null;
+        }
+
+        if (this.t.value[i].details[j].id == "371062") {
         }
         if (
           !this.t.value[i].details[j].nilai &&
@@ -455,18 +455,6 @@ export class FormObjektifComponent implements OnInit {
         dataSubmitD.push(this.t.value[i].details[j]);
       }
     }
-
-    // console.log(JSON.stringify(dataSubmitP));
-    // console.log(JSON.stringify(dataSubmitD));
-
-    // for (let i = 0; i < dataSubmit.length; i++) {
-    //   let jenis = dataSubmit[i].jenis;
-    //   let id = dataSubmit[i].id;
-    //   let data = dataSubmit[i];
-    // if (jenis == "P") {
-    // console.log(dataSubmit[i].jenis);
-    // console.log(dataSubmit[i].id);
-    // console.log("END P");
 
     var dataP = [];
     for (let i = 0; i < dataSubmitP.length; i++) {
@@ -528,7 +516,6 @@ export class FormObjektifComponent implements OnInit {
                   )
                   .subscribe(
                     data => {
-                      // console.log("PUT Request is successful ", data);
                       this.showToast("success", "Data Tersimpan", null);
                       setTimeout(() => {
                         this.blockUI.stop();
@@ -538,7 +525,6 @@ export class FormObjektifComponent implements OnInit {
                       setTimeout(() => {
                         this.blockUI.stop();
                       }, 2500);
-                      // console.log("Error", error);
                       this.showToast(
                         "warning",
                         "Input / koneksi bermasalah",
@@ -549,7 +535,6 @@ export class FormObjektifComponent implements OnInit {
                   );
               }
             }
-            console.log(dataSubmitD[i].id, data);
           },
           error => {}
         );
@@ -564,9 +549,6 @@ export class FormObjektifComponent implements OnInit {
         )
         .subscribe(
           data => {
-            // console.log("PUT Request is successful ", data);
-            // this.showToast("success", "Data Tersimpan", id);
-            // this.ngOnInit();
             setTimeout(() => {
               this.blockUI.stop();
             }, 2500);
@@ -575,7 +557,6 @@ export class FormObjektifComponent implements OnInit {
             setTimeout(() => {
               this.blockUI.stop();
             }, 2500);
-            // console.log("Error", error);
             this.showToast(
               "warning",
               "Input / koneksi bermasalah",
@@ -585,8 +566,6 @@ export class FormObjektifComponent implements OnInit {
           }
         );
     }
-
-    
 
     this.keteranganPolres[0].diubah_oleh = JSON.parse(
       localStorage.getItem("currentUser")
@@ -601,8 +580,6 @@ export class FormObjektifComponent implements OnInit {
       )
       .subscribe(
         data => {
-          // console.log("PUT Request is successful ", data);
-          // this.showToast("success", "Data Tersimpan", id);
           this.ngOnInit();
           setTimeout(() => {
             this.blockUI.stop();
@@ -612,7 +589,6 @@ export class FormObjektifComponent implements OnInit {
           setTimeout(() => {
             this.blockUI.stop();
           }, 2500);
-          // console.log("Error", error);
           this.showToast(
             "warning",
             "Input / koneksi bermasalah",
@@ -621,35 +597,6 @@ export class FormObjektifComponent implements OnInit {
           );
         }
       );
-
-    // } else if (jenis == "D") {
-    //   // console.log(dataSubmit[i].jenis);
-    //   // console.log(dataSubmit[i].id);
-    //   this.httpClient
-    //     .put(
-    //       this._global.baseAPIUrl + "/Itk_trn_penilaian_details/" + id,
-    //       data
-    //     )
-    //     .subscribe(
-    //       data => {
-    //         console.log("PUT Request is successful ", data);
-    //         this.showToast("success", "Data Tersimpan", id);
-    //       },
-    //       error => {
-    //         console.log("Error", error);
-    //         this.showToast(
-    //           "warning",
-    //           "Input / koneksi bermasalah",
-    //           error.error.error.message
-    //         );
-    //       }
-    //     );
-    // } else {
-    //   console.log("Ga ada jenisnya");
-    //   console.log(dataSubmit[i].id);
-    // }
-    // }
-    // alert('SUCCESS!! :-)\n\n' + JSON.stringify(this.dynamicForm.value));
   }
 
   openWindow(contentTemplate, data) {
@@ -831,7 +778,6 @@ export class FormObjektifComponent implements OnInit {
       typeof output.file !== "undefined"
     ) {
       this.files.push(output.file);
-      console.log(output.file.name + " rejected");
     }
 
     this.files = this.files.filter(
@@ -840,7 +786,6 @@ export class FormObjektifComponent implements OnInit {
   }
 
   startUpload(): void {
-    console.log(this.files);
     for (let i = 0; i < this.files.length; i++) {
       this.postMethod(this.files[i], i);
     }
@@ -870,7 +815,9 @@ export class FormObjektifComponent implements OnInit {
     window.open(
       this._global.baseAPIUrl +
         "/ContainerPenilaianIndi/upload_document_indikator/download/" +
-        fileDownload
+        fileDownload +
+        "?access_token=" +
+        JSON.parse(localStorage.getItem("currentUser")).token
     );
   }
 
@@ -916,7 +863,6 @@ export class FormObjektifComponent implements OnInit {
           this.listDataOptions = [];
           this.listDataOptions = data;
           this.satfungKlik(this.dataObjectif.kodeSatfung);
-          console.log(data);
         },
         error => {
           console.log(error);
