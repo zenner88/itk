@@ -110,7 +110,7 @@ export class FormObjektifComponent implements OnInit {
       hp_staff_satfung: ""
     }
   ];
-  src = "https://vadimdez.github.io/ng2-pdf-viewer/assets/pdf-test.pdf";
+  src = "https://drive.google.com/open?id=1oPIUIsYMX60B-sZefCGoZOzJZfHLZ-iH";
   // convenience getters for easy access to form fields
 
   ngOnInit() {
@@ -618,7 +618,15 @@ export class FormObjektifComponent implements OnInit {
     }
   }
 
-  openWindowInfo(contentTemplate) {
+  openWindowInfo(contentTemplate, data) {
+    this.src =
+      this._global.baseAPIUrl +
+      "/ContainerPenilaianIndi/upload_contoh_bukti_dukung/download/" +
+      data.kode_indikator_satfung +
+      ".pdf" +
+      "?access_token=" +
+      JSON.parse(localStorage.getItem("currentUser")).token;
+
     this.windowService.open(contentTemplate, {
       title: "Contoh Dokumen.",
       context: {

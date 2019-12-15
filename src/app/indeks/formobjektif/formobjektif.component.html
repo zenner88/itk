@@ -258,7 +258,7 @@
 
                   <div *ngIf="x.value.id_tipe_indikator == 0"
                     style="width: 50px; min-width: 50px;padding: 5px;display: flex;">
-                    <nb-icon icon="info-outline" status="info" (click)="openWindowInfo(contentTemplate)"
+                    <nb-icon icon="info-outline" status="info" (click)="openWindowInfo(contentTemplate,x)"
                       [options]="{ animation: { type: 'pulse' } }"></nb-icon>
                   </div>
 
@@ -314,7 +314,7 @@
                   </div>
                   <div *ngIf="x.value.id_tipe_indikator == 1"
                     style="width: 50px; min-width: 50px;padding: 5px;display: flex;">
-                    <nb-icon icon="info-outline" status="info" (click)="openWindowInfo(contentTemplate)"
+                    <nb-icon icon="info-outline" status="info" (click)="openWindowInfo(contentTemplate,x)"
                       [options]="{ animation: { type: 'pulse' } }"></nb-icon>
                   </div>
                   <div *ngIf="x.value.id_tipe_indikator == 1"
@@ -367,7 +367,7 @@
 
                     <div *ngIf="x.value.id_tipe_indikator == 2"
                       style="width: 50px; min-width: 50px;padding: 5px;display: flex;">
-                      <nb-icon icon="info-outline" status="info" (click)="openWindowInfo(contentTemplate)"
+                      <nb-icon icon="info-outline" status="info" (click)="openWindowInfo(contentTemplate,z)"
                         [options]="{ animation: { type: 'pulse' } }"></nb-icon>
                     </div>
 
@@ -423,7 +423,7 @@
 
                     <div *ngIf="x.value.id_tipe_indikator == 5"
                       style="width: 50px; min-width: 50px;padding: 5px;display: flex;">
-                      <nb-icon icon="info-outline" status="info" (click)="openWindowInfo(contentTemplate)"
+                      <nb-icon icon="info-outline" status="info" (click)="openWindowInfo(contentTemplate,z)"
                         [options]="{ animation: { type: 'pulse' } }"></nb-icon>
                     </div>
 
